@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @dinosaur.name %>
+</p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @dinosaur.level %>
+</p>
+
+<p>
+  <strong>Rarity:</strong>
+  <%= @dinosaur.rarity.capitalize %>
+</p>
+
+<p>
+  <strong>Health:</strong>
+  <%= @dinosaur.health %>
+</p>
+
+<p>
+  <strong>Speed:</strong>
+  <%= @dinosaur.speed %>
+</p>
+
+<p>
+  <strong>Damage:</strong>
+  <%= @dinosaur.damage %>
+</p>
+<p>
+  <strong>DNA:</strong>
+  <%= @dinosaur.dna %>
+</p>
+<p>
+  <strong>Hybrid:</strong>
+  <%= @dinosaur.is_hybrid %>
+</p>
+
+<p>
+  <strong>Possible Hybrids:</strong>
+  <%= @dinosaur.possible_hybrid_names %>
+</p>
+
+<p>
+  <%= @graph.html_safe %>
+</p>
+
+<p>
+  <strong>Cost to next level (<%= @next_level%>):</strong><br />
+  <div style="display:none;" >
+  Coins: <%= @cost[:coins] %><br />
+  DNA: <%= @cost[:dna] %><br />
+  Fusions: <%= @cost[:fusions] %>
+  </div>
+<table>
+  <thead>
+    <td></td>
+    <% @cost[:coins].each do |key, value| %>
+      <td><%= key %></td>
+    <% end %>
+  </thead>
+  <% @cost.each do |key, cost| %>
+    <tr>
+      <td><%= key.to_s.capitalize %></td>
+      <% cost.each do |key, value| %>
+        <td><%= value.to_i > 0 ? value : '' %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+</p>
+<%= link_to 'Edit', edit_dinosaur_path(@dinosaur) %> |
+<%= link_to 'Back', dinosaurs_path %>

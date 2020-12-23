@@ -1,0 +1,55 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Dinosaurs</h1>
+<div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Level</th>
+      <th>Rarity</th>
+      <th>Health</th>
+      <th>Speed</th>
+      <th>Damage</th>
+      <th>DNA</th>
+      <th>Hybrid</th>
+      <th>Coins to Create</th>
+      <th>DNA to Create</th>
+      <th>Left</th>
+      <th>Right</th>
+      <th>Possible Hybrids</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dinosaurs.each do |dinosaur| %>
+      <tr>
+        <td><%= link_to dinosaur.name, dinosaur %></td>
+        <td><%= dinosaur.level %></td>
+        <td><%= dinosaur.rarity %></td>
+        <td><%= dinosaur.health %></td>
+        <td><%= dinosaur.speed %></td>
+        <td><%= dinosaur.damage %></td>
+        <td><%= dinosaur.dna %></td>
+        <td><%= dinosaur.is_hybrid %></td>
+        <td><%= dinosaur.cost_to_create(:coins) %></td>
+        <td><%= dinosaur.cost_to_create(:dna) %></td>
+        <td><%= dinosaur.left.name rescue nil %></td>
+        <td><%= dinosaur.right.name rescue nil %></td>
+        <td><%= dinosaur.possible_hybrid_names %></td>
+        <td><%= link_to 'Edit', edit_dinosaur_path(dinosaur) %></td>
+        <td><%= link_to 'Destroy', dinosaur, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Dinosaur', new_dinosaur_path %>
+<p>
+  <%= @graph.html_safe %>
+</p>

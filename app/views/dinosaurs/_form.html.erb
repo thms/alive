@@ -1,0 +1,68 @@
+<%= form_with(model: dinosaur, local: true) do |form| %>
+  <% if dinosaur.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(dinosaur.errors.count, "error") %> prohibited this dinosaur from being saved:</h2>
+
+      <ul>
+        <% dinosaur.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :level %>
+    <%= form.number_field :level %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rarity %>
+    <%= form.select :rarity, ['common', 'rare', 'epic', 'legendary', 'unique'] %>
+
+  </div>
+
+  <div class="field">
+    <%= form.label :health %>
+    <%= form.number_field :health %>
+  </div>
+
+  <div class="field">
+    <%= form.label :damage %>
+    <%= form.number_field :damage %>
+  </div>
+
+  <div class="field">
+    <%= form.label :speed %>
+    <%= form.number_field :speed %>
+  </div>
+
+  <div class="field">
+    <%= form.label :dna %>
+    <%= form.number_field :dna %>
+  </div>
+
+  <div class="field">
+    <%= form.label :is_hybrid %>
+    <%= form.check_box :is_hybrid %>
+  </div>
+
+  <div class="field">
+    <%= form.label :left %>
+    <%= form.collection_select :left_id, Dinosaur.all, :id, :name, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :right %>
+    <%= form.collection_select :right_id, Dinosaur.all, :id, :name, include_blank: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
