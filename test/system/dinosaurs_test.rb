@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class DinosaursTest < ApplicationSystemTestCase
   setup do
-    @dinosaur = dinosaurs(:one)
+    @dinosaur = dinosaurs(:two)
   end
 
   test "visiting the index" do
@@ -16,12 +16,13 @@ class DinosaursTest < ApplicationSystemTestCase
 
     fill_in "Damage", with: @dinosaur.damage
     fill_in "Health", with: @dinosaur.health
-    fill_in "Left", with: @dinosaur.left
+    select "", from: "dinosaur[left_id]"
+    select "", from: "dinosaur[right_id]"
     fill_in "Level", with: @dinosaur.level
     fill_in "Name", with: @dinosaur.name
-    fill_in "Rarity", with: @dinosaur.rarity
-    fill_in "Right", with: @dinosaur.right
+    select @dinosaur.rarity, from: "dinosaur[rarity]"
     fill_in "Speed", with: @dinosaur.speed
+    fill_in "Dna", with: @dinosaur.dna
     click_on "Create Dinosaur"
 
     assert_text "Dinosaur was successfully created"
@@ -34,12 +35,13 @@ class DinosaursTest < ApplicationSystemTestCase
 
     fill_in "Damage", with: @dinosaur.damage
     fill_in "Health", with: @dinosaur.health
-    fill_in "Left", with: @dinosaur.left
+    select "", from: "dinosaur[left_id]"
+    select "", from: "dinosaur[right_id]"
     fill_in "Level", with: @dinosaur.level
     fill_in "Name", with: @dinosaur.name
-    fill_in "Rarity", with: @dinosaur.rarity
-    fill_in "Right", with: @dinosaur.right
+    select @dinosaur.rarity, from:  "dinosaur[rarity]"
     fill_in "Speed", with: @dinosaur.speed
+    fill_in "Dna", with: @dinosaur.dna
     click_on "Update Dinosaur"
 
     assert_text "Dinosaur was successfully updated"
