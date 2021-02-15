@@ -1,9 +1,18 @@
-# Base class for a move
+# Base class for an ability
 # Phase 1: affect opponents shields, ciritcal chance, speed
 # Phase 2: affect own distraction, DoT, speed, health
 # Phase 3 deal damange to opponent
 # Constructor: set attacker and defender
-class Move
+
+# Quick-Use Abilities
+# Charged Abilities
+# Counter-Attack Abilities
+# Swap-In Abilities
+# Swap-Out Abilities
+# On-Escape Abilities
+# Priority Abilities
+
+class Ability
 
   def initialize(attacker, defender)
     @attacker = attacker
@@ -34,11 +43,11 @@ class Move
   def damage_defender
   end
 
-  # if there is a cooldown on the move, update the attacker's move stats, to start the cooldown
+  # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown
   # since this is executed before tick, cooldown neds ot be +1
   def update_cooldown_attacker
     if self.cooldown > 0
-      @attacker.move_stats[self.class.name][:cooldown] = self.cooldown + 1
+      @attacker.ability_stats[self.class.name][:cooldown] = self.cooldown + 1
     end
   end
 

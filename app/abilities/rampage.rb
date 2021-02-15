@@ -1,6 +1,6 @@
 # Rampage
 # Deal 2x damage
-class Rampage < Move
+class Rampage < Ability
 
   self.cooldown = 1
   self.delay = 1

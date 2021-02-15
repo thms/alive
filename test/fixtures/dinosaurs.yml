@@ -8,6 +8,7 @@ one:
   health: 1
   speed: 1
   damage: 1
+  dna: 10
   left_id: nil
   right_id: nil
   created_at: <%= Time.now %>
@@ -16,12 +17,41 @@ one:
 two:
   id: 2
   name: two
-  level: 1
+  level: 5
   rarity: rare
   health: 1
   speed: 1
   damage: 1
-  left_id: 1
+  dna: 1
+  left_id: nil
   right_id: nil
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+three:
+  id: 3
+  name: three
+  level: 11
+  rarity: epic
+  health: 1
+  speed: 1
+  damage: 1
+  dna: 1
+  left_id: nil
+  right_id: nil
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+four:
+  id: 4
+  name: four
+  level: 16
+  rarity: legendary
+  health: 1
+  speed: 1
+  damage: 1
+  dna: 1
+  left_id: 2
+  right_id: 3
   created_at: <%= Time.now %>
   updated_at: <%= Time.now %>

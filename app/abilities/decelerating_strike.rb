@@ -1,7 +1,7 @@
 # Decelerating strike
 # Deal damage
 # Reduce opponent's speed by 10%
-class DeceleratingStrike < Move
+class DeceleratingStrike < Ability
 
   self.cooldown = 0
   self.delay = 0

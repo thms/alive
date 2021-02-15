@@ -8,7 +8,6 @@ class CreateDinosaurs < ActiveRecord::Migration[6.0]
       t.integer :damage
       t.integer :speed
       t.integer :dna
-      t.boolean :is_hybrid
       t.integer :left_id
       t.integer :right_id
 

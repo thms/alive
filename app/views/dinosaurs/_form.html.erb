@@ -48,11 +48,6 @@
   </div>
 
   <div class="field">
-    <%= form.label :is_hybrid %>
-    <%= form.check_box :is_hybrid %>
-  </div>
-
-  <div class="field">
     <%= form.label :left %>
     <%= form.collection_select :left_id, Dinosaur.all, :id, :name, include_blank: true %>
   </div>

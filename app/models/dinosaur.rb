@@ -10,22 +10,31 @@ class Dinosaur < ApplicationRecord
   # Attributes needed during a fight
   attr_accessor :current_health
   attr_accessor :current_speed
-  attr_accessor :moves # [Strike, DeceleratingStrike] classes, ulitmately also need to load from database
-  attr_accessor :move_stats # {'Strike' => {cooldown: 1, delay: 2}}
+  attr_accessor :abilities # [Strike, DeceleratingStrike] classes, ulitmately also need to load from database
+  attr_accessor :ability_stats # {'Strike' => {cooldown: 1, delay: 2}}
+  attr_accessor :active_modifiers # {'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
+
+  # is this a hybrid?
 
   # reset fight attributes, to initial values
-  def reset_current_attributes!
+  def reset_attributes!
     @current_health = health
     @current_speed = speed
-    @move_stats = (@moves.map {|move| {move.name => {delay: move.delay, cooldown: 0}}}).reduce(&:merge!)
+    @ability_stats = (@abilities.map {|ability| {ability.name => {delay: ability.delay, cooldown: 0}}}).reduce(&:merge!)
     self
   end
 
-  # affects cooldown and delay of all moves after each round
-  # delay is only initially, cooldown only after a move is used.
+  # calculate current attributes by applying all active modifiers to the Attributes
+  # attributes
+  # speed, distration, shields, damage, critical_chance, dodge
+  def current_attributes
+  end
+
+  # affects cooldown and delay of all abilities after each round
+  # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
   def tick
-    move_stats.each do |index, values|
+    ability_stats.each do |index, values|
       if values[:delay] > 0
         values[:delay] -= 1
       elsif values[:cooldown] > 0
@@ -34,16 +43,16 @@ class Dinosaur < ApplicationRecord
     end
   end
 
-  # available moves are those where both delay and cooldown is 0
-  def available_moves
-    moves.select {|move| move_stats[move.name][:delay] == 0 && move_stats[move.name][:cooldown] == 0}
+  # available abilities are those where both delay and cooldown is 0
+  def available_abilities
+    abilities.select {|ability| ability_stats[ability.name][:delay] == 0 && ability_stats[ability.name][:cooldown] == 0}
   end
 
-  # Pick the next move (need to add order dependency or strikes)
+  # Pick the next ability (need to add order dependency or strikes)
   # returns the class
-  # For now just return the only move defined later use strategies
-  def pick_move
-    moves.first
+  # For now just return the only ability defined later use strategies
+  def pick_ability
+    available_abilities.first
   end
 
   # returns array of all possible hybrids one level up
@@ -59,9 +68,14 @@ class Dinosaur < ApplicationRecord
     possible_hybrids.map {|dinosaur| dinosaur.name}.to_sentence
   end
 
+  # True if it has components
+  def is_hybrid?
+    (left_id && right_id) || (left && right)
+  end
+
   # True if either component is a hybrid
   def is_super_hybrid?
-    left.is_hybrid || right.is_hybrid
+    left.is_hybrid? || right.is_hybrid?
   end
 
   # Fuse two components up to N times, return the coins spent on the fusions and the number of fusions done
@@ -69,7 +83,7 @@ class Dinosaur < ApplicationRecord
   # checks is fusion is possible
   def fuse(requested_fusions = 1)
     result = {coins: 0, fusions: 0}
-    if is_hybrid
+    if is_hybrid?
       # level components must be at
       component_target_level = Constants::MIN_LEVEL_OF_COMPONENTS_TO_FUSE[rarity.to_sym]
       # possible fusions:
@@ -91,25 +105,12 @@ class Dinosaur < ApplicationRecord
     end
   end
 
-  # Upgrade the dinosaur N levels
-  # Only looks at own DNA available, intended as a base operation
-  def evolve(requested_levels = 1)
-    result = {coins: 0, levels: 0}
-    target_level = self.level + requested_levels
-    while self.dna >= Constants::DNA_TO_EVOLVE[rarity.to_sym][level] && self.level < target_level
-      result[:levels] += 1
-      result[:coins] += Constants::COINS_TO_EVOLVE[level]
-      self.dna -= Constants::DNA_TO_EVOLVE[rarity.to_sym][level]
-      self.level += 1
-    end
-    result
-  end
-
   # Calculate the max level this can be evolved to, given the current DNA and levels of self and components
   def max_level_possible
     coins = 0
+    dna_spent = 0
     max_level = self.level
-    if is_hybrid
+    if is_hybrid?
       # min level components need to be at
       component_target_level = Constants::MIN_LEVEL_OF_COMPONENTS_TO_FUSE[rarity.to_sym]
       # dna needed to get to fusion level left
@@ -154,15 +155,16 @@ class Dinosaur < ApplicationRecord
       dna_available = self.dna
       while Constants::DNA_TO_EVOLVE[rarity.to_sym][max_level] <= dna_available
         dna_available -= Constants::DNA_TO_EVOLVE[rarity.to_sym][max_level]
+        dna_spent += Constants::DNA_TO_EVOLVE[rarity.to_sym][max_level]
         max_level += 1
       end
       coins = coins_to_level(max_level)
     end
-    return {coins: coins, level: max_level}
+    return {coins: coins, level: max_level, dna: dna_spent}
   end
 
-
   # Calculate the cost to create this recursively at its lowest possible level, including cost for all components
+  # dimension is coins, dna
   def cost_to_create(dimension)
     target_level = Constants::STARTING_LEVELS[rarity.to_sym]
     cost_to_level(target_level)[dimension].inject(0) {|s, tuple| tuple[1] > 0 ? s+= tuple[1] : s}
@@ -184,7 +186,7 @@ class Dinosaur < ApplicationRecord
     result[:dna][name] = 0 if result[:dna][name].nil?
     result[:fusions][name] = 0 if result[:fusions][name].nil?
     result[:target_levels][name] = target_level
-    if is_hybrid
+    if is_hybrid?
       # add coins to upgrade self after the fusions are done
       result[:coins][name] += coins_to_level(target_level).to_i
 
@@ -210,6 +212,25 @@ class Dinosaur < ApplicationRecord
     end
     result
   end
+
+  private
+
+  # Upgrade the dinosaur N levels
+  # Only looks at own DNA available, intended as a base operation
+  def evolve(requested_levels = 1)
+    result = {coins: 0, levels: 0}
+    target_level = self.level + requested_levels
+    while self.dna >= Constants::DNA_TO_EVOLVE[rarity.to_sym][level] && self.level < target_level
+      result[:levels] += 1
+      result[:coins] += Constants::COINS_TO_EVOLVE[level]
+      self.dna -= Constants::DNA_TO_EVOLVE[rarity.to_sym][level]
+      self.level += 1
+    end
+    result
+  end
+
+
+
 
   # Returns the cost to get to a non-hybrid to a specific level & DNA on hand
   def cost_to_level_non_hybrid(target_level, target_dna, result)

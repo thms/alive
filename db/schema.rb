@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 2020_10_14_100258) do
     t.integer "damage"
     t.integer "speed"
     t.integer "dna"
-    t.boolean "is_hybrid"
     t.integer "left_id"
     t.integer "right_id"
     t.datetime "created_at", precision: 6, null: false

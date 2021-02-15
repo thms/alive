@@ -1,5 +1,5 @@
 # Simple strike, just deal attackers to defnder, no other effects
-class Strike < Move
+class Strike < Ability
 
   self.cooldown = 0
   self.delay = 0

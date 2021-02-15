@@ -2,45 +2,17 @@ require 'graphviz'
 
 class DinosaursController < ApplicationController
   before_action :set_dinosaur, only: [:show, :edit, :update, :destroy]
+  helper_method :sort_column, :sort_direction
 
   # GET /dinosaurs
   # GET /dinosaurs.json
   def index
     @dinosaurs = Dinosaur.where(nil)
     @dinosaurs = @dinosaurs.filter_by_rarity(params[:rarity]) if params[:rarity].present?
-    @dinosaurs = @dinosaurs.order_by_dna(params[:dna]) if params[:dna].present?
-
+    # @dinosaurs = @dinosaurs.order_by_dna(params[:dna]) if params[:dna].present?
+    @dinosaurs = @dinosaurs.order(sort_column + " " + sort_direction)
     g = Graphviz::Graph.new
-    # add all dinosaurs as unconnected nodes
-    @dinosaurs.map {|dinosaur| add_node(g, dinosaur)}
-    # connect each hybrid to its ingredients, need to load ingredients if filtering , missing second level when filtering
-    @dinosaurs.each do |dinosaur|
-      dinosaur_node = g.get_node(node_name(dinosaur)).first
-      if dinosaur.left
-        left_node = g.get_node(node_name(dinosaur.left)).first || add_node(g, dinosaur.left)
-        dinosaur_node.connect(left_node)
-        if dinosaur.left.left && params[:rarity].present?
-          left_left_node = g.get_node(node_name(dinosaur.left.left)).first || add_node(g, dinosaur.left.left)
-          left_node.connect(left_left_node)
-        end
-        if dinosaur.left.right && params[:rarity].present?
-          left_right_node = g.get_node(node_name(dinosaur.left.right)).first || add_node(g, dinosaur.left.right)
-          left_node.connect(left_right_node)
-        end
-      end
-      if dinosaur.right
-        right_node = g.get_node(node_name(dinosaur.right)).first || add_node(g, dinosaur.right)
-        dinosaur_node.connect(right_node)
-        if dinosaur.right.left && params[:rarity].present?
-          right_left_node = g.get_node(node_name(dinosaur.right.left)).first || add_node(g, dinosaur.right.left)
-          right_node.connect(right_left_node)
-        end
-        if dinosaur.right.right && params[:rarity].present?
-          right_right_node = g.get_node(node_name(dinosaur.right.right)).first || add_node(g, dinosaur.right.right)
-          right_node.connect(right_right_node)
-        end
-      end
-    end
+    @dinosaurs.map {|dinosaur| add_dinosaur_to_graph(g, dinosaur)}
     @graph = Graphviz::output(g, format: 'svg')
   end
 
@@ -48,10 +20,7 @@ class DinosaursController < ApplicationController
   # GET /dinosaurs/1.json
   def show
     g = Graphviz::Graph.new
-    me = add_node(g, @dinosaur, 'box')
-    node_add_children(g, me, @dinosaur)
-    node_add_hybrids(g, me, @dinosaur)
-    purge_edges!(g)
+    add_dinosaur_to_graph(g, @dinosaur)
     @graph = Graphviz::output(g, format: 'svg')
     @next_level = @dinosaur.level > 0 ? @dinosaur.level + 1 : Constants::STARTING_LEVELS[@dinosaur.rarity.to_sym]
     @cost = @dinosaur.cost_to_level(@next_level)
@@ -114,7 +83,15 @@ class DinosaursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dinosaur_params
-      params.require(:dinosaur).permit(:name, :level, :rarity, :health, :speed, :damage, :dna, :is_hybrid, :left_id, :right_id)
+      params.require(:dinosaur).permit(:name, :level, :rarity, :health, :speed, :damage, :dna, :left_id, :right_id)
+    end
+
+    def sort_column
+      Dinosaur.column_names.include?(params[:sort]) ? params[:sort] : "name"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 
     #COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green'}
@@ -122,12 +99,18 @@ class DinosaursController < ApplicationController
     # add and format a single node if not already on the graph
     # if already on the graph returns the existing node
     # connects if already on the graph and not yet connected
-    def add_node(parent, dinosaur, shape='oval')
-      node = parent.add_node(node_name(dinosaur))
-      node.attributes[:id] = dinosaur.id
-      node.attributes[:color] = Constants::COLORS[dinosaur.rarity.to_sym]
-      node.attributes[:shape] = shape
-      node.attributes[:URL] = "/dinosaurs/" + dinosaur.id.to_s
+    def add_node(graph, parent, dinosaur, shape='oval')
+      # find or insert node into graph, unconnected
+      if (node = graph.get_node(node_name(dinosaur)).first)
+        parent.connect(node) unless (parent.nil? || parent.connected?(node))
+      else
+        node = graph.add_node(node_name(dinosaur))
+        node.attributes[:id] = dinosaur.id
+        node.attributes[:color] = Constants::COLORS[dinosaur.rarity.to_sym]
+        node.attributes[:shape] = shape
+        node.attributes[:URL] = "/dinosaurs/" + dinosaur.id.to_s
+        parent.connect(node) unless parent.nil?
+      end
       node
     end
 
@@ -135,9 +118,9 @@ class DinosaursController < ApplicationController
     # TODO: add all components of the hybrids downwards too.
     def node_add_hybrids(graph, node, dinosaur)
       dinosaur.possible_hybrids.each do |hybrid|
-        hybrid_node = add_node(graph, hybrid)
-        hybrid_node.connect(node)
-        # add children of hybrid, unless already connected (cases: only one child is already in the graph and connected)
+        hybrid_node = add_node(graph, nil, hybrid)
+        hybrid_node.connect(node) unless hybrid_node.connected?(node)
+        # add children of hybrid, unless already connected
         node_add_children(graph, hybrid_node, hybrid)
         node_add_hybrids(graph, hybrid_node, hybrid)
       end
@@ -148,24 +131,25 @@ class DinosaursController < ApplicationController
     # child is in the graph, and not connected
     def node_add_children(graph, node, dinosaur)
       if dinosaur.left
-        left_node = add_node(node, dinosaur.left)
-        left_node.connections.uniq!
+        left_node = add_node(graph, node, dinosaur.left)
         node_add_children(graph, left_node, dinosaur.left)
       end
       if dinosaur.right
-        right_node = add_node(node, dinosaur.right)
-        right_node.connections.uniq!
+        right_node = add_node(graph, node, dinosaur.right)
         node_add_children(graph, right_node, dinosaur.right)
       end
-
     end
 
+    # Add a dinosaur and all connections to the graph
+    def add_dinosaur_to_graph(graph, dinosaur)
+      node = add_node(graph, nil, dinosaur, 'box')
+      node_add_children(graph, node, dinosaur)
+      node_add_hybrids(graph, node, dinosaur)
+    end
+
+    # generate node name
     def node_name(dinosaur)
       "#{dinosaur.name}\n#{dinosaur.level}"
     end
 
-    # remove duplicate edges
-    def purge_edges!(graph)
-      graph.edges.uniq!
-    end
 end

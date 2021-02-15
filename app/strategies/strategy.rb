@@ -1,4 +1,4 @@
-# Base class for strategies for dinosaurs for pikcng the next move.
+# Base class for strategies for dinosaurs for pikcng the next ability.
 # Possible strategies 1:1
 #   Pick first
 #   Pick random
@@ -8,8 +8,8 @@
 # Possible strategies 4:4
 #   Avoid to die - later for team matches
 # Input needed:
-#   Opponent's health, possible moves, past moves (to determine what that migh likely do next)
-#   Own moves and their cooldown, etc.
-# Picking a move is limited by what moves are available at the time, e.g. limited by delay and cooldown
+#   Opponent's health, possible abilities, past abilities (to determine what that might likely do next)
+#   Own abilities and their cooldown, etc.
+# Picking an ability is limited by what abilities are available at the time, e.g. limited by delay and cooldown
 class Strategy
 end
