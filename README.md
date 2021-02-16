@@ -31,7 +31,10 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
-The other columns
+Priority abilities in Match
+Modifiers :: add to a dinosaur
+DinosaurFactory to build dinos in memory from loading from database, or directly, e.g. pass a set of Ability classes and it instantiates them etc
+The other columns sorting
 ## DONE
 Basic model that shows relationships for Hybrids
 Simple render of graph for lineage of Hybrids

@@ -38,8 +38,12 @@ class Match
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
   def order_dinosaurs
-    retval = @dinosaur1.current_speed > @dinosaur2.current_speed ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
-    retval.shuffle! if @dinosaur1.current_speed == @dinosaur2.current_speed
+    if @dinosaur1.current_speed == @dinosaur2.current_speed
+      retval = @dinosaur1.level > @dinosaur2.level ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
+      retval.shuffle! if @dinosaur1.level == @dinosaur2.level
+    else
+      retval = @dinosaur1.current_speed > @dinosaur2.current_speed ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
+    end
     retval
   end
 

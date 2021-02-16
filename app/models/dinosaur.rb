@@ -10,9 +10,8 @@ class Dinosaur < ApplicationRecord
   # Attributes needed during a fight
   attr_accessor :current_health
   attr_accessor :current_speed
-  attr_accessor :abilities # [Strike, DeceleratingStrike] classes refactor to instances, so they can keep track of their own stats
-  attr_accessor :ability_stats # {'Strike' => {cooldown: 1, delay: 2}}
-  attr_accessor :active_modifiers # {'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
+  attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
+  attr_accessor :active_modifiers # same method, we instantiate modifiers and append them to this list.{'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
 
   # is this a hybrid?
 
@@ -20,7 +19,6 @@ class Dinosaur < ApplicationRecord
   def reset_attributes!
     @current_health = health
     @current_speed = speed
-    ## @ability_stats = (@abilities.map {|ability| {ability.name => {delay: ability.delay, cooldown: 0}}}).reduce(&:merge!)
     self
   end
 
