@@ -253,33 +253,20 @@ class DinosaurTest < ActiveSupport::TestCase
 
   # Testing  ability_stats
   test "Available abilities should be all before tick if none has a delay" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike, Strike])
+    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike.new, Strike.new])
     dinosaur.reset_attributes!
-    assert_equal([DeceleratingStrike, Strike], dinosaur.available_abilities)
+    assert_equal([DeceleratingStrike, Strike], dinosaur.available_abilities.map{|c| c.class})
   end
 
-  test "ability is delay of one should only be available after one tick" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage])
+  test "ability with delay of one should only be available after one tick" do
+    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage.new])
     dinosaur.reset_attributes!
     assert_equal([], dinosaur.available_abilities)
     dinosaur.tick
-    assert_equal([Rampage], dinosaur.available_abilities)
+    assert_equal([Rampage], dinosaur.available_abilities.map{|c| c.class})
     dinosaur.tick
-    assert_equal([Rampage], dinosaur.available_abilities)
+    assert_equal([Rampage], dinosaur.available_abilities.map{|c| c.class})
   end
 
-  test "Using a ability with a cooldown, should trigger cooldown" do
-    d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Strike])
-    d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage])
-    d1.reset_attributes!
-    d2.reset_attributes!
-    d2.tick
-    ability = d2.available_abilities.first.new(d2, d1)
-    ability.execute
-    d2.tick
-    assert_equal([], d2.available_abilities)
-    d2.tick
-    assert_equal([Rampage], d2.available_abilities)
-  end
 
 end

@@ -10,7 +10,7 @@ class Dinosaur < ApplicationRecord
   # Attributes needed during a fight
   attr_accessor :current_health
   attr_accessor :current_speed
-  attr_accessor :abilities # [Strike, DeceleratingStrike] classes, ulitmately also need to load from database
+  attr_accessor :abilities # [Strike, DeceleratingStrike] classes refactor to instances, so they can keep track of their own stats
   attr_accessor :ability_stats # {'Strike' => {cooldown: 1, delay: 2}}
   attr_accessor :active_modifiers # {'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
 
@@ -20,7 +20,7 @@ class Dinosaur < ApplicationRecord
   def reset_attributes!
     @current_health = health
     @current_speed = speed
-    @ability_stats = (@abilities.map {|ability| {ability.name => {delay: ability.delay, cooldown: 0}}}).reduce(&:merge!)
+    ## @ability_stats = (@abilities.map {|ability| {ability.name => {delay: ability.delay, cooldown: 0}}}).reduce(&:merge!)
     self
   end
 
@@ -34,23 +34,20 @@ class Dinosaur < ApplicationRecord
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
   def tick
-    ability_stats.each do |index, values|
-      if values[:delay] > 0
-        values[:delay] -= 1
-      elsif values[:cooldown] > 0
-        values[:cooldown] -= 1
-      end
+    abilities.each do |ability|
+      ability.tick
     end
   end
 
   # available abilities are those where both delay and cooldown is 0
   def available_abilities
-    abilities.select {|ability| ability_stats[ability.name][:delay] == 0 && ability_stats[ability.name][:cooldown] == 0}
+    ## abilities.select {|ability| ability_stats[ability.name][:delay] == 0 && ability_stats[ability.name][:cooldown] == 0}
+    abilities.select {|ability| ability.current_delay <= 0 && ability.current_cooldown == 0}
   end
 
   # Pick the next ability (need to add order dependency or strikes)
-  # returns the class
-  # For now just return the only ability defined later use strategies
+  # returns the instance
+  # For now just return the first available ability defined later use strategies
   def pick_ability
     available_abilities.first
   end

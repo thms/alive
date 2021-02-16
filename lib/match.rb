@@ -6,7 +6,7 @@ require 'logger'
 # Step 4: second ability executed
 # Step 5: expire effects
 # Repeat until one is dead
-# Tick represent the rounds inthe match, to be used to expire effects of abilities on the opponent after the correct time has expired.
+# Tick represent the rounds in the match, to be used to expire effects of abilities on the opponent after the correct time has expired.
 class Match
 
   def initialize(dinosaur1, dinosaur2)
@@ -18,16 +18,18 @@ class Match
 
   def execute
     while @dinosaur1.current_health > 0 && @dinosaur2.current_health > 0
+      # order them by speed, to decide who goes first
       dinosaurs = order_dinosaurs
-      abilities = dinosaurs.map{|d| d.pick_ability.new(d, (dinosaurs - [d]).first)}
-      # TODO: if one more more picked a priority move, redo the shuffling
-      # @logger.info abilities.first.to_s
-      abilities.first.execute
+      # Each picks an ability to use
+      abilities = dinosaurs.map{|d| d.pick_ability}
+      # TODO: if one or more picked a priority move, redo the shuffling
+      # First attacks
+      abilities.first.execute(dinosaurs.first, dinosaurs.last)
       break if dinosaurs.last.current_health <= 0
-      # @logger.info abilities.last.to_s
-      abilities.last.execute
+      # Second attacks
+      abilities.last.execute(dinosaurs.last, dinosaurs.first)
       break if dinosaurs.last.current_health <= 0
-      # TODO: update all the current attributes before the next round 
+      # TODO: update all the current attributes before the next round
 
       tick
     end

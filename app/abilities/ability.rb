@@ -14,45 +14,55 @@
 
 class Ability
 
-  def initialize(attacker, defender)
-    @attacker = attacker
-    @defender = defender
+  # Store the original delay and cooldown as class_attributes, to be set in the derived class
+  class_attribute :initial_delay
+  class_attribute :initial_cooldown
+
+  # Keep track of the current delay and cooldown
+  attr_accessor :current_delay
+  attr_accessor :current_cooldown
+
+  def initialize
+    @current_cooldown = 0 # cooldown only starts after an ability has been used, so initially there is none.
+    @current_delay = self.initial_delay # delay is only until the first use of an ability afterwards it is don't care.
   end
 
-  class_attribute :delay
-  class_attribute :cooldown
+  def tick
+    if @current_delay > 0
+      @current_delay -= 1
+    elsif @current_cooldown > 0
+      @current_cooldown -= 1
+    end
+  end
 
-  def execute
-    update_defender
-    update_attacker
-    damage_defender
-    update_cooldown_attacker
+  def execute(attacker, defender)
+    update_defender(attacker, defender)
+    update_attacker(attacker, defender)
+    damage_defender(attacker, defender)
+    update_cooldown_attacker(attacker, defender)
   end
 
   # update defender's shields, etc.
   # need to push the modifyers onto the defender's list
-  def update_defender
+  def update_defender(attacker, defender)
   end
 
   # update attacker's shields, etc.
   # need to push the modifyers onto the attacker's list
-  def update_attacker
+  def update_attacker(attacker, defender)
   end
 
   # update defender's current_health with the corresponding damage
-  def damage_defender
+  def damage_defender(attacker, defender)
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown
-  # since this is executed before tick, cooldown neds ot be +1
-  def update_cooldown_attacker
-    if self.cooldown > 0
-      @attacker.ability_stats[self.class.name][:cooldown] = self.cooldown + 1
+  # since this is executed before tick, cooldown needs to be +1
+  def update_cooldown_attacker(attacker, defender)
+    if self.initial_cooldown > 0
+      # @attacker.ability_stats[self.class.name][:cooldown] = self.initial_cooldown + 1
+      @current_cooldown = self.initial_cooldown + 1
     end
-  end
-
-  def to_s
-    "#{@attacker.name} #{self.class.name} damage #{@attacker.damage} on health #{@defender.current_health}"
   end
 
 end
