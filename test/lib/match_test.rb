@@ -18,6 +18,16 @@ class MatchTest < ActiveSupport::TestCase
     assert_equal 'd2', result.first.name
   end
 
+  test "Priority move should go first, if only one has it" do
+    skip
+    d1 = Dinosaur.new(health: 1000, damage: 100, speed: 120, level: 20, name: 'd1', abilities: [Strike.new])
+    d2 = Dinosaur.new(health: 1000, damage: 100, speed: 120, level: 20, name: 'd2', abilities: [InstantCharge.new, Strike.new])
+    match = Match.new(d1, d2)
+    match.execute
+    result = match.execute
+    assert_equal 'd2', result.first.name
+  end
+
   test "Equal health and damage, faster should win with simple strikes only" do
     d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd1', abilities: [Strike.new])
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike.new])

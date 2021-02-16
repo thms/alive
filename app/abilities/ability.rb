@@ -18,6 +18,9 @@ class Ability
   class_attribute :initial_delay
   class_attribute :initial_cooldown
 
+  # is this a priority move?
+  class_attribute :is_priority
+
   # Keep track of the current delay and cooldown
   attr_accessor :current_delay
   attr_accessor :current_cooldown

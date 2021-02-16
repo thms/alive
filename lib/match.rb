@@ -22,15 +22,32 @@ class Match
       dinosaurs = order_dinosaurs
       # Each picks an ability to use
       abilities = dinosaurs.map{|d| d.pick_ability}
-      # TODO: if one or more picked a priority move, redo the shuffling
+      # if the second picked priority move and the first one did not, swap them around
+      # in all other cases they are already in the correct order
+      if abilities.last.is_priority && !abilities.first.is_priority
+        dinosaurs.reverse!
+        abilities.reverse!
+      end
       # First attacks
-      abilities.first.execute(dinosaurs.first, dinosaurs.last)
+      if dinosaurs.first.is_stunned
+        @logger.info("#{dinosaurs.first.name} is stunned")
+        dinosaurs.first.is_stunned = false
+      else
+        abilities.first.execute(dinosaurs.first, dinosaurs.last)
+        @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
+      end
       break if dinosaurs.last.current_health <= 0
       # Second attacks
-      abilities.last.execute(dinosaurs.last, dinosaurs.first)
+      if dinosaurs.last.is_stunned
+        @logger.info("#{dinosaurs.last.name} is stunned")
+        dinosaurs.last.is_stunned = false
+      else
+        abilities.last.execute(dinosaurs.last, dinosaurs.first)
+        @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
+      end
       break if dinosaurs.last.current_health <= 0
       # TODO: update all the current attributes before the next round
-
+      # Advance the clock 
       tick
     end
     @dinosaur1.current_health > 0 ? "#{@dinosaur1.name} wins" : "#{@dinosaur2.name} wins"

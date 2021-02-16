@@ -12,13 +12,13 @@ class Dinosaur < ApplicationRecord
   attr_accessor :current_speed
   attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
   attr_accessor :active_modifiers # same method, we instantiate modifiers and append them to this list.{'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
-
-  # is this a hybrid?
+  attr_accessor :is_stunned # when stunned, skip this attack and unstun.
 
   # reset fight attributes, to initial values
   def reset_attributes!
     @current_health = health
     @current_speed = speed
+    @is_stunned = false
     self
   end
 
