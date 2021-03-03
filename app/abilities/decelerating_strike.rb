@@ -8,7 +8,7 @@ class DeceleratingStrike < Ability
   self.is_priority = false
 
   def update_defender(attacker, defender)
-    defender.current_speed = (defender.current_speed * 90 / 100 ).to_int
+    defender.add_modifier(Modifiers::DecreaseSpeed.new(0.1))
   end
 
   def damage_defender(attacker, defender)

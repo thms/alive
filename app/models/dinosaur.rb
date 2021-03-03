@@ -11,29 +11,57 @@ class Dinosaur < ApplicationRecord
   attr_accessor :current_health
   attr_accessor :current_speed
   attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
-  attr_accessor :active_modifiers # same method, we instantiate modifiers and append them to this list.{'SpeedIncrease' => {value: 0.1, turns: 2, attacks: 1}}
+  attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
+  attr_accessor :resistances # {distraction: 100, rending: 50}
 
   # reset fight attributes, to initial values
   def reset_attributes!
     @current_health = health
     @current_speed = speed
     @is_stunned = false
+    @modifiers = []
     self
   end
 
   # calculate current attributes by applying all active modifiers to the Attributes
-  # attributes
-  # speed, distration, shields, damage, critical_chance, dodge
+  # attributes are
+  # speed, distraction, shields, damage, critical_chance, dodge
   def current_attributes
+    attributes = {speed: current_speed}
+    modifiers.each do |modifier|
+      modifier.execute(attributes)
+    end
+    attributes
+  end
+
+
+  # attempt to add a modifiers
+  def add_modifier(modifier)
+    # unconditional at frist, later take resistances into account
+    modifiers << modifier
   end
 
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
   def tick
+    # Count down delay and cooldown of attacks
     abilities.each do |ability|
       ability.tick
+    end
+    # Coutn down modifiers and delete expired ones
+    modifiers.each do |modifier|
+      is_expired = modifier.tick
+      modifiers.delete(modifier) if is_expired
+    end
+  end
+
+  # cleanse all negative effects
+  # it takes effect immeditately, not just at the next tick
+  def cleanse(effect)
+    modifiers.each do |modifier|
+      modifiers.delete(modifier) if modifier.cleanse.include?(effect)
     end
   end
 
