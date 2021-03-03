@@ -1,3 +1,5 @@
+require 'logger'
+
 class Dinosaur < ApplicationRecord
 
   belongs_to :left, class_name: 'Dinosaur', optional: true
@@ -9,18 +11,20 @@ class Dinosaur < ApplicationRecord
 
   # Attributes needed during a fight
   attr_accessor :current_health
-  attr_accessor :current_speed
+  #attr_accessor :current_speed
   attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :resistances # {distraction: 100, rending: 50}
 
   # reset fight attributes, to initial values
+  # also (re)-build the abilities from the classes passed in
   def reset_attributes!
     @current_health = health
     @current_speed = speed
     @is_stunned = false
     @modifiers = []
+    @abilities = @abilities.map{|klass| klass.new} if @abilities.first.class == Class
     self
   end
 
@@ -28,13 +32,16 @@ class Dinosaur < ApplicationRecord
   # attributes are
   # speed, distraction, shields, damage, critical_chance, dodge
   def current_attributes
-    attributes = {speed: current_speed}
+    attributes = {speed: speed}
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
     attributes
   end
 
+  def current_speed
+    current_attributes[:speed]
+  end
 
   # attempt to add a modifiers
   def add_modifier(modifier)
@@ -50,19 +57,16 @@ class Dinosaur < ApplicationRecord
     abilities.each do |ability|
       ability.tick
     end
-    # Coutn down modifiers and delete expired ones
-    modifiers.each do |modifier|
-      is_expired = modifier.tick
-      modifiers.delete(modifier) if is_expired
+    # Count down modifiers and delete expired ones
+    modifiers.delete_if do |modifier|
+      modifier.tick
     end
   end
 
   # cleanse all negative effects
   # it takes effect immeditately, not just at the next tick
   def cleanse(effect)
-    modifiers.each do |modifier|
-      modifiers.delete(modifier) if modifier.cleanse.include?(effect)
-    end
+    modifiers.delete_if{|modifier| modifier.cleanse.include?(effect)}
   end
 
   # available abilities are those where both delay and cooldown is 0

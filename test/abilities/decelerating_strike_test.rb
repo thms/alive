@@ -8,6 +8,9 @@ class DeceleratingStrikeTest < ActiveSupport::TestCase
     DeceleratingStrike.new.execute(attacker, defender)
     assert_equal 900, defender.current_health
     assert_equal 112, defender.current_attributes[:speed]
+    defender.tick
+    assert_equal 112, defender.current_attributes[:speed]
+
   end
 
 end

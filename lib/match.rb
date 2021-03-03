@@ -13,11 +13,12 @@ class Match
     @dinosaur1 = dinosaur1.reset_attributes!
     @dinosaur2 = dinosaur2.reset_attributes!
     @logger = Logger.new(STDOUT)
-    @round = 0
+    @round = 1
   end
 
   def execute
     while @dinosaur1.current_health > 0 && @dinosaur2.current_health > 0
+      @logger.info("Round: #{@round}")
       # order them by speed, to decide who goes first
       dinosaurs = order_dinosaurs
       # Each picks an ability to use
@@ -33,8 +34,8 @@ class Match
         @logger.info("#{dinosaurs.first.name} is stunned")
         dinosaurs.first.is_stunned = false
       else
-        abilities.first.execute(dinosaurs.first, dinosaurs.last)
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
+        abilities.first.execute(dinosaurs.first, dinosaurs.last)
       end
       break if dinosaurs.last.current_health <= 0
       # Second attacks
@@ -42,12 +43,11 @@ class Match
         @logger.info("#{dinosaurs.last.name} is stunned")
         dinosaurs.last.is_stunned = false
       else
-        abilities.last.execute(dinosaurs.last, dinosaurs.first)
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
+        abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
       break if dinosaurs.last.current_health <= 0
-      # TODO: update all the current attributes before the next round
-      # Advance the clock 
+      # Advance the clock
       tick
     end
     @dinosaur1.current_health > 0 ? "#{@dinosaur1.name} wins" : "#{@dinosaur2.name} wins"

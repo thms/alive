@@ -7,6 +7,8 @@ class ModiferTest < ActiveSupport::TestCase
     dinosaur.add_modifier(Modifiers::DecreaseSpeed.new(0.1))
     assert_equal 117, dinosaur.current_attributes[:speed]
     dinosaur.tick
+    assert_equal 117, dinosaur.current_attributes[:speed]
+    dinosaur.tick
     assert_equal 130, dinosaur.current_attributes[:speed]
   end
 

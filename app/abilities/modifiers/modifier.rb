@@ -24,7 +24,7 @@ class Modifiers::Modifier
   # returns true if it should be deleted.
   def tick
     @current_turns -=1
-    if @current_turns == 0
+    if @current_turns < 0
       # remove from the list of active modifiers of the current dinosaur
       return true
     else
@@ -36,5 +36,5 @@ class Modifiers::Modifier
   def execute(attributes)
     attributes
   end
-  
+
 end

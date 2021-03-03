@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_19_153842) do
+ActiveRecord::Schema.define(version: 2021_03_03_120548) do
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_02_19_153842) do
     t.integer "right_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "ability_classes", default: "", null: false
+    t.string "abilities", default: "", null: false
   end
 
 end

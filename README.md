@@ -31,10 +31,12 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
-Priority abilities in Match
-Modifiers :: add to a dinosaur
-DinosaurFactory to build dinos in memory from loading from database, or directly, e.g. pass a set of Ability classes and it instantiates them etc
-The other columns sorting
+DinosaurFactory to build dinos in memory from loading from database, or directly, e.g. pass a set of Ability classes and it instantiates them etc: use the resest_attributes
+distraction
+shields
+armour
+doge & cloak
+
 ## DONE
 Basic model that shows relationships for Hybrids
 Simple render of graph for lineage of Hybrids
@@ -43,6 +45,9 @@ Cost to get dinosaur to next level in terms of coins and DNA to collect (broken 
 Cost to get dinosaur to level x
 Cost to create hybrid, given current ingredients, so we can do the cheapest ones first.
 Sort index by column headers (objects)
+Priority abilities in Match
+Modifiers :: add to a dinosaur
+The other columns sorting
 
 
 ## How To

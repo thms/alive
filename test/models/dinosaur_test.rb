@@ -253,13 +253,13 @@ class DinosaurTest < ActiveSupport::TestCase
 
   # Testing  ability_stats
   test "Available abilities should be all before tick if none has a delay" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike.new, Strike.new])
+    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike, Strike])
     dinosaur.reset_attributes!
     assert_equal([DeceleratingStrike, Strike], dinosaur.available_abilities.map{|c| c.class})
   end
 
   test "ability with delay of one should only be available after one tick" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage.new])
+    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage])
     dinosaur.reset_attributes!
     assert_equal([], dinosaur.available_abilities)
     dinosaur.tick
