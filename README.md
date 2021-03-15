@@ -31,11 +31,13 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
-DinosaurFactory to build dinos in memory from loading from database, or directly, e.g. pass a set of Ability classes and it instantiates them etc: use the resest_attributes
 distraction
 shields
 armour
-doge & cloak
+dodge & cloak
+more abilities
+strategies
+
 
 ## DONE
 Basic model that shows relationships for Hybrids
