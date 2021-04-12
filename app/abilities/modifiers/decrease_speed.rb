@@ -2,6 +2,8 @@ class Modifiers::DecreaseSpeed < Modifiers::Modifier
 
   self.attacks = 1
   self.turns = 1
+  self.is_defense = true
+  self.is_attack = !self.is_defense
   self.cleanse = [:all]
 
   def initialize(decrease)

@@ -1,6 +1,8 @@
 class Modifiers::Distract < Modifiers::Modifier
 
   self.cleanse = [:all, :distraction]
+  self.is_defense = true
+  self.is_attack = !self.is_defense
 
   def initialize(distraction, turns, attacks)
     @value = distraction

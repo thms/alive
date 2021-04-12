@@ -50,6 +50,20 @@ class Dinosaur < ApplicationRecord
     modifiers << modifier
   end
 
+  # for each attack modifier reduce count and delete if depleted
+  def tick_attack_count
+    modifiers.delete_if do |modifier|
+      modifier.is_attack && modifier.tick_attacks
+    end
+  end
+
+  # for each defense modifier reduce count and delete if depleted
+  def tick_defense_count
+    modifiers.delete_if do |modifier|
+      modifier.is_defense && modifier.tick_attacks
+    end
+  end
+
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates

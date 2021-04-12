@@ -63,7 +63,7 @@ class Ability
 
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
-    # Bail out if there is no defender (testing) or there is no damage to be done.
+    # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return if damage_multiplier == 0 || defender.nil?
     # attacker's original damage
     damage = attacker.damage * damage_multiplier
@@ -79,6 +79,9 @@ class Ability
     defender.current_health -= damage
     # round it
     defender.current_health = defender.current_health.to_i
+    # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
+    attacker.tick_attack_count
+    defender.tick_defense_count
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown

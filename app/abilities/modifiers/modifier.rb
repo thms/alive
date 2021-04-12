@@ -10,6 +10,8 @@ class Modifiers::Modifier
   class_attribute :probability # { in float, 0..1.0}
   class_attribute :cleanse # [:all, :dot]
   class_attribute :destroy # [:shields]
+  class_attribute :is_attack # modifies attackers attack, e.g. increase chance of critical hit
+  class_attribute :is_defense # modifies defenders defenses, e.g. shields
 
   # attributes to keep keep track for each instance of the ticking Clock
   attr_accessor :current_turns
@@ -22,7 +24,7 @@ class Modifiers::Modifier
   end
 
   # Clock advances after each round
-  # returns true if it should be deleted.
+  # returns true if the modifier should be deleted.
   def tick
     @current_turns -=1
     if @current_turns < 0
@@ -33,6 +35,17 @@ class Modifiers::Modifier
     end
   end
 
+  # Deplete after each attack
+  # returns true if the modifier should be deleted.
+  def tick_attacks
+    @current_attacks -=1
+    if @current_attacks < 0
+      # remove from the list of active modifiers of the current dinosaur
+      return true
+    else
+      return false
+    end
+  end
 
   def execute(attributes)
     attributes
