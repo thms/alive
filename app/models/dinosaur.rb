@@ -31,8 +31,9 @@ class Dinosaur < ApplicationRecord
   # calculate current attributes by applying all active modifiers to the Attributes
   # attributes are
   # speed, distraction, shields, damage, critical_chance, dodge
+  # shields: 0 .. 100
   def current_attributes
-    attributes = {speed: speed}
+    attributes = {speed: speed, shields: 0}
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
@@ -67,6 +68,15 @@ class Dinosaur < ApplicationRecord
   # it takes effect immeditately, not just at the next tick
   def cleanse(effect)
     modifiers.delete_if{|modifier| modifier.cleanse.include?(effect)}
+  end
+
+  # destroy the shields
+  def destroy_shields
+    modifiers.delete_if{|modifier| modifier.destroy.include?(:shields)}
+  end
+
+  # remove taunt
+  def remove_taunt
   end
 
   # available abilities are those where both delay and cooldown is 0

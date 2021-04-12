@@ -57,7 +57,7 @@ class Ability
   end
 
   # update attacker's shields, etc.
-  # need to push the modifyers onto the attacker's list
+  # need to push the modifiers onto the attacker's list
   def update_attacker(attacker, defender)
   end
 
@@ -71,6 +71,8 @@ class Ability
 
     # apply critical chance
     # filter through defender's modifiers (dogde, cloak, etc.)
+    # filter through defender's shields
+    damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
     # filter through defender's armor if any and the strike does not bypass armor
     damage = (damage * (100 - defender.armor) / 100).to_i unless bypass.include?(:armor)
     # update defender's health

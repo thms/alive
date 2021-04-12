@@ -9,6 +9,7 @@ class Modifiers::Modifier
   class_attribute :source # {:self, :opponent}
   class_attribute :probability # { in float, 0..1.0}
   class_attribute :cleanse # [:all, :dot]
+  class_attribute :destroy # [:shields]
 
   # attributes to keep keep track for each instance of the ticking Clock
   attr_accessor :current_turns
