@@ -5,9 +5,7 @@ class Rampage < Ability
   self.initial_cooldown = 1
   self.initial_delay = 1
   self.is_priority = false
-  
-  def damage_defender(attacker, defender)
-    defender.current_health -= 2 * attacker.damage
-  end
+  self.damage_multiplier = 2
+  self.bypass = []
 
 end

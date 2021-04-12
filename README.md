@@ -21,7 +21,7 @@ Total cost of dinosaur to date, in DNA and coins
 Likelihood to get dinosaur to level x, given average DNA over time (based on total cost for dinosaur to date in DNA and coins)
 
 ## Questions for Fighting
-Which dinosaur is more like to win in a given fight?
+Which dinosaur is more likely to win in a given fight?
 Which team is more likely to win in a given fight?
 
 
@@ -68,7 +68,7 @@ Trykosaurus 89%
 Indominus Rex 2 89%
 Tenontorex 88%
 Ardontosaurus 88%
-Brontoelasmus 87%
+Bronthoelasmus 87%
 Carnotarkus 85%
 Erlidominus 84%
 Utarinex 84%
@@ -77,9 +77,9 @@ Quetzorion 83%
 Utasinoraptor 83%
 Diorajasaurus 82%
 Phorusaura 83%
-Corboceratops 83%
+Carboceratops 83%
 
 
 ## Strategy
 Geminitan and Ardentismaxima: use for closing out fights, rather than for opening, since they are hard to kill, but may not have much left afterwards
-Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fury plus definite rampage or just defnite rampage.
+Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fury plus definite rampage or just definite rampage.

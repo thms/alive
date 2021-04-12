@@ -21,6 +21,12 @@ class Ability
   # is this a priority move?
   class_attribute :is_priority
 
+  # what does this bypass?
+  class_attribute :bypass # [:armour, :dodge, :cloak]
+
+  # damage multiplier for this move: attacker.damage * multiplier, will be applied.
+  class_attribute :damage_multiplier
+
   # Keep track of the current delay and cooldown
   attr_accessor :current_delay
   attr_accessor :current_cooldown
@@ -57,6 +63,17 @@ class Ability
 
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
+    # Bail out if there is no defender (testing) or there is no damage to be done.
+    return if damage_multiplier == 0 || defender.nil?
+    # attacker's original damage
+    damage = attacker.damage * damage_multiplier
+    # filter through attacker's modifiers (distraction, increase)
+
+    # apply critical chance
+    # filter through defender's modifiers (dogde, cloak, etc.)
+    # filter through defender's natural defenses (armour)
+    # update defender's health
+    defender.current_health -= damage
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown

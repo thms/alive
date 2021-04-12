@@ -7,7 +7,7 @@ class Modifiers::Modifier
   class_attribute :turns # number of turns this is active
   class_attribute :attacks # number of attacks this is active
   class_attribute :source # {:self, :opponent}
-  class_attribute :probability # { in flloat, 0..1.0}
+  class_attribute :probability # { in float, 0..1.0}
   class_attribute :cleanse # [:all, :dot]
 
   # attributes to keep keep track for each instance of the ticking Clock

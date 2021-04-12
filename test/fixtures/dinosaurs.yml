@@ -6,6 +6,8 @@ one:
   level: 1
   rarity: common
   health: 1
+  armour: 0
+  critical_chance: 5
   speed: 1
   damage: 1
   dna: 10
@@ -20,6 +22,8 @@ two:
   level: 5
   rarity: rare
   health: 1
+  armour: 0
+  critical_chance: 5
   speed: 1
   damage: 1
   dna: 1
@@ -34,6 +38,8 @@ three:
   level: 11
   rarity: epic
   health: 1
+  armour: 0
+  critical_chance: 5
   speed: 1
   damage: 1
   dna: 1
@@ -48,6 +54,8 @@ four:
   level: 16
   rarity: legendary
   health: 1
+  armour: 0
+  critical_chance: 5
   speed: 1
   damage: 1
   dna: 1
