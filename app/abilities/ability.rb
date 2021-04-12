@@ -22,7 +22,7 @@ class Ability
   class_attribute :is_priority
 
   # what does this bypass?
-  class_attribute :bypass # [:armour, :dodge, :cloak]
+  class_attribute :bypass # [:armor, :dodge, :cloak]
 
   # damage multiplier for this move: attacker.damage * multiplier, will be applied.
   class_attribute :damage_multiplier
@@ -71,9 +71,12 @@ class Ability
 
     # apply critical chance
     # filter through defender's modifiers (dogde, cloak, etc.)
-    # filter through defender's natural defenses (armour)
+    # filter through defender's armor if any and the strike does not bypass armor
+    damage = (damage * (100 - defender.armor) / 100).to_i unless bypass.include?(:armor)
     # update defender's health
     defender.current_health -= damage
+    # round it
+    defender.current_health = defender.current_health.to_i
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown

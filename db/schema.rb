@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_110644) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "abilities", default: "", null: false
-    t.integer "armour", default: 0, null: false
+    t.integer "armor", default: 0, null: false
     t.integer "critical_chance", default: 0, null: false
   end
 

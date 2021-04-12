@@ -33,7 +33,7 @@ Fusions: dna needed for one fusion for each level of rarity
 ## TODO
 distraction
 shields
-armour
+armor
 dodge & cloak
 more abilities
 strategies

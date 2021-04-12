@@ -17,7 +17,7 @@ class DinosaursControllerTest < ActionDispatch::IntegrationTest
 
   test "should create dinosaur" do
     assert_difference('Dinosaur.count') do
-      post dinosaurs_url, params: { dinosaur: { damage: @dinosaur.damage, health: @dinosaur.health, left: @dinosaur.left, level: @dinosaur.level, name: @dinosaur.name, rarity: @dinosaur.rarity, right: @dinosaur.right, speed: @dinosaur.speed, armour: @dinosaur.armour, critical_chance: @dinosaur.critical_chance } }
+      post dinosaurs_url, params: { dinosaur: { damage: @dinosaur.damage, health: @dinosaur.health, left: @dinosaur.left, level: @dinosaur.level, name: @dinosaur.name, rarity: @dinosaur.rarity, right: @dinosaur.right, speed: @dinosaur.speed, armor: @dinosaur.armor, critical_chance: @dinosaur.critical_chance } }
     end
 
     assert_redirected_to dinosaur_url(Dinosaur.last)
@@ -34,7 +34,7 @@ class DinosaursControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update dinosaur" do
-    patch dinosaur_url(@dinosaur), params: { dinosaur: { damage: @dinosaur.damage, health: @dinosaur.health, left: @dinosaur.left, level: @dinosaur.level, name: @dinosaur.name, rarity: @dinosaur.rarity, right: @dinosaur.right, speed: @dinosaur.speed, armour: @dinosaur.armour, critical_chance: @dinosaur.critical_chance } }
+    patch dinosaur_url(@dinosaur), params: { dinosaur: { damage: @dinosaur.damage, health: @dinosaur.health, left: @dinosaur.left, level: @dinosaur.level, name: @dinosaur.name, rarity: @dinosaur.rarity, right: @dinosaur.right, speed: @dinosaur.speed, armor: @dinosaur.armor, critical_chance: @dinosaur.critical_chance } }
     assert_redirected_to dinosaur_url(@dinosaur)
   end
 
