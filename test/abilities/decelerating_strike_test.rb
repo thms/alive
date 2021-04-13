@@ -7,9 +7,9 @@ class DeceleratingStrikeTest < ActiveSupport::TestCase
     defender = Dinosaur.new(health: 1000, speed: 125, name: 'defender', abilities: []).reset_attributes!
     DeceleratingStrike.new.execute(attacker, defender)
     assert_equal 900, defender.current_health
-    assert_equal 112, defender.current_attributes[:speed]
+    assert_equal 112, defender.current_speed
     defender.tick
-    assert_equal 112, defender.current_attributes[:speed]
+    assert_equal 112, defender.current_speed
 
   end
 

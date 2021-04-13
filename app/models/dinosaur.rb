@@ -31,22 +31,24 @@ class Dinosaur < ApplicationRecord
   # calculate current attributes by applying all active modifiers to the Attributes
   # attributes are
   # speed, distraction, shields, damage, critical_chance, dodge
-  # shields: 0 .. 100
+  # shields: 0 .. 100 (modification in percent)
+  # speed: 0 .. 200 (modifers in percent)
   def current_attributes
-    attributes = {speed: speed, shields: 0}
+    attributes = {speed: 100, shields: 0}
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
     attributes
   end
 
+  # TOdo: cap at zero, to prevent it from going negative?
   def current_speed
-    current_attributes[:speed]
+    (speed * current_attributes[:speed] / 100).to_i
   end
 
   # attempt to add a modifiers
   def add_modifier(modifier)
-    # unconditional at frist, later take resistances into account
+    # unconditional at frist, TODO later take resistances into account
     modifiers << modifier
   end
 
