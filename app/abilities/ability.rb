@@ -67,7 +67,7 @@ class Ability
     return if damage_multiplier == 0 || defender.nil?
     # attacker's original damage
     damage = attacker.damage * damage_multiplier
-    # filter through attacker's modifiers (distraction, increase)
+    # filter through attacker's modifiers (distraction, increase attack)
 
     # apply critical chance
     # filter through defender's modifiers (dogde, cloak, etc.)
@@ -76,9 +76,7 @@ class Ability
     # filter through defender's armor if any and the strike does not bypass armor
     damage = (damage * (100 - defender.armor) / 100).to_i unless bypass.include?(:armor)
     # update defender's health
-    defender.current_health -= damage
-    # round it
-    defender.current_health = defender.current_health.to_i
+    defender.current_health = (defender.current_health - damage).to_i
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
     attacker.tick_attack_count
     defender.tick_defense_count

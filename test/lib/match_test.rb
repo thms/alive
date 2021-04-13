@@ -58,12 +58,12 @@ class MatchTest < ActiveSupport::TestCase
     assert_equal "d1 wins", result
   end
 
-  test "Equal health, damage, and speed decelerating strike against cleansing strike should be a tossup " do
-    d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd1', abilities: [DeceleratingStrike])
-    d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [CleansingStrike])
-    match = Match.new(d1, d2)
-    result = match.execute
-    assert_equal "d1 wins", result
-  end
+  # test "Equal health, damage, and speed decelerating strike against cleansing strike should be a 66/33 percent " do
+  #   d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd1', abilities: [DeceleratingStrike])
+  #   d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [CleansingStrike])
+  #   match = Match.new(d1, d2)
+  #   result = match.execute
+  #   assert_equal "d1 wins", result
+  # end
 
 end

@@ -31,12 +31,15 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
+
+Load seeds from dinodex.json
 distraction
-shields
-armor
 dodge & cloak
-more abilities
+all abilities
 strategies
+Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
+Refactor model to allow swap-in, counter and escape abilities
+Include counter attacks in rounds
 
 
 ## DONE
@@ -50,6 +53,18 @@ Sort index by column headers (objects)
 Priority abilities in Match
 Modifiers :: add to a dinosaur
 The other columns sorting
+shields
+armor
+
+
+# get the dinodex from here
+https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
+
+## Boosts
+
+Each level increases health, Damage by 5%
+Critical hit: +25% damage
+
 
 
 ## How To

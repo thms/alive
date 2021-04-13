@@ -91,6 +91,11 @@ class Dinosaur < ApplicationRecord
     modifiers.delete_if{|modifier| modifier.destroy.include?(:shields)}
   end
 
+  # remove all positive effects
+  def nullify
+    modifiers.delete_if{|modifier| modifier.is_positive}
+  end
+
   # remove taunt
   def remove_taunt
   end

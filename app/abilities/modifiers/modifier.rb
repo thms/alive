@@ -12,6 +12,7 @@ class Modifiers::Modifier
   class_attribute :destroy # [:shields]
   class_attribute :is_attack # modifies attackers attack, e.g. increase chance of critical hit
   class_attribute :is_defense # modifies defenders defenses, e.g. shields
+  class_attribute :is_positive # if true, boosts the dinosaur, if negative hamoers it
 
   # attributes to keep keep track for each instance of the ticking Clock
   attr_accessor :current_turns

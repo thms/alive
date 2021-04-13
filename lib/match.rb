@@ -19,6 +19,8 @@ class Match
   def execute
     while @dinosaur1.current_health > 0 && @dinosaur2.current_health > 0
       @logger.info("Round: #{@round}")
+      @logger.info("#{@dinosaur1.name}: #{@dinosaur1.current_speed}")
+      @logger.info("#{@dinosaur2.name}: #{@dinosaur2.current_speed}")
       # order them by speed, to decide who goes first
       dinosaurs = order_dinosaurs
       # Each picks an ability to use

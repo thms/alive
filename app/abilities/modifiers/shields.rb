@@ -3,6 +3,7 @@ class Modifiers::Shields < Modifiers::Modifier
   self.is_defense = true
   self.is_attack = !self.is_defense
   self.destroy = [:shields]
+  self.is_positive = true
 
   def initialize(strength, turns, attacks)
     @value = strength
