@@ -3,7 +3,7 @@
 # possibly update the templates
 
 require 'json'
-require 'rails/generators'
+require 'generators/ability/ability_generator'
 
 file = File.read(Rails.root.join('db', './dinodex.json'))
 data =  JSON.parse(file)
