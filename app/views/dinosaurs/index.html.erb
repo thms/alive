@@ -16,6 +16,7 @@
       <th><%= sortable "speed" %></th>
       <th><%= sortable "damage" %></th>
       <th><%= sortable "DNA" %></th>
+      <th>Abilities</th>
       <th>Coins to Create</th>
       <th>DNA to Create</th>
       <th>Left</th>
@@ -37,6 +38,7 @@
         <td><%= dinosaur.speed %></td>
         <td><%= dinosaur.damage %></td>
         <td><%= dinosaur.dna %></td>
+        <td><%= dinosaur.abilities %></td>
         <td><%= dinosaur.cost_to_create(:coins) %></td>
         <td><%= dinosaur.cost_to_create(:dna) %></td>
         <td><%= dinosaur.left.name rescue nil %></td>

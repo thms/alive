@@ -10,7 +10,10 @@ data['pageProps']['creatures'].each do |creature|
   slug = creature['name']
   name = (creature['name'].split('_').map {|word| word.camelize}).join(' ')
   rarity = creature['rarity']
-  ability_classes = (creature['moves'].map {|ability| ability.camelize}).join(',')
+  abilities = (creature['moves'].map {|ability| ability.camelize.constantize})
+  abilities_counter = (creature['moves_counter'].map {|ability| ability.camelize.constantize})
+  abilities_swap_in = (creature['moves_swap_in'].map {|ability| ability.camelize.constantize})
+  abilities_on_escape = (creature['moves_on_escape'].map {|ability| ability.camelize.constantize})
   health = creature['health']
   damage = creature['damage']
   speed = creature['speed']
@@ -27,16 +30,18 @@ data['pageProps']['creatures'].each do |creature|
     critical_chance: critical_chance,
     speed: speed,
     dna: 0,
-    abilities: ability_classes,
+    abilities: abilities,
+    abilities_counter: abilities_counter,
+    abilities_swap_in: abilities_swap_in,
+    abilities_on_escape: abilities_on_escape,
     left_id: nil,
     right_id: nil
   })
 end
 
-# Establish links for hybrids 
+# Establish links for hybrids
 data['pageProps']['creatures'].each do |creature|
   next if creature['ingredients'].empty?
-  puts creature['name']
   left_id  = Dinosaur.find_by_slug(creature['ingredients'].first).id
   right_id = Dinosaur.find_by_slug(creature['ingredients'].last).id
   d = Dinosaur.find_by_slug(creature['name'])

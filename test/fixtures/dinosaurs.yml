@@ -3,6 +3,7 @@
 one:
   id: 1
   name: one
+  slug: one
   level: 1
   rarity: common
   health: 1
@@ -19,6 +20,7 @@ one:
 two:
   id: 2
   name: two
+  slug: two
   level: 5
   rarity: rare
   health: 1
@@ -35,6 +37,7 @@ two:
 three:
   id: 3
   name: three
+  slug: three
   level: 11
   rarity: epic
   health: 1
@@ -51,6 +54,7 @@ three:
 four:
   id: 4
   name: four
+  slug: four
   level: 16
   rarity: legendary
   health: 1

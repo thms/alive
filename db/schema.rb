@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_092619) do
+ActiveRecord::Schema.define(version: 2021_04_14_095548) do
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -28,6 +28,9 @@ ActiveRecord::Schema.define(version: 2021_04_14_092619) do
     t.integer "armor", default: 0, null: false
     t.integer "critical_chance", default: 0, null: false
     t.string "slug", default: "", null: false
+    t.string "abilities_swap_in", default: "", null: false
+    t.string "abilities_counter", default: "", null: false
+    t.string "abilities_on_escape", default: "", null: false
   end
 
 end

@@ -5,14 +5,17 @@ class Dinosaur < ApplicationRecord
   belongs_to :left, class_name: 'Dinosaur', optional: true
   belongs_to :right, class_name: 'Dinosaur', optional: true
 
+  # Storage format for abilities
+  serialize :abilities
+
   # Filtering
   scope :filter_by_rarity, -> (rarity) { where rarity: rarity }
   scope :order_by_dna, -> (direction) { order dna: direction }
 
   # Attributes needed during a fight
   attr_accessor :current_health
-  #attr_accessor :current_speed
-  attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
+  # attr_accessor :current_speed
+  # attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :resistances # {distraction: 100, rending: 50}
@@ -24,7 +27,8 @@ class Dinosaur < ApplicationRecord
     @current_speed = speed
     @is_stunned = false
     @modifiers = []
-    @abilities = @abilities.map{|klass| klass.new} if @abilities.first.class == Class
+    # Instantiate the abilities
+    self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
     self
   end
 
