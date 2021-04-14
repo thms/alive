@@ -31,15 +31,15 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
-
-Load seeds from dinodex.json
 distraction
 dodge & cloak
 all abilities
 strategies
+Resistances
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 Refactor model to allow swap-in, counter and escape abilities
 Include counter attacks in rounds
+On escape abilities get triggered by the attempt to swap out from self or other
 
 
 ## DONE
@@ -55,6 +55,7 @@ Modifiers :: add to a dinosaur
 The other columns sorting
 shields
 armor
+Load seeds from dinodex.json
 
 
 # get the dinodex from here
