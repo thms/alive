@@ -12,7 +12,8 @@ class DinosaursController < ApplicationController
     # @dinosaurs = @dinosaurs.order_by_dna(params[:dna]) if params[:dna].present?
     @dinosaurs = @dinosaurs.order(sort_column + " " + sort_direction)
     g = Graphviz::Graph.new
-    @dinosaurs.map {|dinosaur| add_dinosaur_to_graph(g, dinosaur)}
+    # Disable for now, this blows up for 245 dinosaurs, and wold not be readable on the page anyway
+    # @dinosaurs.map {|dinosaur| add_dinosaur_to_graph(g, dinosaur)}
     @graph = Graphviz::output(g, format: 'svg')
   end
 

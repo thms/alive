@@ -1,13 +1,15 @@
 module Constants
 
-RARITIES = [:common, :rare, :epic, :legendary, :unique]
-COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green'}
+# https://jurassic-world-alive.fandom.com/wiki/Hybrids
+RARITIES = [:common, :rare, :epic, :legendary, :unique, :apex]
+COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green', apex: 'black'}
 STARTING_LEVELS = {
   common: 1,
   rare: 6,
   epic: 11,
   legendary: 16,
-  unique: 21
+  unique: 21,
+  apex: 26
 }
 MAX_LEVEL = 30
 
@@ -17,14 +19,15 @@ DNA_TO_UNLOCK = {
   rare: 100,
   epic: 150,
   legendary: 200,
-  unique: 250
+  unique: 250,
+  apex: 300
 }
 # Cost of fusion depends only on the rarity of the creature that results from the fusion
 COINS_TO_FUSE = {
   rare: 20,
   epic: 100,
   legendary: 200,
-  unique: 1000
+  unique: 1000,
 }
 # DNA required for one fusion outer index is starting level and inner is target level
 DNA_TO_FUSE = {
@@ -265,6 +268,38 @@ DNA_TO_EVOLVE = {
     400,
     500,
     750
+  ],
+  apex: [
+    DNA_TO_UNLOCK[:apex],
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    100,
+    150,
+    200,
+    250   
   ]
 }
 end
