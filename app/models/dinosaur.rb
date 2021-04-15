@@ -7,6 +7,12 @@ class Dinosaur < ApplicationRecord
 
   # Storage format for abilities
   serialize :abilities
+  serialize :abilities_swap_in
+  serialize :abilities_counter
+  serialize :abilities_on_escape
+
+  # Storage format for resistances
+  serialize :resistances
 
   # Filtering
   scope :filter_by_rarity, -> (rarity) { where rarity: rarity }
@@ -18,7 +24,6 @@ class Dinosaur < ApplicationRecord
   # attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
-  attr_accessor :resistances # {distraction: 100, rending: 50}
   attr_accessor :strategy
 
   # reset fight attributes, to initial values

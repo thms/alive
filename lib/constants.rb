@@ -1,6 +1,8 @@
 module Constants
 
 # https://jurassic-world-alive.fandom.com/wiki/Hybrids
+
+RESISTANCES = [:critical_reduction, :damage_over_time, :distraction, :rend, :speed_decrease, :stun, :swap_prevention, :taunt, :vulnerable]
 RARITIES = [:common, :rare, :epic, :legendary, :unique, :apex]
 COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green', apex: 'black'}
 STARTING_LEVELS = {
@@ -299,7 +301,7 @@ DNA_TO_EVOLVE = {
     100,
     150,
     200,
-    250   
+    250
   ]
 }
 end

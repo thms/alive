@@ -40,6 +40,8 @@ Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, et
 Refactor model to allow swap-in, counter and escape abilities
 Include counter attacks in rounds
 On escape abilities get triggered by the attempt to swap out from self or other
+Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
+Think about using document style db, rather than relational for this project, might make things simpler.
 
 
 ## DONE

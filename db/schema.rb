@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_14_095548) do
+ActiveRecord::Schema.define(version: 2021_04_15_141030) do
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 2021_04_14_095548) do
     t.string "abilities_swap_in", default: "", null: false
     t.string "abilities_counter", default: "", null: false
     t.string "abilities_on_escape", default: "", null: false
+    t.string "resistances", default: "", null: false
   end
 
 end
