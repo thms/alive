@@ -39,11 +39,11 @@ class MatchupsController < ApplicationController
       end
     end
 
-    File.open("graph.dot", "w") do |output|
+    File.open("tmp/graph.dot", "w") do |output|
       g.dump_graph(output)
     end
-    `dot -T svg graph.dot > graph.svg`
-    @graph = File.read('graph.svg')
+    `dot -T svg tmp/graph.dot > tmp/graph.svg`
+    @graph = File.read('tmp/graph.svg')
     # the normal ways has massive issues, killing the system (no clue why)
     #@graph = Graphviz::output(g, format: 'svg')
   end
