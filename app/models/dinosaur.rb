@@ -19,6 +19,7 @@ class Dinosaur < ApplicationRecord
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :resistances # {distraction: 100, rending: 50}
+  attr_accessor :strategy
 
   # reset fight attributes, to initial values
   # also (re)-build the abilities from the classes passed in
@@ -114,7 +115,7 @@ class Dinosaur < ApplicationRecord
   # returns the instance
   # For now just return the first available ability defined later use strategies
   def pick_ability
-    available_abilities.first
+    strategy.next_move(available_abilities)
   end
 
   # returns array of all possible hybrids one level up

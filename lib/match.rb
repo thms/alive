@@ -14,6 +14,7 @@ class Match
     @dinosaur2 = dinosaur2.reset_attributes!
     @logger = Logger.new(STDOUT)
     @round = 1
+    @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
   end
 
   def execute
@@ -34,25 +35,32 @@ class Match
       # First attacks
       if dinosaurs.first.is_stunned
         @logger.info("#{dinosaurs.first.name} is stunned")
+        @log << "#{dinosaurs.first.name}::stunned"
         dinosaurs.first.is_stunned = false
       else
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
+        @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
         abilities.first.execute(dinosaurs.first, dinosaurs.last)
       end
       break if dinosaurs.last.current_health <= 0
       # Second attacks
       if dinosaurs.last.is_stunned
         @logger.info("#{dinosaurs.last.name} is stunned")
+        @log << "#{dinosaurs.last.name}::stunned"
         dinosaurs.last.is_stunned = false
       else
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
+        @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
         abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
-      break if dinosaurs.last.current_health <= 0
+      break if dinosaurs.first.current_health <= 0
       # Advance the clock
       tick
     end
-    @dinosaur1.current_health > 0 ? "#{@dinosaur1.name} wins" : "#{@dinosaur2.name} wins"
+    winner = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
+    # write the winner log entry
+    @log << winner
+    {winner: winner, log: @log}
   end
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
