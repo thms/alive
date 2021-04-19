@@ -34,15 +34,19 @@ Fusions: dna needed for one fusion for each level of rarity
 distraction
 dodge & cloak
 all abilities
-strategies
+critical chance
+strategies refactor: use name space, base class, and the ability to look into the match and both current Dinosaurs
+Strategies: learn the best strategy through unsupervised learning
 Resistances
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
-Refactor model to allow swap-in, counter and escape abilities
 Include counter attacks in rounds
-On escape abilities get triggered by the attempt to swap out from self or other
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Think about using document style db, rather than relational for this project, might make things simpler.
 Add Boosts
+4:4 matches
+On escape abilities get triggered by the attempt to swap out from self or other
+Swap in abilities activation for 4:4 matches
+
 
 ## DONE
 Basic model that shows relationships for Hybrids
@@ -58,6 +62,7 @@ The other columns sorting
 shields
 armor
 Load seeds from dinodex.json
+Refactor model to allow swap-in, counter and escape abilities
 
 
 # get the dinodex from here
