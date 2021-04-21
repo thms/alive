@@ -12,7 +12,7 @@ class DistractingStrike < Ability
   self.bypass = []
 
   def update_defender(attacker, defender)
-    defender.add_modifier(Modifiers::Distract.new(distraction: 0.5, attacks: 4, turns: 2))
+    defender.add_modifier(Modifiers::Distract.new(50, 2, 4))
   end
 
 end

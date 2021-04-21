@@ -44,7 +44,7 @@ class Dinosaur < ApplicationRecord
   # shields: 0 .. 100 (modification in percent)
   # speed: 0 .. 200 (modifers in percent)
   def current_attributes
-    attributes = {speed: 100, shields: 0}
+    attributes = {speed: 100, shields: 0 }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end

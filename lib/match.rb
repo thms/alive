@@ -4,7 +4,7 @@ require 'logger'
 # Step 2: each dinosaur picks an ability
 # Step 3: first ability executed
 # Step 4: second ability executed
-# Step 5: expire effects
+# Step 5: expire modifiers
 # Repeat until one is dead
 # Tick represent the rounds in the match, to be used to expire effects of abilities on the opponent after the correct time has expired.
 class Match

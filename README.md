@@ -43,9 +43,11 @@ Include counter attacks in rounds
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Think about using document style db, rather than relational for this project, might make things simpler.
 Add Boosts
+Matchups: allow picking dinosaurs from the UI, tweak their strength and then run th match
 4:4 matches
 On escape abilities get triggered by the attempt to swap out from self or other
 Swap in abilities activation for 4:4 matches
+Use forward looking evaluation as a strategy
 
 
 ## DONE
