@@ -13,7 +13,7 @@
  *= require_tree .
  *= require_self
  */
- table {border-collapse: collapse;}
-td {
-  border: 1px solid #ddd;
-}
+@import "materialize";
+@import "https://fonts.googleapis.com/icon?family=Material+Icons";
+table {border-collapse: collapse;}
+td { border: 1px solid #ddd;}

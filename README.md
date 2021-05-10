@@ -35,7 +35,7 @@ distraction
 dodge & cloak
 all abilities
 critical chance
-strategies refactor: use name space, base class, and the ability to look into the match and both current Dinosaurs
+strategies refactor: use name space, base class, and the ability to look into the match and both Dinosaurs
 Strategies: learn the best strategy through unsupervised learning
 Resistances
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
@@ -43,7 +43,7 @@ Include counter attacks in rounds
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Think about using document style db, rather than relational for this project, might make things simpler.
 Add Boosts
-Matchups: allow picking dinosaurs from the UI, tweak their strength and then run th match
+Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 4:4 matches
 On escape abilities get triggered by the attempt to swap out from self or other
 Swap in abilities activation for 4:4 matches
