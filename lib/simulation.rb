@@ -9,13 +9,16 @@ require 'logger'
 
 class Simulation
 
+  attr_accessor :dinosaur1
+  attr_accessor :dinosaur2
+
   def initialize(dinosaur1, dinosaur2)
     @dinosaur1 = dinosaur1.reset_attributes!
     @dinosaur2 = dinosaur2.reset_attributes!
     @logger = Logger.new(STDOUT)
     @round = 1
     @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
-    @root = Node.new('root')
+    @root = Node.new('Start')
   end
 
   def execute
@@ -94,6 +97,8 @@ class Simulation
         # call next, and mark the most recent node as a win for the first dinosaur
         if dinosaurs.last.current_health <= 0
           node.is_win = true
+          node.winner = dinosaurs.first.name
+          node.color = dinosaurs.first.color
           next
         end
         # Second attacks
@@ -120,6 +125,8 @@ class Simulation
         end
         if dinosaurs.first.current_health <= 0
           node.is_win = true
+          node.winner = dinosaurs.last.name
+          node.color = dinosaurs.last.color
           next
         end
         # Advance the clock

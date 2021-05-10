@@ -18,16 +18,19 @@ class Dinosaur < ApplicationRecord
   scope :filter_by_rarity, -> (rarity) { where rarity: rarity }
   scope :order_by_dna, -> (direction) { order dna: direction }
 
+  # Attributes for rendering simulations
+  attr_accessor :color
+
   # Attributes needed during a fight
   attr_accessor :current_health
   # attr_accessor :current_speed
-  # attr_accessor :abilities # [Strike, DeceleratingStrike] instances, so they can keep track of their own stats
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :strategy
 
   # reset fight attributes, to initial values
   # also (re)-build the abilities from the classes passed in
+  # ToDo: use stat bosts to calculate actual health, speed and damage
   def reset_attributes!
     @current_health = health
     @current_speed = speed
@@ -42,7 +45,7 @@ class Dinosaur < ApplicationRecord
   # attributes are
   # speed, distraction, shields, damage, critical_chance, dodge
   # shields: 0 .. 100 (modification in percent)
-  # speed: 0 .. 200 (modifers in percent)
+  # speed: 0 .. 200 (cumulatove modifers in percent)
   def current_attributes
     attributes = {speed: 100, shields: 0 }
     modifiers.each do |modifier|
@@ -51,7 +54,7 @@ class Dinosaur < ApplicationRecord
     attributes
   end
 
-  # TOdo: cap at zero, to prevent it from going negative?
+  # ToDo: cap at zero, to prevent it from going negative?
   def current_speed
     (speed * current_attributes[:speed] / 100).to_i
   end

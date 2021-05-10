@@ -6,9 +6,11 @@ class MatchupsController < ApplicationController
     stats = HashWithIndifferentAccess.new({'d1': 0, 'd2':0})
     logs = []
   100.times do
-    d1 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd1', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
-    d2 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
-    result = Match.new(d1, d2).execute
+    @d1 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd1', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
+    @d2 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
+    @d1.color = '#03a9f4'
+    @d2.color = '#03f4a9'
+    result = Match.new(@d1, @d2).execute
     stats[result[:winner]]+=1
     logs << result[:log]
     end

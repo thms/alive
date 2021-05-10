@@ -5,8 +5,10 @@ class SimulationsController < ApplicationController
   def index
     d1 = Dinosaur.new(health: 3000, damage: 1000, speed: 120, level: 20, name: 'd1', abilities: [Strike, InstantCharge], strategy: RandomStrategy)
     d2 = Dinosaur.new(health: 3000, damage: 1000, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal], strategy: RandomStrategy)
-    simulation = Simulation.new(d1, d2)
-    result = simulation.execute
+    d1.color = '#03a9f4'
+    d2.color = '#03f4a9'
+    @simulation = Simulation.new(d1, d2)
+    result = @simulation.execute
 
     g = build_graph(result)
     File.open("tmp/graph.dot", "w") do |output|
@@ -32,12 +34,17 @@ class SimulationsController < ApplicationController
       n = graph.add_node(node_title(child))
       n.attributes[:fontname] = 'verdana, arial, helvetica, sans-serif'
       n.attributes[:fontsize] = 10.0
+      if child.is_win == true
+        n.attributes[:fillcolor] = child.color
+        n.attributes[:style] = 'filled'
+      end
       parent.connect n
       graph_add_children(graph, n, child.children) unless child.children.empty?
+
     end
   end
 
-  def node_title(child)
-    "#{child.name}\n#{child.data[:health]}\n#{child.id}"
+  def node_title(node)
+    "#{node.name}\n#{node.data[:health]}\n#{node.id}"
   end
 end

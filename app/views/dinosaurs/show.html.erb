@@ -1,49 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @dinosaur.name %>
-</p>
-
-<p>
-  <strong>Level:</strong>
-  <%= @dinosaur.level %>
-</p>
-
-<p>
-  <strong>Rarity:</strong>
-  <%= @dinosaur.rarity.capitalize %>
-</p>
-
-<p>
-  <strong>Health:</strong>
-  <%= @dinosaur.health %>
-</p>
-
-<p>
-  <strong>armor:</strong>
-  <%= @dinosaur.armor %> %
-</p>
-
-<p>
-  <strong>Critical Chance:</strong>
-  <%= @dinosaur.critical_chance %> %
-</p>
-
-<p>
-  <strong>Speed:</strong>
-  <%= @dinosaur.speed %>
-</p>
-
-<p>
-  <strong>Damage:</strong>
-  <%= @dinosaur.damage %>
-</p>
-<p>
-  <strong>DNA:</strong>
-  <%= @dinosaur.dna %>
-</p>
-
+<%= render 'dinosaurs/data', dinosaur: @dinosaur %>
 <p>
   <strong>Possible Hybrids:</strong>
   <%= @dinosaur.possible_hybrid_names %>

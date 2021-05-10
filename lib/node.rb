@@ -6,6 +6,8 @@ class Node
   attr_accessor :data
   attr_accessor :visits
   attr_accessor :is_win
+  attr_accessor :winner
+  attr_accessor :color
   attr_accessor :id
 
   def initialize(name, data = nil)
@@ -15,6 +17,7 @@ class Node
     @parent = nil
     @visits = 1
     @is_win = false
+    @winner = nil
     @id = SecureRandom.uuid[0..7]
   end
 

@@ -1,0 +1,9 @@
+<div class="row">
+  <div style="width: 16px; height: 16px; background-color: <%= dinosaur.color %>; display: inline-block;" ></div>
+  <big><%= "#{dinosaur.name}" %></big><br/>
+  <%= "L: #{dinosaur.level} DNA: #{dinosaur.dna}" %><br/>
+  <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
+  <% dinosaur.abilities.each do |ability| %>
+    <%= ability.class %><br/>
+  <% end %>
+</div>

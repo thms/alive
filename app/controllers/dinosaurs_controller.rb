@@ -20,6 +20,9 @@ class DinosaursController < ApplicationController
   # GET /dinosaurs/1
   # GET /dinosaurs/1.json
   def show
+    # set color based on rarity
+    @dinosaur.color = Constants::COLORS[@dinosaur.rarity.to_sym]
+    @dinosaur.reset_attributes!
     g = Graphviz::Graph.new
     add_dinosaur_to_graph(g, @dinosaur)
     @graph = Graphviz::output(g, format: 'svg')
