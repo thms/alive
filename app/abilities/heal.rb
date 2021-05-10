@@ -3,6 +3,7 @@
 # cleanse all negative effects
 class Heal < Ability
 
+  self.is_implemented = true
   self.initial_cooldown = 3
   self.initial_delay = 0
   self.is_priority = true

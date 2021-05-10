@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Abilities</h1>
+<div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= sortable "name"%></th>
+      <th><%= sortable "is_implemented"%></th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @abilities.each do |ability| %>
+      <tr>
+        <td><%= ability[:name] %></td>
+        <td><%= ability[:is_implemented] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

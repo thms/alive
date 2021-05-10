@@ -5,20 +5,20 @@ class MatchupsController < ApplicationController
   def index
     stats = HashWithIndifferentAccess.new({'d1': 0, 'd2':0})
     logs = []
-  100.times do
-    @d1 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd1', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
-    @d2 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
-    @d1.color = '#03a9f4'
-    @d2.color = '#03f4a9'
-    result = Match.new(@d1, @d2).execute
-    stats[result[:winner]]+=1
-    logs << result[:log]
+    100.times do
+      @d1 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd1', abilities: [Strike, Heal], strategy: RandomStrategy)
+      @d2 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal, InstantCharge], strategy: RandomStrategy)
+      @d1.color = '#03a9f4'
+      @d2.color = '#03f4a9'
+      result = Match.new(@d1, @d2).execute
+      stats[result[:winner]]+=1
+      logs << result[:log]
     end
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph('d1')
     d2_wins_graph = g.add_subgraph('d2')
-    d1_start_node = d1_wins_graph.add_node('d1 start')
-    d2_start_node = d2_wins_graph.add_node('d2 start')
+    d1_start_node = d1_wins_graph.add_node('d1 wins')
+    d2_start_node = d2_wins_graph.add_node('d2 wins')
     d1_wins_node = d1_wins_graph.add_node("d1 - #{stats['d1']}")
     d2_wins_node = d2_wins_graph.add_node("d2 - #{stats['d2']}")
     logs.each do |log|

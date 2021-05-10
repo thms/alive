@@ -2,6 +2,7 @@
 # TODO: add stun modifier
 class InstantCharge < Ability
 
+  self.is_implemented = true
   self.initial_cooldown = 2
   self.initial_delay = 1
   self.is_priority = true

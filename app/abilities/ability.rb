@@ -14,6 +14,10 @@
 
 class Ability
 
+  # Helper to keep track of what has been completely implemented
+  class_attribute :is_implemented
+  self.is_implemented = false
+
   # Store the original delay and cooldown as class_attributes, to be set in the derived class
   class_attribute :initial_delay
   class_attribute :initial_cooldown

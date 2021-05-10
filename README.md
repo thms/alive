@@ -108,3 +108,12 @@ Carboceratops 83%
 ## Strategy
 Geminitan and Ardentismaxima: use for closing out fights, rather than for opening, since they are hard to kill, but may not have much left afterwards
 Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fury plus definite rampage or just definite rampage.
+
+
+# Mechanics
+## Stat Boosts
+sum(boosts) <= dino.level
+max tierss per type: 20
+attack: max boost = 50%       ==> 2.5% per tier
+health: max boost = 50%       ==> 2.5% per tier
+speed:  max boost = 40 points ==> 2 points per tier

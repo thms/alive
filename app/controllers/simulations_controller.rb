@@ -3,8 +3,8 @@ require 'graphviz'
 class SimulationsController < ApplicationController
 
   def index
-    d1 = Dinosaur.new(health: 3000, damage: 1000, speed: 120, level: 20, name: 'd1', abilities: [Strike, InstantCharge], strategy: RandomStrategy)
-    d2 = Dinosaur.new(health: 3000, damage: 1000, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal], strategy: RandomStrategy)
+    d1 = Dinosaur.new(health: 3000, damage: 1500, speed: 120, level: 20, name: 'd1', abilities: [Strike, InstantCharge], strategy: RandomStrategy)
+    d2 = Dinosaur.new(health: 3000, damage: 1500, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal], strategy: RandomStrategy)
     d1.color = '#03a9f4'
     d2.color = '#03f4a9'
     @simulation = Simulation.new(d1, d2)
