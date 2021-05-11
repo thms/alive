@@ -3,7 +3,9 @@
   <big><%= "#{dinosaur.name}" %></big><br/>
   <%= "L: #{dinosaur.level} DNA: #{dinosaur.dna}" %><br/>
   <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
+  <% if dinosaur.abilities.class == Array %>
   <% dinosaur.abilities.each do |ability| %>
     <%= ability.class %><br/>
+  <% end %>
   <% end %>
 </div>
