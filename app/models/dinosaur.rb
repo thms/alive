@@ -16,6 +16,7 @@ class Dinosaur < ApplicationRecord
 
   # Filtering
   scope :filter_by_rarity, -> (rarity) { where rarity: rarity }
+  scope :filter_by_is_implemented, -> (is_implemented) { where is_implemented: is_implemented }
   scope :order_by_dna, -> (direction) { order dna: direction }
 
   # Attributes for rendering simulations

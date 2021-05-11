@@ -9,6 +9,7 @@ class DinosaursController < ApplicationController
   def index
     @dinosaurs = Dinosaur.where(nil)
     @dinosaurs = @dinosaurs.filter_by_rarity(params[:rarity]) if params[:rarity].present?
+    @dinosaurs = @dinosaurs.filter_by_is_implemented(params[:is_implemented]) if params[:is_implemented].present?
     # @dinosaurs = @dinosaurs.order_by_dna(params[:dna]) if params[:dna].present?
     @dinosaurs = @dinosaurs.order(sort_column + " " + sort_direction)
     g = Graphviz::Graph.new

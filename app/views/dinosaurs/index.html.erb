@@ -33,7 +33,7 @@
   <tbody>
     <% @dinosaurs.each do |dinosaur| %>
       <tr>
-        <td><%= link_to dinosaur.name, dinosaur %></td>
+        <td><%= link_to dinosaur.name, dinosaur %><%= "*" if dinosaur.is_implemented %></td>
         <td><%= dinosaur.level %></td>
         <td><%= dinosaur.rarity %></td>
         <td><%= dinosaur.health %></td>
