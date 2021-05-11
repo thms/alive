@@ -5,8 +5,8 @@ class SimulationsController < ApplicationController
   def index
     d1 = Dinosaur.new(health: 3000, damage: 1500, speed: 120, level: 20, name: 'd1', abilities: [Strike, InstantCharge], strategy: RandomStrategy)
     d2 = Dinosaur.new(health: 3000, damage: 1500, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal], strategy: RandomStrategy)
-    d1 = Dinosaur.find_by_name('Dilophosaurus Gen 2')
-    d2 = Dinosaur.find_by_name('Dracorex Gen 2')
+    d1 = Dinosaur.find_by_name('Secodontosaurus')
+    d2 = Dinosaur.find_by_name('Tyrannosaurus Rex')
     if d1.name == d2.name
       d1.name += '-1'
       d2.name += '-2'
@@ -16,12 +16,22 @@ class SimulationsController < ApplicationController
     @simulation = Simulation.new(d1, d2)
     result = @simulation.execute
 
-    g = build_graph(result)
-    File.open("tmp/graph.dot", "w") do |output|
-      g.dump_graph(output)
+    full_graph = build_graph(result)
+    File.open("tmp/full_graph.dot", "w") do |output|
+      full_graph.dump_graph(output)
     end
-    `dot -T svg tmp/graph.dot > tmp/graph.svg`
-    @graph = File.read('tmp/graph.svg')
+    `dot -T svg tmp/full_graph.dot > tmp/full_graph.svg`
+    @full_graph = File.read('tmp/full_graph.svg')
+
+    # create pruned version of the graph
+    prune(result)
+    pruned_graph = build_graph(result)
+    File.open("tmp/pruned_graph.dot", "w") do |output|
+      pruned_graph.dump_graph(output)
+    end
+    `dot -T svg tmp/pruned_graph.dot > tmp/pruned_graph.svg`
+    @pruned_graph = File.read('tmp/pruned_graph.svg')
+
   end
 
   private
@@ -52,5 +62,34 @@ class SimulationsController < ApplicationController
 
   def node_title(node)
     "#{node.name}\n#{node.data[:health]}\n#{node.id}"
+  end
+
+
+  def prune(result)
+    queue = [result]
+    while !queue.empty? do
+      node = queue.shift
+      prune_node(node)
+      node.children.each do |child|
+        queue.push(child)
+      end
+    end
+  end
+
+  # prunes children of one node
+  # logic: if there is at least one leaf / win in the children and all
+  # chidlren have the same dino doing the action
+  # then the non-leaves get deleted
+  def prune_node(node)
+    has_win = false
+    dinos_seen = {}
+    node.children.each do |child|
+      dinos_seen[child.name.split('::').first] = true
+      has_win = true if child.is_win
+    end
+    if has_win && dinos_seen.size == 1
+      # prune all non-wins
+      node.children.delete_if {|child| !child.is_win }
+    end
   end
 end

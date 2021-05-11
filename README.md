@@ -113,7 +113,7 @@ Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fur
 # Mechanics
 ## Stat Boosts
 sum(boosts) <= dino.level
-max tierss per type: 20
+max tiers per type: 20
 attack: max boost = 50%       ==> 2.5% per tier
 health: max boost = 50%       ==> 2.5% per tier
 speed:  max boost = 40 points ==> 2 points per tier

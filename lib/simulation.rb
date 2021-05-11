@@ -48,6 +48,7 @@ class Simulation
 
     # create all possible combinations
     depth = current_node.data[:depth] + 1
+    # Safety valve
     return if depth > 10
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
