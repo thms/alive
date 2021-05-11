@@ -1,4 +1,3 @@
-# TODO:
 class DistractingImpact < Ability
 
   self.is_implemented = true

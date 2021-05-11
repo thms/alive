@@ -1,4 +1,3 @@
-# TODO:
 class FierceImpact < Ability
 
   self.is_implemented = true

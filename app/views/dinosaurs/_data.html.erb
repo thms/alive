@@ -5,7 +5,7 @@
   <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
   <% if dinosaur.abilities.class == Array %>
   <% dinosaur.abilities.each do |ability| %>
-    <%= ability.class %><br/>
+    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
   <% end %>
   <% end %>
 </div>

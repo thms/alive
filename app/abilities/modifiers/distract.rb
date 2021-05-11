@@ -3,7 +3,9 @@ class Modifiers::Distract < Modifiers::Modifier
   self.cleanse = [:all, :distraction]
   self.is_defense = true
   self.is_attack = !self.is_defense
+  self.destroy = []
   self.is_positive = false
+  self.cleanse = [:distraction]
 
   def initialize(distraction, turns, attacks)
     @value = distraction

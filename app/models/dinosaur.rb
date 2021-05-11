@@ -46,8 +46,10 @@ class Dinosaur < ApplicationRecord
   # speed, distraction, shields, damage, critical_chance, dodge
   # shields: 0 .. 100 (modification in percent)
   # speed: 0 .. 200 (cumulatove modifers in percent)
+  # damage: 0 .. 200 (cumulative modifiers in percent)
+  # critical chance: -100 .. +100 (cumulative modifiers in percent)
   def current_attributes
-    attributes = {speed: 100, shields: 0 }
+    attributes = {speed: 100, shields: 0, damage: 0, critical_chance: 100 }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
@@ -93,7 +95,7 @@ class Dinosaur < ApplicationRecord
     end
   end
 
-  # cleanse all negative effects
+  # cleanse negative effects
   # it takes effect immeditately, not just at the next tick
   def cleanse(effect)
     modifiers.delete_if{|modifier| modifier.cleanse.include?(effect)}
@@ -113,10 +115,15 @@ class Dinosaur < ApplicationRecord
   def remove_taunt
   end
 
+  def remove_critical_chance_increase
+  end
+
+  def remove_attack_increase
+  end
+
   # available abilities are those where both delay and cooldown is 0
   def available_abilities
-    ## abilities.select {|ability| ability_stats[ability.name][:delay] == 0 && ability_stats[ability.name][:cooldown] == 0}
-    abilities.select {|ability| ability.current_delay <= 0 && ability.current_cooldown == 0}
+    abilities.select {|ability| ability.current_delay <= 0 && ability.current_cooldown == 0 && ability.is_implemented}
   end
 
   # Pick the next ability (need to add order dependency or strikes)

@@ -1,4 +1,3 @@
-# TODO:
 # Self: cleanse DoT
 # Target lowest HP: remove critical increase, and attack increases.
 # Reduce critical chance 100% and reduce Damage 50% for 2 attacks, 1 turn
@@ -6,6 +5,7 @@
 
 class CunningStrike < Ability
 
+  self.is_implemented = true
   self.initial_cooldown = 0
   self.initial_delay = 0
   self.is_priority = false
@@ -17,7 +17,10 @@ class CunningStrike < Ability
   end
 
   def update_defender(attacker, defender)
-    defender.add_modifier(Modifiers::Distract.new(distraction: 50, attacks: 2, turns: 1))
+    defender.remove_critical_chance_increase
+    defender.remove_attack_increase
+    defender.add_modifier(Modifiers::Distract.new(50, 1, 2))
+    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100))
   end
 
 end

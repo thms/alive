@@ -69,12 +69,13 @@ class Ability
   def damage_defender(attacker, defender)
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return if damage_multiplier == 0 || defender.nil?
-    # attacker's original damage
+    # attacker's original damage times the type of attack
     damage = attacker.damage * damage_multiplier
-    # filter through attacker's modifiers (distraction, increase attack)
-
-    # apply critical chance
-    # filter through defender's modifiers (dogde, cloak, etc.)
+    # TODO: filter through attacker's modifiers (distraction, increase attack)
+    # damage of attacker is reduced by distraction
+    damage = (damage * (100 - attacker.current_attributes[:damage]) / 100).to_i
+    # TODO: apply critical chance
+    # TODO: filter through defender's modifiers (dogde, cloak, etc.)
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
     # filter through defender's armor if any and the strike does not bypass armor
