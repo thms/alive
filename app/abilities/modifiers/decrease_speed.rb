@@ -6,7 +6,7 @@ class Modifiers::DecreaseSpeed < Modifiers::Modifier
   self.destroy = []
   self.is_positive = false
 
-  def initialize(decrease, turns, attacks = 100)
+  def initialize(decrease, turns, attacks = nil)
     @value = decrease
     self.turns = turns
     self.attacks = attacks

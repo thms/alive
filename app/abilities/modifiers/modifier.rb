@@ -27,7 +27,7 @@ class Modifiers::Modifier
   # Clock advances after each round
   # returns true if the modifier should be deleted.
   def tick
-    @current_turns -=1
+    @current_turns -= 1
     if @current_turns < 0
       # remove from the list of active modifiers of the current dinosaur
       return true
@@ -39,6 +39,7 @@ class Modifiers::Modifier
   # Deplete after each attack
   # returns true if the modifier should be deleted.
   def tick_attacks
+    return false if current_attacks.nil?
     @current_attacks -=1
     if @current_attacks < 0
       # remove from the list of active modifiers of the current dinosaur

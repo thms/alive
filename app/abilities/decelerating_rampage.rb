@@ -9,7 +9,7 @@ class DeceleratingRampage < Ability
   self.bypass = []
 
   def update_defender(attacker, defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, 100))
+    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))
   end
 
 

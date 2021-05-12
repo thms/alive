@@ -77,7 +77,7 @@ class Ability
     damage = attacker.damage * damage_multiplier
     # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
     # note: modifiers may reduce critical chance to zero, in the current attributes
-    damage = damage * 1.25 if (100* rand <= (attacker.critical_chance - attacker.current_attributes[:critical_chance]))
+    damage = damage * 1.25 if (100 * rand <= attacker.current_attributes[:critical_chance])
     # TODO: filter through attacker's modifiers (distraction, increase attack)
     # - damage of attacker is reduced by distraction
     damage = (damage * (100 - attacker.current_attributes[:damage]) / 100).to_i

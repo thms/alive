@@ -9,7 +9,7 @@ class Modifiers::ReduceCriticalChance < Modifiers::Modifier
   def initialize(reduction)
     @value = reduction
     self.turns = 1
-    self.attacks = 100
+    self.attacks = nil
     super()
   end
 
