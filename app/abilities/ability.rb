@@ -31,9 +31,13 @@ class Ability
   # damage multiplier for this move: attacker.damage * multiplier, will be applied.
   class_attribute :damage_multiplier
 
+  # True if this is an automatic counter move
+  class_attribute :is_counter
+
   # Keep track of the current delay and cooldown
   attr_accessor :current_delay
   attr_accessor :current_cooldown
+
 
   def initialize
     @current_cooldown = 0 # cooldown only starts after an ability has been used, so initially there is none.
@@ -71,10 +75,12 @@ class Ability
     return if damage_multiplier == 0 || defender.nil?
     # attacker's original damage times the type of attack
     damage = attacker.damage * damage_multiplier
+    # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
+    # note: modifiers may reduce critical chance to zero, in the current attributes
+    damage = damage * 1.25 if (100* rand <= (attacker.critical_chance - attacker.current_attributes[:critical_chance]))
     # TODO: filter through attacker's modifiers (distraction, increase attack)
-    # damage of attacker is reduced by distraction
+    # - damage of attacker is reduced by distraction
     damage = (damage * (100 - attacker.current_attributes[:damage]) / 100).to_i
-    # TODO: apply critical chance
     # TODO: filter through defender's modifiers (dogde, cloak, etc.)
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i

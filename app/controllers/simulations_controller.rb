@@ -3,10 +3,11 @@ require 'graphviz'
 class SimulationsController < ApplicationController
 
   def index
-    d1 = Dinosaur.new(health: 3000, damage: 1500, speed: 120, level: 20, name: 'd1', abilities: [Strike, InstantCharge], strategy: RandomStrategy)
-    d2 = Dinosaur.new(health: 3000, damage: 1500, speed: 130, level: 20, name: 'd2', abilities: [Strike, Heal], strategy: RandomStrategy)
-    d1 = Dinosaur.find_by_name('Secodontosaurus')
-    d2 = Dinosaur.find_by_name('Tyrannosaurus Rex')
+    # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
+    d1 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 40, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
+    d2 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Strike], strategy: RandomStrategy)
+    # d1 = Dinosaur.find_by_name('Thoradolosaur')
+    # d2 = Dinosaur.find_by_name('Monolometrodon')
     if d1.name == d2.name
       d1.name += '-1'
       d2.name += '-2'
@@ -39,7 +40,7 @@ class SimulationsController < ApplicationController
     graph = Graphviz::Graph.new
     node = graph.add_node(root.name)
     node.attributes[:fontname] = 'verdana, arial, helvetica, sans-serif'
-    node.attributes[:fontsize] = 10.0
+    node.attributes[:fontsize] = 8.0
     graph_add_children(graph, node, root.children)
     graph
   end
@@ -49,7 +50,7 @@ class SimulationsController < ApplicationController
     children.each do |child|
       n = graph.add_node(node_title(child))
       n.attributes[:fontname] = 'verdana, arial, helvetica, sans-serif'
-      n.attributes[:fontsize] = 10.0
+      n.attributes[:fontsize] = 8.0
       if child.is_win == true
         n.attributes[:fillcolor] = child.color
         n.attributes[:style] = 'filled'
@@ -65,6 +66,7 @@ class SimulationsController < ApplicationController
   end
 
 
+  # prune an entire graph of nodes that are errors by one player
   def prune(result)
     queue = [result]
     while !queue.empty? do

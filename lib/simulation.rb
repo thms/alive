@@ -63,6 +63,16 @@ class Simulation
         if dinosaur1.current_speed == dinosaur2.current_speed
           dinosaurs = dinosaur1.level > dinosaur2.level ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
           abilities = dinosaur1.level > dinosaur2.level ? [ a1, a2 ] : [ a2, a1 ]
+          # random shuffling, if speed and level are the same
+          if dinosaur1.level == dinosaur2.level
+            if rand < 0.5
+              dinosaurs = [ dinosaur1, dinosaur2 ]
+              abilities = [ a1, a2 ]
+            else
+              dinosaurs = [ dinosaur2, dinosaur1 ]
+              abilities = [ a2, a1 ]
+            end
+          end
           # dinosaurs.shuffle! if dinosaur1.level == dinosaur2.level
         else
           dinosaurs = dinosaur1.current_speed > dinosaur2.current_speed ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]

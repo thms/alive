@@ -42,15 +42,17 @@ class Dinosaur < ApplicationRecord
     self
   end
 
-  # calculate current attributes by applying all active modifiers to the Attributes
+  # calculate modifications to current attributes by collecting all active modifiers to the attributes
   # attributes are
   # speed, distraction, shields, damage, critical_chance, dodge
   # shields: 0 .. 100 (modification in percent)
-  # speed: 0 .. 200 (cumulatove modifers in percent)
+  # speed: 0 .. 200 (cumulative modifers in percent)
   # damage: 0 .. 200 (cumulative modifiers in percent)
   # critical chance: -100 .. +100 (cumulative modifiers in percent)
+  # TODO: decide the mechanism to use, this is currently a mix of two.
+  # if percentage values: this is an absolute delta.
   def current_attributes
-    attributes = {speed: 100, shields: 0, damage: 0, critical_chance: 100 }
+    attributes = {speed: 100, shields: 0, damage: 0, critical_chance: 0 }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
