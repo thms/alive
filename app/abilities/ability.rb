@@ -81,8 +81,8 @@ class Ability
     # TODO: filter through attacker's modifiers (distraction, increase attack)
     # - damage of attacker is reduced by distraction, increased by attack increase
     damage = (damage * (100 + attacker.current_attributes[:damage]) / 100).to_i
-    # TODO: filter through defender's modifiers (dogde, etc.)
-    damage = (damage * (100 - defender.current_attributes[:dodge]) / 100).to_i
+    # TODO: filter through defender's modifiers (dogde)
+    damage = (damage * (100 - defender.current_attributes[:dodge]) / 100).to_i unless bypass.include?(:dodge)
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
     # filter through defender's armor if any and the strike does not bypass armor
