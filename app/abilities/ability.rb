@@ -79,13 +79,16 @@ class Ability
     # note: modifiers may reduce critical chance to zero, in the current attributes
     damage = damage * 1.25 if (100 * rand <= attacker.current_attributes[:critical_chance])
     # TODO: filter through attacker's modifiers (distraction, increase attack)
-    # - damage of attacker is reduced by distraction
-    damage = (damage * (100 - attacker.current_attributes[:damage]) / 100).to_i
-    # TODO: filter through defender's modifiers (dogde, cloak, etc.)
+    # - damage of attacker is reduced by distraction, increased by attack increase
+    damage = (damage * (100 + attacker.current_attributes[:damage]) / 100).to_i
+    # TODO: filter through defender's modifiers (dogde, etc.)
+    damage = (damage * (100 - defender.current_attributes[:dodge]) / 100).to_i
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
     # filter through defender's armor if any and the strike does not bypass armor
     damage = (damage * (100 - defender.armor) / 100).to_i unless bypass.include?(:armor)
+    # damage must no go below zero
+    damage = [damage, 0].max
     # update defender's health
     defender.current_health = (defender.current_health - damage).to_i
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up

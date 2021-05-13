@@ -1,4 +1,5 @@
-class Modifiers::Distract < Modifiers::Modifier
+# Reduce damamge by x percent 
+class Modifiers::Distraction < Modifiers::Modifier
 
   self.cleanse = [:all, :distraction]
   self.is_defense = true
@@ -17,6 +18,6 @@ class Modifiers::Distract < Modifiers::Modifier
   # this should be additive with respect to the original damage
   # and this works on the other, not on self, by reducing their damage attribute
   def execute(attributes)
-    attributes[:damage] = ((100.0 - @value)/100.0 * attributes[:damage]).to_int
+    attributes[:damage] -= @value
   end
 end

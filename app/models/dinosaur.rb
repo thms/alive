@@ -47,12 +47,13 @@ class Dinosaur < ApplicationRecord
   # speed, distraction, shields, damage, critical_chance, dodge
   # shields: 0 .. 100 (modification in percent)
   # speed: 0 .. 200 (cumulative modifers in percent)
-  # damage: 0 .. 200 (cumulative modifiers in percent)
+  # damage: -100 .. 200 (cumulative modifiers in percent) damage = (100+this)/100 * original damage
   # critical chance: -100 .. +100 (cumulative modifiers in percent)
+  # dodge: totoal chance due t dodge, so if create dodge 67% of damange, value is 67
   # TODO: decide the mechanism to use, this is currently a mix of two.
   # if percentage values: this is an absolute delta.
   def current_attributes
-    attributes = {speed: 100, shields: 0, damage: 0, critical_chance: self.critical_chance }
+    attributes = {speed: 100, shields: 0, damage: 0, dodge: 0, critical_chance: self.critical_chance }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
@@ -78,6 +79,7 @@ class Dinosaur < ApplicationRecord
   end
 
   # for each defense modifier reduce count and delete if depleted
+  # example: shields that take a hit, get their count decremented
   def tick_defense_count
     modifiers.delete_if do |modifier|
       modifier.is_defense && modifier.tick_attacks
@@ -116,6 +118,12 @@ class Dinosaur < ApplicationRecord
 
   # remove taunt
   def remove_taunt
+  end
+
+  def remove_dodge
+  end
+
+  def remove_cloak
   end
 
   def remove_critical_chance_increase

@@ -1,13 +1,16 @@
 require 'test_helper'
 
-class ModiferTest < ActiveSupport::TestCase
+class DecreaseSpeedTest < ActiveSupport::TestCase
 
-  test "decrease speed should reduce speed for one round" do
+  test "decrease speed should reduce speed for one turn" do
     dinosaur = Dinosaur.new(damage: 100, speed: 130, name: 'attacker', abilities: []).reset_attributes!
     dinosaur.add_modifier(Modifiers::DecreaseSpeed.new(10, 1, 1))
+    # should change speed now
     assert_equal 117, dinosaur.current_speed
+    # should be effective in the next turn
     dinosaur.tick
     assert_equal 117, dinosaur.current_speed
+    # should be back to noral in the turn after
     dinosaur.tick
     assert_equal 130, dinosaur.current_speed
   end

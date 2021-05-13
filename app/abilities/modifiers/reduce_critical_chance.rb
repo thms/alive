@@ -6,10 +6,10 @@ class Modifiers::ReduceCriticalChance < Modifiers::Modifier
   self.destroy = []
   self.is_positive = false
 
-  def initialize(reduction)
+  def initialize(reduction, turns, attacks = nil)
     @value = reduction
-    self.turns = 1
-    self.attacks = nil
+    self.turns = turns
+    self.attacks = attacks
     super()
   end
 
