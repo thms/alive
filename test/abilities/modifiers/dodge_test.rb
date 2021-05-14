@@ -7,19 +7,22 @@ class DodgeTest < ActiveSupport::TestCase
     defender = Dinosaur.new(health: 1000, speed: 125, name: 'defender', abilities: []).reset_attributes!
     defender.add_modifier(Modifiers::Dodge.new(75, 1, 1))
     Strike.new.execute(attacker, defender)
-    assert_includes [500, 835], defender.current_health
+    assert_includes [500, 834], defender.current_health
   end
 
   test "Dodge should reduce the damage taken with a certain probability" do
     cumulative_health = 0
+    num_of_dodges = 0
     100.times do
       attacker = Dinosaur.new(damage: 500, speed: 130, name: 'attacker', abilities: []).reset_attributes!
       defender = Dinosaur.new(health: 1000, speed: 125, name: 'defender', abilities: []).reset_attributes!
       defender.add_modifier(Modifiers::Dodge.new(75, 1, 1))
-      Strike.new.execute(attacker, defender)
+      stats = Strike.new.execute(attacker, defender)
       cumulative_health += defender.current_health
+      num_of_dodges += 1 if stats[:did_dodge]
     end
-    assert_in_delta 75 * 835 + 25 * 500, cumulative_health, 2000
+    assert_in_delta 75, num_of_dodges, 10
+    assert_in_delta 75 * 834 + 25 * 500, cumulative_health, 334*10
   end
 
 

@@ -19,7 +19,7 @@ class CunningStrike < Ability
   def update_defender(attacker, defender)
     defender.remove_critical_chance_increase
     defender.remove_attack_increase
-    defender.add_modifier(Modifiers::Distract.new(50, 1, 2))
+    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
     defender.add_modifier(Modifiers::ReduceCriticalChance.new(100))
   end
 

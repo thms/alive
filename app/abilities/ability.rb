@@ -55,8 +55,9 @@ class Ability
   def execute(attacker, defender)
     update_defender(attacker, defender)
     update_attacker(attacker, defender)
-    damage_defender(attacker, defender)
+    stats = damage_defender(attacker, defender)
     update_cooldown_attacker(attacker, defender)
+    stats
   end
 
   # update defender's shields, etc.
@@ -72,17 +73,19 @@ class Ability
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
-    return if damage_multiplier == 0 || defender.nil?
+    return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
     # attacker's original damage times the type of attack
     damage = attacker.damage * damage_multiplier
     # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
     # note: modifiers may reduce critical chance to zero, in the current attributes
-    damage = damage * 1.25 if (100 * rand <= attacker.current_attributes[:critical_chance])
+    is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
+    damage = damage * 1.25 if is_critical_hit
     # TODO: filter through attacker's modifiers (distraction, increase attack)
     # - damage of attacker is reduced by distraction, increased by attack increase
     damage = (damage * (100 + attacker.current_attributes[:damage]) / 100).to_i
     # TODO: filter through defender's modifiers (dogde)
-    damage = (damage * (100 - defender.current_attributes[:dodge]) / 100).to_i unless bypass.include?(:dodge)
+    did_dodge = (100 * rand < defender.current_attributes[:dodge])
+    damage = (damage * (100.0 - 66.7) / 100.0).to_i if (did_dodge && !bypass.include?(:dodge))
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
     # filter through defender's armor if any and the strike does not bypass armor
@@ -94,13 +97,13 @@ class Ability
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
     attacker.tick_attack_count
     defender.tick_defense_count
+    {is_critical_hit: is_critical_hit, did_dodge: did_dodge}
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown
   # since this is executed before tick, cooldown needs to be +1
   def update_cooldown_attacker(attacker, defender)
     if self.initial_cooldown > 0
-      # @attacker.ability_stats[self.class.name][:cooldown] = self.initial_cooldown + 1
       @current_cooldown = self.initial_cooldown + 1
     end
   end

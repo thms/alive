@@ -39,7 +39,8 @@ class Node
     @children.length != 0
   end
 
-  def add_child(node)
+  def add_child(name, data)
+    node = Node.new(name, data)
     children << node
     node
   end

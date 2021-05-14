@@ -8,7 +8,7 @@ class DistractingImpact < Ability
   self.bypass = []
 
   def update_defender(attacker, defender)
-    defender.add_modifier(Modifiers::Distract.new(50, 2, 4))
+    defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
   end
 
 end

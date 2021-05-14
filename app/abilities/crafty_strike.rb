@@ -1,10 +1,17 @@
-# TODO:
+# Target lowest HP: Remove damage and critical hit increase.
+# BBYpass dodge and armor
+# Precise attack 1x
 class CraftyStrike < Ability
 
+  self.is_implemented = true
   self.initial_cooldown = 0
   self.initial_delay = 0
   self.is_priority = false
   self.damage_multiplier = 1
-  self.bypass = []
+  self.bypass = [:armor, :dodge]
 
+  def update_defender(attacker, defender)
+    defender.remove_critical_chance_increase
+    defender.remove_attack_increase
+  end
 end

@@ -10,10 +10,11 @@ class InstantCharge < Ability
   self.bypass = []
 
   def damage_defender(attacker, defender)
-    super
+    result = super
     # stun the defender
     # TODO: add in resistance of defender
     defender.is_stunned = (rand <= 0.75)
+    result
   end
 
 end

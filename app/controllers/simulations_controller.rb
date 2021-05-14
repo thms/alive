@@ -4,10 +4,10 @@ class SimulationsController < ApplicationController
 
   def index
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
-    d1 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 40, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
-    d2 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Strike], strategy: RandomStrategy)
-    # d1 = Dinosaur.find_by_name('Thoradolosaur')
-    # d2 = Dinosaur.find_by_name('Monolometrodon')
+    # d1 = Dinosaur.new(health: 4200, damage: 1400, speed: 132, armor: 0, critical_chance: 0, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
+    # d2 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Sidestep, NullifyingRampage], strategy: RandomStrategy)
+    d1 = Dinosaur.find_by_name('Thoradolosaur')
+    d2 = Dinosaur.find_by_name('Velociraptor')
     if d1.name == d2.name
       d1.name += '-1'
       d2.name += '-2'
@@ -62,7 +62,7 @@ class SimulationsController < ApplicationController
   end
 
   def node_title(node)
-    "#{node.name}\n#{node.data[:health]}\n#{node.id}"
+    "#{node.name}\n#{node.data[:health]}\n#{node.id}\n#{node.visits}"
   end
 
 

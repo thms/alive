@@ -4,7 +4,10 @@
 # output is a tree with all possible path and their outcomes
 # possible outcomes: one of the two wins, or swaps out, or both die (DoT)
 
-
+# TODO
+# Imlement statistical elements - critical chance, possibiity of a dodge, etc
+# Two options: create separte nodes and inject decision
+# or: add crit/no-crit, dodge/no-doge to the title of node
 require 'logger'
 
 class Simulation
@@ -73,7 +76,6 @@ class Simulation
               abilities = [ a2, a1 ]
             end
           end
-          # dinosaurs.shuffle! if dinosaur1.level == dinosaur2.level
         else
           dinosaurs = dinosaur1.current_speed > dinosaur2.current_speed ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
           abilities = dinosaur1.current_speed > dinosaur2.current_speed ? [a1, a2 ] : [ a2, a1 ]
@@ -97,8 +99,8 @@ class Simulation
         else
           @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
           @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
-          abilities.first.execute(dinosaurs.first, dinosaurs.last)
-          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class}", {
+          hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
+          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}", {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
@@ -110,7 +112,7 @@ class Simulation
           node.is_win = true
           node.winner = dinosaurs.first.name
           node.color = dinosaurs.first.color
-          next
+          break
         end
         # Second attacks
         if dinosaurs.last.is_stunned
@@ -126,8 +128,8 @@ class Simulation
         else
           @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
           @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
-          abilities.last.execute(dinosaurs.last, dinosaurs.first)
-          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class}", {
+          hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
+          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}", {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,

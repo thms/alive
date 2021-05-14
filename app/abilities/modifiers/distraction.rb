@@ -1,4 +1,4 @@
-# Reduce damamge by x percent 
+# Reduce damamge by x percent
 class Modifiers::Distraction < Modifiers::Modifier
 
   self.cleanse = [:all, :distraction]
@@ -6,7 +6,7 @@ class Modifiers::Distraction < Modifiers::Modifier
   self.is_attack = !self.is_defense
   self.destroy = []
   self.is_positive = false
-  self.cleanse = [:distraction]
+  self.cleanse = [:distraction, :all]
 
   def initialize(distraction, turns, attacks)
     @value = distraction
