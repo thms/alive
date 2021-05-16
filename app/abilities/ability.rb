@@ -52,6 +52,7 @@ class Ability
     end
   end
 
+  # TODO: ability to force the random decisions (crit, dodge) one way or the other for the simulator
   def execute(attacker, defender)
     update_defender(attacker, defender)
     update_attacker(attacker, defender)
