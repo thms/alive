@@ -6,8 +6,8 @@ class MatchupsController < ApplicationController
     stats = HashWithIndifferentAccess.new({'d1': 0, 'd2':0})
     logs = []
     100.times do
-      @d1 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd1', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: BestAgainstClassStrategy)
-      @d2 = Dinosaur.new(health: 300, damage: 150, speed: 130, level: 20, name: 'd2', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: BestAgainstClassStrategy)
+      @d1 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: 'd1', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: HighestDamageStrategy)
+      @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: 'd2', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: BestAgainstClassStrategy)
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
