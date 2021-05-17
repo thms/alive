@@ -1,7 +1,7 @@
 module Constants
 
 # https://jurassic-world-alive.fandom.com/wiki/Hybrids
-
+KLASSES = [:cunning, :cunning_fierce, :cunning_resilient, :fierce, :fierce_resilient, :resilient, :wild_card]
 RESISTANCES = [:critical_reduction, :damage_over_time, :distraction, :rend, :speed_decrease, :stun, :swap_prevention, :taunt, :vulnerable]
 RARITIES = [:common, :rare, :epic, :legendary, :unique, :apex]
 COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green', apex: 'black'}

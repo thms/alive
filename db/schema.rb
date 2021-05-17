@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_133340) do
+ActiveRecord::Schema.define(version: 2021_05_16_113046) do
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2021_05_11_133340) do
     t.integer "health_boosts", default: 0, null: false
     t.integer "speed_boosts", default: 0, null: false
     t.boolean "is_implemented", default: false, null: false
+    t.string "klass", default: "", null: false
   end
 
 end

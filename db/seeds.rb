@@ -20,6 +20,7 @@ data['pageProps']['creatures'].each do |creature|
   speed = creature['speed']
   armor = creature['armor']
   critical_chance = creature['crit']
+  klass = creature['class']
   Dinosaur.create!({
     slug: slug,
     name: name,
@@ -36,6 +37,7 @@ data['pageProps']['creatures'].each do |creature|
     abilities_swap_in: abilities_swap_in,
     abilities_on_escape: abilities_on_escape,
     resistances: resistances,
+    klass: klass,
     left_id: nil,
     right_id: nil
   })
