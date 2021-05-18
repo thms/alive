@@ -8,7 +8,6 @@ Raids?
 Ability to calculate cost of evolution for a given dinosaur
 Ability to calculate cost to create a given dinosaur
 Ability to pick next dinosaur to focus on based on cost, likelihood, as the best next investment of coins, DNA, etc.
-How to apply boosts: probably tier and resulting speed, attack, etc. can do later as refinement
 
 
 ## Data Model
@@ -31,23 +30,20 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
-distraction
-dodge & cloak
+cloak attack increases
 all abilities
-critical chance
-strategies refactor: use name space, base class, and the ability to look into the match and both Dinosaurs
-Strategies: learn the best strategy through unsupervised learning
+Strategies: learn the best strategy through unsupervised learning (reinforcement learning, Q-Table ...)
 Resistances
+Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
-Include counter attacks in rounds
+Implement counter attacks
+
+Implement swap in abilities
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
-Think about using document style db, rather than relational for this project, might make things simpler.
-Add Boosts
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 4:4 matches
 On escape abilities get triggered by the attempt to swap out from self or other
 Swap in abilities activation for 4:4 matches
-Use forward looking evaluation as a strategy
 
 
 ## DONE
@@ -65,7 +61,11 @@ shields
 armor
 Load seeds from dinodex.json
 Refactor model to allow swap-in, counter and escape abilities
-
+strategies refactor: use name space, base class, and the ability to look into the match and both Dinosaurs
+Use forward looking evaluation as a strategy
+distraction
+dodge
+critical chance
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
@@ -107,7 +107,7 @@ Carboceratops 83%
 
 ## Strategy
 Geminitan and Ardentismaxima: use for closing out fights, rather than for opening, since they are hard to kill, but may not have much left afterwards
-Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fury plus definite rampage or just definite rampage.
+Indoraptor Gen 2: cautious strikes until opponent slows it down, then mutual fury plus definite rampage or just  rampage.
 
 
 # Mechanics

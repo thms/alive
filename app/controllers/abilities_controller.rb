@@ -7,7 +7,7 @@ class AbilitiesController < ApplicationController
     class_names = Dir.glob(File.join(Rails.root, "app", 'abilities', '*')).collect{|path| File.basename(path, '.rb').camelize}
     class_names.delete('Ability')
     class_names.delete('Modifiers')
-    @abilities = class_names.map{|class_name| {name: class_name, is_implemented: class_name.constantize.is_implemented.to_s}}
+    @abilities = class_names.map{|class_name| {name: class_name, is_implemented: class_name.constantize.is_implemented}}
     @abilities.sort_by! {|ability| ability[sort_column.to_sym]}
     @abilities.reverse! if sort_direction == 'desc'
   end

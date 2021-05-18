@@ -1,0 +1,16 @@
+<div>Count: <%= abilities.count %></div>
+<table>
+  <thead>
+    <tr>
+      <th><%= sortable "name"%></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% abilities.each do |ability| %>
+      <tr>
+        <td><%= ability[:name] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
