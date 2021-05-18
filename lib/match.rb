@@ -25,7 +25,9 @@ class Match
       # order them by speed, to decide who goes first
       dinosaurs = order_dinosaurs
       # Each picks an ability to use
-      abilities = dinosaurs.map{|d| d.pick_ability}
+      abilities = []
+      abilities << dinosaurs.first.pick_ability(dinosaurs.first, dinosaurs.last)
+      abilities << dinosaurs.last.pick_ability(dinosaurs.last, dinosaurs.first)
       # if the second picked priority move and the first one did not, swap them around
       # in all other cases they are already in the correct order
       if abilities.last.is_priority && !abilities.first.is_priority
@@ -37,6 +39,8 @@ class Match
         @logger.info("#{dinosaurs.first.name} is stunned")
         @log << "#{dinosaurs.first.name}::stunned"
         dinosaurs.first.is_stunned = false
+        # cooldown whatever the player selected, even if he did not get around to using it
+        abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
       else
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
         @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
@@ -48,6 +52,8 @@ class Match
         @logger.info("#{dinosaurs.last.name} is stunned")
         @log << "#{dinosaurs.last.name}::stunned"
         dinosaurs.last.is_stunned = false
+        # cooldown whatever the player selected, even if he did not get around to using it
+        abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
       else
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
         @log << "#{dinosaurs.last.name}::#{abilities.last.class}"

@@ -140,8 +140,8 @@ class Dinosaur < ApplicationRecord
   # Pick the next ability (need to add order dependency or strikes)
   # returns the instance
   # For now just return the first available ability defined later use strategies
-  def pick_ability
-    strategy.next_move(available_abilities)
+  def pick_ability(attacker, defender)
+    strategy.next_move(attacker, defender)
   end
 
   # returns array of all possible hybrids one level up

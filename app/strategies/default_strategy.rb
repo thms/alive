@@ -13,7 +13,7 @@
 # Picking an ability is limited by what abilities are available at the time, e.g. limited by delay and cooldown
 class DefaultStrategy
 
-  def self.next_move(available_abilities)
-    available_abilities.first
+  def self.next_move(attacker, defender)
+    attacker.available_abilities.first
   end
 end

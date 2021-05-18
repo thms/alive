@@ -2,9 +2,9 @@
 # without taking the defender into account yet
 class HighestDamageStrategy
 
-  def self.next_move(available_abilities)
+  def self.next_move(attacker, defender)
     # select ability by higest damage
-    available_abilities.sort_by {| ability| ability.damage_multiplier}.last
+    attacker.available_abilities.sort_by {| ability| ability.damage_multiplier}.last
   end
 
 end

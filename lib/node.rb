@@ -1,23 +1,27 @@
 class Node
 
   attr_accessor :name
+  attr_accessor :ability_name
   attr_accessor :children
   attr_accessor :parent
   attr_accessor :data
   attr_accessor :visits
   attr_accessor :is_win
   attr_accessor :winner
+  attr_accessor :looser
   attr_accessor :color
   attr_accessor :id
 
-  def initialize(name, data = nil)
+  def initialize(name, ability_name = '', data = nil)
     @name = name
+    @ability_name = ability_name
     @data = data
     @children = []
     @parent = nil
     @visits = 1
     @is_win = false
     @winner = nil
+    @looser = nil
     @id = SecureRandom.uuid[0..7]
   end
 
@@ -39,19 +43,19 @@ class Node
     @children.length != 0
   end
 
-  def add_child(name, data)
-    node = Node.new(name, data)
+  def add_child(name, ability_name, data)
+    node = Node.new(name, ability_name, data)
     children << node
     node
   end
 
   # adds a child node unless one with the same name already exists
-  def add_or_update_child(name, data)
+  def add_or_update_child(name, ability_name, data)
     if child = children.find {|child| child.name == name}
       child.visits += 1
       return child
     else
-      children << Node.new(name, data)
+      children << Node.new(name, ability_name, data)
       return children.last
     end
   end

@@ -16,8 +16,8 @@ class Simulation
   attr_accessor :dinosaur2
 
   def initialize(dinosaur1, dinosaur2)
-    @dinosaur1 = dinosaur1.reset_attributes!
-    @dinosaur2 = dinosaur2.reset_attributes!
+    @dinosaur1 = dinosaur1
+    @dinosaur2 = dinosaur2
     @logger = Logger.new(STDOUT)
     @round = 1
     @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
@@ -33,6 +33,53 @@ class Simulation
     one_round(@root)
     return @root
   end
+
+  # calucate the wins and losses for a given node recursively
+  # return {name1: {wins: 1, :losses: 0}, name2: {wins:2, losses: 5}}
+  def calc_wins_and_losses(node, result = nil)
+    result = {node.data[:dinosaur1].name => {wins: 0, losses: 0}, node.data[:dinosaur2].name => {wins: 0, losses: 0}} if result.nil?
+    # if the node is a leaf, update result and return
+    if node.is_win
+      result[node.winner][:wins] += 1
+      result[node.looser][:losses] += 1
+    else
+      node.children.each do |child|
+        calc_wins_and_losses(child, result)
+      end
+    end
+    return result
+  end
+
+  # prune an entire graph of nodes that are errors by one player
+  def prune(result)
+    queue = [result]
+    while !queue.empty? do
+      node = queue.shift
+      prune_node(node)
+      node.children.each do |child|
+        queue.push(child)
+      end
+    end
+  end
+
+  # prunes children of one node
+  # logic: if there is at least one leaf / win in the children and all
+  # chidlren have the same dino doing the action
+  # then the non-leaves get deleted
+  def prune_node(node)
+    has_win = false
+    dinos_seen = {}
+    node.children.each do |child|
+      dinos_seen[child.name.split('::').first] = true
+      has_win = true if child.is_win
+    end
+    if has_win && dinos_seen.size == 1
+      # prune all non-wins
+      node.children.delete_if {|child| !child.is_win }
+    end
+  end
+
+  private
 
   # execute one round of the simulation
   # take state of dinosaurs and match from the node's data
@@ -87,49 +134,54 @@ class Simulation
 
         # First attacks
         if dinosaurs.first.is_stunned
-          @logger.info("#{dinosaurs.first.name} is stunned")
+          #@logger.info("#{dinosaurs.first.name} is stunned")
           @log << "#{dinosaurs.first.name}::stunned"
           dinosaurs.first.is_stunned = false
-          node = current_node.add_or_update_child( "#{dinosaurs.first.name}::stunned", {
+          node = current_node.add_or_update_child( "#{dinosaurs.first.name}::stunned", '', {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
             health: health(dinosaurs)
           } )
         else
-          @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
+          #@logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
           @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
           hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}", {
-            dinosaur1: dinosaurs.first,
-            dinosaur2: dinosaurs.last,
-            depth: depth,
-            health: health(dinosaurs)
-          } )
+          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+            abilities.first.class,
+            {
+              dinosaur1: dinosaurs.first,
+              dinosaur2: dinosaurs.last,
+              depth: depth,
+              health: health(dinosaurs)
+            } )
         end
         # call next, and mark the most recent node as a win for the first dinosaur
         if dinosaurs.last.current_health <= 0
           node.is_win = true
           node.winner = dinosaurs.first.name
+          node.looser = dinosaurs.last.name
           node.color = dinosaurs.first.color
           break
         end
         # Second attacks
         if dinosaurs.last.is_stunned
-          @logger.info("#{dinosaurs.last.name} is stunned")
+          #@logger.info("#{dinosaurs.last.name} is stunned")
           @log << "#{dinosaurs.last.name}::stunned"
           dinosaurs.last.is_stunned = false
-          node = node.add_or_update_child( "#{dinosaurs.last.name}::stunned", {
+          node = node.add_or_update_child( "#{dinosaurs.last.name}::stunned", '', {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
             health: health(dinosaurs)
     }  )
         else
-          @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
+          #@logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
           @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
           hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}", {
+          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+            abilities.last.class,
+            {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
@@ -139,6 +191,7 @@ class Simulation
         if dinosaurs.first.current_health <= 0
           node.is_win = true
           node.winner = dinosaurs.last.name
+          node.looser = dinosaurs.first.name
           node.color = dinosaurs.last.color
           next
         end
@@ -167,5 +220,7 @@ class Simulation
       return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
     end
   end
+
+
 
 end

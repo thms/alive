@@ -2,18 +2,20 @@ require 'graphviz'
 
 class MatchupsController < ApplicationController
 
+  # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     stats = HashWithIndifferentAccess.new({'d1': 0, 'd2':0})
     logs = []
-    100.times do
-      @d1 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: 'd1', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: HighestDamageStrategy)
-      @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: 'd2', klass: 'cunning', abilities: [Strike, HighPounce, Heal], strategy: BestAgainstClassStrategy)
+    10.times do
+      @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: 'd1', klass: 'cunning', abilities: [InstantCharge, Strike], strategy: SimulationStrategy)
+      @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: 'd2', klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
       stats[result[:winner]]+=1
       logs << result[:log]
     end
+
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph('d1')
     d2_wins_graph = g.add_subgraph('d2')

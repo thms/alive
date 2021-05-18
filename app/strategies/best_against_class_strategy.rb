@@ -11,16 +11,16 @@ class BestAgainstClassStrategy
     wild_card: []
   }
 
-  def self.next_move(available_abilities)
+  def self.next_move(attacker, defender)
     # TODO: get defender class passed
-    defender_klass = :cunning
+    defender_klass = defender.klass.to_sym
     # select abilities where the name includes at least one word from the array of good options
-    abilities = available_abilities.select {|ability| BEST_ABILITIES_AGAINST_KLASS[defender_klass].map {|kw| ability.class.name.downcase.include? kw}.any?}
+    abilities = attacker.available_abilities.select {|ability| BEST_ABILITIES_AGAINST_KLASS[defender_klass].map {|kw| ability.class.name.downcase.include? kw}.any?}
     # and pick on of those
     ability = abilities.first
     # fallback on random, if nothing matches
     if abilities.empty?
-      return available_abilities.sample
+      return attacker.available_abilities.sample
     else
       return ability
     end
