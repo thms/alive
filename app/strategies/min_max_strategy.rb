@@ -2,7 +2,7 @@
 # calculates all possible futures
 # rolls up wins an losses to decide what is the next best move
 # needs access to both dinosaurs
-class SimulationStrategy
+class MinMaxStrategy
 
   # Convention: attacker is the one trying to figure out the next move
   def self.next_move(a, d)
@@ -23,6 +23,9 @@ class SimulationStrategy
     # Each child is a possible action to take
     # need to look two levels deep, due to priority abilities, etc.
     # So it provides the stats for both dinos, allowing to also guess at what the other should do.
+    # TODO: Evaluate these according to the min-max algorithm, rather than just the sum of wins and losses
+    # so that we always make the best possible outcome come true
+    # https://medium.com/@carsten.friedrich/part-2-the-min-max-algorithm-ae1489509660
     wins_and_losses = {}
     result.children.each do |child|
       w_a_l = simulation.calc_wins_and_losses(child)

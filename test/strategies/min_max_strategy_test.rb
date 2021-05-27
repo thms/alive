@@ -1,8 +1,8 @@
 require 'test_helper'
 
-class SimulationStrategyTest < ActiveSupport::TestCase
+class MinMaxStrategyTest < ActiveSupport::TestCase
 
-  test "Simulation Strategy should find strongest move even when there is no guarantee of a win" do
+  test "MinMax Strategy should find strongest move even when there is no guarantee of a win" do
     attacker = Dinosaur.new(
       level: 26,
       health: 4500,
@@ -24,11 +24,11 @@ class SimulationStrategyTest < ActiveSupport::TestCase
 
     attacker.color = '#03a9f4'
     defender.color = '#03f4a9'
-    result = SimulationStrategy.next_move(attacker, defender)
+    result = MinMaxStrategy.next_move(attacker, defender)
     assert_equal FierceImpact, result.class
   end
 
-  test "Simulation Strategy should find strongest move when there is a clear path to victory" do
+  test "MinMax Strategy should find strongest move when there is a clear path to victory" do
     defender = Dinosaur.new(
       level: 26,
       health: 4500,
@@ -50,7 +50,7 @@ class SimulationStrategyTest < ActiveSupport::TestCase
 
     attacker.color = '#03a9f4'
     defender.color = '#03f4a9'
-    result = SimulationStrategy.next_move(attacker, defender)
+    result = MinMaxStrategy.next_move(attacker, defender)
     assert_equal HighPounce, result.class
   end
 

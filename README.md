@@ -30,6 +30,9 @@ Fusions: dna needed for one fusion for each level of rarity
 
 
 ## TODO
+Update simulation strategy to use correct back propagation of rewards and rename to min max strategy
+Tabular Q function approach?
+Build neural network for the Q-function
 cloak attack increases
 all abilities
 Strategies: learn the best strategy through unsupervised learning (reinforcement learning, Q-Table ...)
