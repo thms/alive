@@ -9,7 +9,12 @@ Ability to calculate cost of evolution for a given dinosaur
 Ability to calculate cost to create a given dinosaur
 Ability to pick next dinosaur to focus on based on cost, likelihood, as the best next investment of coins, DNA, etc.
 
-
+## Rails issues
+Running
+    rails server
+will not reliably reload files with spring running. So either do a
+    spring stop
+after the rails server started or
 ## Data Model
 
 

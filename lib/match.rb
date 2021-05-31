@@ -11,7 +11,9 @@ class Match
 
   def initialize(dinosaur1, dinosaur2)
     @dinosaur1 = dinosaur1.reset_attributes!
+    @dinosaur1.value = 1.0
     @dinosaur2 = dinosaur2.reset_attributes!
+    @dinosaur2.value = -1.0
     @logger = Logger.new(STDOUT)
     @round = 1
     @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]

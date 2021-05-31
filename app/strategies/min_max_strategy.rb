@@ -4,8 +4,78 @@
 # needs access to both dinosaurs
 class MinMaxStrategy
 
+  @@cache = {}
+  @@cache_hits = 0
+  @@cache_misses = 0
+  # return the next move based on full tree search of future outcomes
+  def self.next_move(a,d)
+    attacker = deep_clone(a)
+    defender = deep_clone(d)
+    if attacker.name == defender.name
+      attacker.name += '-1'
+      defender.name += '-2'
+    end
+    # Run simulation - which is wasteful on every move ...
+    attacker.color = '#03a9f4'
+    defender.color = '#03f4a9'
+    simulation = Simulation.new(attacker, defender)
+    result = simulation.execute
+
+    # traverse tree depths first and propagate wins / loss upwards
+    # TODO: validate what happens with stunning and priority moves
+    # Use a caache to speed things up
+    # If going second, determine the most likely move of the other and use the stringest move from that subtree
+    ability_outcomes = {}
+    result.children.each do |child|
+      if child.name.split('::').first == a.name
+        ability_outcomes[child.ability_name] = one_level(child)
+      else
+        # if the other moves first, need to traverse down one level
+        ability_outcomes.merge! child.children.map {|grandchild| [grandchild.ability_name, one_level(grandchild)]}.to_h
+      end
+    end
+    # find highest value move and return the actual instance from the player available abilities
+    # it is quite possible to arrive here with multiple action with the same highest value
+    # In that case, we pick a random one to make it less predictable
+    puts ability_outcomes
+    begin
+      ability_outcomes.delete_if {|k,v| k === ""}
+      max_value = ability_outcomes.max_by{|k,v| v}.last
+      ability_outcomes.keep_if {|k,v| v == max_value}
+      klass = ability_outcomes.keys.sample
+      puts "class: #{klass}"
+      return a.available_abilities.find {|ability| ability.class.name == klass.name}
+    rescue => e
+      puts e.inspect
+      puts 'picking random'
+      # need to return the ability of the original attacker that was passed to get the cooldown and delay right.
+      return a.available_abilities.sample
+    end
+
+  end
+
+  # given a node, determine the value recursively for each possible action
+  def self.one_level(node)
+    cache_key = node.hash_value
+    if @@cache.key? cache_key
+      @@cache_hits += 1
+      return @@cache[cache_key]
+    end
+
+    if node.is_win
+      result = node.value
+    elsif node.has_children?
+      result = node.children.map {|child| one_level(child)}.max
+    else # if we limit the depth of the tree search we may have leaves that are undecided
+      result = 0.0
+    end
+    @@cache[cache_key] = result
+    @@cache_misses += 1
+    return result
+  end
+
   # Convention: attacker is the one trying to figure out the next move
-  def self.next_move(a, d)
+  def self.next_move_orig(a, d)
     attacker = deep_clone(a)
     defender = deep_clone(d)
     if attacker.name == defender.name
@@ -83,6 +153,14 @@ class MinMaxStrategy
       # need to return the ability of the original attacker that was passed to get the cooldown and delay right.
       return a.available_abilities.sample
     end
+  end
+
+  def self.cache_stats
+    {size: @@cache.length, hits: @@cache_hits, misses: @@cache_misses}
+  end
+
+  def self.reset_cache
+    @@cache = {}
   end
 
   private

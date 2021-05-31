@@ -50,6 +50,7 @@ class Simulation
     return result
   end
 
+
   # prune an entire graph of nodes that are errors by one player
   def prune(result)
     queue = [result]
@@ -83,29 +84,27 @@ class Simulation
 
   # execute one round of the simulation
   # take state of dinosaurs and match from the node's data
-  # create / merge  nodes for each combination of possible moves and store the new reuslt back into the tree.
+  # create / merge  nodes for each combination of possible moves and store the new result back into the tree.
   # only every other level has the dinosaur data after one exchange.
   # if dinosaur dies during the round, mark this node as an end.
   # TODO: add DoT
-  # TODO: create separate brnaches for the different possible outcomes of stun, critical chance, etc, requires a method to get all possible outcomes and to force a specific outcome (otherwise we need to run random battles, and force )
+  # TODO: create separate branches for the different possible outcomes of stun, critical chance, etc, requires a method to get all possible outcomes and to force a specific outcome (otherwise we need to run random battles, and force )
   # Also need to add probability of path taken, once we do that ....
   def one_round(current_node)
     # store all possible starting points for the next round
     next_round_nodes = []
-    @logger.info("top of round")
-    @logger.info("#{current_node.data[:dinosaur1].abilities.last.class}: #{current_node.data[:dinosaur1].abilities.last.current_cooldown}")
-    @logger.info("#{current_node.data[:dinosaur2].abilities.last.class}: #{current_node.data[:dinosaur2].abilities.last.current_cooldown}")
 
     # create all possible combinations
     depth = current_node.data[:depth] + 1
-    # Safety valve
-    return if depth > 10
+    # Safety valve to only look so far into the future
+    return if depth > 8
+
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
         # make deep clones of both dinosaurs
         dinosaur1 = deep_clone(current_node.data[:dinosaur1])
         dinosaur2 = deep_clone(current_node.data[:dinosaur2])
-        # use the cloned abilities to get correct cooldown and delay behaviours
+        # use the cloned abilities to get correct cooldown and delay behaviours from the original ones, rather than the clones
         a1 = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
         a2 = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
         abilities = [a1, a2]
@@ -162,6 +161,7 @@ class Simulation
           node.winner = dinosaurs.first.name
           node.looser = dinosaurs.last.name
           node.color = dinosaurs.first.color
+          node.value = dinosaurs.first.value
           break
         end
         # Second attacks
@@ -193,6 +193,7 @@ class Simulation
           node.winner = dinosaurs.last.name
           node.looser = dinosaurs.first.name
           node.color = dinosaurs.last.color
+          node.value = dinosaurs.last.value
           next
         end
         # Advance the clock

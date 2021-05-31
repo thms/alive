@@ -11,6 +11,7 @@ class Node
   attr_accessor :looser
   attr_accessor :color
   attr_accessor :id
+  attr_accessor :value
 
   def initialize(name, ability_name = '', data = nil)
     @name = name
@@ -21,6 +22,7 @@ class Node
     @visits = 1
     @is_win = false
     @winner = nil
+    @value = 0
     @looser = nil
     @id = SecureRandom.uuid[0..7]
   end
@@ -62,5 +64,20 @@ class Node
 
   def to_s
     "#{@name} - #{@id}"
+  end
+
+  # calculate a uniqe hash value for the state of the game represented by the node
+  # to use in the MinMaxStrategy to speed things up
+  # Need: names of both, health of both, modifier names * tick count, ability names and cooldown/delay, levels, damage,
+  def hash_value
+    d = @data[:dinosaur1]
+    result = "#{d.name} #{d.health} #{d.level} "
+    d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
+    d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    d = @data[:dinosaur2]
+    result << "#{d.name} #{d.health} #{d.level} "
+    d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
+    d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    result
   end
 end

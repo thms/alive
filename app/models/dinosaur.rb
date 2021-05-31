@@ -28,6 +28,7 @@ class Dinosaur < ApplicationRecord
   attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :strategy
+  attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
 
   # reset fight attributes, to initial values
   # also (re)-build the abilities from the classes passed in
