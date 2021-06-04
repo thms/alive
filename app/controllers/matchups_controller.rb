@@ -5,7 +5,7 @@ class MatchupsController < ApplicationController
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     MinMaxStrategy.reset_cache
-    name1 = 'Velociraptor'
+    name1 = 'Quetzorion'
     name2 = 'Thoradolosaur'
     stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0})
     logs = []
@@ -15,14 +15,13 @@ class MatchupsController < ApplicationController
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = MinMaxStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = RandomStrategy
+      @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
       stats[result[:winner]]+=1
       logs << result[:log]
     end
-    @cache_stats = MinMaxStrategy.cache_stats
 
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph(name1)
