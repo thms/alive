@@ -310,8 +310,12 @@ class Dinosaur < ApplicationRecord
   end
 
   def resistance(symbol)
-    index = Constants::RESISTANCES.find_index(symbol)
-    self.resistances[index] rescue 0
+    begin
+      index = Constants::RESISTANCES.find_index(symbol)
+      self.resistances[index]
+    rescue
+      0
+    end
   end
 
   private

@@ -1,5 +1,4 @@
 # Instant Charge
-# TODO: add stun modifier
 class InstantCharge < Ability
 
   self.is_implemented = true
@@ -12,8 +11,7 @@ class InstantCharge < Ability
   def damage_defender(attacker, defender)
     result = super
     # stun the defender
-    # TODO: add in resistance of defender
-    defender.is_stunned = (rand <= 0.75)
+    defender.is_stunned = rand(100) < 75 * (100.0 - defender.resistance(:stun) / 100.0)
     result
   end
 

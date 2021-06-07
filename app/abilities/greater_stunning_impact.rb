@@ -10,9 +10,8 @@ class GreaterStunningImpact < Ability
 
   def damage_defender(attacker, defender)
     result = super
-    # stun the defender
-    # TODO: add in resistance of defender
-    defender.is_stunned = (rand <= 0.75)
+    # stun the defender, with probabilities from resistance & attack
+    defender.is_stunned = rand(100) < 75 * (100.0 - defender.resistance(:stun) / 100.0)
     result
   end
 

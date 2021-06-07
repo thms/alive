@@ -10,9 +10,8 @@ class AcuteStun < Ability
 
   def damage_defender(attacker, defender)
     result = super
-    # stun the defender
-    # TODO: add in resistance of defender
-    defender.is_stunned = true
+    # stun the defender, with probability depending on the resitance of the defender
+    defender.is_stunned = rand(100) < (100 - defender.resistance(:stun))
     result
   end
 

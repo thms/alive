@@ -41,6 +41,8 @@ Build neural network for the Q-function
 cloak attack increases
 all abilities
 Resistances
+Counters
+Swap-in abilities
 Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 Implement counter attacks
@@ -124,3 +126,9 @@ max tiers per type: 20
 attack: max boost = 50%       ==> 2.5% per tier
 health: max boost = 50%       ==> 2.5% per tier
 speed:  max boost = 40 points ==> 2 points per tier
+
+## DoT
+
+## Rending attack
+damage is x percent of attackers max health bypassing armor and destroying shields
+distraction, critical hits and ferocity affect the percentage

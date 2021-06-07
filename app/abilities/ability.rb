@@ -31,6 +31,10 @@ class Ability
   # damage multiplier for this move: attacker.damage * multiplier, will be applied.
   class_attribute :damage_multiplier
 
+  # if true, this is a rending attack, doing damage based on the max health of the other critter
+  class_attribute :is_rending_attack
+  self.is_rending_attack = false
+
   # True if this is an automatic counter move
   class_attribute :is_counter
 
@@ -75,8 +79,13 @@ class Ability
   def damage_defender(attacker, defender)
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
-    # attacker's original damage times the type of attack
-    damage = attacker.damage * damage_multiplier
+    if is_rending_attack
+      # in a rending attack the damage is based of the max health of the defender, apply resistence
+      damage = defender.health * damage_multiplier * (100.0 - defender.resistance(:rend)) / 100.0
+    else
+      # attacker's original damage times the type of attack
+      damage = attacker.damage * damage_multiplier
+    end
     # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
     # note: modifiers may reduce critical chance to zero, in the current attributes
     is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
