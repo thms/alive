@@ -214,11 +214,11 @@ class MinMaxStrategy
   # calculate a unique key for the cache that represents the game state
   def self.hash_value(node)
     d = node.data[:dinosaur1]
-    result = "#{d.name} #{d.health} #{d.level} "
+    result = "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     d = node.data[:dinosaur2]
-    result << "#{d.name} #{d.health} #{d.level} "
+    result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     result

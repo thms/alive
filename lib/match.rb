@@ -62,9 +62,12 @@ class Match
         abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
       break if dinosaurs.first.current_health <= 0
-      # Advance the clock
+      # Advance the clock - also implement damage over time there
       tick
+      # After DoT has been applied, we may have a draw, or one of the dinosaurs won, so we need to check for it again.
+      # TODO: check if any of them died due to
     end
+    # With DoT: if we get here, ew still need to tick to aply DoT if the winner
     winner = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
     # write the winner log entry
     @log << winner

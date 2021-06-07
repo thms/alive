@@ -51,10 +51,11 @@ class Dinosaur < ApplicationRecord
   # damage: -100 .. 200 (cumulative modifiers in percent) damage = (100+this)/100 * original damage
   # critical chance: -100 .. +100 (cumulative modifiers in percent)
   # dodge: totoal chance due t dodge, so if create dodge 67% of damange, value is 67
+  # damage_over_time: 0 (none) to x percent
   # TODO: decide the mechanism to use, this is currently a mix of two.
   # if percentage values: this is an absolute delta.
   def current_attributes
-    attributes = {speed: 100, shields: 0, damage: 0, dodge: 0, critical_chance: self.critical_chance }
+    attributes = {speed: 100, shields: 0, damage: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0 }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
@@ -90,10 +91,15 @@ class Dinosaur < ApplicationRecord
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
+  # TODO: implement DoT here, before modifers are couted down.
   def tick
     # Count down delay and cooldown of attacks
     abilities.each do |ability|
       ability.tick
+    end
+    # Apply damage over time, if any, taking resistance into account
+    if current_attributes[:damage_over_time] != 0
+      self.current_health -= current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0
     end
     # Count down modifiers and delete expired ones
     modifiers.delete_if do |modifier|
@@ -301,6 +307,11 @@ class Dinosaur < ApplicationRecord
       cost_to_level_non_hybrid(target_level, target_dna, result)
     end
     result
+  end
+
+  def resistance(symbol)
+    index = Constants::RESISTANCES.find_index(symbol)
+    self.resistances[index] rescue 0
   end
 
   private

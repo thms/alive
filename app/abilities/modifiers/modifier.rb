@@ -8,7 +8,7 @@ class Modifiers::Modifier
   class_attribute :attacks # number of attacks this is active
   class_attribute :source # {:self, :opponent}
   class_attribute :probability # { in integer, 0..100}
-  class_attribute :cleanse # [:all, :dot]
+  class_attribute :cleanse # [:all, :damage_over_time, :distraction]
   class_attribute :destroy # [:shields]
   class_attribute :is_attack # modifies attackers attack, e.g. increase chance of critical hit
   class_attribute :is_defense # modifies defenders defenses, e.g. shields

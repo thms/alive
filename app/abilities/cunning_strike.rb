@@ -13,7 +13,7 @@ class CunningStrike < Ability
   self.bypass = []
 
   def update_attacker(attacker, defender)
-    attacker.cleanse(:dot)
+    attacker.cleanse(:damage_over_time)
   end
 
   def update_defender(attacker, defender)
