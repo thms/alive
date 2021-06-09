@@ -3,7 +3,7 @@ require 'test_helper'
 class MinMaxStrategyTest < ActiveSupport::TestCase
 
   test "MinMax Strategy should find strongest move even when there is no guarantee of a win" do
-    skip
+    #skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -30,7 +30,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should find strongest move when there is a clear path to victory" do
-    skip
+    #skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -79,12 +79,12 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       abilities: [Strike, HighPounce]).reset_attributes!
       MinMaxStrategy.reset_cache
     result = MinMaxStrategy.next_move(attacker, defender)
-    assert_equal LethalWound, result.class
+    assert_equal InstantDistraction, result.class
 
   end
 
   test "MinMax Strategy should find a good move for Quetzorion" do
-    skip
+    #skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
