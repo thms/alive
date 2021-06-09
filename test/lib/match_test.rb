@@ -23,7 +23,7 @@ class MatchTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 120, level: 20, name: 'd2', abilities: [InstantCharge, Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)
     result = match.execute
-    assert_equal 'd2', result[:winner]
+    assert_equal 'd2', result[:outcome]
   end
 
   test "Equal health and damage, faster should win with simple strikes only" do
@@ -31,7 +31,7 @@ class MatchTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)
     result = match.execute
-    assert_equal "d1", result[:winner]
+    assert_equal "d1", result[:outcome]
   end
 
   test "Equal health and damage, faster should win with simple strikes only - reversed order" do
@@ -39,7 +39,7 @@ class MatchTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)
     result = match.execute
-    assert_equal "d2", result[:winner]
+    assert_equal "d2", result[:outcome]
   end
 
   test "Equal health and speed, higher damager should win with simple strikes only" do
@@ -47,7 +47,7 @@ class MatchTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)
     result = match.execute
-    assert_equal "d1", result[:winner]
+    assert_equal "d1", result[:outcome]
   end
 
   test "Equal health, damage, and speed decelerating strike should win " do
@@ -55,7 +55,7 @@ class MatchTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)
     result = match.execute
-    assert_equal "d1", result[:winner]
+    assert_equal "d1", result[:outcome]
   end
 
   # test "Equal health, damage, and speed decelerating strike against cleansing strike should be a 66/33 percent " do
@@ -63,7 +63,7 @@ class MatchTest < ActiveSupport::TestCase
   #   d2 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd2', abilities: [CleansingStrike])
   #   match = Match.new(d1, d2)
   #   result = match.execute
-  #   assert_equal "d1", result[:winner]
+  #   assert_equal "d1", result[:outcome]
   # end
 
 end

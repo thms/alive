@@ -62,16 +62,22 @@ class Match
         abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
       break if dinosaurs.first.current_health <= 0
-      # Advance the clock - also implement damage over time there
+      # Advance the clock, to apply DoT and tick down modifiers
       tick
-      # After DoT has been applied, we may have a draw, or one of the dinosaurs won, so we need to check for it again.
-      # TODO: check if any of them died due to
+      # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
+      break if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
     end
-    # With DoT: if we get here, ew still need to tick to aply DoT if the winner
-    winner = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
-    # write the winner log entry
-    @log << winner
-    {winner: winner, log: @log}
+    # If we get here, we still need to tick to apply DoT, since this can lead to a draw
+    tick
+    # three possible outcomes: draw, d1 wins, d2 wins
+    if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
+      outcome = 'draw'
+    else
+      outcome = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
+    end
+    # write the outcome log entry
+    @log << outcome
+    {outcome: outcome, log: @log}
   end
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)

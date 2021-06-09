@@ -99,7 +99,7 @@ class Dinosaur < ApplicationRecord
     end
     # Apply damage over time, if any, taking resistance into account
     if current_attributes[:damage_over_time] != 0
-      self.current_health -= current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0
+      self.current_health -= (current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0).to_i
     end
     # Count down modifiers and delete expired ones
     modifiers.delete_if do |modifier|

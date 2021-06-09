@@ -15,6 +15,7 @@ class MinMaxStrategy
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
+  @@cache_is_enabled = true
   @@error_rate = 0.0
   @@root = nil
   @@round = 0
@@ -25,6 +26,8 @@ class MinMaxStrategy
     round = 0
     if rand < @@error_rate
       move = attacker.availabe_abilities.sample
+    elsif attacker.available_abilities.size == 1
+      move = attacker.available_abilities.first
     else
       # select best possible move
       root = Node.new('Start')
@@ -43,12 +46,13 @@ class MinMaxStrategy
 
   # returns array of moves with the highest value for the attacker
   def self.one_round(current_node, attacker, defender)
-    cache_key = hash_value(current_node)
-    if @@cache.key? cache_key
-      @@cache_hits += 1
-      return @@cache[cache_key]
+    if @@cache_is_enabled
+      cache_key = hash_value(current_node, attacker.value)
+      if @@cache.key? cache_key
+        @@cache_hits += 1
+        return @@cache[cache_key]
+      end
     end
-
     # Store the abilities for the attacker and their respective outcome value
     ability_outcomes = {}
     # Safety valve to only look so far into the future
@@ -113,17 +117,19 @@ class MinMaxStrategy
         end
         # call next, and mark the most recent node as a win for the first dinosaur
         if dinosaurs.last.current_health <= 0
-          node.is_win = true
-          node.winner = dinosaurs.first.name
-          node.looser = dinosaurs.last.name
-          node.value = dinosaurs.first.value
-          @@logger.info("1: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-          if node.winner == attacker.name
-            # store this as a winning node for the attacker (who may have value -1.0)
-            ability_outcomes[abilities.first.class.name] = node.value
-          else
-            # store the selection of the attacker as a loss
-            ability_outcomes[abilities.last.class.name] = node.value
+          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+            node.is_final = true
+            node.winner = dinosaurs.first.name
+            node.looser = dinosaurs.last.name
+            node.value = dinosaurs.first.value
+            @@logger.info("1: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
+            if node.winner == attacker.name
+              # store this as a winning node for the attacker (who may have value -1.0)
+              ability_outcomes[abilities.first.class.name] = node.value
+            else
+              # store the selection of the attacker as a loss
+              ability_outcomes[abilities.last.class.name] = node.value
+            end
           end
           @@logger.info ability_outcomes
           break # next rather than break?
@@ -153,26 +159,28 @@ class MinMaxStrategy
           } )
         end
         if dinosaurs.first.current_health <= 0
-          @@logger.info("#{dinosaurs.last.name} wins")
-          node.is_win = true
-          node.winner = dinosaurs.last.name
-          node.looser = dinosaurs.first.name
-          node.value = dinosaurs.last.value
-          @@logger.info("2: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-          if node.winner == attacker.name
-            # store this as a winning node for the attacker (who may have value -1.0)
-            ability_outcomes[abilities.last.class.name] = node.value
-          else
-            # mark the move above as a loosing move for the attacker
-            ability_outcomes[abilities.first.class.name] = node.value
+          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+            @@logger.info("#{dinosaurs.last.name} wins")
+            node.is_final = true
+            node.winner = dinosaurs.last.name
+            node.looser = dinosaurs.first.name
+            node.value = dinosaurs.last.value
+            @@logger.info("2: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
+            if node.winner == attacker.name
+              # store this as a winning node for the attacker (who may have value -1.0)
+              ability_outcomes[abilities.last.class.name] = node.value
+            else
+              # mark the move above as a loosing move for the attacker
+              ability_outcomes[abilities.first.class.name] = node.value
+            end
           end
           @@logger.info ability_outcomes
           next
         end
         # Advance the clock
         @@round += 1
-        dinosaur1.tick
-        dinosaur2.tick
+        # apply damage over time and skip to next
+        next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
         # since both survived, explore further into the future
         # the move the dinosaur chose above either leads to a win or a loss further down the line, so we need find the most favourable outcome
         # for the attacker and mark the move chosen above with that outcome
@@ -194,14 +202,20 @@ class MinMaxStrategy
     # TODO: we may want to use a random selection or secondary strategy if there or more than one good moves to choose from
     result = [ability_outcomes.sort_by {|k,v| attacker.value * v}.last].to_h rescue {}
     # update cache
-    @@cache[cache_key] = result
-    @@cache_misses += 1
+    if @@cache_is_enabled
+      @@cache[cache_key] = result
+      @@cache_misses += 1
+    end
     # return best ability
     return result
   end
 
   def self.cache_stats
     {size: @@cache.length, hits: @@cache_hits, misses: @@cache_misses}
+  end
+
+  def self.cache
+    @@cache
   end
 
   def self.reset_cache
@@ -211,10 +225,28 @@ class MinMaxStrategy
   end
 
   private
+
+  def self.apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+    dinosaurs.first.tick
+    dinosaurs.last.tick
+    if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+      @@logger.info("Draw")
+      node.is_final = true
+      node.winner = nil
+      node.looser = nil
+      node.value = 0.0
+      node.data[:health] = health(dinosaurs)
+      ability_outcomes[abilities.last.class.name] = 0.0
+      return true
+    else
+      return false
+    end
+  end
   # calculate a unique key for the cache that represents the game state
-  def self.hash_value(node)
+  def self.hash_value(node, attacker_value)
+    result = "#{attacker_value}"
     d = node.data[:dinosaur1]
-    result = "#{d.name} #{d.current_health} #{d.level} "
+    result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     d = node.data[:dinosaur2]

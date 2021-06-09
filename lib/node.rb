@@ -6,7 +6,7 @@ class Node
   attr_accessor :parent
   attr_accessor :data
   attr_accessor :visits
-  attr_accessor :is_win
+  attr_accessor :is_final
   attr_accessor :winner
   attr_accessor :looser
   attr_accessor :color
@@ -20,7 +20,7 @@ class Node
     @children = []
     @parent = nil
     @visits = 1
-    @is_win = false
+    @is_final = false
     @winner = nil
     @value = 0
     @looser = nil

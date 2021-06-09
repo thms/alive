@@ -132,3 +132,55 @@ speed:  max boost = 40 points ==> 2 points per tier
 ## Rending attack
 damage is x percent of attackers max health bypassing armor and destroying shields
 distraction, critical hits and ferocity affect the percentage
+
+## Resistances
+### DoT
+dot = x
+resistance y (y=100%: dot = 0, y=0: dot = x, y=50% dot=0.5*x)
+
+### Critical Reduction
+P(d.crit_hit) = x
+reduction y (y=100%: x= 0, y=50%: x = 0.5 * x)
+P(d.crit_hit) = x * (1-y)
+resist reduction z (z=100: x, z=0: x * (1-y), z=50: )
+P(d.crit_hit) = x * (1 - y * (1 - z))
+
+### Distraction
+damage = x
+distraction = y (y=100%: damage = 0; y=50%: damage = 0.5*x; y = 0%: damage = x)
+damage = x*(1-y)
+resistance z (z=100%: damage = x; z=50%: d = x*(1-0.5*y), z=0: d = x*(1-y))
+d = x * (1 - y * (1 -z))
+
+### Rend
+damage = x
+resistance = y (y=100%: d = 0, y=50% d= 0.5*x)
+d = x * (1 - y)
+
+### Speed Decrease
+speed = x
+reduction = y
+s = x * (1 - y)
+resistance z
+s = x * (1 - y * (1 - z))
+
+### Stun
+P(stun) = x
+resistance y
+P(stun) = x * (1 - y)
+
+### Swap Prevention
+P(swap_prevention) = x
+resistance y
+P(sp) = x * (1 - y)
+
+### Taunt
+resistance = x
+P(attack any opponent) = x
+
+### Vulnerable
+damage = x
+vulnerable : true / false
+true: damage = 1.25 x
+resistance y
+damage = (1 + 25% * (1 - y)) * x

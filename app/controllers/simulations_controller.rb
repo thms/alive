@@ -6,16 +6,16 @@ class SimulationsController < ApplicationController
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
     d1 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
     d2 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Sidestep, NullifyingRampage], strategy: RandomStrategy)
-    d1 = Dinosaur.find_by_name('Thoradolosaur')
-    d2 = Dinosaur.find_by_name('Quetzorion')
+    d1 = Dinosaur.find_by_name('Velociraptor')
+    d2 = Dinosaur.find_by_name('Suchotator')
     d1.reset_attributes!
     d2.reset_attributes!
     if d1.name == d2.name
       d1.name += '-1'
       d2.name += '-2'
     end
-    d1.color = '#03a9f4'
-    d2.color = '#03f4a9'
+    d1.color = '#81d4fa'
+    d2.color = '#b2dfdb'
     @simulation = Simulation.new(d1, d2)
     result = @simulation.execute
 
@@ -53,7 +53,7 @@ class SimulationsController < ApplicationController
       n = graph.add_node(node_title(child))
       n.attributes[:fontname] = 'verdana, arial, helvetica, sans-serif'
       n.attributes[:fontsize] = 8.0
-      if child.is_win == true
+      if child.is_final == true
         n.attributes[:fillcolor] = child.color
         n.attributes[:style] = 'filled'
       end

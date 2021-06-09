@@ -35,13 +35,15 @@ class Simulation
   end
 
   # calucate the wins and losses for a given node recursively
-  # return {name1: {wins: 1, :losses: 0}, name2: {wins:2, losses: 5}}
+  # return {name1: {wins: 1, losses: 0}, name2: {wins:2, losses: 5}, draws: 3}
   def calc_wins_and_losses(node, result = nil)
-    result = {node.data[:dinosaur1].name => {wins: 0, losses: 0}, node.data[:dinosaur2].name => {wins: 0, losses: 0}} if result.nil?
+    result = {node.data[:dinosaur1].name => {wins: 0, losses: 0}, node.data[:dinosaur2].name => {wins: 0, losses: 0}, 'draws' => 0} if result.nil?
     # if the node is a leaf, update result and return
-    if node.is_win
+    if node.is_final && !node.winner.nil?
       result[node.winner][:wins] += 1
       result[node.looser][:losses] += 1
+    elsif node.is_final && node.winner.nil?
+      result['draws'] += 1
     else
       node.children.each do |child|
         calc_wins_and_losses(child, result)
@@ -68,15 +70,15 @@ class Simulation
   # chidlren have the same dino doing the action
   # then the non-leaves get deleted
   def prune_node(node)
-    has_win = false
+    is_final = false
     dinos_seen = {}
     node.children.each do |child|
       dinos_seen[child.name.split('::').first] = true
-      has_win = true if child.is_win
+      is_final = true if child.is_final
     end
-    if has_win && dinos_seen.size == 1
+    if is_final && dinos_seen.size == 1
       # prune all non-wins
-      node.children.delete_if {|child| !child.is_win }
+      node.children.delete_if {|child| !child.is_final }
     end
   end
 
@@ -157,11 +159,13 @@ class Simulation
         end
         # call next, and mark the most recent node as a win for the first dinosaur
         if dinosaurs.last.current_health <= 0
-          node.is_win = true
-          node.winner = dinosaurs.first.name
-          node.looser = dinosaurs.last.name
-          node.color = dinosaurs.first.color
-          node.value = dinosaurs.first.value
+          unless apply_damage_over_time(node, dinosaurs)
+            node.is_final = true
+            node.winner = dinosaurs.first.name
+            node.looser = dinosaurs.last.name
+            node.color = dinosaurs.first.color
+            node.value = dinosaurs.first.value
+          end
           break
         end
         # Second attacks
@@ -189,24 +193,43 @@ class Simulation
           } )
         end
         if dinosaurs.first.current_health <= 0
-          node.is_win = true
-          node.winner = dinosaurs.last.name
-          node.looser = dinosaurs.first.name
-          node.color = dinosaurs.last.color
-          node.value = dinosaurs.last.value
+          # apply DoT to other to see if that kills it
+          unless apply_damage_over_time(node, dinosaurs)
+            node.is_final = true
+            node.winner = dinosaurs.last.name
+            node.looser = dinosaurs.first.name
+            node.color = dinosaurs.last.color
+            node.value = dinosaurs.last.value
+          end
           next
         end
         # Advance the clock
         @round += 1
-        dinosaur1.tick
-        dinosaur2.tick
-        # since both survived, push last node onto the stack for the next round of simulation
-        next_round_nodes << node
+        # since both survived, push last node onto the stack for the next round of simulation, unless DoT led to both being dead
+        next_round_nodes << node unless apply_damage_over_time(node, dinosaurs)
       end
     end
     # and recurse through the possible futures
     next_round_nodes.each do |node|
       one_round(node)
+    end
+  end
+
+  # there are three places where we need to apply DoT and update nodes
+  # returns true if DoT led to both dinos being dead
+  def apply_damage_over_time(node, dinosaurs)
+    dinosaurs.first.tick
+    dinosaurs.last.tick
+    if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+      node.is_final = true
+      node.value = 0.0
+      node.winner = nil
+      node.looser = nil
+      node.color = '#cfd8dc'
+      node.data[:health] = health(dinosaurs)
+      return true
+    else
+      return false
     end
   end
 

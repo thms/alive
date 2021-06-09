@@ -56,8 +56,35 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     assert_equal HighPounce, result.class
   end
 
+  test "MinMax Strategy should use damage over time" do
+    attacker = Dinosaur.new(
+      value: 1.0,
+      level: 26,
+      health: 4500,
+      damage: 1300,
+      speed: 116,
+      armor: 0,
+      critical_chance: 20,
+      name: 'Suchotator',
+      abilities: [SuperiorityStrike, LethalWound, NullifyingImpact, InstantDistraction]).reset_attributes!
+    defender = Dinosaur.new(
+      value: -1.0,
+      level: 26,
+      health: 1650,
+      damage: 1550,
+      speed: 132,
+      armor: 0,
+      critical_chance: 5,
+      name: 'Velociraptor',
+      abilities: [Strike, HighPounce]).reset_attributes!
+      MinMaxStrategy.reset_cache
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal LethalWound, result.class
+
+  end
+
   test "MinMax Strategy should find a good move for Quetzorion" do
-    #skip
+    skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
