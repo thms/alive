@@ -48,14 +48,15 @@ class Dinosaur < ApplicationRecord
   # speed, distraction, shields, damage, critical_chance, dodge
   # shields: 0 .. 100 (modification in percent)
   # speed: 0 .. 200 (cumulative modifers in percent)
-  # damage: -100 .. 200 (cumulative modifiers in percent) damage = (100+this)/100 * original damage
+  # damage: -100 .. 200 (cumulative modifiers in percent) damage = (100+this)/100 * original damage, use for attack increase
+  # distraction: 0..100 (cumulative modifiers in percent)
   # critical chance: -100 .. +100 (cumulative modifiers in percent)
   # dodge: totoal chance due t dodge, so if create dodge 67% of damange, value is 67
   # damage_over_time: 0 (none) to x percent
   # TODO: decide the mechanism to use, this is currently a mix of two.
   # if percentage values: this is an absolute delta.
   def current_attributes
-    attributes = {speed: 100, shields: 0, damage: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0 }
+    attributes = {speed: 100, shields: 0, damage: 0, distraction: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0 }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
@@ -99,7 +100,7 @@ class Dinosaur < ApplicationRecord
     end
     # Apply damage over time, if any, taking resistance into account
     if current_attributes[:damage_over_time] != 0
-      self.current_health -= (current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0).to_i
+      self.current_health -= (current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0).round
     end
     # Count down modifiers and delete expired ones
     modifiers.delete_if do |modifier|

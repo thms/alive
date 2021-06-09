@@ -19,28 +19,28 @@ class TQStrategyTest < ActiveSupport::TestCase
 
   test "should learn from a number of games against the random player when going randomly first and last" do
     puts 'TQ : Random'
-    stats = HashWithIndifferentAccess.new({d1: 0, d2: 0})
+    stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     TQStrategy.reset
     1000.times do
       d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: TQStrategy)
       d2 = Dinosaur.new(health: 1000, damage: 200, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: RandomStrategy)
       match = Match.new(d1, d2)
       result = match.execute
-      outcome = result[:winner] == d1.name ? d1.value : d2.value
+      outcome = result[:outcome] == d1.name ? d1.value : d2.value
       TQStrategy.update_q_table(outcome)
-      stats[result[:winner]] += 1
+      stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
     pp TQStrategy.stats
 
-    stats = HashWithIndifferentAccess.new({d1: 0, d2: 0})
+    stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     100.times do
       d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: TQStrategy)
       d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: RandomStrategy)
       match = Match.new(d1, d2)
       result = match.execute
-      outcome = result[:winner] == d1.name ? d1.value : d2.value
-      stats[result[:winner]] += 1
+      outcome = result[:outcome] == d1.name ? d1.value : d2.value
+      stats[result[:outcome]] += 1
     end
     puts "Testing: #{stats}"
     pp TQStrategy.stats

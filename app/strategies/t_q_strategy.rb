@@ -1,3 +1,4 @@
+require 'logger'
 # Tabular Q Function strategy
 # Learning over teh course of a numbe of games what works best in a gven state of the game
 # Inputs to learning: state == attacker, defender
@@ -9,6 +10,8 @@ class TQStrategy
   @@q_table = {}
   @@log = []
   @@value = 1.0
+  @@logger = Logger.new(STDOUT)
+  @@logger.level = 2
 
   def self.next_move(attacker, defender)
     available_ability_names = attacker.available_abilities.map {|a| a.class.name }
@@ -54,7 +57,7 @@ class TQStrategy
       end
       # get max a of all possible actions for the entry in the table
       max_a = @@q_table[hash_value].sort_by {|k, v| v }.last.last
-      puts "max(a): #{max_a}, table: #{@@q_table[hash_value]}"
+      @@logger.info "max(a): #{max_a}, table: #{@@q_table[hash_value]}"
     end
   end
 

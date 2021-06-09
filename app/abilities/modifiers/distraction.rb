@@ -1,4 +1,4 @@
-# Reduce damamge by x percent
+# Reduce damage by x percent
 class Modifiers::Distraction < Modifiers::Modifier
 
   self.cleanse = [:all, :distraction]
@@ -18,6 +18,6 @@ class Modifiers::Distraction < Modifiers::Modifier
   # this should be additive with respect to the original damage
   # and this works on the other, not on self, by reducing their damage attribute
   def execute(attributes)
-    attributes[:damage] -= @value
+    attributes[:distraction] += @value
   end
 end

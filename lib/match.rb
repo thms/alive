@@ -15,6 +15,7 @@ class Match
     @dinosaur2 = dinosaur2.reset_attributes!
     @dinosaur2.value = -1.0
     @logger = Logger.new(STDOUT)
+    @logger.level = 2
     @round = 1
     @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
   end

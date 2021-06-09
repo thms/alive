@@ -1,15 +1,7 @@
 # Combination of simulation and min max strategy to bemore efficient and combine caching
 require 'logger'
 
-class DummyLogger
-  attr_accessor  :log
-  def initialize(args)
-    @log = []
-  end
-  def info(args)
-    @log << args
-  end
-end
+
 class MinMaxStrategy
 
   @@cache = {}
@@ -18,12 +10,10 @@ class MinMaxStrategy
   @@cache_is_enabled = true
   @@error_rate = 0.0
   @@root = nil
-  @@round = 0
   @@logger = Logger.new(STDOUT)
-
+  @@logger.level = 2
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)
-    round = 0
     if rand < @@error_rate
       move = attacker.availabe_abilities.sample
     elsif attacker.available_abilities.size == 1
@@ -117,7 +107,7 @@ class MinMaxStrategy
         end
         # call next, and mark the most recent node as a win for the first dinosaur
         if dinosaurs.last.current_health <= 0
-          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
             node.is_final = true
             node.winner = dinosaurs.first.name
             node.looser = dinosaurs.last.name
@@ -159,7 +149,7 @@ class MinMaxStrategy
           } )
         end
         if dinosaurs.first.current_health <= 0
-          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
             @@logger.info("#{dinosaurs.last.name} wins")
             node.is_final = true
             node.winner = dinosaurs.last.name
@@ -177,10 +167,8 @@ class MinMaxStrategy
           @@logger.info ability_outcomes
           next
         end
-        # Advance the clock
-        @@round += 1
-        # apply damage over time and skip to next
-        next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+        # Advance the clock & apply damage over time and skip to next if both are dead
+        next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
         # since both survived, explore further into the future
         # the move the dinosaur chose above either leads to a win or a loss further down the line, so we need find the most favourable outcome
         # for the attacker and mark the move chosen above with that outcome
@@ -193,11 +181,10 @@ class MinMaxStrategy
             ability_outcomes[abilities.last.class.name] = best_outcome
           end
           @@logger.info ability_outcomes
-
         end
       end
     end
-    #@logger.info ability_outcomes
+    @@logger.info ability_outcomes
     # At this point we have {"Strike" => 1.0, "EvasiveStance" => -1.0} so we need to pick the best outcome only
     # TODO: we may want to use a random selection or secondary strategy if there or more than one good moves to choose from
     result = [ability_outcomes.sort_by {|k,v| attacker.value * v}.last].to_h rescue {}
@@ -226,7 +213,7 @@ class MinMaxStrategy
 
   private
 
-  def self.apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities)
+  def self.apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
     dinosaurs.first.tick
     dinosaurs.last.tick
     if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
@@ -236,15 +223,20 @@ class MinMaxStrategy
       node.looser = nil
       node.value = 0.0
       node.data[:health] = health(dinosaurs)
-      ability_outcomes[abilities.last.class.name] = 0.0
+      if attacker.name == dinosaurs.first.name
+        ability_outcomes[abilities.first.class.name] = 0.0
+      else
+        ability_outcomes[abilities.last.class.name] = 0.0
+      end
       return true
     else
       return false
     end
   end
+
   # calculate a unique key for the cache that represents the game state
   def self.hash_value(node, attacker_value)
-    result = "#{attacker_value}"
+    result = "#{attacker_value} "
     d = node.data[:dinosaur1]
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }

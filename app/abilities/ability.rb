@@ -91,19 +91,21 @@ class Ability
     is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
     damage = damage * 1.25 if is_critical_hit
     # TODO: filter through attacker's modifiers (distraction, increase attack)
-    # - damage of attacker is reduced by distraction, increased by attack increase
-    damage = (damage * (100 + attacker.current_attributes[:damage]) / 100).to_i
+    # Apply distraction
+    damage = (damage * (100.0 - attacker.current_attributes[:distraction] * (100.0 - attacker.resistance(:distraction)) / 100.0) / 100.0)
+    # Attack increase
+    damage = (damage * (100.0 + attacker.current_attributes[:damage]) / 100.0)
     # TODO: filter through defender's modifiers (dogde)
     did_dodge = (100 * rand < defender.current_attributes[:dodge])
-    damage = (damage * (100.0 - 66.7) / 100.0).to_i if (did_dodge && !bypass.include?(:dodge))
+    damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge && !bypass.include?(:dodge))
     # filter through defender's shields
-    damage = (damage * (100 - defender.current_attributes[:shields]) / 100).to_i
+    damage = (damage * (100 - defender.current_attributes[:shields]) / 100)
     # filter through defender's armor if any and the strike does not bypass armor
-    damage = (damage * (100 - defender.armor) / 100).to_i unless bypass.include?(:armor)
+    damage = (damage * (100 - defender.armor) / 100) unless bypass.include?(:armor)
     # damage must no go below zero
     damage = [damage, 0].max
     # update defender's health
-    defender.current_health = (defender.current_health - damage).to_i
+    defender.current_health = (defender.current_health - damage).round
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
     attacker.tick_attack_count
     defender.tick_defense_count

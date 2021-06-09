@@ -57,6 +57,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should use damage over time" do
+    #skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
