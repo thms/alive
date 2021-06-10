@@ -20,7 +20,7 @@ class CunningStrike < Ability
     defender.remove_critical_chance_increase
     defender.remove_attack_increase
     defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
-    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100))
+    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
   end
 
 end

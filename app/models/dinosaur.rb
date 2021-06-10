@@ -30,6 +30,9 @@ class Dinosaur < ApplicationRecord
   attr_accessor :strategy
   attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
 
+  def to_param
+    name.parameterize
+  end
   # reset fight attributes, to initial values
   # also (re)-build the abilities from the classes passed in
   # ToDo: use stat bosts to calculate actual health, speed and damage
@@ -126,18 +129,27 @@ class Dinosaur < ApplicationRecord
 
   # remove taunt
   def remove_taunt
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::Taunt}
   end
 
   def remove_dodge
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::Dodge}
   end
 
   def remove_cloak
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::Taunt}
+    # TODO remmove other effects of dodge
   end
 
   def remove_critical_chance_increase
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::IncreaseCriticalChance}
   end
 
   def remove_attack_increase
+  end
+
+  def remove_speed_increase
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::IncreaseSpeed}
   end
 
   # available abilities are those where both delay and cooldown is 0

@@ -47,7 +47,7 @@ class MinMaxStrategy
     ability_outcomes = {}
     # Safety valve to only look so far into the future
     depth = current_node.data[:depth] + 1
-    return if depth > 10
+    return {} if depth > 4
     # create all possible combinations of abilities of the two dinosaurs
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|

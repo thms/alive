@@ -83,7 +83,7 @@ class DinosaursController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_dinosaur
-      @dinosaur = Dinosaur.find(params[:id])
+      @dinosaur = Dinosaur.find_by(slug: params[:id])
     end
 
     # Only allow a list of trusted parameters through.

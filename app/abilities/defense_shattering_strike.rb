@@ -1,4 +1,3 @@
-# TODO:
 class DefenseShatteringStrike < Ability
 
   self.is_implemented = true

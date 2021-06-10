@@ -4,25 +4,33 @@ class MatchupsController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    MinMaxStrategy.reset_cache
-    name1 = 'Velociraptor'
-    name2 = 'Suchotator'
+    #MinMaxStrategy.reset_cache
+    name1 = 'Indoraptor'
+    name2 = 'Smilonemys'
     stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     logs = []
     10.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
       # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = MinMaxStrategy
+      @d1.strategy = TQStrategy
+      # @d1.level = 30
+      # @d1.health = 5469
+      # @d1.damage = 2324
+      #@d1.speed = 141
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMaxStrategy
+      @d2.strategy = TQStrategy
+      # @d2.level = 30
+      # @d2.health = 5333
+      # @d2.damage = 1982
+      # @d2.speed = 138
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
       stats[result[:outcome]]+=1
       logs << result[:log]
     end
-
+puts TQStrategy.stats
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph(name1)
     d2_wins_graph = g.add_subgraph(name2)
