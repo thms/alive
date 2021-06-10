@@ -6,28 +6,33 @@ require 'logger'
 # Q_Table stores a hash of the availble abilities to the q value : {"CunningStrike" => 0.3, "FierceImpact" => 0.6}
 class TQStrategy
 
-  INITIAL_Q_VALUE = 0.3
+  INITIAL_Q_VALUE = 0.2
+  EPSILON = 0.05
   @@q_table = {}
   @@log = []
   @@value = 1.0
+  @@random_mode = false
   @@logger = Logger.new(STDOUT)
-  @@logger.level = 2
+  @@logger.level = 2 # 1: show info, 2: don't show info
 
   def self.next_move(attacker, defender)
     available_ability_names = attacker.available_abilities.map {|a| a.class.name }
     # abilities according to the Q table
-    abilities = @@q_table[hash_value(attacker, defender)].clone
+    abilities = @@q_table[hash_value(attacker, defender)]
     # if empty, initialize and pick a random available ability
     if abilities.nil?
       @@q_table[hash_value(attacker, defender)] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h
       ability = attacker.available_abilities.sample.class.name
+    elsif @@random_mode || rand < EPSILON
+      # pick a random ability to do a broad learning in initial training
+      ability = available_ability_names.sample
     else
       # What is the highest value
       highest_value = abilities.sort_by {|k, v| v}.last.last
-      # find all moves that have the highest value and pickone at random
+      # find all moves that have the highest value and pick one at random
       ability = abilities.map {|k, v| highest_value == v ? k : nil}.compact.sample
     end
-    @@log << [hash_value(attacker, defender), available_ability_names, attacker.value, ability]
+    @@log.push [hash_value(attacker, defender), available_ability_names, attacker.value, ability]
     # Return the actual ability instance of the attacker
     return attacker.abilities.select {|a| a.class.name == ability}.first
   end
@@ -38,7 +43,7 @@ class TQStrategy
   # player value = 1.0 or -1.0
   # log does not include the final state of the game, since it is not needed for training
   def self.update_q_table(outcome)
-    learning_rate = 0.1
+    learning_rate = 0.01
     discount = 0.95
     max_a = (1.0 + @@value * outcome)/2.0
     last_entry = true
@@ -66,8 +71,24 @@ class TQStrategy
     @@log = []
   end
 
-  def self.stats
-    return @@q_table, @@q_table.size
+  def self.q_table
+    return @@q_table
+  end
+
+  def self.log
+    @@log
+  end
+
+  def self.set_log(log)
+    @@log = log
+  end
+
+  def self.enable_random_mode
+    @@random_mode = true
+  end
+
+  def self.disable_random_mode
+    @@random_mode = false
   end
 
   private
