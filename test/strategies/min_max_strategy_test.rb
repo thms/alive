@@ -78,7 +78,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       critical_chance: 5,
       name: 'Velociraptor',
       abilities: [Strike, HighPounce]).reset_attributes!
-      MinMaxStrategy.reset_cache
+      MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
     assert_equal InstantDistraction, result.class
 
@@ -106,10 +106,27 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       critical_chance: 20,
       name: 'Quetzorion',
       abilities: [CraftyStrike, LongInvincibility, NullifyingRampage, Sidestep]).reset_attributes!
-    MinMaxStrategy.reset_cache
+    MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
     puts MinMaxStrategy.cache_stats
     assert_includes [Sidestep, CraftyStrike], result.class
+  end
+
+  test "should save state to disk and load back" do
+    MinMaxStrategy.reset
+    10.times do
+      d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
+      d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: MinMaxStrategy)
+      match = Match.new(d1, d2)
+      result = match.execute
+      MinMaxStrategy.learn(result[:outcome_value])
+    end
+    MinMaxStrategy.save
+    games_played = MinMaxStrategy.games_played
+    MinMaxStrategy.reset
+    assert_equal 0, MinMaxStrategy.games_played
+    MinMaxStrategy.load
+    assert_equal games_played, MinMaxStrategy.games_played
   end
 
 end

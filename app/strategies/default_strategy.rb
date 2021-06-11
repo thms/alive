@@ -11,7 +11,7 @@
 #   Opponent's health, possible abilities, past abilities (to determine what that might likely do next)
 #   Own abilities and their cooldown, etc.
 # Picking an ability is limited by what abilities are available at the time, e.g. limited by delay and cooldown
-class DefaultStrategy
+class DefaultStrategy < Strategy
 
   def self.next_move(attacker, defender)
     attacker.available_abilities.first

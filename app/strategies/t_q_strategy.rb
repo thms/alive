@@ -4,14 +4,14 @@ require 'logger'
 # Inputs to learning: state == attacker, defender
 # outputs: value for each of the dinosaurs abilties (max of four per dinosaur)
 # Q_Table stores a hash of the availble abilities to the q value : {"CunningStrike" => 0.3, "FierceImpact" => 0.6}
-class TQStrategy
+class TQStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
   EPSILON = 0.05
   @@q_table = {}
   @@log = []
-  @@value = 1.0
   @@random_mode = false
+  @@games_played = 0
   @@logger = Logger.new(STDOUT)
   @@logger.level = 2 # 1: show info, 2: don't show info
 
@@ -37,6 +37,11 @@ class TQStrategy
     return attacker.abilities.select {|a| a.class.name == ability}.first
   end
 
+  def self.learn(outcome)
+    return if @@log.empty?
+    @@games_played += 1
+    update_q_table(outcome)
+  end
   # log is an array of shape: [[hash, attacker, defender before action, player value, action]], outcome is 0.0, 0.5 or 1.0
   # distribute reward backwards from the last move with discount and apply learning
   # action is "FierceStrike", etc
@@ -45,7 +50,8 @@ class TQStrategy
   def self.update_q_table(outcome)
     learning_rate = 0.01
     discount = 0.95
-    max_a = (1.0 + @@value * outcome)/2.0
+    attacker_value = @@log.first[2]
+    max_a = (1.0 + attacker_value * outcome)/2.0
     last_entry = true
     while entry = @@log.pop
       hash_value = entry[0]
@@ -69,6 +75,7 @@ class TQStrategy
   def self.reset
     @@q_table = {}
     @@log = []
+    @@games_played = 0
   end
 
   def self.q_table
@@ -77,6 +84,10 @@ class TQStrategy
 
   def self.log
     @@log
+  end
+
+  def self.games_played
+    @@games_played
   end
 
   def self.set_log(log)
@@ -91,11 +102,25 @@ class TQStrategy
     @@random_mode = false
   end
 
+  def self.save
+    state = Marshal.dump({q_table: @@q_table, games_played: @@games_played})
+    File.open("#{Rails.root}/tmp/t_q_strategy.state", "wb") do |file|
+      file.write state
+    end
+  end
+
+  def self.load
+    state = Marshal.load(File.binread("#{Rails.root}/tmp/t_q_strategy.state"))
+    @@q_table = state[:q_table]
+    @@games_played = state[:games_played]
+  end
+
   private
   # calculate a unique key for the cache that represents the game state
   def self.hash_value(attacker, defender)
     d = attacker
-    result = "#{d.name} #{d.current_health} #{d.level} "
+    result = "#{attacker.value} "
+    result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     d = defender

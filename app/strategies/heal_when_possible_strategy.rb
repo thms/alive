@@ -1,5 +1,5 @@
 # If it is possible to heal do that
-class HealWhenPossibleStrategy
+class HealWhenPossibleStrategy < Strategy
 
   HEALING_ABILITIES = ['heal','adrenaline', 'dig', 'refresh']
 

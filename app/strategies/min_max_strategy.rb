@@ -2,18 +2,20 @@
 require 'logger'
 
 
-class MinMaxStrategy
+class MinMaxStrategy < Strategy
 
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
   @@cache_is_enabled = true
+  @@games_played = 0
   @@error_rate = 0.0
   @@root = nil
   @@logger = Logger.new(STDOUT)
   @@logger.level = 2
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)
+    @@games_played += 1
     if rand < @@error_rate
       move = attacker.availabe_abilities.sample
     elsif attacker.available_abilities.size == 1
@@ -47,7 +49,7 @@ class MinMaxStrategy
     ability_outcomes = {}
     # Safety valve to only look so far into the future
     depth = current_node.data[:depth] + 1
-    return {} if depth > 4
+    return {} if depth > 5
     # create all possible combinations of abilities of the two dinosaurs
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
@@ -205,10 +207,30 @@ class MinMaxStrategy
     @@cache
   end
 
-  def self.reset_cache
+  def self.games_played
+    @@games_played
+  end
+
+  def self.reset
     @@cache = {}
     @@cache_hits = 0
     @@cache_misses = 0
+    @@games_played = 0
+  end
+
+  def self.save
+    state = Marshal.dump({cache: @@cache, cache_hits: @@cache_hits, cache_misses: @@cache_misses, games_played: @@games_played})
+    File.open("#{Rails.root}/tmp/min_max_strategy.state", "wb") do |file|
+      file.write state
+    end
+  end
+
+  def self.load
+    state = Marshal.load(File.binread("#{Rails.root}/tmp/min_max_strategy.state"))
+    @@cache = state[:cache]
+    @@cache_hits = state[:cache_hits]
+    @@cache_misses = state[:cache_misses]
+    @@games_played = state[:games_played]
   end
 
   private

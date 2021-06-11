@@ -73,12 +73,14 @@ class Match
     # three possible outcomes: draw, d1 wins, d2 wins
     if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
       outcome = 'draw'
+      outcome_value = 0.0
     else
       outcome = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
+      outcome_value = @dinosaur1.current_health > 0 ? @dinosaur1.value : @dinosaur2.value
     end
     # write the outcome log entry
     @log << outcome
-    {outcome: outcome, log: @log}
+    {outcome: outcome, outcome_value: outcome_value, log: @log}
   end
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)

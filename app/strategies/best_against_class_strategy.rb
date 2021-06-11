@@ -1,5 +1,5 @@
 # Picks from the avaialbe moves ones that are in general better against a speciic class of dinosaurs
-class BestAgainstClassStrategy
+class BestAgainstClassStrategy < Strategy
 
   BEST_ABILITIES_AGAINST_KLASS = {
     cunning: ['resilient', 'shield', 'precise', 'pounce'],

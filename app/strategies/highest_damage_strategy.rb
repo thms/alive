@@ -1,6 +1,6 @@
 # Picks from the avaialbe moves one that deals the highest damage
 # without taking the defender into account yet
-class HighestDamageStrategy
+class HighestDamageStrategy < Strategy
 
   def self.next_move(attacker, defender)
     # select ability by higest damage

@@ -9,6 +9,7 @@ class MatchupsController < ApplicationController
     name2 = 'Smilonemys'
     stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     logs = []
+    # TQStrategy.reset
     10.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
       # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
@@ -27,10 +28,12 @@ class MatchupsController < ApplicationController
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
+      @d1.strategy.learn(result[:outcome_value])
+      @d2.strategy.learn(result[:outcome_value])
       stats[result[:outcome]]+=1
       logs << result[:log]
     end
-puts TQStrategy.stats
+
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph(name1)
     d2_wins_graph = g.add_subgraph(name2)
