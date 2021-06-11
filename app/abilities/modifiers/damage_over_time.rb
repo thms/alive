@@ -3,7 +3,7 @@ class Modifiers::DamageOverTime < Modifiers::Modifier
   self.is_defense = false
   self.is_attack = !self.is_defense
   self.destroy = []
-  self.cleanse = [:dmage_over_time]
+  self.cleanse = [:damage_over_time, :all]
   self.is_positive = false
 
   def initialize(percent, turns)
