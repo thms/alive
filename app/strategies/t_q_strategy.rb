@@ -9,6 +9,7 @@ class TQStrategy < Strategy
   INITIAL_Q_VALUE = 0.2
   EPSILON = 0.05
   @@q_table = {}
+  @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = []
   @@random_mode = false
   @@games_played = 0
@@ -51,7 +52,14 @@ class TQStrategy < Strategy
     learning_rate = 0.01
     discount = 0.95
     attacker_value = @@log.first[2]
-    max_a = (1.0 + attacker_value * outcome)/2.0
+    # calcuate average of outcomes for the final move
+    hash_value = @@log.last[0]
+    if @@max_a_s[hash_value].nil?
+      @@max_a_s[hash_value] = [(1.0 + attacker_value * outcome)/2.0]
+    else
+      @@max_a_s[hash_value].push (1.0 + attacker_value * outcome)/2.0
+    end
+    max_a = @@max_a_s[hash_value].sum(0.0) / @@max_a_s[hash_value].size
     last_entry = true
     while entry = @@log.pop
       hash_value = entry[0]
@@ -61,6 +69,8 @@ class TQStrategy < Strategy
       @@q_table[hash_value] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h if @@q_table[hash_value].nil?
       # update with discount and learning rate, unless it is the final outcome, then use its value straight up
       if last_entry
+        # due to the stochastic nature of these outcomes, we cannot simply use the last outcome for this given
+        # state, but need to average across them all. (I.e. if a move with critical leads to a win and with crit to a loss)
         @@q_table[hash_value][action] = max_a
         last_entry = false
       else

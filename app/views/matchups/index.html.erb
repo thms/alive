@@ -1,7 +1,7 @@
 <h1>Matchups</h1>
 <%= render 'dinosaurs/data', dinosaur: @d1 %>
 <%= render 'dinosaurs/data', dinosaur: @d2 %>
-<div>games_played: <%= TQStrategy.games_played %>
+<div>Stats: <%= @stats %>
 <div>
   <%= @graph.html_safe %>
 </div>

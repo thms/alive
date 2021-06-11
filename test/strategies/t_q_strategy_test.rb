@@ -22,7 +22,7 @@ class TQStrategyTest < ActiveSupport::TestCase
   end
 
   test "training should propagate backwards" do
-    skip
+    #skip
     TQStrategy.reset
     TQStrategy.enable_random_mode
     d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, FierceStrike], strategy: TQStrategy).reset_attributes!
@@ -42,7 +42,7 @@ class TQStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the random player when going randomly first and last" do
-    skip
+    #skip
     puts 'TQ : Random'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     TQStrategy.reset
@@ -71,6 +71,7 @@ class TQStrategyTest < ActiveSupport::TestCase
   end
 
   test "should save state to disk and load back" do
+    skip
     TQStrategy.reset
     10.times do
       d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)

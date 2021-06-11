@@ -295,6 +295,7 @@ class Dinosaur < ApplicationRecord
     result[:dna][name] = 0 if result[:dna][name].nil?
     result[:fusions][name] = 0 if result[:fusions][name].nil?
     result[:target_levels][name] = target_level
+    return result if level == 30
     if is_hybrid?
       # add coins to upgrade self after the fusions are done
       result[:coins][name] += coins_to_level(target_level).to_i

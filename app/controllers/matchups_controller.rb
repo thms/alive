@@ -5,32 +5,24 @@ class MatchupsController < ApplicationController
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     #MinMaxStrategy.reset_cache
-    name1 = 'Indoraptor'
+    name1 = 'Thoradolosaur'
     name2 = 'Smilonemys'
-    stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
+    @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     logs = []
     # TQStrategy.reset
     10.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
       # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = TQStrategy
-      # @d1.level = 30
-      # @d1.health = 5469
-      # @d1.damage = 2324
-      #@d1.speed = 141
+      @d1.strategy = MinMaxStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = TQStrategy
-      # @d2.level = 30
-      # @d2.health = 5333
-      # @d2.damage = 1982
-      # @d2.speed = 138
+      @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
       @d1.strategy.learn(result[:outcome_value])
       @d2.strategy.learn(result[:outcome_value])
-      stats[result[:outcome]]+=1
+      @stats[result[:outcome]]+=1
       logs << result[:log]
     end
 
@@ -41,22 +33,22 @@ class MatchupsController < ApplicationController
     d1_start_node = d1_wins_graph.add_node("#{name1} wins")
     d2_start_node = d2_wins_graph.add_node("#{name2} wins")
     draw_start_node = draw_graph.add_node("draw")
-    d1_wins_node = d1_wins_graph.add_node("#{name1} - #{stats[name1]}")
-    d2_wins_node = d2_wins_graph.add_node("#{name2} - #{stats[name2]}")
-    draw_node = draw_graph.add_node("draw - #{stats['draw']}")
+    d1_wins_node = d1_wins_graph.add_node("#{name1} - #{@stats[name1]}")
+    d2_wins_node = d2_wins_graph.add_node("#{name2} - #{@stats[name2]}")
+    draw_node = draw_graph.add_node("draw - #{@stats['draw']}")
     logs.each do |log|
       outcome = log.last
       if outcome == name1
         last_node = d1_start_node
-        log[-1] = "#{name1} - #{stats[name1]}"
+        log[-1] = "#{name1} - #{@stats[name1]}"
         subgraph = d1_wins_graph
       elsif outcome == name2
         last_node = d2_start_node
-        log[-1] = "#{name2} - #{stats[name2]}"
+        log[-1] = "#{name2} - #{@stats[name2]}"
         subgraph = d2_wins_graph
       else
         last_node = draw_start_node
-        log[-1] = "draw - #{stats['draw']}"
+        log[-1] = "draw - #{@stats['draw']}"
         subgraph = draw_graph
       end
       log.each_with_index do |entry, index|
