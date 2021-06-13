@@ -43,6 +43,7 @@ class Dinosaur < ApplicationRecord
     @modifiers = []
     # Instantiate the abilities
     self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
+    self.abilities_counter = self.abilities_counter.map{|klass| klass.new} if self.abilities_counter.first.class == Class
     self
   end
 
@@ -162,6 +163,10 @@ class Dinosaur < ApplicationRecord
   # For now just return the first available ability defined later use strategies
   def pick_ability(attacker, defender)
     strategy.next_move(attacker, defender)
+  end
+
+  def has_counter?
+    !abilities_counter.empty?
   end
 
   # returns array of all possible hybrids one level up

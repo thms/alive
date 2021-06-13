@@ -12,5 +12,8 @@
   <% dinosaur.abilities.each do |ability| %>
     <%= ability.class %><%= "*" if ability.is_implemented %><br/>
   <% end %>
+  <% dinosaur.abilities_counter.each do |ability| %>
+    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <% end %>
   <% end %>
 </div>
