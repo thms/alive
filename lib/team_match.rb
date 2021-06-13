@@ -47,6 +47,7 @@ class TeamMatch
       if dinosaurs.last.current_health <= 0
         dinosaurs.first.tick
         if is_win?
+          # match is over
           break
         else
           next
@@ -73,6 +74,9 @@ class TeamMatch
           next
         end
       end
+      # neither has died, tick down both before the next round
+      dinosaurs.first.tick
+      dinosaurs.last.tick
     end
     # three possible outcomes: draw, attacker wins, defender wins
     if @attacker.current_health <= 1 && @defender.current_health <= 1
