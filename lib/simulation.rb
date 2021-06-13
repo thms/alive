@@ -168,6 +168,30 @@ class Simulation
           end
           break
         end
+        # Execute counter ability - which may kill the other dinosaur
+        if dinosaurs.last.has_counter?
+          @log << "#{dinosaurs.last.name}::#{dinosaurs.last.abilities_counter.first.class}"
+          hit_stats = dinosaurs.last.abilities_counter.first.execute(dinosaurs.last, dinosaurs.first)
+          node = node.add_or_update_child("#{dinosaurs.last.name}::#{dinosaurs.last.abilities_counter.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+            dinosaurs.last.abilities_counter.first.class,
+            {
+              dinosaur1: dinosaurs.first,
+              dinosaur2: dinosaurs.last,
+              depth: depth,
+              health: health(dinosaurs)
+            } )
+          if dinosaurs.first.current_health <= 0
+            unless apply_damage_over_time(node, dinosaurs)
+              node.is_final = true
+              node.winner = dinosaurs.last.name
+              node.looser = dinosaurs.first.name
+              node.color = dinosaurs.last.color
+              node.value = dinosaurs.last.value
+            end
+            break
+          end
+        end
+
         # Second attacks
         if dinosaurs.last.is_stunned
           #@logger.info("#{dinosaurs.last.name} is stunned")
@@ -203,6 +227,30 @@ class Simulation
           end
           next
         end
+        # Execute counter ability - which may kill the other dinosaur
+        if dinosaurs.first.has_counter?
+          @log << "#{dinosaurs.first.name}::#{dinosaurs.first.abilities_counter.first.class}"
+          hit_stats = dinosaurs.first.abilities_counter.first.execute(dinosaurs.first, dinosaurs.last)
+          node = node.add_or_update_child("#{dinosaurs.first.name}::#{dinosaurs.first.abilities_counter.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+            dinosaurs.first.abilities_counter.first.class,
+            {
+              dinosaur1: dinosaurs.first,
+              dinosaur2: dinosaurs.last,
+              depth: depth,
+              health: health(dinosaurs)
+            } )
+          if dinosaurs.last.current_health <= 0
+            unless apply_damage_over_time(node, dinosaurs)
+              node.is_final = true
+              node.winner = dinosaurs.first.name
+              node.looser = dinosaurs.last.name
+              node.color = dinosaurs.first.color
+              node.value = dinosaurs.first.value
+            end
+            break
+          end
+        end
+
         # Advance the clock
         @round += 1
         # since both survived, push last node onto the stack for the next round of simulation, unless DoT led to both being dead

@@ -6,8 +6,8 @@ class SimulationsController < ApplicationController
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
     d1 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
     d2 = Dinosaur.new(health: 4200, damage: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Sidestep, NullifyingRampage], strategy: RandomStrategy)
-    d1 = Dinosaur.find_by_name('Indoraptor')
-    d2 = Dinosaur.find_by_name('Smilonemys')
+    d1 = Dinosaur.find_by_name('Thoradolosaur')
+    d2 = Dinosaur.find_by_name('Trykosaurus')
     d1.reset_attributes!
     d2.reset_attributes!
     if d1.name == d2.name
