@@ -61,6 +61,10 @@ class Ability
     update_defender(attacker, defender)
     update_attacker(attacker, defender)
     stats = damage_defender(attacker, defender)
+    # execute counter attack, if defender survived and attack is an attack
+    if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
+      stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
+    end
     update_cooldown_attacker(attacker, defender)
     stats
   end
