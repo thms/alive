@@ -6,7 +6,7 @@ class MatchupsController < ApplicationController
   def index
     #MinMaxStrategy.reset_cache
     name1 = 'Thoradolosaur'
-    name2 = 'Smilonemys'
+    name2 = 'Trykosaurus'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     logs = []
     # TQStrategy.reset

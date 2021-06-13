@@ -49,14 +49,8 @@ class Match
         @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
         abilities.first.execute(dinosaurs.first, dinosaurs.last)
       end
-      break if dinosaurs.last.current_health <= 0
-      # Execute counter ability - which may kill the other dinosaur
-      if dinosaurs.last.has_counter?
-        @logger.info("#{dinosaurs.last.name}: #{dinosaurs.last.abilities_counter.first.class}")
-        @log << "#{dinosaurs.last.name}::#{dinosaurs.last.abilities_counter.first.class}"
-        dinosaurs.last.abilities_counter.first.execute(dinosaurs.last, dinosaurs.first)
-        break if dinosaurs.first.current_health <= 0
-      end
+      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
+
       # Second attacks
       if dinosaurs.last.is_stunned
         @logger.info("#{dinosaurs.last.name} is stunned")
@@ -69,14 +63,7 @@ class Match
         @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
         abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
-      break if dinosaurs.first.current_health <= 0
-      # Execute counter ability - which may kill the other dinosaur
-      if dinosaurs.first.has_counter?
-        @logger.info("#{dinosaurs.first.name}: #{dinosaurs.first.abilities_counter.first.class}")
-        @log << "#{dinosaurs.first.name}::#{dinosaurs.first.abilities_counter.first.class}"
-        dinosaurs.first.abilities_counter.first.execute(dinosaurs.first, dinosaurs.last)
-        break if dinosaurs.last.current_health <= 0
-      end
+      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
       # Advance the clock, to apply DoT and tick down modifiers
       tick
       # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
