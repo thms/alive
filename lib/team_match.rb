@@ -44,8 +44,8 @@ class TeamMatch
         abilities.first.execute(dinosaurs.first, dinosaurs.last)
       end
       # if that leads to death, the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
-      if dinosaurs.last.current_health <= 0
-        dinosaurs.first.tick
+      if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
+        apply_damage_over_time(dinosaurs)
         if is_win?
           # match is over
           break
@@ -66,8 +66,8 @@ class TeamMatch
         abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
       # if that leads to death, the round ends
-      if dinosaurs.first.current_health <= 0
-        dinosaurs.last.tick
+      if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
+        apply_damage_over_time(dinosaurs)
         if is_win?
           break
         else
@@ -79,12 +79,12 @@ class TeamMatch
       dinosaurs.last.tick
     end
     # three possible outcomes: draw, attacker wins, defender wins
-    if @attacker.current_health <= 1 && @defender.current_health <= 1
+    if @attacker.healthy_members <= 1 && @defender.healthy_members <= 1
       outcome = 'draw'
       outcome_value = 0.0
     else
-      outcome = @attacker.current_health > 1 ? "#{@attacker.name}" : "#{@defender.name}"
-      outcome_value = @attacker.current_health > 1 ? @attacker.value : @defender.value
+      outcome = @attacker.healthy_members > 1 ? "#{@attacker.name}" : "#{@defender.name}"
+      outcome_value = @attacker.healthy_members > 1 ? @attacker.value : @defender.value
     end
     # write the outcome log entry
     @log << outcome
@@ -92,6 +92,11 @@ class TeamMatch
 
   end
 
+  def apply_damage_over_time(dinosaurs)
+    dinosaurs.first.tick
+    dinosaurs.last.tick
+  end
+  
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
   def order_dinosaurs_and_abilities(dinosaurs, abilities)
     @logger.info(dinosaurs.map {|d| d.name})
@@ -124,7 +129,7 @@ class TeamMatch
 
   # Is the current state a win for one of the teams?
   def is_win?
-    @attacker.current_health <= 1 || @defender.current_health <= 1
+    @attacker.healthy_members <= 1 || @defender.healthy_members <= 1
   end
 
 end

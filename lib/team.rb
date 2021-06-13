@@ -39,7 +39,7 @@ class Team
   end
 
   # number of alive dinosaurs
-  def current_health
+  def healthy_members
     available_dinosaurs.size
   end
 
