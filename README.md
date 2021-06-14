@@ -33,24 +33,23 @@ Data needed
 DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
+## DOING
+4:4 matches
 
 ## TODO
 Strategies: learn the best strategy through unsupervised learning
-Tabular Q function approach
+Tabular Q function approach for 4:4
 Build neural network for the Q-function
-cloak attack increases
-all abilities
+Cloak attack increases
+Remaining abilities
 Resistances
-Counters
 Swap-in abilities
 Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
-Implement counter attacks
 
 Implement swap in abilities
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
-4:4 matches
 On escape abilities get triggered by the attempt to swap out from self or other
 Swap in abilities activation for 4:4 matches
 
@@ -75,6 +74,8 @@ Use forward looking evaluation as a strategy
 distraction
 dodge
 critical chance
+Counters
+Tabular Q function approach for 1:1
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
