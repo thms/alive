@@ -26,8 +26,8 @@ class TeamMatch
       @logger.info("Attacker #{@attacker.health}")
       @logger.info("Defender #{@defender.health}")
       # each team picks a dinosaur and a move.
-      abilities = [attacker.next_move(defender), defender.next_move(attacker)]
-      dinosaurs = [attacker.current_dinosaur, defender.current_dinosaur]
+      abilities = [@attacker.next_move(@defender), @defender.next_move(@attacker)]
+      dinosaurs = [@attacker.current_dinosaur, @defender.current_dinosaur]
       # order the dinosaurs by level, speeds etc
       order_dinosaurs_and_abilities(dinosaurs, abilities)
 
@@ -96,7 +96,7 @@ class TeamMatch
     dinosaurs.first.tick
     dinosaurs.last.tick
   end
-  
+
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
   def order_dinosaurs_and_abilities(dinosaurs, abilities)
     @logger.info(dinosaurs.map {|d| d.name})

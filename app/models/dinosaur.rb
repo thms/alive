@@ -43,7 +43,9 @@ class Dinosaur < ApplicationRecord
     @modifiers = []
     # Instantiate the abilities
     self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
+    self.abilities_swap_in = self.abilities_swap_in.map{|klass| klass.new} if self.abilities_swap_in.first.class == Class
     self.abilities_counter = self.abilities_counter.map{|klass| klass.new} if self.abilities_counter.first.class == Class
+    self.abilities_on_escape = self.abilities_on_escape.map{|klass| klass.new} if self.abilities_on_escape.first.class == Class
     self
   end
 
