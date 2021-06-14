@@ -171,6 +171,12 @@ class Dinosaur < ApplicationRecord
     !abilities_counter.empty?
   end
 
+  # can the dino swap out in the current state of the game
+  # this is determined exclusively by an active swap_prevention modifer
+  def can_swap?
+    modifiers.none? {|modifier| modifier.class == Modifiers::PreventSwap} || rand(100) <= resistance(:swap_prevention)
+  end
+
   # returns array of all possible hybrids one level up
   def possible_hybrids
     [
