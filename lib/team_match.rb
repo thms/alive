@@ -41,7 +41,7 @@ class TeamMatch
       else
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
         @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
-        abilities.first.execute(dinosaurs.first, dinosaurs.last)
+        hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
       end
       # if that leads to death, the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
@@ -63,7 +63,7 @@ class TeamMatch
       else
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
         @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
-        abilities.last.execute(dinosaurs.last, dinosaurs.first)
+        hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
       end
       # if that leads to death, the round ends
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0

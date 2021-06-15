@@ -1,6 +1,12 @@
 <h1>Matchups</h1>
-<%= render 'dinosaurs/data', dinosaur: @d1 %>
-<%= render 'dinosaurs/data', dinosaur: @d2 %>
+<div class="row">
+  <div class="col s6">
+    <%= render 'dinosaurs/data', dinosaur: @d1 %>
+  </div>
+  <div class="col s6">
+    <%= render 'dinosaurs/data', dinosaur: @d2 %>
+  </div>
+</div>
 <div>Stats: <%= @stats %>
 <div>
   <%= @graph.html_safe %>

@@ -1,0 +1,8 @@
+<%= team.name %>
+<div class="row">
+  <% team.dinosaurs.each do |dinosaur| %>
+  <div class="col s3">
+    <%= render "dinosaurs/data", dinosaur: dinosaur %>
+  </div>
+  <% end %>
+</div>

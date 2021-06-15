@@ -1,0 +1,10 @@
+<h1>Team Matches</h1>
+<%= render 'team_matches/data', team: @t1 %>
+<%= render 'team_matches/data', team: @t2 %>
+<b>Stats</b>
+<div><%= @stats %></div>
+<b>Health</b>
+<div><%= @t1.health %></div>
+<div><%= @t2.health %></div>
+<div><%= @logs %></div>
+<div><%= @graph.html_safe %></div>

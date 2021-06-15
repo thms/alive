@@ -12,6 +12,7 @@ class Team
   attr_accessor :recent_dinosaur # keeps track of current dinossaur when he was forced to swap out, so we cannot swap him in again
   attr_accessor :logger
   attr_accessor :log
+  attr_accessor :color
 
   def initialize(name, dinosaurs)
     @name = name
@@ -25,8 +26,12 @@ class Team
   end
 
   def reset_attributes!
+    if @dinosaurs.first.class == String
+      @dinosaurs.map! {|name| Dinosaur.find_by_name(name)}
+    end
     @dinosaurs.each do |dinosaur|
       dinosaur.reset_attributes!
+      dinosaur.color = @color
     end
     self
   end
@@ -49,6 +54,7 @@ class Team
   end
 
   # swap out current for a new one
+  # todo: add double swap in here
   def swap(new_dinosaur)
     @logger.info("#{@name} is swapping #{@current_dinosaur.try(:name)} for #{new_dinosaur.try(:name)} with recent: #{@recent_dinosaur.try(:name)}")
     unless @current_dinosaur.nil?

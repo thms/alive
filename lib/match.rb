@@ -17,7 +17,7 @@ class Match
     @logger = Logger.new(STDOUT)
     @logger.level = 2
     @round = 1
-    @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
+    @log = [] # [{event: "D1::Strike", stats: {}, health: {}}, {event: "D2::CleansingStrike" stats: , ...]
   end
 
   def execute
@@ -40,28 +40,28 @@ class Match
       # First attacks
       if dinosaurs.first.is_stunned
         @logger.info("#{dinosaurs.first.name} is stunned")
-        @log << "#{dinosaurs.first.name}::stunned"
+        @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.first.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
       else
+        hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-        @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
-        abilities.first.execute(dinosaurs.first, dinosaurs.last)
+        @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
       end
       break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
 
       # Second attacks
       if dinosaurs.last.is_stunned
         @logger.info("#{dinosaurs.last.name} is stunned")
-        @log << "#{dinosaurs.last.name}::stunned"
+        @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.last.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
       else
+        hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-        @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
-        abilities.last.execute(dinosaurs.last, dinosaurs.first)
+        @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
       end
       break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
       # Advance the clock, to apply DoT and tick down modifiers
@@ -80,7 +80,7 @@ class Match
       outcome_value = @dinosaur1.current_health > 0 ? @dinosaur1.value : @dinosaur2.value
     end
     # write the outcome log entry
-    @log << outcome
+    @log << {event: outcome, stats: {}, health: health(dinosaurs)}
     {outcome: outcome, outcome_value: outcome_value, log: @log}
   end
 
@@ -93,6 +93,14 @@ class Match
       retval = @dinosaur1.current_speed > @dinosaur2.current_speed ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
     end
     retval
+  end
+
+  def health(dinosaurs)
+    if dinosaurs.first.name < dinosaurs.last.name
+      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
+    else
+      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
+    end
   end
 
   # Move the clock

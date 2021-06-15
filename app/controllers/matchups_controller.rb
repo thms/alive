@@ -8,7 +8,7 @@ class MatchupsController < ApplicationController
     name1 = 'Thoradolosaur'
     name2 = 'Trykosaurus'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
-    logs = []
+    @logs = []
     # TQStrategy.reset
     10.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
@@ -23,7 +23,7 @@ class MatchupsController < ApplicationController
       @d1.strategy.learn(result[:outcome_value])
       @d2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
-      logs << result[:log]
+      @logs << result[:log]
     end
 
     g = Graphviz::Graph.new()
@@ -36,23 +36,23 @@ class MatchupsController < ApplicationController
     d1_wins_node = d1_wins_graph.add_node("#{name1} - #{@stats[name1]}")
     d2_wins_node = d2_wins_graph.add_node("#{name2} - #{@stats[name2]}")
     draw_node = draw_graph.add_node("draw - #{@stats['draw']}")
-    logs.each do |log|
-      outcome = log.last
+    @logs.each do |log|
+      outcome = log.last[:event]
       if outcome == name1
         last_node = d1_start_node
-        log[-1] = "#{name1} - #{@stats[name1]}"
+        log[-1][:event] = "#{name1} - #{@stats[name1]}"
         subgraph = d1_wins_graph
       elsif outcome == name2
         last_node = d2_start_node
-        log[-1] = "#{name2} - #{@stats[name2]}"
+        log[-1][:event] = "#{name2} - #{@stats[name2]}"
         subgraph = d2_wins_graph
       else
         last_node = draw_start_node
-        log[-1] = "draw - #{@stats['draw']}"
+        log[-1][:event] = "draw - #{@stats['draw']}"
         subgraph = draw_graph
       end
       log.each_with_index do |entry, index|
-        title = (entry == log.last) ? entry : "#{outcome} - #{index} - #{entry}"
+        title = (entry[:event] == log.last) ? entry : "#{outcome} - #{index} - #{entry[:event]}"
         node = subgraph.get_node(title).first || subgraph.add_node(title)
         edge = last_node.connected?(node) || last_node.connect(node, {label: 0})
         edge.attributes[:label] += 1
