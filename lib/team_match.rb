@@ -1,4 +1,5 @@
 # Match of 4:1
+require 'digest'
 class TeamMatch
 
   attr_accessor :attacker
@@ -34,14 +35,14 @@ class TeamMatch
       # first one attacks
       if dinosaurs.first.is_stunned
         @logger.info("#{dinosaurs.first.name} is stunned")
-        @log << "#{dinosaurs.first.name}::stunned"
+        @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.first.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
       else
-        @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-        @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
         hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
+        @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
+        @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
       end
       # if that leads to death, the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
@@ -56,14 +57,14 @@ class TeamMatch
       # second one attacks
       if dinosaurs.last.is_stunned
         @logger.info("#{dinosaurs.last.name} is stunned")
-        @log << "#{dinosaurs.last.name}::stunned"
+        @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.last.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
       else
-        @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-        @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
         hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
+        @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
+        @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
       end
       # if that leads to death, the round ends
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
@@ -87,7 +88,7 @@ class TeamMatch
       outcome_value = @attacker.healthy_members > 1 ? @attacker.value : @defender.value
     end
     # write the outcome log entry
-    @log << outcome
+    @log << {outcome: outcome, stats: {}, health: health(dinosaurs)}
     {outcome: outcome, outcome_value: outcome_value, log: @log}
 
   end
@@ -130,6 +131,19 @@ class TeamMatch
   # Is the current state a win for one of the teams?
   def is_win?
     @attacker.healthy_members <= 1 || @defender.healthy_members <= 1
+  end
+
+  def health(dinosaurs)
+    if dinosaurs.first.name < dinosaurs.last.name
+      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
+    else
+      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
+    end
+  end
+
+  # Hash value expressing the state of the game
+  def hash_value
+    "#{attacker.value} #{attacker.hash_value} #{attacker.current_dinosaur.name} #{defender.value} #{defender.hash_value} #{defender.current_dinosaur.name} "
   end
 
 end

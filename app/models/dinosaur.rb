@@ -177,6 +177,14 @@ class Dinosaur < ApplicationRecord
     modifiers.none? {|modifier| modifier.class == Modifiers::PreventSwap} || rand(100) <= resistance(:swap_prevention)
   end
 
+  # Hash value for lookup tables etc.
+  def hash_value
+    result = "#{name} #{current_health} #{level} "
+    abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
+    modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    result
+  end
+
   # returns array of all possible hybrids one level up
   def possible_hybrids
     [

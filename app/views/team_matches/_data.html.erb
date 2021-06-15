@@ -1,4 +1,7 @@
-<%= team.name %>
+<div class="row">
+  <div class="col s3"><b><%= team.name %></b></div>
+  <div class="col s9"><%= team.strategy %></div>
+</div>
 <div class="row">
   <% team.dinosaurs.each do |dinosaur| %>
   <div class="col s3">

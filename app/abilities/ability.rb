@@ -108,8 +108,8 @@ class Ability
     damage = (damage * (100 - defender.armor) / 100) unless bypass.include?(:armor)
     # damage must no go below zero
     damage = [damage, 0].max
-    # update defender's health
-    defender.current_health = (defender.current_health - damage).round
+    # update defender's health and clamp all death to value 0
+    defender.current_health = [(defender.current_health - damage).round, 0].max
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
     attacker.tick_attack_count
     defender.tick_defense_count

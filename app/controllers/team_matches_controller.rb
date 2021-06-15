@@ -4,16 +4,16 @@ class TeamMatchesController < ApplicationController
 
   def index
     team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
-    name1 = 'attacker'
+    name1 = 'Attacker'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
-    name2 = 'defender'
+    name2 = 'Defender'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
-    1.times do
+    10.times do
       @t1 = Team.new(name1, team1)
-      @t1.strategy = DefaultTeamStrategy
+      @t1.strategy = RandomTeamStrategy
       @t2 = Team.new(name2, team2)
-      @t2.strategy = DefaultTeamStrategy
+      @t2.strategy = RandomTeamStrategy
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
       result = TeamMatch.new(@t1, @t2).execute
@@ -21,6 +21,36 @@ class TeamMatchesController < ApplicationController
       @logs << result[:log]
     end
 
+    @graph = generate_graph(@logs, name1, name2)
+  end
+
+  private
+
+  def generate_graph(logs, name1, name2)
+    g = Graphviz::Graph.new()
+    g.add_node('Start')
+    logs.each do |log|
+      last_node = g.get_node('Start').first
+      # don't need the last node at the moment.
+      log.pop
+      log.each do |entry|
+        title = entry[:health]
+        node = g.get_node(title).first || g.add_node(title)
+        edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
+        edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+        last_node = node
+      end
+    end
+    File.open("tmp/graph.dot", "w") do |output|
+      g.dump_graph(output)
+    end
+    `dot -T svg tmp/graph.dot > tmp/graph.svg`
+    graph = File.read('tmp/graph.svg')
+    graph
+  end
+
+  # Original version, quite clumsy
+  def generate_graph_orig(logs, name1, name2)
     g = Graphviz::Graph.new()
     t1_wins_graph = g.add_subgraph(name1)
     t2_wins_graph = g.add_subgraph(name2)
@@ -59,7 +89,7 @@ class TeamMatchesController < ApplicationController
       g.dump_graph(output)
     end
     `dot -T svg tmp/graph.dot > tmp/graph.svg`
-    @graph = File.read('tmp/graph.svg')
-
+    graph = File.read('tmp/graph.svg')
+    graph
   end
 end

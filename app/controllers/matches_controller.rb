@@ -26,6 +26,36 @@ class MatchesController < ApplicationController
       @logs << result[:log]
     end
 
+    @graph = generate_graph(@logs, name1, name2)
+
+  end
+
+  private
+
+  def generate_graph(logs, name1, name2)
+    g = Graphviz::Graph.new()
+    g.add_node('Start')
+    logs.each do |log|
+      last_node = g.get_node('Start').first
+      # don't need the last node at the moment.
+      log.pop
+      log.each do |entry|
+        title = entry[:health]
+        node = g.get_node(title).first || g.add_node(title)
+        edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
+        edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+        last_node = node
+      end
+    end
+    File.open("tmp/graph.dot", "w") do |output|
+      g.dump_graph(output)
+    end
+    `dot -T svg tmp/graph.dot > tmp/graph.svg`
+    graph = File.read('tmp/graph.svg')
+    graph
+  end
+
+  def generate_graph_orig(logs, name1, name2)
     g = Graphviz::Graph.new()
     d1_wins_graph = g.add_subgraph(name1)
     d2_wins_graph = g.add_subgraph(name2)
@@ -36,7 +66,7 @@ class MatchesController < ApplicationController
     d1_wins_node = d1_wins_graph.add_node("#{name1} - #{@stats[name1]}")
     d2_wins_node = d2_wins_graph.add_node("#{name2} - #{@stats[name2]}")
     draw_node = draw_graph.add_node("draw - #{@stats['draw']}")
-    @logs.each do |log|
+    logs.each do |log|
       outcome = log.last[:event]
       if outcome == name1
         last_node = d1_start_node
@@ -64,8 +94,7 @@ class MatchesController < ApplicationController
       g.dump_graph(output)
     end
     `dot -T svg tmp/graph.dot > tmp/graph.svg`
-    @graph = File.read('tmp/graph.svg')
-    # the normal ways has massive issues, killing the system (no clue why)
-    #@graph = Graphviz::output(g, format: 'svg')
+    graph = File.read('tmp/graph.svg')
+    graph
   end
 end

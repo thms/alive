@@ -103,6 +103,10 @@ class Match
     end
   end
 
+  def hash_value(dinosaurs)
+    "#{dinosaurs.first.value} #{dinosaurs.first.hash_value} #{dinosaurs.last.value} #{dinosaurs.last.hash_value}"
+  end
+
   # Move the clock
   # Update abilities' delay and cooldown counts
   # Update / expire effects on self and opponents

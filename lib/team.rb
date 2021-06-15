@@ -77,4 +77,8 @@ class Team
   def health
     @dinosaurs.map {|d| [d.name, d.current_health]}.to_h
   end
+
+  def hash_value
+    @dinosaurs.map {|d| d.hash_value}.to_sentence
+  end
 end
