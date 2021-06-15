@@ -1,6 +1,6 @@
 require 'graphviz'
 
-class MatchupsController < ApplicationController
+class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
