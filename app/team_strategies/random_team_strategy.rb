@@ -17,4 +17,5 @@ class RandomTeamStrategy < TeamStrategy
     next_dinosaur(team1, team2) if team1.current_dinosaur.nil? || team1.current_dinosaur.current_health <= 0
     return team1.current_dinosaur.available_abilities.sample
   end
+
 end

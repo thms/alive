@@ -8,4 +8,8 @@ class TeamStrategy
   def next_move(team1, team2)
   end
 
+  # Interface for learning from the outcome of a match
+  def self.learn(outcome)
+  end
+
 end

@@ -3,7 +3,7 @@ require 'test_helper'
 class DefaultTeamStrategyTest < ActiveSupport::TestCase
 
   test "should select the one of the available dinosaurs" do
-    team1 = create_team(1000, 300, 132, 20, 'attacker', [Strike], RandomTeamStrategy)
+    team1 = create_team(1000, 300, 132, 20, 'attacker', [Strike], [], RandomTeamStrategy)
     team1.reset_attributes!
     name1 = team1.next_dinosaur(nil).name
     name2 = team1.next_dinosaur(nil).name
@@ -11,7 +11,7 @@ class DefaultTeamStrategyTest < ActiveSupport::TestCase
   end
 
   test "should return the random available ability" do
-    team1 = create_team(1000, 300, 132, 20, 'attacker', [Strike, Impact], RandomTeamStrategy)
+    team1 = create_team(1000, 300, 132, 20, 'attacker', [Strike, Impact], [], RandomTeamStrategy)
     team1.reset_attributes!
     stats = {'Strike' => 0, 'Impact' => 0}
     20.times do

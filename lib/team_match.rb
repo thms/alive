@@ -15,7 +15,7 @@ class TeamMatch
     @defender.value = -1.0
     @round = 0
     @logger = Logger.new(STDOUT)
-    @logger.level = 1
+    @logger.level = 2
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
   end
 
@@ -142,8 +142,12 @@ class TeamMatch
   end
 
   # Hash value expressing the state of the game
-  def hash_value
-    "#{attacker.value} #{attacker.hash_value} #{attacker.current_dinosaur.name} #{defender.value} #{defender.hash_value} #{defender.current_dinosaur.name} "
+  def self.hash_value(attacker, defender)
+    result = ""
+    result += "#{attacker.value} #{attacker.hash_value} "
+    result += attacker.current_dinosaur.nil? ? "-" : attacker.current_dinosaur.name
+    result += " #{defender.value} #{defender.hash_value} "
+    result += defender.current_dinosaur.nil? ? "-" : defender.current_dinosaur.name
   end
 
 end

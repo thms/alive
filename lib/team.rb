@@ -53,10 +53,13 @@ class Team
     @dinosaurs.select {|d| d.current_health > 0}
   end
 
+  def can_swap?
+    current_dinosaur.nil? || current_dinosaur.can_swap?
+  end
+
   # swap out current for a new one
   # todo: add double swap in here
   def swap(new_dinosaur)
-    @logger.info("#{@name} is swapping #{@current_dinosaur.try(:name)} for #{new_dinosaur.try(:name)} with recent: #{@recent_dinosaur.try(:name)}")
     unless @current_dinosaur.nil?
       # remove all modifiers
       @current_dinosaur.modifiers = []

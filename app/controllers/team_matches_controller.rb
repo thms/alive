@@ -9,14 +9,17 @@ class TeamMatchesController < ApplicationController
     name2 = 'Defender'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
+    #TQTeamStrategy.reset
     10.times do
       @t1 = Team.new(name1, team1)
-      @t1.strategy = RandomTeamStrategy
+      @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
       @t2.strategy = RandomTeamStrategy
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
       result = TeamMatch.new(@t1, @t2).execute
+      @t1.strategy.learn(result[:outcome_value])
+      @t2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end

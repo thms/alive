@@ -1,0 +1,69 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  name: one
+  slug: one
+  level: 1
+  rarity: common
+  health: 1
+  armor: 0
+  critical_chance: 5
+  speed: 1
+  damage: 1
+  dna: 10
+  left_id: nil
+  right_id: nil
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+two:
+  id: 2
+  name: two
+  slug: two
+  level: 5
+  rarity: rare
+  health: 1
+  armor: 0
+  critical_chance: 5
+  speed: 1
+  damage: 1
+  dna: 1
+  left_id: nil
+  right_id: nil
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+three:
+  id: 3
+  name: three
+  slug: three
+  level: 11
+  rarity: epic
+  health: 1
+  armor: 0
+  critical_chance: 5
+  speed: 1
+  damage: 1
+  dna: 1
+  left_id: nil
+  right_id: nil
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>
+
+four:
+  id: 4
+  name: four
+  slug: four
+  level: 16
+  rarity: legendary
+  health: 1
+  armor: 0
+  critical_chance: 5
+  speed: 1
+  damage: 1
+  dna: 1
+  left_id: 2
+  right_id: 3
+  created_at: <%= Time.now %>
+  updated_at: <%= Time.now %>

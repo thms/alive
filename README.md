@@ -43,11 +43,12 @@ Build neural network for the Q-function
 Cloak attack increases
 Remaining abilities
 Resistances
-Swap-in abilities
+Implement swap in abilities
+Implement swap out abilities
+Implement X and run abilities
 Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 
-Implement swap in abilities
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 On escape abilities get triggered by the attempt to swap out from self or other
