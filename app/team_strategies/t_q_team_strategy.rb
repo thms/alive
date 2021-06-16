@@ -53,11 +53,18 @@ class TQTeamStrategy < Strategy
 
     # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can and have to swap dinosaurs
     dinosaur_name = ability.split('::').first
+    was_healthy = attacker.current_dinosaur.current_health > 0 rescue false
+    has_swapped = false
     if attacker.current_dinosaur.nil? || attacker.current_dinosaur.name != dinosaur_name && attacker.can_swap?
       attacker.swap(attacker.available_dinosaurs.select {|d| d.name == dinosaur_name}.first)
+      has_swapped = true
     end
     # Return the actual ability instance of the attacker, unless we swapped for a life dinosaur, then use the swap in ability
-    return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability.split('::').last}.first
+    if was_healthy && has_swapped
+      return attacker.current_dinosaur.has_swap_in? ? attacker.current_dinosaur.abilities_swap_in.first : SwapIn.new
+    else
+      return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability.split('::').last}.first
+    end
   end
 
   def self.learn(outcome)
@@ -136,13 +143,13 @@ class TQTeamStrategy < Strategy
 
   def self.save
     state = Marshal.dump({q_table: @@q_table, games_played: @@games_played})
-    File.open("#{Rails.root}/tmp/team_t_q_strategy.state", "wb") do |file|
+    File.open("#{Rails.root}/tmp/t_q_team_strategy.state", "wb") do |file|
       file.write state
     end
   end
 
   def self.load
-    state = Marshal.load(File.binread("#{Rails.root}/tmp/team_t_q_strategy.state"))
+    state = Marshal.load(File.binread("#{Rails.root}/tmp/t_q_team_strategy.state"))
     @@q_table = state[:q_table]
     @@games_played = state[:games_played]
   end
