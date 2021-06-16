@@ -1,5 +1,5 @@
 # Does nothing, used when swapping in and the dino has no swap-in ability
-class NoOp < Ability
+class SwapIn < Ability
 
   self.is_implemented = true
   self.initial_cooldown = 0

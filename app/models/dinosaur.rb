@@ -171,6 +171,10 @@ class Dinosaur < ApplicationRecord
     !abilities_counter.empty?
   end
 
+  def has_swap_in?
+    !abilities_swap_in.empty?
+  end
+
   # can the dino swap out in the current state of the game
   # this is determined exclusively by an active swap_prevention modifer
   def can_swap?

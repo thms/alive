@@ -50,12 +50,13 @@ class TQTeamStrategy < Strategy
       ability = abilities.map {|k, v| highest_value == v ? k : nil}.compact.sample
     end
     @@log.push [hash, available_ability_names, attacker.value, ability]
-    # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we have to swap dinosaurs
+
+    # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can and have to swap dinosaurs
     dinosaur_name = ability.split('::').first
     if attacker.current_dinosaur.nil? || attacker.current_dinosaur.name != dinosaur_name && attacker.can_swap?
       attacker.swap(attacker.available_dinosaurs.select {|d| d.name == dinosaur_name}.first)
     end
-    # Return the actual ability instance of the attacker
+    # Return the actual ability instance of the attacker, unless we swapped for a life dinosaur, then use the swap in ability
     return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability.split('::').last}.first
   end
 

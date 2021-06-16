@@ -1,6 +1,6 @@
 require 'logger'
 
-# Represents a team in a 4:4 match
+# Represents a team in a 4:4 match (or any other number of opponents)
 
 class Team
 
@@ -54,7 +54,7 @@ class Team
   end
 
   def can_swap?
-    current_dinosaur.nil? || current_dinosaur.can_swap?
+    (current_dinosaur.nil? || current_dinosaur.can_swap? ) && available_dinosaurs.count > 0
   end
 
   # swap out current for a new one
