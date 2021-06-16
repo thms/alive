@@ -88,7 +88,7 @@ class TeamMatch
       outcome_value = @attacker.healthy_members > 1 ? @attacker.value : @defender.value
     end
     # write the outcome log entry
-    @log << {outcome: outcome, stats: {}, health: health(dinosaurs)}
+    @log << {event: outcome, stats: {}, health: health(dinosaurs)}
     {outcome: outcome, outcome_value: outcome_value, log: @log}
 
   end

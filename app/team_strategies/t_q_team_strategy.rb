@@ -14,7 +14,7 @@ class TQTeamStrategy < Strategy
   @@random_mode = false
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = 1 # 1: show info, 2: don't show info
+  @@logger.level = 2 # 1: show info, 2: don't show info
 
 
   # TODO: need to pick these also depending on the q table

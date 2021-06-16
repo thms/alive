@@ -3,10 +3,12 @@ require 'graphviz'
 class TeamMatchesController < ApplicationController
 
   def index
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
     name1 = 'Attacker'
-    team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
+    #team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
+    team1 = ['Tarbosaurus', 'Velociraptor']
     name2 = 'Defender'
+    #team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
+    team2 = ['Allosaurus', 'Dilophosaurus Gen 2']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     #TQTeamStrategy.reset
@@ -14,7 +16,7 @@ class TeamMatchesController < ApplicationController
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
-      @t2.strategy = RandomTeamStrategy
+      @t2.strategy = TQTeamStrategy
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
       result = TeamMatch.new(@t1, @t2).execute
@@ -34,13 +36,19 @@ class TeamMatchesController < ApplicationController
     g.add_node('Start')
     logs.each do |log|
       last_node = g.get_node('Start').first
-      # don't need the last node at the moment.
-      log.pop
-      log.each do |entry|
-        title = entry[:health]
-        node = g.get_node(title).first || g.add_node(title)
-        edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
-        edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+      log.each_with_index do |entry, index|
+        # treat last entry differently
+        if index == log.size - 1
+          title = entry[:event]
+          node = g.get_node(title).first || g.add_node(title)
+          edge = last_node.connected?(node) || last_node.connect(node, {label: 0})
+          edge.attributes[:label] += 1
+        else
+          title = entry[:health]
+          node = g.get_node(title).first || g.add_node(title)
+          edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
+          edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+        end
         last_node = node
       end
     end
