@@ -54,21 +54,35 @@ class Team
   end
 
   def can_swap?
-    (current_dinosaur.nil? || current_dinosaur.can_swap? ) && available_dinosaurs.count > 0
+    (current_dinosaur.nil? || current_dinosaur.can_swap? ) && (available_dinosaurs - [@current_dinosaur]).count > 0
   end
 
-  # swap out current for a new one
-  # todo: add double swap in here
-  def swap(new_dinosaur)
-    unless @current_dinosaur.nil?
-      # remove all modifiers
-      @current_dinosaur.modifiers = []
-      # remove stun
-      @current_dinosaur.is_stunned = false
+  # this may fail, e.g. if the dinosaur cannot swap
+  # after: current_dinosaur is set to either the new or the old one
+  # returns {has_swapped: true, was_healthy: false} if the swap was successfuly
+  def swap(target_dinosaur, target_ability)
+    was_healthy = @current_dinosaur.current_health > 0 rescue false
+    retval = {has_swapped: false, was_healthy: was_healthy, ability: target_ability}
+    if can_swap?
+      retval[:has_swapped] = true
+      unless @current_dinosaur.nil?
+        # remove all modifiers
+        @current_dinosaur.modifiers = []
+        # remove stun
+        @current_dinosaur.is_stunned = false
+      end
+      @recent_dinosaur = @current_dinosaur
+      @current_dinosaur = target_dinosaur
+      if was_healthy
+        retval[:ability] = @current_dinosaur.has_swap_in? ? @current_dinosaur.abilities_swap_in.first : SwapIn.new
+      end
+    else
+      # if swapping is denied for some reason the dinosaur looses this turn's ability
+      retval[:ability] = SwapFailed.new
     end
-    @recent_dinosaur = @current_dinosaur
-    @current_dinosaur = new_dinosaur
+    return retval
   end
+
 
   # select the next move based on the strategy
   # decide to either use an ability of the current dinosaur

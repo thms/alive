@@ -11,7 +11,7 @@ class TeamMatchesController < ApplicationController
     team2 = ['Allosaurus', 'Dilophosaurus Gen 2']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
-    #TQTeamStrategy.reset
+    TQTeamStrategy.load
     1.times do
       @t1 = Team.new(name1, team1)
       @t1.strategy = RandomTeamStrategy
@@ -25,7 +25,7 @@ class TeamMatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-
+    #TQTeamStrategy.save
     @graph = generate_graph(@logs, name1, name2)
   end
 

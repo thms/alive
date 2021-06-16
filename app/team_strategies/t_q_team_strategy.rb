@@ -19,8 +19,8 @@ class TQTeamStrategy < Strategy
 
   # TODO: need to pick these also depending on the q table
   def self.next_dinosaur(team1, team2)
-    new_dinosaur = (team1.available_dinosaurs - [team1.current_dinosaur, team1.recent_dinosaur]).sample
-    team1.swap(new_dinosaur)
+    target_dinosaur = (team1.available_dinosaurs - [team1.current_dinosaur, team1.recent_dinosaur]).sample
+    team1.swap(target_dinosaur)
   end
 
   def self.next_move(attacker, defender)
@@ -52,18 +52,14 @@ class TQTeamStrategy < Strategy
     @@log.push [hash, available_ability_names, attacker.value, ability]
 
     # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can and have to swap dinosaurs
-    dinosaur_name = ability.split('::').first
-    was_healthy = attacker.current_dinosaur.current_health > 0 rescue false
-    has_swapped = false
-    if attacker.current_dinosaur.nil? || attacker.current_dinosaur.name != dinosaur_name && attacker.can_swap?
-      attacker.swap(attacker.available_dinosaurs.select {|d| d.name == dinosaur_name}.first)
-      has_swapped = true
-    end
-    # Return the actual ability instance of the attacker, unless we swapped for a life dinosaur, then use the swap in ability
-    if was_healthy && has_swapped
-      return attacker.current_dinosaur.has_swap_in? ? attacker.current_dinosaur.abilities_swap_in.first : SwapIn.new
+    dinosaur_name, ability_name = ability.split('::')
+    if !attacker.current_dinosaur.nil? && dinosaur_name == attacker.current_dinosaur.name
+      return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
     else
-      return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability.split('::').last}.first
+      target_dinosaur = attacker.dinosaurs.select {|d| d.name == dinosaur_name}.first
+      target_ability = target_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
+      result = attacker.swap(target_dinosaur, target_ability)
+      return result[:ability]
     end
   end
 

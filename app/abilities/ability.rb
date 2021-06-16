@@ -66,6 +66,7 @@ class Ability
       stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
     end
     update_cooldown_attacker(attacker, defender)
+    on_escape(attacker, defender)
     stats
   end
 
@@ -122,6 +123,10 @@ class Ability
     if self.initial_cooldown > 0
       @current_cooldown = self.initial_cooldown + 1
     end
+  end
+
+  # TODO: performs swapping out effects, 
+  def on_escape(attacker, defender)
   end
 
 end
