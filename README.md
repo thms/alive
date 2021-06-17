@@ -37,22 +37,19 @@ Fusions: dna needed for one fusion for each level of rarity
 4:4 matches
 
 ## TODO
-Strategies: learn the best strategy through unsupervised learning
+MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
 Tabular Q function approach for 4:4
 Build neural network for the Q-function
 Cloak attack increases
 Remaining abilities
 Resistances
-Implement swap in abilities
 Implement swap out abilities
-Implement X and run abilities
 Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 On escape abilities get triggered by the attempt to swap out from self or other
-Swap in abilities activation for 4:4 matches
 
 
 ## DONE
@@ -77,6 +74,9 @@ dodge
 critical chance
 Counters
 Tabular Q function approach for 1:1
+Implement swap in abilities
+Implement X and run abilities
+Swap in abilities activation for 4:4 matches
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json

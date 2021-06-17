@@ -66,7 +66,7 @@ class MatchTest < ActiveSupport::TestCase
     assert_equal "d1", result[:outcome]
   end
 
-  test "Dino usng swap out ability should conclude the match" do
+  test "Dino using swap out ability should conclude the match" do
     d1 = Dinosaur.new(health: 1000, damage: 300, speed: 132, level: 20, name: 'd1', abilities: [Strike, RampageAndRun], strategy: HighestDamageStrategy)
     d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: DefaultStrategy)
     match = Match.new(d1, d2)

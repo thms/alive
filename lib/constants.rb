@@ -1,5 +1,7 @@
 module Constants
 
+# Constants for strategies
+MATCH = {win: 1.0, loss: -1.0, draw: 0.0, swap_out: -0.3, max_player: 1.0, min_player: -1.0}
 # https://jurassic-world-alive.fandom.com/wiki/Hybrids
 KLASSES = [:cunning, :cunning_fierce, :cunning_resilient, :fierce, :fierce_resilient, :resilient, :wild_card]
 RESISTANCES = [:critical_reduction, :damage_over_time, :distraction, :rend, :speed_decrease, :stun, :swap_prevention, :taunt, :vulnerable]

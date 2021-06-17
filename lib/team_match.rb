@@ -10,9 +10,9 @@ class TeamMatch
 
   def initialize(attacker, defender)
     @attacker = attacker.reset_attributes!
-    @attacker.value = 1.0
+    @attacker.value = Constants::MATCH[:max_player]
     @defender = defender.reset_attributes!
-    @defender.value = -1.0
+    @defender.value = Constants::MATCH[:min_player]
     @round = 0
     @logger = Logger.new(STDOUT)
     @logger.level = 2
@@ -82,7 +82,7 @@ class TeamMatch
     # three possible outcomes: draw, attacker wins, defender wins
     if @attacker.healthy_members <= 1 && @defender.healthy_members <= 1
       outcome = 'draw'
-      outcome_value = 0.0
+      outcome_value = Constants::MATCH[:draw]
     else
       outcome = @attacker.healthy_members > 1 ? "#{@attacker.name}" : "#{@defender.name}"
       outcome_value = @attacker.healthy_members > 1 ? @attacker.value : @defender.value

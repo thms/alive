@@ -49,7 +49,7 @@ class MinMaxStrategy < Strategy
     ability_outcomes = {}
     # Safety valve to only look so far into the future
     depth = current_node.data[:depth] + 1
-    return {} if depth > 8
+    return {} if depth > 5
     # create all possible combinations of abilities of the two dinosaurs
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
@@ -82,11 +82,10 @@ class MinMaxStrategy < Strategy
           dinosaurs.reverse!
           abilities.reverse!
         end
-
+        swapped_out = ""
         # First attacks
         if dinosaurs.first.is_stunned
           @@logger.info("#{dinosaurs.first.name} is stunned")
-          #@log << "#{dinosaurs.first.name}::stunned"
           dinosaurs.first.is_stunned = false
           node = current_node.add_or_update_child( "#{dinosaurs.first.name}::stunned", '', {
             dinosaur1: dinosaurs.first,
@@ -96,8 +95,8 @@ class MinMaxStrategy < Strategy
           } )
         else
           @@logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-          #@log << "#{dinosaurs.first.name}::#{abilities.first.class}"
           hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
+          swapped_out = dinosaurs.first.name if abilities.first.is_swap_out
           node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
             abilities.first.class,
             {
@@ -125,11 +124,16 @@ class MinMaxStrategy < Strategy
           end
           @@logger.info ability_outcomes
           break # next rather than break?
+        elsif !swapped_out.empty?
+          node.is_final = true
+          node.winner = ""
+          node.looser = ""
+          node.value = dinosaurs.first.value * Constants::MATCH[:swap_out]
+          ability_outcomes[abilities.first.class.name] = node.value
         end
         # Second attacks
         if dinosaurs.last.is_stunned
           @@logger.info("#{dinosaurs.last.name} is stunned")
-          #@log << "#{dinosaurs.last.name}::stunned"
           dinosaurs.last.is_stunned = false
           node = node.add_or_update_child( "#{dinosaurs.last.name}::stunned", '', {
             dinosaur1: dinosaurs.first,
@@ -139,8 +143,8 @@ class MinMaxStrategy < Strategy
           })
         else
           @@logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-          #@log << "#{dinosaurs.last.name}::#{abilities.last.class}"
           hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
+          swapped_out = dinosaurs.last.name if abilities.last.is_swap_out
           node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
             abilities.last.class,
             {
@@ -168,6 +172,12 @@ class MinMaxStrategy < Strategy
           end
           @@logger.info ability_outcomes
           next
+        elsif !swapped_out.empty?
+          node.is_final = true
+          node.winner = ""
+          node.looser = ""
+          node.value = dinosaurs.last.value * Constants::MATCH[:swap_out]
+          ability_outcomes[abilities.last.class.name] = node.value
         end
         # Advance the clock & apply damage over time and skip to next if both are dead
         next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
@@ -243,12 +253,12 @@ class MinMaxStrategy < Strategy
       node.is_final = true
       node.winner = nil
       node.looser = nil
-      node.value = 0.0
+      node.value = Constants::MATCH[:draw]
       node.data[:health] = health(dinosaurs)
       if attacker.name == dinosaurs.first.name
-        ability_outcomes[abilities.first.class.name] = 0.0
+        ability_outcomes[abilities.first.class.name] = Constants::MATCH[:draw]
       else
-        ability_outcomes[abilities.last.class.name] = 0.0
+        ability_outcomes[abilities.last.class.name] = Constants::MATCH[:draw]
       end
       return true
     else

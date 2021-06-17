@@ -228,7 +228,7 @@ class Simulation
     node.is_final = true
     node.data[:health] = health(dinosaurs)
     if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
-      node.value = 0.0
+      node.value = Constants::MATCH[:draw]
       node.winner = nil
       node.looser = nil
       node.color = '#cfd8dc'

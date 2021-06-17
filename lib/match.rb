@@ -11,9 +11,9 @@ class Match
 
   def initialize(dinosaur1, dinosaur2)
     @dinosaur1 = dinosaur1.reset_attributes!
-    @dinosaur1.value = 1.0
+    @dinosaur1.value = Constants::MATCH[:max_player]
     @dinosaur2 = dinosaur2.reset_attributes!
-    @dinosaur2.value = -1.0
+    @dinosaur2.value = Constants::MATCH[:min_player]
     @logger = Logger.new(STDOUT)
     @logger.level = 2
     @round = 1
@@ -77,13 +77,13 @@ class Match
     # four possible outcomes: draw, d1 wins, d2 wins, one dino swapped out
     if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
       outcome = 'draw'
-      outcome_value = 0.0
+      outcome_value = Constants::MATCH[:draw]
     elsif @dinosaur1.current_health == 0 || @dinosaur2.current_health == 0
       outcome = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
       outcome_value = @dinosaur1.current_health > 0 ? @dinosaur1.value : @dinosaur2.value
     elsif !swapped_out.empty?
       outcome = "#{swapped_out} swapped out"
-      outcome_value  = @dinosaur1.name == swapped_out ? @dinosaur1.value * 0.3 : @dinosaur2.value * 0.3
+      outcome_value  = Constants::MATCH[:swap_out] * (@dinosaur1.name == swapped_out ? @dinosaur1.value : @dinosaur2.value)
     end
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}

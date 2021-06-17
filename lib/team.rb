@@ -17,7 +17,7 @@ class Team
   def initialize(name, dinosaurs)
     @name = name
     @dinosaurs = dinosaurs
-    @value = 1.0
+    @value = Constants::MATCH[:max_player]
     @strategy = nil
     @current_dinosaur = nil
     @recent_dinosaur = nil

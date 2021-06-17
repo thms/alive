@@ -5,18 +5,18 @@ class MatchesController < ApplicationController
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     #MinMaxStrategy.reset_cache
-    name1 = 'Thoradolosaur'
+    name1 = 'Indoraptor'
     name2 = 'Smilonemys'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     # TQStrategy.reset
-    10.times do
+    1.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
       # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = MinMaxStrategy
+      @d1.strategy = RandomStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = RandomStrategy
+      @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
