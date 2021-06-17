@@ -9,14 +9,14 @@ class MatchesController < ApplicationController
     name2 = 'Smilonemys'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    # TQStrategy.reset
-    1.times do
+    TQStrategy.reset
+    1000.times do
       # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
       # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = RandomStrategy
+      @d1.strategy = TQStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMaxStrategy
+      @d2.strategy = TQStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute

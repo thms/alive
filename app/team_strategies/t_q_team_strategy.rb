@@ -158,6 +158,7 @@ class TQTeamStrategy < Strategy
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    result << "- "
     d = defender
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }

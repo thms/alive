@@ -7,7 +7,9 @@
     <%= render 'dinosaurs/data', dinosaur: @d2 %>
   </div>
 </div>
-<div>Stats: <%= @stats %>
+<div>Stats: <%= @stats %></div>
+<div>Stats: <%= TQStrategy.stats %></div>
 <div>
   <%= @graph.html_safe %>
 </div>
+<div><%= render partial: 'q_table' %></div>

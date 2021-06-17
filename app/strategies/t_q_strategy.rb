@@ -112,6 +112,10 @@ class TQStrategy < Strategy
     @@random_mode = false
   end
 
+  def self.stats
+    {games: @@games_played, size: @@q_table.size}
+  end
+
   def self.save
     state = Marshal.dump({q_table: @@q_table, games_played: @@games_played})
     File.open("#{Rails.root}/tmp/t_q_strategy.state", "wb") do |file|
@@ -133,6 +137,7 @@ class TQStrategy < Strategy
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    result << "- "
     d = defender
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }

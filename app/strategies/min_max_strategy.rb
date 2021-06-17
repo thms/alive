@@ -273,6 +273,7 @@ class MinMaxStrategy < Strategy
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
+    result << "- "
     d = node.data[:dinosaur2]
     result << "#{d.name} #{d.current_health} #{d.level} "
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
