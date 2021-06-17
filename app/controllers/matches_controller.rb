@@ -6,8 +6,8 @@ class MatchesController < ApplicationController
   def index
     #MinMaxStrategy.reset_cache
     name1 = 'Thoradolosaur'
-    name2 = 'Trykosaurus'
-    @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
+    name2 = 'Smilonemys'
+    @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     # TQStrategy.reset
     10.times do
@@ -16,7 +16,7 @@ class MatchesController < ApplicationController
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = MinMaxStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMaxStrategy
+      @d2.strategy = RandomStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute

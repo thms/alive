@@ -38,6 +38,10 @@ class Ability
   # True if this is an automatic counter move
   class_attribute :is_counter
 
+  # True if this is an "rampage and run" style ability leading to automatic swap out of the dino after the move
+  class_attribute :is_swap_out
+  self.is_swap_out = false
+
   # Keep track of the current delay and cooldown
   attr_accessor :current_delay
   attr_accessor :current_cooldown
@@ -125,7 +129,7 @@ class Ability
     end
   end
 
-  # TODO: performs swapping out effects, 
+  # TODO: performs swapping out effects,
   def on_escape(attacker, defender)
   end
 

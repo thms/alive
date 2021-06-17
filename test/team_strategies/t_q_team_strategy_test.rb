@@ -43,7 +43,7 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the random team" do
-    #skip
+    skip
     puts 'TQ : Random'
     team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
     name1 = 'Attacker'

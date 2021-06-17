@@ -21,6 +21,7 @@ class Match
   end
 
   def execute
+    swapped_out = ""
     while @dinosaur1.current_health > 0 && @dinosaur2.current_health > 0
       @logger.info("Round: #{@round}")
       @logger.info("#{@dinosaur1.name}: #{@dinosaur1.current_speed}")
@@ -46,10 +47,11 @@ class Match
         abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
       else
         hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
+        swapped_out = dinosaurs.first.name if abilities.first.is_swap_out
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
         @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
       end
-      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
+      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0 || !swapped_out.empty?
 
       # Second attacks
       if dinosaurs.last.is_stunned
@@ -60,10 +62,11 @@ class Match
         abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
       else
         hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
+        swapped_out = dinosaurs.last.name if abilities.last.is_swap_out
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
         @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
       end
-      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
+      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0 || !swapped_out.empty?
       # Advance the clock, to apply DoT and tick down modifiers
       tick
       # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
@@ -71,13 +74,16 @@ class Match
     end
     # If we get here, we still need to tick to apply DoT, since this can lead to a draw
     tick
-    # three possible outcomes: draw, d1 wins, d2 wins
+    # four possible outcomes: draw, d1 wins, d2 wins, one dino swapped out
     if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
       outcome = 'draw'
       outcome_value = 0.0
-    else
+    elsif @dinosaur1.current_health == 0 || @dinosaur2.current_health == 0
       outcome = @dinosaur1.current_health > 0 ? "#{@dinosaur1.name}" : "#{@dinosaur2.name}"
       outcome_value = @dinosaur1.current_health > 0 ? @dinosaur1.value : @dinosaur2.value
+    elsif !swapped_out.empty?
+      outcome = "#{swapped_out} swapped out"
+      outcome_value  = @dinosaur1.name == swapped_out ? @dinosaur1.value * 0.3 : @dinosaur2.value * 0.3
     end
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}
