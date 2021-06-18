@@ -7,8 +7,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
-      health: 4500,
-      damage: 1700,
+      health_26: 4500,
+      damage_26: 1700,
       speed: 105,
       armor: 0,
       critical_chance: 40,
@@ -17,8 +17,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
-      health: 1650,
-      damage: 1550,
+      health_26: 1650,
+      damage_26: 1550,
       speed: 132,
       armor: 0,
       critical_chance: 5,
@@ -34,8 +34,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
-      health: 4500,
-      damage: 1700,
+      health_26: 4500,
+      damage_26: 1700,
       speed: 105,
       armor: 0,
       critical_chance: 40,
@@ -44,8 +44,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
-      health: 1650,
-      damage: 1550,
+      health_26: 1650,
+      damage_26: 1550,
       speed: 132,
       armor: 0,
       critical_chance: 5,
@@ -61,8 +61,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
-      health: 4500,
-      damage: 1300,
+      health_26: 4500,
+      damage_26: 1300,
       speed: 116,
       armor: 0,
       critical_chance: 20,
@@ -71,8 +71,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
-      health: 1650,
-      damage: 1550,
+      health_26: 1650,
+      damage_26: 1550,
       speed: 132,
       armor: 0,
       critical_chance: 5,
@@ -89,8 +89,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
-      health: 4500,
-      damage: 1700,
+      health_26: 4500,
+      damage_26: 1700,
       speed: 105,
       armor: 0,
       critical_chance: 40,
@@ -99,8 +99,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
-      health: 4200,
-      damage: 1450,
+      health_26: 4200,
+      damage_26: 1450,
       speed: 130,
       armor: 0,
       critical_chance: 20,
@@ -115,8 +115,8 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   test "should save state to disk and load back" do
     MinMaxStrategy.reset
     10.times do
-      d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
-      d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: MinMaxStrategy)
+      d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
+      d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: MinMaxStrategy)
       match = Match.new(d1, d2)
       result = match.execute
       MinMaxStrategy.learn(result[:outcome_value])

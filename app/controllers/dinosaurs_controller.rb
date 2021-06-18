@@ -88,7 +88,7 @@ class DinosaursController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def dinosaur_params
-      params.require(:dinosaur).permit(:name, :level, :rarity, :health, :armor, :critical_chance, :speed, :damage, :dna, :left_id, :right_id)
+      params.require(:dinosaur).permit(:name, :level, :rarity, :health_26, :armor, :critical_chance, :speed, :damage_26, :dna, :left_id, :right_id)
     end
 
     def sort_column

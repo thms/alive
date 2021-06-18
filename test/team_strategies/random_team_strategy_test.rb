@@ -22,8 +22,8 @@ class RandomTeamStrategyTest < ActiveSupport::TestCase
   end
 
   test "should occasionaly pick a swap in ability" do
-    d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
-    d2 = Dinosaur.new(health: 1000, damage: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: DefaultStrategy)
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: DefaultStrategy)
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.strategy = RandomTeamStrategy
     stats = {'Strike' => 0, 'Impact' => 0, 'SwapIn' => 0, 'SwapInSavagery' => 0}

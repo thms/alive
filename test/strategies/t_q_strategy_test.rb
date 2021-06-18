@@ -5,16 +5,16 @@ class TQStrategyTest < ActiveSupport::TestCase
 
   test "should return the only available ability without training" do
     skip
-    d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd1', abilities: [Strike], strategy: TQStrategy).reset_attributes!
-    d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 100, speed: 130, level: 20, name: 'd1', abilities: [Strike], strategy: TQStrategy).reset_attributes!
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
     result = TQStrategy.next_move(d1, d2)
     assert_equal Strike, result.class
   end
 
   test "should return the any available ability without training" do
     skip
-    d1 = Dinosaur.new(health: 1000, damage: 100, speed: 130, level: 20, name: 'd1', abilities: [Strike, FierceStrike], strategy: TQStrategy).reset_attributes!
-    d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 100, speed: 130, level: 20, name: 'd1', abilities: [Strike, FierceStrike], strategy: TQStrategy).reset_attributes!
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
     result = TQStrategy.next_move(d1, d2)
     assert_includes [Strike, FierceStrike], result.class
   end
@@ -23,8 +23,8 @@ class TQStrategyTest < ActiveSupport::TestCase
     #skip
     TQStrategy.reset
     TQStrategy.enable_random_mode
-    d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, FierceStrike], strategy: TQStrategy).reset_attributes!
-    d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, FierceStrike], strategy: TQStrategy).reset_attributes!
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
     match = Match.new(d1, d2)
     result = match.execute
     outcome = result[:outcome] == d1.name ? d1.value : d2.value
@@ -43,8 +43,8 @@ class TQStrategyTest < ActiveSupport::TestCase
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     TQStrategy.reset
     100.times do
-      d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
-      d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
+      d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
+      d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
       match = Match.new(d1, d2)
       result = match.execute
       TQStrategy.learn(result[:outcome_value])
@@ -55,8 +55,8 @@ class TQStrategyTest < ActiveSupport::TestCase
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     log = []
     100.times do
-      d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
-      d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
+      d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
+      d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
       match = Match.new(d1, d2)
       result = match.execute
       log.push result[:log]
@@ -69,8 +69,8 @@ class TQStrategyTest < ActiveSupport::TestCase
     skip
     TQStrategy.reset
     10.times do
-      d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
-      d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
+      d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
+      d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
       match = Match.new(d1, d2)
       result = match.execute
       TQStrategy.learn(result[:outcome_value])

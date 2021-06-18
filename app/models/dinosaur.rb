@@ -38,7 +38,7 @@ class Dinosaur < ApplicationRecord
   # also (re)-build the abilities from the classes passed in
   # ToDo: use stat bosts to calculate actual health, speed and damage
   def reset_attributes!
-    @current_health = health_at_current_level
+    @current_health = health
     @current_speed = speed
     @is_stunned = false
     @modifiers = []
@@ -195,12 +195,12 @@ class Dinosaur < ApplicationRecord
   end
 
   # caluclate health at specific level from level @ 26 includng stat boosts
-  def health_at_current_level
+  def health
     (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
   end
 
   # caluclate damamge at specific level from level @ 26 includng stat boosts
-  def damage_at_current_level
+  def damage
     (damage_26 * (100.0 + attack_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
   end
 

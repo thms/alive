@@ -10,14 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_104212) do
+ActiveRecord::Schema.define(version: 2021_06_18_130122) do
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
     t.integer "level"
     t.string "rarity"
-    t.integer "health"
-    t.integer "damage"
     t.integer "speed"
     t.integer "dna"
     t.integer "left_id"

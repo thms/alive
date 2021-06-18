@@ -25,7 +25,7 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
       stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
-    pp TQTeamStrategy.q_table
+    #pp TQTeamStrategy.q_table
     stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     100.times do
       t1 = Team.new(name1, team1)

@@ -14,8 +14,8 @@ class DinosaursTest < ApplicationSystemTestCase
     visit dinosaurs_url
     click_on "New Dinosaur"
 
-    fill_in "Damage", with: @dinosaur.damage
-    fill_in "Health", with: @dinosaur.health
+    fill_in "Damage 26", with: @dinosaur.damage_26
+    fill_in "Health 26", with: @dinosaur.health_26
     select "", from: "dinosaur[left_id]"
     select "", from: "dinosaur[right_id]"
     fill_in "Level", with: @dinosaur.level
@@ -33,8 +33,8 @@ class DinosaursTest < ApplicationSystemTestCase
     visit dinosaurs_url
     click_on "Edit", match: :first
 
-    fill_in "Damage", with: @dinosaur.damage
-    fill_in "Health", with: @dinosaur.health
+    fill_in "Damage 26", with: @dinosaur.damage_26
+    fill_in "Health 26", with: @dinosaur.health_26
     select "", from: "dinosaur[left_id]"
     select "", from: "dinosaur[right_id]"
     fill_in "Level", with: @dinosaur.level
