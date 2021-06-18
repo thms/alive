@@ -9,7 +9,6 @@ class TQStrategyTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
     result = TQStrategy.next_move(d1, d2)
     assert_equal Strike, result.class
-    pp TQStrategy.q_table
   end
 
   test "should return the any available ability without training" do
@@ -18,7 +17,6 @@ class TQStrategyTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health: 1000, damage: 100, speed: 125, level: 20, name: 'd2', abilities: [Strike], strategy: RandomStrategy).reset_attributes!
     result = TQStrategy.next_move(d1, d2)
     assert_includes [Strike, FierceStrike], result.class
-    pp TQStrategy.q_table
   end
 
   test "training should propagate backwards" do
@@ -33,11 +31,9 @@ class TQStrategyTest < ActiveSupport::TestCase
     puts "Outcome: #{outcome}"
     log = TQStrategy.log.clone
     TQStrategy.learn(result[:outcome_value])
-    pp TQStrategy.q_table
     # replay the game
     TQStrategy.set_log(log)
     TQStrategy.learn(result[:outcome_value])
-    pp TQStrategy.q_table
 
   end
 
@@ -55,7 +51,6 @@ class TQStrategyTest < ActiveSupport::TestCase
       stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
-    pp TQStrategy.q_table
 
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     log = []

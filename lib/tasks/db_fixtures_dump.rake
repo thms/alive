@@ -32,7 +32,7 @@ namespace :db do
             attrs.delete_if{|k,v| v.blank?}
 
             output = {m + '_' + increment.to_s => attrs}
-            f << output.to_yaml.gsub(/^--- \n/,'') + "\n"
+            f << output.to_yaml.gsub(/^---\n/,'') + "\n"
 
             increment += 1
           end

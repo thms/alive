@@ -38,7 +38,7 @@ class Dinosaur < ApplicationRecord
   # also (re)-build the abilities from the classes passed in
   # ToDo: use stat bosts to calculate actual health, speed and damage
   def reset_attributes!
-    @current_health = health
+    @current_health = health_at_current_level
     @current_speed = speed
     @is_stunned = false
     @modifiers = []
@@ -72,7 +72,7 @@ class Dinosaur < ApplicationRecord
 
   # ToDo: cap at zero, to prevent it from going negative?
   def current_speed
-    (speed * current_attributes[:speed] / 100).to_i
+    (speed_with_boosts * current_attributes[:speed] / 100).to_i
   end
 
   # attempt to add a modifiers
@@ -192,6 +192,21 @@ class Dinosaur < ApplicationRecord
     abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     result
+  end
+
+  # caluclate health at specific level from level @ 26 includng stat boosts
+  def health_at_current_level
+    (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+  end
+
+  # caluclate damamge at specific level from level @ 26 includng stat boosts
+  def damage_at_current_level
+    (damage_26 * (100.0 + attack_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+  end
+
+  # caluclate speed includng stat boosts
+  def speed_with_boosts
+    (speed * (100.0 + speed_boosts * 2.5) / 100.0).round
   end
 
   # returns array of all possible hybrids one level up

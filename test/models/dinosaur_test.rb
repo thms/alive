@@ -253,13 +253,13 @@ class DinosaurTest < ActiveSupport::TestCase
 
   # Testing  ability_stats
   test "Available abilities should be all before tick if none has a delay" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike, Strike])
+    dinosaur = Dinosaur.new(health_26: 1000, level: 26, damage: 100, speed: 130, name: 'd1', abilities: [DeceleratingStrike, Strike])
     dinosaur.reset_attributes!
     assert_equal([DeceleratingStrike, Strike], dinosaur.available_abilities.map{|c| c.class})
   end
 
   test "ability with delay of one should only be available after one tick" do
-    dinosaur = Dinosaur.new(health: 1000, damage: 100, speed: 130, name: 'd1', abilities: [Rampage])
+    dinosaur = Dinosaur.new(health_26: 1000, level: 26, damage: 100, speed: 130, name: 'd1', abilities: [Rampage])
     dinosaur.reset_attributes!
     assert_equal([], dinosaur.available_abilities)
     dinosaur.tick
@@ -267,6 +267,28 @@ class DinosaurTest < ActiveSupport::TestCase
     dinosaur.tick
     assert_equal([Rampage], dinosaur.available_abilities.map{|c| c.class})
   end
+
+  # Testing boosts and level dependent calculations
+  test "Health at level 26 without boost should same as health_26" do
+    dinosaur = Dinosaur.new(health_26: 1000, level: 26, health_boosts: 0, damage: 100, speed: 130, name: 'd1', abilities: [])
+    assert_equal 1000, dinosaur.health_at_current_level
+  end
+
+  test "Health at level 30 without boost should be 20% higher" do
+    dinosaur = Dinosaur.new(health_26: 1000, level: 30, health_boosts: 0, damage: 100, speed: 130, name: 'd1', abilities: [])
+    assert_equal 1200, dinosaur.health_at_current_level
+  end
+
+  test "Health at level 16 without boost should be 50% lower" do
+    dinosaur = Dinosaur.new(health_26: 1000, level: 16, health_boosts: 0, damage: 100, speed: 130, name: 'd1', abilities: [])
+    assert_equal 500, dinosaur.health_at_current_level
+  end
+
+  test "Health at level 26 with 10 boost should by 25% higher" do
+    dinosaur = Dinosaur.new(health_26: 1000, level: 26, health_boosts: 10, damage: 100, speed: 130, name: 'd1', abilities: [])
+    assert_equal 1250, dinosaur.health_at_current_level
+  end
+
 
 
 end
