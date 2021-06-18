@@ -29,6 +29,7 @@ class Dinosaur < ApplicationRecord
   attr_accessor :is_stunned # when stunned, skip this attack and unstun.
   attr_accessor :strategy
   attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
+  attr_accessor :team # used in team matches
 
   def to_param
     name.parameterize
@@ -179,6 +180,10 @@ class Dinosaur < ApplicationRecord
   # this is determined exclusively by an active swap_prevention modifer
   def can_swap?
     modifiers.none? {|modifier| modifier.class == Modifiers::PreventSwap} || rand(100) <= resistance(:swap_prevention)
+  end
+
+  def run
+    team.run
   end
 
   # Hash value for lookup tables etc.

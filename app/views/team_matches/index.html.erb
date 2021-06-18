@@ -8,5 +8,7 @@
 <div><%= @t2.health %></div>
 <div><%= TQTeamStrategy.q_table.size %>
 <div><%= @graph.html_safe %></div>
-<div><%= TQTeamStrategy.q_table %>
-<div><%= @logs %></div>
+<div><%= render partial: 'logs', logs: @events %></div>
+<!--
+<div><%= TQTeamStrategy.q_table %></div>
+>

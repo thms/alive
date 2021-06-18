@@ -5,14 +5,15 @@ class TeamMatchesController < ApplicationController
   def index
     name1 = 'Attacker'
     #team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
-    team1 = ['Tarbosaurus', 'Dracorex Gen 2']
+    team1 = ['Tarbosaurus', 'Dracorex Gen 2', 'Ornithomimus']
     name2 = 'Defender'
     #team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
-    team2 = ['Allosaurus', 'Dilophosaurus Gen 2']
+    team2 = ['Allosaurus', 'Dilophosaurus Gen 2', 'Arambourgiania']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
-    TQTeamStrategy.reset
-    100.times do
+    @events = []
+    TQTeamStrategy.load
+    1.times do
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
@@ -24,9 +25,10 @@ class TeamMatchesController < ApplicationController
       @t2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
       @logs << result[:log]
+      @events << result[:events]
     end
     #TQTeamStrategy.save
-    @graph = generate_graph(@logs, name1, name2)
+    @graph = generate_graph(@events, name1, name2)
   end
 
   private

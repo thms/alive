@@ -1,0 +1,10 @@
+<% @logs.each do |log| %>
+<table>
+  <% log.each do |entry| %>
+    <tr>
+      <td><%= entry[:event] %></td>
+      <td><%= entry[:health] %></td>
+    </tr>
+  <% end %>
+</table>
+<% end %>

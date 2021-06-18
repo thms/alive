@@ -17,15 +17,13 @@ class TeamMatch
     @logger = Logger.new(STDOUT)
     @logger.level = 2
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
+    @events = []
   end
 
 
   def execute
     while !is_win? && @round < 100 # safetly valve only
       @round += 1
-      @logger.info("Round: #{@round}")
-      @logger.info("Attacker #{@attacker.health}")
-      @logger.info("Defender #{@defender.health}")
       # each team picks a dinosaur and a move.
       abilities = [@attacker.next_move(@defender), @defender.next_move(@attacker)]
       dinosaurs = [@attacker.current_dinosaur, @defender.current_dinosaur]
@@ -34,15 +32,25 @@ class TeamMatch
 
       # first one attacks
       if dinosaurs.first.is_stunned
-        @logger.info("#{dinosaurs.first.name} is stunned")
         @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
+        @events << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.first.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
       else
         hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-        @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
         @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
+        @events << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
+        if abilities.first.is_swap_out
+          team = dinosaurs.first.team
+          name = dinosaurs.first.name
+          if dinosaurs.first.run
+            dinosaurs.first = team.current_dinosaur
+            @events << {event: "#{name} swapped out", stats: {}, health: health(dinosaurs)}
+          else
+            @events << {event: "#{name} prevented from swapping out", stats: {}, health: health(dinosaurs)}
+          end
+        end
       end
       # if that leads to death, the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
@@ -56,15 +64,23 @@ class TeamMatch
       end
       # second one attacks
       if dinosaurs.last.is_stunned
-        @logger.info("#{dinosaurs.last.name} is stunned")
         @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
+        @events << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
         dinosaurs.last.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
       else
         hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-        @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
         @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
+        @events << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
+        if abilities.last.is_swap_out
+          if dinosaurs.last.team.run
+            @events << {event: "#{dinosaurs.last.name} swapped out", stats: {}, health: health(dinosaurs)}
+          else
+            @events << {event: "#{dinosaurs.last.name} prevented from swapping out", stats: {}, health: health(dinosaurs)}
+          end
+        end
+
       end
       # if that leads to death, the round ends
       if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
@@ -89,7 +105,7 @@ class TeamMatch
     end
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}
-    {outcome: outcome, outcome_value: outcome_value, log: @log}
+    {outcome: outcome, outcome_value: outcome_value, log: @log, events: @events}
 
   end
 
@@ -100,8 +116,6 @@ class TeamMatch
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
   def order_dinosaurs_and_abilities(dinosaurs, abilities)
-    @logger.info(dinosaurs.map {|d| d.name})
-
     if dinosaurs.first.current_speed == dinosaurs.last.current_speed
       if dinosaurs.first.level < dinosaurs.last.level
         # same speed but different level, higher level goes first
