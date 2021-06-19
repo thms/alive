@@ -11,6 +11,7 @@ class MinMaxStrategy < Strategy
   @@games_played = 0
   @@error_rate = 0.0
   @@root = nil
+  @@max_depth = 6
   @@logger = Logger.new(STDOUT)
   @@logger.level = 2
 # returns a single availabe ability from the attacker
@@ -49,7 +50,7 @@ class MinMaxStrategy < Strategy
     ability_outcomes = {}
     # Safety valve to only look so far into the future
     depth = current_node.data[:depth] + 1
-    return {} if depth > 5
+    return {} if depth > @@max_depth
     # create all possible combinations of abilities of the two dinosaurs
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|

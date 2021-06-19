@@ -14,9 +14,9 @@ class MatchesController < ApplicationController
     TQStrategy.load
     1.times do
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = TQStrategy
+      @d1.strategy = ForcedStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = TQStrategy
+      @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute

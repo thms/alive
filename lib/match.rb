@@ -51,7 +51,8 @@ class Match
         @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
         @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
       end
-      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0 || !swapped_out.empty?
+      # matchs ends if second is dead or first has swapped out
+      break if dinosaurs.last.current_health <= 0 || !swapped_out.empty?
 
       # Second attacks
       if dinosaurs.last.is_stunned
@@ -66,9 +67,13 @@ class Match
         @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
         @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
       end
-      break if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0 || !swapped_out.empty?
+      # match ends if first is dead or second has swapped out
+      break if dinosaurs.first.current_health <= 0|| !swapped_out.empty?
       # Advance the clock, to apply DoT and tick down modifiers
       tick
+      if health(dinosaurs) != @log.last[:health]
+        @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
+      end
       # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
       break if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
     end

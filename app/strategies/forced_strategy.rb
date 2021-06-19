@@ -4,7 +4,11 @@ class ForcedStrategy < Strategy
   @@moves = {'Dracoceratops' => ['CleansingImpact', 'FierceImpact'], 'Suchotator' => ['LethalWound', 'SuperiorityStrike']}
   def self.next_move(attacker, defender)
     move = @@moves[attacker.name].shift
-    attacker.available_abilities.select {|a| a.class.name == move}.first
+    if move.nil?
+      attacker.available_abilities.sample
+    else
+      attacker.available_abilities.select {|a| a.class.name == move}.first
+    end
   end
 
   def self.reset
