@@ -72,8 +72,12 @@ class Match
       # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
       break if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
     end
-    # If we get here, we still need to tick to apply DoT, since this can lead to a draw
-    tick
+    # if only has died, we still need to apply damage over time - if both have died, we already have ticked
+    tick unless dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+    # if damage over time has changed the health from the last log entry write another log entry
+    if health(dinosaurs) != @log.last[:health]
+      @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
+    end
     # four possible outcomes: draw, d1 wins, d2 wins, one dino swapped out
     if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
       outcome = 'draw'

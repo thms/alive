@@ -45,7 +45,7 @@ class TeamMatch
           team = dinosaurs.first.team
           name = dinosaurs.first.name
           if dinosaurs.first.run
-            dinosaurs.first = team.current_dinosaur
+            dinosaurs[0] = team.current_dinosaur
             @events << {event: "#{name} swapped out", stats: {}, health: health(dinosaurs)}
           else
             @events << {event: "#{name} prevented from swapping out", stats: {}, health: health(dinosaurs)}
@@ -105,6 +105,7 @@ class TeamMatch
     end
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}
+    @events << {event: outcome, stats: {}, health: health(dinosaurs)}
     {outcome: outcome, outcome_value: outcome_value, log: @log, events: @events}
 
   end

@@ -114,7 +114,7 @@ class MinMaxStrategy < Strategy
             node.looser = dinosaurs.last.name
             node.value = dinosaurs.first.value
             @@logger.info("1: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-            if node.winner == attacker.name
+            if dinosaurs.first.name == attacker.name
               # store this as a winning node for the attacker (who may have value -1.0)
               ability_outcomes[abilities.first.class.name] = node.value
             else
@@ -162,7 +162,7 @@ class MinMaxStrategy < Strategy
             node.looser = dinosaurs.first.name
             node.value = dinosaurs.last.value
             @@logger.info("2: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-            if node.winner == attacker.name
+            if dinosaurs.last.name == attacker.name
               # store this as a winning node for the attacker (who may have value -1.0)
               ability_outcomes[abilities.last.class.name] = node.value
             else
@@ -245,6 +245,8 @@ class MinMaxStrategy < Strategy
 
   private
 
+  # tick both dinosaurs to apply damage over time
+  # returns true if one or more are dead, false otherwise
   def self.apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
     dinosaurs.first.tick
     dinosaurs.last.tick
@@ -259,6 +261,30 @@ class MinMaxStrategy < Strategy
         ability_outcomes[abilities.first.class.name] = Constants::MATCH[:draw]
       else
         ability_outcomes[abilities.last.class.name] = Constants::MATCH[:draw]
+      end
+      return true
+    elsif dinosaurs.first.current_health <= 0
+      node.is_final = true
+      node.winner = dinosaurs.last.name
+      node.looser = dinosaurs.first.name
+      node.value = dinosaurs.last.value
+      node.data[:health] = health(dinosaurs)
+      if attacker.name == dinosaurs.first.name
+        ability_outcomes[abilities.first.class.name] = node.value
+      else
+        ability_outcomes[abilities.last.class.name] = -node.value
+      end
+      return true
+    elsif dinosaurs.last.current_health <= 0
+      node.is_final = true
+      node.winner = dinosaurs.first.name
+      node.looser = dinosaurs.last.name
+      node.value = dinosaurs.first.value
+      node.data[:health] = health(dinosaurs)
+      if attacker.name == dinosaurs.first.name
+        ability_outcomes[abilities.first.class.name] = node.value
+      else
+        ability_outcomes[abilities.last.class.name] = - node.value
       end
       return true
     else

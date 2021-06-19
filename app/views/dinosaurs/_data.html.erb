@@ -3,7 +3,7 @@
   <%= "L: #{dinosaur.level} DNA: #{dinosaur.dna}" %><br/>
   <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
   <% Constants::RESISTANCES.each do |resistance| %>
-    <%= "#{resistance}: #{dinosaur.resistance(resistance)} " unless dinosaur.resistance(resistance) == 0 %>
+    <%= "#{resistance.to_s.gsub('_',' ').capitalize}: #{dinosaur.resistance(resistance)}, " unless dinosaur.resistance(resistance) == 0 %>
   <% end %>
   <br />
   <%= dinosaur.strategy %><br/>

@@ -5,14 +5,14 @@ class MatchesController < ApplicationController
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     #MinMaxStrategy.reset_cache
-    name1 = 'Indoraptor'
-    name2 = 'Smilonemys'
+    name1 = 'Dracoceratops'
+    name2 = 'Suchotator'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    TQStrategy.reset
-    1000.times do
-      # @d1 = Dinosaur.new(health: 350, damage: 150, speed: 132, level: 20, name: name1, klass: 'cunning', abilities: [InstantCharge, Strike], strategy: MinMaxStrategy)
-      # @d2 = Dinosaur.new(health: 350, damage: 150, speed: 130, level: 20, name: name2, klass: 'cunning', abilities: [InstantCharge, Strike, HighPounce], strategy: DefaultStrategy)
+    #TQStrategy.reset
+    #MinMaxStrategy.reset
+    TQStrategy.load
+    1.times do
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = TQStrategy
       @d2 = Dinosaur.find_by_name name2
@@ -25,8 +25,12 @@ class MatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-
-    @graph = generate_graph(@logs, name1, name2)
+    TQStrategy.save
+    if @logs.size > 10
+      @graph = ""
+    else
+      @graph = generate_graph(@logs, name1, name2)
+    end
 
   end
 
@@ -42,8 +46,9 @@ class MatchesController < ApplicationController
       log.each do |entry|
         title = entry[:health]
         node = g.get_node(title).first || g.add_node(title)
-        edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
-        edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+        edge_label = "#{entry[:event]}#{' - crit' if entry[:stats][:is_critical_hit]}#{' - dodged' if entry[:stats][:did_dodge]}"
+        edge = last_node.connected?(node) || last_node.connect(node, {label: edge_label})
+        edge.attributes[:label] += ", #{edge_label}" unless edge.attributes[:label].include?(edge_label)
         last_node = node
       end
     end
