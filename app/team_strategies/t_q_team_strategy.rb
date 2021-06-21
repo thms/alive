@@ -38,8 +38,8 @@ class TQTeamStrategy < Strategy
     # if empty, initialize and pick a random available ability from the current dinosaur or swap randomly
     if abilities.nil?
       @@q_table[hash] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h
-      attacker.current_dinosaur = attacker.available_dinosaurs.sample
-      ability = "#{attacker.current_dinosaur.name}::#{attacker.current_dinosaur.available_abilities.sample.class.name}"
+      target_dinosaur = attacker.available_dinosaurs.sample
+      ability = "#{target_dinosaur.name}::#{target_dinosaur.available_abilities.sample.class.name}"
     elsif @@random_mode || rand < EPSILON
       # pick a random ability to do a broad learning in initial training
       ability = available_ability_names.sample

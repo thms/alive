@@ -1,7 +1,7 @@
   <div style="width: 16px; height: 16px; background-color: <%= dinosaur.color %>; display: inline-block;" ></div>
   <big><%= "#{dinosaur.name}" %></big><br/>
   <%= "L: #{dinosaur.level} DNA: #{dinosaur.dna}" %><br/>
-  <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
+  <%= "H: #{dinosaur.health} D: #{dinosaur.damage} S: #{dinosaur.speed_with_boosts} A: #{dinosaur.armor}% C: #{dinosaur.critical_chance}%" %><br/>
   <% Constants::RESISTANCES.each do |resistance| %>
     <%= "#{resistance.to_s.gsub('_',' ').capitalize}: #{dinosaur.resistance(resistance)}, " unless dinosaur.resistance(resistance) == 0 %>
   <% end %>
