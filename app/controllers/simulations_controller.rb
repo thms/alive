@@ -6,8 +6,8 @@ class SimulationsController < ApplicationController
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
     d1 = Dinosaur.new(health_26: 4200, damage_26: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd1', abilities: [Strike], strategy: RandomStrategy)
     d2 = Dinosaur.new(health_26: 4200, damage_26: 1400, speed: 130, armor: 0, critical_chance: 0, level: 26, name: 'd2', abilities: [Sidestep, NullifyingRampage], strategy: RandomStrategy)
-    d1 = Dinosaur.find_by_name('Dracoceratops')
-    d2 = Dinosaur.find_by_name('Suchotator')
+    d1 = Dinosaur.find_by_name('Thoradolosaur')
+    d2 = Dinosaur.find_by_name('Quetzorion')
     d1.reset_attributes!
     d2.reset_attributes!
     if d1.name == d2.name
@@ -17,9 +17,9 @@ class SimulationsController < ApplicationController
     d1.color = '#81d4fa'
     d2.color = '#b2dfdb'
     @simulation = Simulation.new(d1, d2)
-    result = @simulation.execute
+    @result = @simulation.execute
 
-    full_graph = build_graph(result)
+    full_graph = build_graph(@result)
     File.open("tmp/full_graph.dot", "w") do |output|
       full_graph.dump_graph(output)
     end
@@ -27,8 +27,8 @@ class SimulationsController < ApplicationController
     @full_graph = File.read('tmp/full_graph.svg')
 
     # create pruned version of the graph
-    @simulation.prune(result)
-    pruned_graph = build_graph(result)
+    @simulation.prune(@result)
+    pruned_graph = build_graph(@result)
     File.open("tmp/pruned_graph.dot", "w") do |output|
       pruned_graph.dump_graph(output)
     end

@@ -65,7 +65,7 @@ class TeamTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
-    d1.add_modifier(Modifiers::PreventSwap.new(2))
+    d1.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
     result = team.swap(d2, d2.available_abilities.first)
     assert_equal SwapFailed, result[:ability].class
   end

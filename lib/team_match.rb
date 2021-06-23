@@ -15,7 +15,7 @@ class TeamMatch
     @defender.value = Constants::MATCH[:min_player]
     @round = 0
     @logger = Logger.new(STDOUT)
-    @logger.level = 2
+    @logger.level = :warn
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
     @events = []
   end
@@ -34,6 +34,7 @@ class TeamMatch
       if dinosaurs.first.is_stunned
         @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
         @events << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
+        EventSink.add "#{dinosaurs.first.name}::stunned"
         dinosaurs.first.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
@@ -41,9 +42,14 @@ class TeamMatch
         hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
         @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
         @events << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
+        EventSink.add "#{dinosaurs.first.name}::#{abilities.first.class}"
         if abilities.first.is_swap_out
           team = dinosaurs.first.team
           name = dinosaurs.first.name
+          if dinosaurs.last.has_on_escape?
+            EventSink.add "#{dinosaurs.last.name}::#{dinosaurs.last.abilities_on_escape.first.class}"
+            dinosaurs.last.abilities_on_escape.first.execute(dinosaurs.last, dinosaurs.first)
+          end
           if dinosaurs.first.run
             dinosaurs[0] = team.current_dinosaur
             @events << {event: "#{name} swapped out", stats: {}, health: health(dinosaurs)}
@@ -66,6 +72,7 @@ class TeamMatch
       if dinosaurs.last.is_stunned
         @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
         @events << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
+        EventSink.add "#{dinosaurs.last.name}::stunned"
         dinosaurs.last.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
         abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
@@ -73,7 +80,12 @@ class TeamMatch
         hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
         @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
         @events << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
+        EventSink.add "#{dinosaurs.last.name}::#{abilities.last.class}"
         if abilities.last.is_swap_out
+          if dinosaurs.first.has_on_escape?
+            EventSink.add "#{dinosaurs.first.name}::#{dinosaurs.first.abilities_on_escape.first.class}"
+            dinosaurs.first.abilities_on_escape.first.execute(dinosaurs.first, dinosaurs.last)
+          end
           if dinosaurs.last.team.run
             @events << {event: "#{dinosaurs.last.name} swapped out", stats: {}, health: health(dinosaurs)}
           else
@@ -106,6 +118,7 @@ class TeamMatch
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}
     @events << {event: outcome, stats: {}, health: health(dinosaurs)}
+    EventSink.add "#{@attacker.health} : #{@defender.health}"
     {outcome: outcome, outcome_value: outcome_value, log: @log, events: @events}
 
   end

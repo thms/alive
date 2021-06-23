@@ -5,7 +5,7 @@ class Modifiers::Taunt < Modifiers::Modifier
   self.is_attack = !self.is_defense
   self.cleanse = []
   self.destroy = []
-  self.is_positive = true
+  self.is_positive = false
 
   # API:
   # turns: the number of turns to be active after this current turn ends

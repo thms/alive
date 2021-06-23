@@ -177,10 +177,28 @@ class Dinosaur < ApplicationRecord
     !abilities_swap_in.empty?
   end
 
+  def has_on_escape?
+    !abilities_on_escape.empty?
+  end
+
   # can the dino swap out in the current state of the game
   # this is determined exclusively by an active swap_prevention modifer
+  # two modes: if dino swaps in and swap rpevention is a consequence of that, resistance is not evaluated
+  # if another dino lays swap prevention modifier, then resistance is evaluated
   def can_swap?
-    modifiers.none? {|modifier| modifier.class == Modifiers::PreventSwap} || rand(100) <= resistance(:swap_prevention)
+    if modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'self'}
+      # cannot swap if own swap-in resulted the swap prevention
+      return false
+    elsif modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'other'}
+      if rand(100) <= resistance(:swap_prevention)
+        # can swap if other initated swap prevention and resistance is in its favor
+        return true
+      else
+        return false
+      end
+    else
+      return true
+    end
   end
 
   def run

@@ -4,18 +4,24 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'Attacker'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Dracoceratops', 'Suchotator']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Ardentismaxima', 'Sarcorixis']
     name2 = 'Defender'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
+    @survivors1 = HashWithIndifferentAccess.new
+    @survivors2 = HashWithIndifferentAccess.new
+    team1.each {|name| @survivors1[name] = 0}
+    team2.each {|name| @survivors2[name] = 0}
     TQTeamStrategy.load
     #TQTeamStrategy.reset
     1.times do
+      EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
+      #pimp_defense_team
       @t2.strategy = TQTeamStrategy
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
@@ -25,8 +31,12 @@ class TeamMatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
       @events << result[:events]
+      @t1.health.each {|k,v| @survivors1[k] += 1 if v > 0}
+      @t2.health.each {|k,v| @survivors2[k] += 1 if v > 0}
     end
     TQTeamStrategy.save
+    @survivors1.each {|k,v| @survivors1[k] = v * 100 / @logs.size}
+    @survivors2.each {|k,v| @survivors2[k] = v * 100 / @logs.size}
     if @logs.size > 10
       @graph = ""
     else
@@ -35,6 +45,15 @@ class TeamMatchesController < ApplicationController
   end
 
   private
+  def pimp_defense_team
+    @t2.reset_attributes!
+    @t2.dinosaurs.each do |d|
+      d.level = 30
+      d.health_boosts = 5
+      d.attack_boosts = 5
+      d.speed_boosts = 5
+    end
+  end
 
   def generate_graph(logs, name1, name2)
     g = Graphviz::Graph.new()

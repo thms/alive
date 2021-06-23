@@ -15,7 +15,7 @@ class Match
     @dinosaur2 = dinosaur2.reset_attributes!
     @dinosaur2.value = Constants::MATCH[:min_player]
     @logger = Logger.new(STDOUT)
-    @logger.level = 2
+    @logger.level = :warn
     @round = 1
     @log = [] # [{event: "D1::Strike", stats: {}, health: {}}, {event: "D2::CleansingStrike" stats: , ...]
   end

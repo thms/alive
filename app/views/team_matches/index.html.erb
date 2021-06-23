@@ -6,9 +6,12 @@
 <b>Health</b>
 <div><%= @t1.health %></div>
 <div><%= @t2.health %></div>
+<b>Survivors</b>
+<div><%= @survivors1 %></div>
+<div><%= @survivors2 %></div>
 <div><%= TQTeamStrategy.q_table.size %>
 <div><%= @graph.html_safe %></div>
+<% if @logs.size < 10 %>
+<div><%= EventSink.events %></div>
 <div><%= render partial: 'logs', logs: @events %></div>
-<!--
-<div><%= TQTeamStrategy.q_table %></div>
->
+<% end %>

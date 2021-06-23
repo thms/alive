@@ -14,4 +14,10 @@
   <% dinosaur.abilities_counter.each do |ability| %>
     <%= ability.class %><%= "*" if ability.is_implemented %><br/>
   <% end %>
+  <% dinosaur.abilities_swap_in.each do |ability| %>
+    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <% end %>
+  <% dinosaur.abilities_on_escape.each do |ability| %>
+    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <% end %>
   <% end %>

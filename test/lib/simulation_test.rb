@@ -16,7 +16,7 @@ class SimulationTest < ActiveSupport::TestCase
     simulation = Simulation.new(d1, d2)
     result = simulation.execute
     wins_and_losses = simulation.calc_wins_and_losses(result)
-    expected = {"d1"=>{:wins=>0, :losses=>3}, "d2"=>{:wins=>3, :losses=>0}, "draws" => 0}
+    expected = {"d1"=>{:wins=>1, :losses=>3}, "d2"=>{:wins=>3, :losses=>1}, "draws" => 0}
     assert_equal expected, wins_and_losses
   end
 

@@ -14,7 +14,7 @@ class TQStrategy < Strategy
   @@random_mode = false
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = 2 # 1: show info, 2: don't show info
+  @@logger.level = :warn
 
   def self.next_move(attacker, defender)
     available_ability_names = attacker.available_abilities.map {|a| a.class.name }

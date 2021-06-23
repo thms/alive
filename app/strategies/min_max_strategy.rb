@@ -7,13 +7,13 @@ class MinMaxStrategy < Strategy
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
-  @@cache_is_enabled = true
+  @@cache_is_enabled = false
   @@games_played = 0
   @@error_rate = 0.0
   @@root = nil
-  @@max_depth = 6
+  @@max_depth = 10
   @@logger = Logger.new(STDOUT)
-  @@logger.level = 2
+  @@logger.level = :warn
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)
     @@games_played += 1
@@ -32,6 +32,7 @@ class MinMaxStrategy < Strategy
 
       moves = one_round(root, attacker, defender)
       @@logger.info("Moves: #{moves}")
+      EventSink.add "Moves: #{moves}"
       move = attacker.available_abilities.select {|a| a.class.name == moves.first.first}.first
     end
     return move
@@ -124,13 +125,14 @@ class MinMaxStrategy < Strategy
             end
           end
           @@logger.info ability_outcomes
-          break # next rather than break?
+          next
         elsif !swapped_out.empty?
           node.is_final = true
           node.winner = ""
           node.looser = ""
           node.value = dinosaurs.first.value * Constants::MATCH[:swap_out]
           ability_outcomes[abilities.first.class.name] = node.value
+          next
         end
         # Second attacks
         if dinosaurs.last.is_stunned
@@ -179,6 +181,7 @@ class MinMaxStrategy < Strategy
           node.looser = ""
           node.value = dinosaurs.last.value * Constants::MATCH[:swap_out]
           ability_outcomes[abilities.last.class.name] = node.value
+          next
         end
         # Advance the clock & apply damage over time and skip to next if both are dead
         next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
@@ -188,16 +191,18 @@ class MinMaxStrategy < Strategy
         outcomes = one_round(node, attacker, defender)
         unless outcomes.empty?
           best_outcome = outcomes.sort_by {|k, v| attacker.value * v}.last.last
+          worst_outcome = outcomes.sort_by {|k, v| attacker.value * v}.first.last
           if attacker.name == dinosaurs.first.name
-            ability_outcomes[abilities.first.class.name] = best_outcome
+            ability_outcomes[abilities.first.class.name] = worst_outcome
           else
-            ability_outcomes[abilities.last.class.name] = best_outcome
+            ability_outcomes[abilities.last.class.name] = worst_outcome
           end
           @@logger.info ability_outcomes
         end
       end
     end
     @@logger.info ability_outcomes
+    EventSink.add "#{attacker.name} #{ability_outcomes}" if depth == 1
     # At this point we have {"Strike" => 1.0, "EvasiveStance" => -1.0} so we need to pick the best outcome only
     # TODO: we may want to use a random selection or secondary strategy if there or more than one good moves to choose from
     result = [ability_outcomes.sort_by {|k,v| attacker.value * v}.last].to_h rescue {}
@@ -209,6 +214,8 @@ class MinMaxStrategy < Strategy
     # return best ability
     return result
   end
+
+
 
   def self.cache_stats
     {size: @@cache.length, hits: @@cache_hits, misses: @@cache_misses}
@@ -273,7 +280,7 @@ class MinMaxStrategy < Strategy
       if attacker.name == dinosaurs.first.name
         ability_outcomes[abilities.first.class.name] = node.value
       else
-        ability_outcomes[abilities.last.class.name] = -node.value
+        ability_outcomes[abilities.last.class.name] = node.value
       end
       return true
     elsif dinosaurs.last.current_health <= 0
@@ -285,7 +292,7 @@ class MinMaxStrategy < Strategy
       if attacker.name == dinosaurs.first.name
         ability_outcomes[abilities.first.class.name] = node.value
       else
-        ability_outcomes[abilities.last.class.name] = - node.value
+        ability_outcomes[abilities.last.class.name] = node.value
       end
       return true
     else

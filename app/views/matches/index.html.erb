@@ -12,4 +12,6 @@
 <div>
   <%= @graph.html_safe %>
 </div>
-<div><%= render partial: 'q_table' %></div>
+<div><%= render partial: 'q_table' if false%></div>
+<div><%= EventSink.events %></div>
+<div><%= render partial: 'team_matches/logs' if true %></div>

@@ -10,7 +10,7 @@ class DamageOverTimeTest < ActiveSupport::TestCase
     defender.tick
     assert_equal 332, defender.current_health
     defender.tick
-    assert_equal -2, defender.current_health
+    assert_equal 0, defender.current_health
   end
 
   test "Dot should have no impact when immune" do

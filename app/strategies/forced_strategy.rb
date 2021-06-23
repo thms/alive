@@ -1,7 +1,6 @@
 # Really for testing only, force a sequence of moves
 class ForcedStrategy < Strategy
 
-  @@moves = {'Dracoceratops' => ['CleansingImpact', 'FierceImpact'], 'Suchotator' => ['LethalWound', 'SuperiorityStrike']}
   def self.next_move(attacker, defender)
     move = @@moves[attacker.name].shift
     if move.nil?
@@ -12,6 +11,10 @@ class ForcedStrategy < Strategy
   end
 
   def self.reset
-    @@moves = {'Dracoceratops' => ['CleansingImpact', 'FierceImpact'], 'Suchotator' => ['LethalWound', 'SuperiorityStrike']}
+    @@moves = {
+      'Dracoceratops' => ['CleansingImpact', 'FierceImpact'],
+      'Suchotator' => ['LethalWound', 'SuperiorityStrike'],
+      'Trykosaurus' => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike']
+    }
   end
 end

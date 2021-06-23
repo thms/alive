@@ -6,11 +6,12 @@ class Modifiers::PreventSwap < Modifiers::Modifier
   self.is_attack = !self.is_defense
   self.destroy = []
   self.cleanse = []
-  self.is_positive = true
+  self.is_positive = false
 
-  def initialize(turns)
+  def initialize(turns, source)
     self.turns = turns
     self.attacks = nil
+    self.source = source
     super()
   end
 
