@@ -8,7 +8,7 @@ class LesserGroupHeal < Ability
   self.bypass = []
 
   def update_attacker(attacker, defender)
-    attacker.current_health += [attacker.health - attacker.current_health, 1.0 * attacker.damage].min
+    attacker.heal(attacker.damage)
     attacker.cleanse(:all)
   end
 

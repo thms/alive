@@ -213,6 +213,12 @@ class Dinosaur < ApplicationRecord
     result
   end
 
+  # heal up to maximum of original health
+  def heal(value)
+    @current_health += value
+    @current_health = health if current_health > health
+  end
+
   # caluclate health at specific level from level @ 26 includng stat boosts
   def health
     (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round

@@ -164,7 +164,7 @@ class MinMax2Strategy < Strategy
     return result
   end
 
-  def self.cache_stats
+  def self.stats
     {size: @@cache.length, hits: @@cache_hits, misses: @@cache_misses}
   end
 

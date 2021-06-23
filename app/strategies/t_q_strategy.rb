@@ -7,7 +7,7 @@ require 'logger'
 class TQStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.05
+  EPSILON = 0.0
   @@q_table = {}
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = []
@@ -70,7 +70,7 @@ class TQStrategy < Strategy
       # update with discount and learning rate, unless it is the final outcome, then use its value straight up
       if last_entry
         # due to the stochastic nature of these outcomes, we cannot simply use the last outcome for this given
-        # state, but need to average across them all. (I.e. if a move with critical leads to a win and with crit to a loss)
+        # state, but need to average across them all. (I.e. if a move with critical leads to a win and without crit to a loss)
         @@q_table[hash_value][action] = max_a
         last_entry = false
       else
@@ -113,11 +113,11 @@ class TQStrategy < Strategy
   end
 
   def self.stats
-    {games: @@games_played, size: @@q_table.size}
+    {games: @@games_played, size: @@q_table.size, max_a_s: @@max_a_s.size}
   end
 
   def self.save
-    state = Marshal.dump({q_table: @@q_table, games_played: @@games_played})
+    state = Marshal.dump({q_table: @@q_table, games_played: @@games_played, max_a_s: @@max_a_s})
     File.open("#{Rails.root}/tmp/t_q_strategy.state", "wb") do |file|
       file.write state
     end
@@ -127,6 +127,7 @@ class TQStrategy < Strategy
     state = Marshal.load(File.binread("#{Rails.root}/tmp/t_q_strategy.state"))
     @@q_table = state[:q_table]
     @@games_played = state[:games_played]
+    @@max_a_s = state[:max_a_s]
   end
 
   private

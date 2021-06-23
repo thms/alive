@@ -4,7 +4,7 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'Attacker'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Ardentismaxima', 'Sarcorixis']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Tuoramoloch', 'Monolometrodon']
     name2 = 'Defender'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
@@ -14,9 +14,9 @@ class TeamMatchesController < ApplicationController
     @survivors2 = HashWithIndifferentAccess.new
     team1.each {|name| @survivors1[name] = 0}
     team2.each {|name| @survivors2[name] = 0}
-    TQTeamStrategy.load
-    #TQTeamStrategy.reset
-    1.times do
+    #TQTeamStrategy.load
+    TQTeamStrategy.reset
+    100.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
@@ -34,7 +34,7 @@ class TeamMatchesController < ApplicationController
       @t1.health.each {|k,v| @survivors1[k] += 1 if v > 0}
       @t2.health.each {|k,v| @survivors2[k] += 1 if v > 0}
     end
-    TQTeamStrategy.save
+    #TQTeamStrategy.save
     @survivors1.each {|k,v| @survivors1[k] = v * 100 / @logs.size}
     @survivors2.each {|k,v| @survivors2[k] = v * 100 / @logs.size}
     if @logs.size > 10

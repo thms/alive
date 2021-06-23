@@ -11,7 +11,7 @@ class Heal < Ability
   self.bypass = []
 
   def update_attacker(attacker, defender)
-    attacker.current_health += [attacker.health - attacker.current_health, 1.5 * attacker.damage].min
+    attacker.heal(1.5 * attacker.damage)
     attacker.cleanse(:all)
   end
 

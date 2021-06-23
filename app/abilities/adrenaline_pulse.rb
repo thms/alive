@@ -9,7 +9,7 @@ class AdrenalinePulse < Ability
   self.bypass = []
 
   def update_attacker(attacker, defender)
-    attacker.current_health += [attacker.health - attacker.current_health, 1200].min
+    attacker.heal(attacker.damage)
   end
 
 end

@@ -8,10 +8,11 @@
   </div>
 </div>
 <div>Stats: <%= @stats %></div>
-<div>Stats: <%= MinMaxStrategy.cache_stats %></div>
+<div>Stats: <%= @d1.strategy.stats %></div>
+<div>Stats: <%= @d2.strategy.stats %></div>
 <div>
   <%= @graph.html_safe %>
 </div>
 <div><%= render partial: 'q_table' if false%></div>
-<div><%= EventSink.events %></div>
-<div><%= render partial: 'team_matches/logs' if true %></div>
+<div><%= EventSink.events if @logs.size < 10 %></div>
+<div><%= render partial: 'team_matches/logs' if @logs.size < 10 %></div>
