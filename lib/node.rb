@@ -22,7 +22,7 @@ class Node
     @visits = 1
     @is_final = false
     @winner = nil
-    @value = 0
+    @value = nil
     @looser = nil
     @id = SecureRandom.uuid[0..7]
   end

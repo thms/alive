@@ -108,7 +108,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       abilities: [CraftyStrike, LongInvincibility, NullifyingRampage, Sidestep]).reset_attributes!
     MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
-    puts MinMaxStrategy.cache_stats
+    puts MinMaxStrategy.stats
     assert_includes [Sidestep, CraftyStrike], result.class
   end
 

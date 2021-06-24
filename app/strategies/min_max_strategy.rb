@@ -19,8 +19,10 @@ class MinMaxStrategy < Strategy
     @@games_played += 1
     if rand < @@error_rate
       move = attacker.availabe_abilities.sample
+      EventSink.add "#{attacker.name}: #{move.class.name} - random"
     elsif attacker.available_abilities.size == 1
       move = attacker.available_abilities.first
+      EventSink.add "#{attacker.name}: #{move.class.name} - only choice"
     else
       # select best possible move
       root = Node.new('Start')
@@ -32,7 +34,7 @@ class MinMaxStrategy < Strategy
 
       moves = one_round(root, attacker, defender)
       @@logger.info("Moves: #{moves}")
-      EventSink.add "Moves: #{moves}"
+      EventSink.add "#{attacker.name}: #{moves}"
       move = attacker.available_abilities.select {|a| a.class.name == moves.first.first}.first
     end
     return move
@@ -202,7 +204,6 @@ class MinMaxStrategy < Strategy
       end
     end
     @@logger.info ability_outcomes
-    EventSink.add "#{attacker.name} #{ability_outcomes}" if depth == 1
     # At this point we have {"Strike" => 1.0, "EvasiveStance" => -1.0} so we need to pick the best outcome only
     # TODO: we may want to use a random selection or secondary strategy if there or more than one good moves to choose from
     result = [ability_outcomes.sort_by {|k,v| attacker.value * v}.last].to_h rescue {}
