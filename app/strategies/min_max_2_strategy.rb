@@ -11,7 +11,7 @@ class MinMax2Strategy < Strategy
   @@cache_is_enabled = false
   @@games_played = 0
   @@error_rate = 0.0
-  @@max_depth = 6
+  @@max_depth = 4
   @@logger = Logger.new(STDOUT)
   @@logger.level = :info
 
@@ -206,13 +206,16 @@ class MinMax2Strategy < Strategy
   private
 
   # update a node's value during bubbling
-  # if the attacker's value is positive: onlyupdate if new value is higher than current
-  # otherwise the if new value is lower than current
+  # if the attacker's value is positive: only update if new value is higher than current
+  # if the attacker is minimizing only update the if new value is lower than current
+  # to make shorter paths to victory more at attractive, reduce value during bubbling
   def self.bubble_value_to_parent(parent, value, attacker)
+    bubble_factor = 1.0
+    value = bubble_factor * value
     if attacker.value == 1.0
-      parent.value = [parent.value, value].max rescue value
+      parent.value = [bubble_factor * parent.value, value].max rescue value
     else
-      parent.value = [parent.value, value].min rescue value
+      parent.value = [bubble_factor * parent.value, value].min rescue value
     end
   end
 
@@ -247,12 +250,13 @@ end
   # update final node depending on the current state of the game
   # swapped_out holds the dinosaur who swapped out as a consequence of x-and-run or is nil
   def self.update_final_node(node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
+    bubble_factor = 0.95
     if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
       @@logger.info("Draw")
       node.is_final = true
       node.winner = nil
       node.looser = nil
-      node.value = Constants::MATCH[:draw]
+      node.value = Constants::MATCH[:draw] * (bubble_factor ** (node.data[:depth] - 1))
       node.data[:health] = health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
       return true
@@ -260,7 +264,7 @@ end
       node.is_final = true
       node.winner = dinosaurs.last.name
       node.looser = dinosaurs.first.name
-      node.value = dinosaurs.last.value
+      node.value = dinosaurs.last.value * (bubble_factor ** (node.data[:depth] - 1))
       node.data[:health] = health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
       return true
@@ -268,7 +272,7 @@ end
       node.is_final = true
       node.winner = dinosaurs.first.name
       node.looser = dinosaurs.last.name
-      node.value = dinosaurs.first.value
+      node.value = dinosaurs.first.value * (bubble_factor ** (node.data[:depth] - 1))
       node.data[:health] = health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
       return true
@@ -276,7 +280,7 @@ end
       node.is_final = true
       node.winner = ""
       node.looser = ""
-      node.value = swapped_out.value * Constants::MATCH[:swap_out]
+      node.value = swapped_out.value * Constants::MATCH[:swap_out] * (bubble_factor ** (node.data[:depth] - 1))
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
       return true
     else
