@@ -11,7 +11,7 @@ class Modifiers::IncreaseSpeed < Modifiers::Modifier
   # attacks: the number of attacks
   def initialize(increase, turns, attacks = nil)
     @value = increase
-    self.turns = turns
+    self.turns = turns + 1
     self.attacks = attacks
   super()
   end

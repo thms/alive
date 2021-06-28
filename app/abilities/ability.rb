@@ -118,6 +118,8 @@ class Ability
     # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
     attacker.tick_attack_count
     defender.tick_defense_count
+    # count down attacker's distraction (should also tick distraction when the attacker is stunned)
+    attacker.tick_distraction
     {is_critical_hit: is_critical_hit, did_dodge: did_dodge}
   end
 

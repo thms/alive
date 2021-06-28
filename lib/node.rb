@@ -47,6 +47,7 @@ class Node
 
   def add_child(name, ability_name, data)
     node = Node.new(name, ability_name, data)
+    node.parent = self
     children << node
     node
   end

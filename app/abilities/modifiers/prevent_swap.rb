@@ -9,7 +9,7 @@ class Modifiers::PreventSwap < Modifiers::Modifier
   self.is_positive = false
 
   def initialize(turns, source)
-    self.turns = turns
+    self.turns = turns + 1
     self.attacks = nil
     self.source = source
     super()

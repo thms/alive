@@ -96,10 +96,16 @@ class Dinosaur < ApplicationRecord
     end
   end
 
+  # Distraction ticks down at the end of the affected dino's action, so the turn based mechanism does not work
+  def tick_distraction
+    modifiers.delete_if do |modifier|
+      modifier.class == Modifiers::Distraction && modifier.tick
+    end
+  end
+
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
-  # TODO: implement DoT here, before modifers are couted down.
   def tick
     # Count down delay and cooldown of attacks
     abilities.each do |ability|
@@ -110,9 +116,9 @@ class Dinosaur < ApplicationRecord
       self.current_health -= (current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0).round
       self.current_health = 0 if self.current_health < 0
     end
-    # Count down modifiers and delete expired ones
+    # Count down modifiers and delete expired ones, except distraction, this is handled after each action
     modifiers.delete_if do |modifier|
-      modifier.tick
+      modifier.tick unless modifier.class == Modifiers::Distraction
     end
   end
 

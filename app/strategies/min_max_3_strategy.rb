@@ -1,7 +1,7 @@
 require 'logger'
 
-class MinMax2Strategy < Strategy
-
+class MinMax3Strategy < Strategy
+# like mina max 2, but breadth first instead of depth first
   FIRST = 0 # indexes for passing around
   LAST  = 1
 
@@ -11,9 +11,9 @@ class MinMax2Strategy < Strategy
   @@cache_is_enabled = true
   @@games_played = 0
   @@error_rate = 0.0
-  @@max_depth = 3
+  @@max_depth = 4
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :warn
+  @@logger.level = :info
   @@break_on_winning_move = false
 
 # returns a single availabe ability from the attacker
@@ -61,6 +61,8 @@ class MinMax2Strategy < Strategy
         return @@cache[cache_key]
       end
     end
+    # store nodes for the next round
+    next_round_nodes = []
     # Store the abilities for the attacker and their respective outcome value
     ability_outcomes = {}
     # Safety valve to only look so far into the future
@@ -103,8 +105,7 @@ class MinMax2Strategy < Strategy
         update_final_node(first_node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
         # skip the other attack, since the state is already final
         bubble_value_to_parent(current_node, first_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        first_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       end
 
       # second dino attacks
@@ -124,8 +125,7 @@ class MinMax2Strategy < Strategy
         update_final_node(second_node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
         # bubble value up to the first node
         bubble_value_to_parent(first_node, second_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        second_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       end
       # at this point both dinos are still alive and we are at the bottom of a round
       # apply damage over time
@@ -133,22 +133,31 @@ class MinMax2Strategy < Strategy
       if is_final_state?(dinosaurs, nil)
         update_final_node(second_node, dinosaurs, abilities, attacker, nil, ability_outcomes)
         bubble_value_to_parent(first_node, second_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        second_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       else
-        result = one_round(second_node, attacker, defender)
-        second_node.value = result[:value]
-        bubble_value_to_parent(first_node, second_node.value, attacker)
-        update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, result[:value])
+        # store node for the next round exploration
+        second_node.data[:abilities] = abilities
+        second_node.data[:dinosaurs] = dinosaurs
+        next_round_nodes << second_node
       end
     end # combinations.each
+
+    # if there are nodes to fruther epxlore do it now
+    next_round_nodes.each do |node|
+      result = one_round(node, attacker, defender)
+      node.value = result[:value]
+      bubble_value_to_parent(node.parent, node.value, attacker)
+      dinosaurs = node.data[:dinosaurs]
+      abilities = node.data[:abilities]
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, result[:value])
+    end
 
     # now we have evaluated all combinations (and done so recursively), so it is time to evaluate.
     # for the choice made in current_node, we need to propagate the best possible outcome of all the combinations in this round as the current_node's value
     if attacker.value == 1.0
-      best_outcome = current_node.children.max_by {|node| node.value}.value
+      best_outcome = current_node.children.max_by {|node| node.value || -1.0}.value
     else
-      best_outcome = current_node.children.min_by {|node| node.value}.value
+      best_outcome = current_node.children.min_by {|node| node.value || 1.0}.value
     end
     bubble_value_to_parent(current_node, best_outcome, attacker)
     current_node.children.each do |child|
@@ -158,9 +167,10 @@ class MinMax2Strategy < Strategy
       end
     end
 
+    # When hitting the boundaries of depth search, nodes may have a nil value, reject them here
     result = {}
     result[:value] = best_outcome
-    result[:ability_outcomes] = ability_outcomes
+    result[:ability_outcomes] = ability_outcomes.compact
     @@logger.info best_outcome
     @@logger.info ability_outcomes
 
@@ -214,6 +224,7 @@ class MinMax2Strategy < Strategy
   # if the attacker is minimizing only update the if new value is lower than current
   # to make shorter paths to victory more at attractive, reduce value during bubbling
   def self.bubble_value_to_parent(parent, value, attacker)
+    return if parent.nil? || value.nil?
     bubble_factor = 1.0
     value = bubble_factor * value
     if attacker.value == 1.0

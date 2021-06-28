@@ -10,7 +10,7 @@ class DecreaseSpeedTest < ActiveSupport::TestCase
     # should be effective in the next turn
     dinosaur.tick
     assert_equal 117, dinosaur.current_speed
-    # should be back to noral in the turn after
+    # should be back to normal in the turn after
     dinosaur.tick
     assert_equal 130, dinosaur.current_speed
   end

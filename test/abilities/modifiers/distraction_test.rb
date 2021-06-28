@@ -10,4 +10,12 @@ class DistractionTest < ActiveSupport::TestCase
     assert_equal 875, defender.current_health
   end
 
+  test "Distraction should tick down at the end of the affected dinosaur's action" do
+    attacker = Dinosaur.new(damage_26: 500, level: 26, speed: 130, name: 'attacker', abilities: []).reset_attributes!
+    defender = Dinosaur.new(health_26: 1000, level: 26, speed: 125, name: 'defender', abilities: []).reset_attributes!
+    attacker.add_modifier(Modifiers::Distraction.new(75, 1, 1))
+    attacker.tick_distraction
+    assert_empty defender.modifiers
+  end
+
 end

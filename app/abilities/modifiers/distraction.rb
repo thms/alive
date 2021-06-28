@@ -20,4 +20,9 @@ class Modifiers::Distraction < Modifiers::Modifier
   def execute(attributes)
     attributes[:distraction] += @value
   end
+
+  def tick
+    puts "before #{self.current_turns}:#{self.current_attacks}"
+    super
+  end
 end

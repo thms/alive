@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class MinMax2StrategyTest < ActiveSupport::TestCase
+class MinMax3StrategyTest < ActiveSupport::TestCase
 
   test "MinMax Strategy should find strongest move even when there is a clear path to victory as maximising player" do
     skip
@@ -8,7 +8,7 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
     attacker.value = 1.0
     defender = Dinosaur.find_by_name('Velociraptor').reset_attributes!
     defender.value = -1.0
-    result = MinMax2Strategy.next_move(attacker, defender)
+    result = MinMax3Strategy.next_move(attacker, defender)
     assert_includes [FierceImpact, FierceStrike], result.class
   end
 
@@ -16,8 +16,8 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
     skip
     attacker = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
     defender = Dinosaur.find_by_name('Velociraptor').reset_attributes!
-    attacker.strategy = MinMax2Strategy
-    defender.strategy = MinMax2Strategy
+    attacker.strategy = MinMax3Strategy
+    defender.strategy = MinMax3Strategy
     result = Match.new(attacker, defender).execute
     assert_equal 'Thoradolosaur', result[:outcome]
   end
@@ -26,7 +26,7 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
     skip
     attacker = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
     defender = Dinosaur.find_by_name('Velociraptor').reset_attributes!
-    attacker.strategy = MinMax2Strategy
+    attacker.strategy = MinMax3Strategy
     defender.strategy = MinMaxStrategy
     result = Match.new(defender, attacker).execute
     assert_equal 'Thoradolosaur', result[:outcome]
@@ -37,7 +37,7 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
     attacker = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
     defender = Dinosaur.find_by_name('Quetzorion').reset_attributes!
     attacker.strategy = MinMaxStrategy
-    defender.strategy = MinMax2Strategy
+    defender.strategy = MinMax3Strategy
     result = Match.new(attacker, defender).execute
     assert_equal 'Thoradolosaur', result[:outcome]
   end
@@ -48,18 +48,28 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.find_by_name('Velociraptor').reset_attributes!
     attacker.value = 1.0
     defender.value = -1.0
-    result = MinMax2Strategy.next_move(attacker, defender)
-    assert_equal HighPounce, result.class
+    result = MinMax3Strategy.next_move(attacker, defender)
+    assert_includes [FierceImpact, FierceStrike], result.class
   end
 
   test "MinMax Strategy should find shortest path to vicory for minimising player quetzorion" do
-
+    skip
     attacker = Dinosaur.find_by_name('Velociraptor').reset_attributes!
     defender = Dinosaur.find_by_name('Quetzorion').reset_attributes!
-    attacker.strategy = MinMax2Strategy
-    defender.strategy = MinMax2Strategy
+    attacker.strategy = MinMax3Strategy
+    defender.strategy = MinMax3Strategy
     result = Match.new(attacker, defender).execute
     assert_equal 'Quetzorion', result[:outcome]
+  end
+
+  test "MinMax Strategy should find shortest path to vicory for minimising player Monostegotops" do
+    #skip
+    attacker = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
+    defender = Dinosaur.find_by_name('Monostegotops').reset_attributes!
+    attacker.strategy = MinMax3Strategy
+    defender.strategy = MinMax3Strategy
+    result = Match.new(attacker, defender).execute
+    assert_equal 'Thoradolosaur', result[:outcome]
   end
 
 end
