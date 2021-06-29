@@ -30,6 +30,7 @@ class Dinosaur < ApplicationRecord
   attr_accessor :strategy
   attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
   attr_accessor :team # used in team matches
+  attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
 
   def to_param
     name.parameterize
@@ -42,6 +43,7 @@ class Dinosaur < ApplicationRecord
     @current_speed = speed
     @is_stunned = false
     @modifiers = []
+    @is_revenge = false
     # Instantiate the abilities
     self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
     self.abilities_swap_in = self.abilities_swap_in.map{|klass| klass.new} if self.abilities_swap_in.first.class == Class

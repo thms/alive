@@ -22,7 +22,6 @@ class Modifiers::Distraction < Modifiers::Modifier
   end
 
   def tick
-    puts "before #{self.current_turns}:#{self.current_attacks}"
     super
   end
 end

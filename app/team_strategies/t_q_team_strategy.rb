@@ -7,24 +7,26 @@ require 'logger'
 class TQTeamStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.05
+  EPSILON = 0.05 # eplison greedy strategy: pick suboptimal move in 5% of cases
   @@q_table = {}
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = []
   @@random_mode = false
+  @@swap_penalty = 0.5 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :warn
+  @@logger.level = :info
 
 
+  # pick the next dinosaur, either at the start of the game or when a swap is needed
   # TODO: need to pick these also depending on the q table
+  # Not being used
   def self.next_dinosaur(team1, team2)
     target_dinosaur = (team1.available_dinosaurs - [team1.current_dinosaur, team1.recent_dinosaur]).sample
     team1.swap(target_dinosaur)
   end
 
   def self.next_move(attacker, defender)
-    #next_dinosaur(attacker, defender) if attacker.current_dinosaur.nil? || attacker.current_dinosaur.current_health <= 0
 
     available_ability_names = []
     attacker.available_dinosaurs.each do |dinosaur|
@@ -44,6 +46,11 @@ class TQTeamStrategy < Strategy
       # pick a random ability to do a broad learning in initial training
       ability = available_ability_names.sample
     else
+      # adjust values for swapping moves to discourage swapping - current learning leads to excessive swapping
+      abilities.each do |k, v|
+        #abilities[k] = (0.8 * v) if (!attacker.current_dinosaur.nil? && !k.include?(attacker.current_dinosaur.name))
+        abilities[k] = (@@swap_penalty * v) unless (attacker.current_dinosaur.nil? || k.include?(attacker.current_dinosaur.name))
+      end
       # What is the highest value
       highest_value = abilities.sort_by {|k, v| v}.last.last
       # find all moves that have the highest value and pick one at random
@@ -51,7 +58,7 @@ class TQTeamStrategy < Strategy
     end
     @@log.push [hash, available_ability_names, attacker.value, ability]
 
-    # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can and have to swap dinosaurs
+    # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can / have to swap dinosaurs
     dinosaur_name, ability_name = ability.split('::')
     if !attacker.current_dinosaur.nil? && dinosaur_name == attacker.current_dinosaur.name
       return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability_name}.first

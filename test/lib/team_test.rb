@@ -70,7 +70,32 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal SwapFailed, result[:ability].class
   end
 
+  test "should not turn on revenge for first dino" do
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike], strategy: DefaultStrategy)
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, RevengeRampage], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
+    team = Team.new('attacker', [d1, d2]).reset_attributes!
+    team.current_dinosaur = d2
+    assert_equal false, d2.is_revenge
+  end
 
+  test "should turn on revenge for next dino if current one dies" do
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike], strategy: DefaultStrategy)
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, RevengeRampage], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
+    team = Team.new('attacker', [d1, d2]).reset_attributes!
+    team.current_dinosaur = d1
+    team.current_dinosaur.current_health = 0
+    team.swap(d2, d2.abilities.first)
+    assert_equal true, d2.is_revenge
+  end
 
+  test "should not turn on revenge for next dino if current one is still healthy" do
+    d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike], strategy: DefaultStrategy)
+    d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, RevengeRampage], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
+    team = Team.new('attacker', [d1, d2]).reset_attributes!
+    team.current_dinosaur = d1
+    team.current_dinosaur.current_health = 1
+    team.swap(d2, d2.abilities.first)
+    assert_equal false, d2.is_revenge
+  end
 
 end

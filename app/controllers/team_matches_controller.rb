@@ -3,29 +3,33 @@ require 'graphviz'
 class TeamMatchesController < ApplicationController
 
   def index
-    name1 = 'Attacker'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Tuoramoloch', 'Monolometrodon']
-    name2 = 'Defender'
+    name1 = 'A'
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Dracoceratops']
+    name2 = 'D'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
     @survivors1 = HashWithIndifferentAccess.new
     @survivors2 = HashWithIndifferentAccess.new
-    team1.each {|name| @survivors1[name] = 0}
-    team2.each {|name| @survivors2[name] = 0}
-    #TQTeamStrategy.load
-    TQTeamStrategy.reset
-    100.times do
+    team1.each {|name| @survivors1["#{name1}:#{name}"] = 0}
+    team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
+    TQTeamStrategy.load
+    #TQTeamStrategy.reset
+    1.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
-      #pimp_defense_team
       @t2.strategy = TQTeamStrategy
+      pimp_defense_team
+      pimp_offense_team
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
-      result = TeamMatch.new(@t1, @t2).execute
+      match = TeamMatch.new(@t1, @t2)
+      add_team_name_to_dinosaur_name(@t1)
+      add_team_name_to_dinosaur_name(@t2)
+      result = match.execute
       @t1.strategy.learn(result[:outcome_value])
       @t2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
@@ -34,7 +38,7 @@ class TeamMatchesController < ApplicationController
       @t1.health.each {|k,v| @survivors1[k] += 1 if v > 0}
       @t2.health.each {|k,v| @survivors2[k] += 1 if v > 0}
     end
-    #TQTeamStrategy.save
+    TQTeamStrategy.save
     @survivors1.each {|k,v| @survivors1[k] = v * 100 / @logs.size}
     @survivors2.each {|k,v| @survivors2[k] = v * 100 / @logs.size}
     if @logs.size > 10
@@ -45,6 +49,14 @@ class TeamMatchesController < ApplicationController
   end
 
   private
+
+  def add_team_name_to_dinosaur_name(team)
+    team.dinosaurs.each do |dinosaur|
+      dinosaur.name = "#{team.name}:#{dinosaur.name}"
+    end
+  end
+
+  # bring defense team up to level in campagin battle
   def pimp_defense_team
     @t2.reset_attributes!
     @t2.dinosaurs.each do |d|
@@ -52,6 +64,41 @@ class TeamMatchesController < ApplicationController
       d.health_boosts = 5
       d.attack_boosts = 5
       d.speed_boosts = 5
+    end
+  end
+
+  # bring offense team up to expected level for campaign battle
+  def pimp_offense_team
+    @t1.reset_attributes!
+    @t1.dinosaurs.each do |d|
+      if d.name.include?('Thoradolosaur')
+        d.level = 28
+        d.health_boosts = 2
+        d.attack_boosts = 4
+        d.speed_boosts = 9
+      elsif d.name.include?('Monolometrodon')
+        d.level = 28
+        d.health_boosts = 3
+        d.attack_boosts = 15
+        d.speed_boosts = 9
+      elsif d.name.include?('Indoraptor')
+        d.level = 28
+        d.health_boosts = 11
+        d.attack_boosts = 7
+        d.speed_boosts = 8
+      elsif d.name.include?('Erlikospyx')
+        d.level = 28
+        d.health_boosts = 8
+        d.attack_boosts = 6
+        d.speed_boosts = 9
+      elsif d.name.include?('Dracoceratops')
+        d.level = 28
+        d.health_boosts = 1
+        d.attack_boosts = 0
+        d.speed_boosts = 0
+      else
+        d.level = 28
+      end
     end
   end
 

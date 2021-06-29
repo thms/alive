@@ -16,7 +16,7 @@ class Team
 
   def initialize(name, dinosaurs)
     @name = name
-    @dinosaurs = dinosaurs
+    @dinosaurs = dinosaurs.clone
     @value = Constants::MATCH[:max_player]
     @strategy = nil
     @current_dinosaur = nil
@@ -33,6 +33,7 @@ class Team
       dinosaur.reset_attributes!
       dinosaur.color = @color
       dinosaur.team = self
+      dinosaur.value = @value
     end
     self
   end
@@ -78,19 +79,23 @@ class Team
       return false
     end
   end
+
   # pick the one on the right in the array, with modulo
   def next_available_dinosaur
-    dinos = healthy_dinosaurs
+    dinos = dinosaurs.clone
+    dinos.delete_if {|d| d.current_health <= 0 && d != @current_dinosaur}
     current_index = dinos.find_index(@current_dinosaur)
     next_index = (current_index + 1).modulo(dinos.size)
     dinos[next_index]
   end
+
 
   # this may fail, e.g. if the dinosaur cannot swap
   # after: current_dinosaur is set to either the new or the old one
   # returns {has_swapped: true, was_healthy: false} if the swap was successfuly
   def swap(target_dinosaur, target_ability)
     was_healthy = @current_dinosaur.current_health > 0 rescue false
+    is_revenge = @current_dinosaur && @current_dinosaur.current_health <= 0
     retval = {has_swapped: false, was_healthy: was_healthy, ability: target_ability}
 
     if can_swap?
@@ -101,11 +106,16 @@ class Team
         @current_dinosaur.modifiers = []
         # remove stun
         @current_dinosaur.is_stunned = false
+        # remove revenge
+        @current_dinosaur.is_revenge = false
       end
       @recent_dinosaur = nil # @current_dinosaur
       @current_dinosaur = target_dinosaur
       if was_healthy
         retval[:ability] = @current_dinosaur.has_swap_in? ? @current_dinosaur.abilities_swap_in.first : SwapIn.new
+      end
+      if is_revenge
+        @current_dinosaur.is_revenge = true
       end
     else
       # if swapping is denied for some reason the dinosaur looses this turn's ability
