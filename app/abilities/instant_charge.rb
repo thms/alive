@@ -2,8 +2,8 @@
 class InstantCharge < Ability
 
   self.is_implemented = true
-  self.initial_cooldown = 2
-  self.initial_delay = 1
+  self.cooldown = 2
+  self.delay = 1
   self.is_priority = true
   self.damage_multiplier = 1
   self.bypass = []

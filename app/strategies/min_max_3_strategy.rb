@@ -13,7 +13,7 @@ class MinMax3Strategy < Strategy
   @@error_rate = 0.0
   @@max_depth = 4
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
   @@break_on_winning_move = false
 
 # returns a single availabe ability from the attacker

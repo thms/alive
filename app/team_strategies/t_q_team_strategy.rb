@@ -15,7 +15,7 @@ class TQTeamStrategy < Strategy
   @@swap_penalty = 0.5 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
 
 
   # pick the next dinosaur, either at the start of the game or when a swap is needed

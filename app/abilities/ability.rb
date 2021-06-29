@@ -19,8 +19,8 @@ class Ability
   self.is_implemented = false
 
   # Store the original delay and cooldown as class_attributes, to be set in the derived class
-  class_attribute :initial_delay
-  class_attribute :initial_cooldown
+  class_attribute :delay
+  class_attribute :cooldown
 
   # is this a priority move?
   class_attribute :is_priority
@@ -49,7 +49,7 @@ class Ability
 
   def initialize
     @current_cooldown = 0 # cooldown only starts after an ability has been used, so initially there is none.
-    @current_delay = self.initial_delay # delay is only until the first use of an ability afterwards it is don't care.
+    @current_delay = self.delay # delay is only until the first use of an ability afterwards it is don't care.
   end
 
   def tick
@@ -126,8 +126,8 @@ class Ability
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown
   # since this is executed before tick, cooldown needs to be +1
   def update_cooldown_attacker(attacker, defender)
-    if self.initial_cooldown > 0
-      @current_cooldown = self.initial_cooldown + 1
+    if self.cooldown > 0
+      @current_cooldown = self.cooldown + 1
     end
   end
 
