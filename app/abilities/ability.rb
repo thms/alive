@@ -105,8 +105,8 @@ class Ability
     # Attack increase
     damage = (damage * (100.0 + attacker.current_attributes[:damage]) / 100.0)
     # TODO: filter through defender's modifiers (dogde)
-    did_dodge = (100 * rand < defender.current_attributes[:dodge])
-    damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge && !bypass.include?(:dodge))
+    did_dodge = (100 * rand < defender.current_attributes[:dodge]) && !bypass.include?(:dodge)
+    damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge)
     # filter through defender's shields
     damage = (damage * (100 - defender.current_attributes[:shields]) / 100)
     # filter through defender's armor if any and the strike does not bypass armor

@@ -150,8 +150,7 @@ class Dinosaur < ApplicationRecord
   end
 
   def remove_cloak
-    modifiers.delete_if{|modifier| modifier.class == Modifiers::Taunt}
-    # TODO remmove other effects of dodge
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::Cloak}
   end
 
   def remove_critical_chance_increase

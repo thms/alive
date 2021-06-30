@@ -4,7 +4,7 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Dracoceratops']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Erlikospyx']
     name2 = 'D'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
@@ -15,8 +15,8 @@ class TeamMatchesController < ApplicationController
     team1.each {|name| @survivors1["#{name1}:#{name}"] = 0}
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
-    #TQTeamStrategy.reset
-    1.times do
+    TQTeamStrategy.reset
+    1000.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
@@ -42,7 +42,7 @@ class TeamMatchesController < ApplicationController
     @survivors1.each {|k,v| @survivors1[k] = v * 100 / @logs.size}
     @survivors2.each {|k,v| @survivors2[k] = v * 100 / @logs.size}
     if @logs.size > 10
-      @graph = ""
+      @graph = generate_graph([@events.last], name1, name2)
     else
       @graph = generate_graph(@events, name1, name2)
     end

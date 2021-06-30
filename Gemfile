@@ -27,6 +27,7 @@ gem 'jbuilder', '~> 2.7'
 
 gem 'materialize-sass'
 gem 'json'
+gem 'ruby-fann', :git => 'https://github.com/thms/ruby-fann.git'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false

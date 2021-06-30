@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/thms/ruby-fann.git
+  revision: 0ef939f26b3751f21a52ed8031a4c1c135facbbd
+  specs:
+    ruby-fann (1.3.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -253,6 +259,7 @@ DEPENDENCIES
   materialize-sass
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)
+  ruby-fann!
   sass-rails (>= 6)
   seed_dump
   selenium-webdriver
