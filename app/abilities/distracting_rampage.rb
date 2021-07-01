@@ -8,7 +8,7 @@ class DistractingRampage < Ability
   self.damage_multiplier = 2
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
   end
 

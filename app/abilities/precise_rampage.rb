@@ -1,4 +1,3 @@
-# TODO:
 class PreciseRampage < Ability
 
   self.is_implemented = true
@@ -6,6 +5,6 @@ class PreciseRampage < Ability
   self.delay = 0
   self.is_priority = false
   self.damage_multiplier = 2
-  self.bypass = [:dodge]
+  self.bypass = [:dodge, :cloak]
 
 end

@@ -1,15 +1,15 @@
 # TODO: implement taunting, when implementeing raids ...
 class Modifiers::Taunt < Modifiers::Modifier
 
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = true
+  self.tick_when_attacking = false
   self.cleanse = []
   self.destroy = []
   self.is_positive = false
 
   # API:
   # turns: the number of turns to be active after this current turn ends
-  # attacks: the number of attacks
+  # attacks: the number of attacks  ignored
   def initialize(turns, attacks = nil)
     @value = nil
     self.turns = turns

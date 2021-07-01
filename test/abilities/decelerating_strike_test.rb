@@ -10,7 +10,6 @@ class DeceleratingStrikeTest < ActiveSupport::TestCase
     assert_equal 112, defender.current_speed
     defender.tick
     assert_equal 112, defender.current_speed
-
   end
 
 end

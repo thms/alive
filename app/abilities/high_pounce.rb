@@ -9,7 +9,7 @@ class HighPounce < Ability
   self.damage_multiplier = 2.0
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
   end
 

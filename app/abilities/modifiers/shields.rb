@@ -1,7 +1,7 @@
 class Modifiers::Shields < Modifiers::Modifier
 
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = true
+  self.tick_when_attacking = false
   self.destroy = [:shields]
   self.cleanse = []
   self.is_positive = true

@@ -11,7 +11,7 @@ class GroupSuperiority < Ability
     attacker.cleanse(:all)
   end
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 1))
   end
 

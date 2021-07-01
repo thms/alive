@@ -7,7 +7,7 @@ class InstantDistraction < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::Distraction.new(100, 1, 2))
   end
 

@@ -1,7 +1,7 @@
 class Modifiers::DamageOverTime < Modifiers::Modifier
 
-  self.is_defense = false
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = false
   self.destroy = []
   self.cleanse = [:damage_over_time, :all]
   self.is_positive = false

@@ -8,6 +8,6 @@ class PrecisePounceTest < ActiveSupport::TestCase
     defender.add_modifier(Modifiers::Dodge.new(50, 1, 1))
     PrecisePounce.new.execute(attacker, defender)
     assert_equal 800, defender.current_health
-    assert_equal 2, defender.modifiers.length
+    assert_equal [Modifiers::Distraction], defender.modifiers.map(&:class)
   end
 end

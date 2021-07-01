@@ -10,8 +10,8 @@ class Modifiers::Modifier
   class_attribute :probability # { in integer, 0..100}
   class_attribute :cleanse # [:all, :damage_over_time, :distraction]
   class_attribute :destroy # [:shields]
-  class_attribute :is_attack # modifies attackers attack, e.g. increase chance of critical hit
-  class_attribute :is_defense # modifies defenders defenses, e.g. shields
+  class_attribute :tick_when_attacking # ticks down attacks when the dino is making an attack, e.g. using damage_increase
+  class_attribute :tick_when_attacked # ticks down attacks when the dino is defending, e.g. using shields
   class_attribute :is_positive # if true, boosts the dinosaur, if negative hampers it
 
   # attributes to keep keep track for each instance of the ticking Clock
@@ -36,12 +36,12 @@ class Modifiers::Modifier
     end
   end
 
-  # Deplete after each attack tis modifier is affecting
+  # Deplete after each attack this modifier is affecting
   # returns true if the modifier should be deleted.
   def tick_attacks
     return false if current_attacks.nil?
     @current_attacks -=1
-    if @current_attacks < 0
+    if @current_attacks <= 0
       # remove from the list of active modifiers of the current dinosaur
       return true
     else

@@ -1,8 +1,8 @@
 # reduces the attack damage by 67% with a probablity of x for n turns, m attacks
 class Modifiers::Dodge < Modifiers::Modifier
 
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = true
+  self.tick_when_attacking = false
   self.destroy = [:dodge]
   self.cleanse = []
   self.is_positive = true

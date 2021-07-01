@@ -62,14 +62,20 @@ class Ability
 
   # TODO: ability to force the random decisions (crit, dodge) one way or the other for the simulator
   def execute(attacker, defender)
+    # destroy shields, cloak dodge, before attacking
     update_defender(attacker, defender)
+    # increase damage, tick down own shields
     update_attacker(attacker, defender)
     stats = damage_defender(attacker, defender)
+    # TODO: move new modifiers for the defender over here, so they don't get ticked down during the attack already
+    update_defender_after_damage(attacker, defender)
     # execute counter attack, if defender survived and was attacked
     if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
       stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
     end
+    # update the abiltities usage stats
     update_cooldown_attacker(attacker, defender)
+    # trigger on escape ability of the attacker, if any
     on_escape(attacker, defender)
     stats
   end
@@ -82,6 +88,11 @@ class Ability
   # update attacker's shields, etc.
   # need to push the modifiers onto the attacker's list
   def update_attacker(attacker, defender)
+  end
+
+  # update defender's speed, distractions etc, after they have received a hit so they don't get ticked down during damage_defender already
+  # need to push the modifiers onto the defender's list
+  def update_defender_after_damage(attacker, defender)
   end
 
   # update defender's current_health with the corresponding damage
@@ -115,8 +126,10 @@ class Ability
     damage = [damage, 0].max
     # update defender's health and clamp all death to value 0
     defender.current_health = [(defender.current_health - damage).round, 0].max
-    # count down the attack ticks on the attacker and defenders active modifiers and delete them if used up
+    # count down the attack ticks on the attacker's attack modifiers
     attacker.tick_attack_count
+    # count down and defender's active modifiers and delete them if used up
+    # TODO: this is not working correctly yet - it counts downmodifiers that were part of the attackers attack
     defender.tick_defense_count
     # count down attacker's distraction (should also tick distraction when the attacker is stunned)
     attacker.tick_distraction

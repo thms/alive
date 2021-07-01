@@ -1,7 +1,7 @@
 class Modifiers::IncreaseCriticalChance < Modifiers::Modifier
 
-  self.is_defense = false
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = true
   self.cleanse = []
   self.destroy = []
   self.is_positive = true

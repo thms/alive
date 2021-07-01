@@ -9,7 +9,7 @@ class NoEscape < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::PreventSwap.new(1, 'other'))
   end
 

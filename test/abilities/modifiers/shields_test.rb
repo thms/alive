@@ -27,7 +27,7 @@ class ShieldsTest < ActiveSupport::TestCase
     Strike.new.execute(attacker, defender)
     assert_equal 1, defender.modifiers.first.current_attacks
     Strike.new.execute(attacker, defender)
-    assert_equal 0, defender.modifiers.first.current_attacks
+    assert_equal [], defender.modifiers
   end
 
 

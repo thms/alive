@@ -15,6 +15,9 @@ class ResilientStrike < Ability
     defender.remove_dodge
     defender.remove_cloak
     defender.remove_speed_increase
+  end
+
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 1))
   end
 

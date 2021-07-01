@@ -11,7 +11,7 @@ class MinMax2Strategy < Strategy
   @@cache_is_enabled = true
   @@games_played = 0
   @@error_rate = 0.0
-  @@max_depth = 3
+  @@max_depth = 5
   @@logger = Logger.new(STDOUT)
   @@logger.level = :warn
   @@break_on_winning_move = false

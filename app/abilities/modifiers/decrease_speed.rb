@@ -1,7 +1,7 @@
 class Modifiers::DecreaseSpeed < Modifiers::Modifier
 
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = false
   self.cleanse = [:all, :decrease_speed]
   self.destroy = []
   self.is_positive = false

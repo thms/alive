@@ -10,8 +10,8 @@ class DeceleratingStrike < Ability
   self.damage_multiplier = 1
   self.bypass = []
 
-  def update_defender(attacker, defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(10, 1, 1))
+  def update_defender_after_damage(attacker, defender)
+    defender.add_modifier(Modifiers::DecreaseSpeed.new(10, 1))
   end
 
 end

@@ -1,5 +1,5 @@
-# Targe lowest HP
-# reduce damage by 50% doe 2 attacks, lasting 1 turn
+# Target lowest HP
+# reduce damage by 50% for 2 attacks, lasting 1 turn
 # Precise attack 2x
 class PrecisePounce < Ability
 
@@ -8,9 +8,9 @@ class PrecisePounce < Ability
   self.delay = 0
   self.is_priority = false
   self.damage_multiplier = 2
-  self.bypass = [:dodge]
+  self.bypass = [:dodge, :cloak]
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
   end
 

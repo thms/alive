@@ -6,9 +6,9 @@ class SuperiorityStrike < Ability
   self.is_priority = false
   self.damage_multiplier = 1
   self.bypass = []
-  self.bypass = [:dodge]
+  self.bypass = [:dodge, :cloak]
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 1))
   end
 end

@@ -1,8 +1,8 @@
 class Modifiers::IncreaseSpeed < Modifiers::Modifier
 
   self.cleanse = []
-  self.is_defense = false
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = true
   self.is_positive = true
   self.destroy = []
 

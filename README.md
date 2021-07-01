@@ -38,8 +38,8 @@ Fusions: dna needed for one fusion for each level of rarity
 Build neural network for the Q-function for team matches
 
 ## TODO
+Refactor turn logic to be more accurate
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
-Cloak attack increases
 Remaining abilities
 
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
@@ -78,6 +78,7 @@ Implement swap out abilities
 Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 4:4 matches
+Cloak attack increases
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json

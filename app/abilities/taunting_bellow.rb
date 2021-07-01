@@ -12,7 +12,7 @@ class TauntingBellow < Ability
     attacker.add_modifier(Modifiers::Taunt.new(1))
   end
 
-  def update_defender(attacker, defender)
+  def update_defender_after_damage(attacker, defender)
     attacker.add_modifier(Modifiers::DecreaseSpeed.new(50, 2))
   end
 

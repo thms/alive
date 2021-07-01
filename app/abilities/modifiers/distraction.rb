@@ -2,8 +2,8 @@
 class Modifiers::Distraction < Modifiers::Modifier
 
   self.cleanse = [:all, :distraction]
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = true
   self.destroy = []
   self.is_positive = false
   self.cleanse = [:distraction, :all]

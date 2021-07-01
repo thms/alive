@@ -2,8 +2,8 @@
 # It's presence is sufficient
 class Modifiers::PreventSwap < Modifiers::Modifier
 
-  self.is_defense = true
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = false
   self.destroy = []
   self.cleanse = []
   self.is_positive = false

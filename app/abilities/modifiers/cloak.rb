@@ -3,8 +3,8 @@
 # both expires when used on own attack
 class Modifiers::Cloak < Modifiers::Modifier
 
-  self.is_defense = false
-  self.is_attack = !self.is_defense
+  self.tick_when_attacked = false
+  self.tick_when_attacking = true
   self.destroy = [:cloak]
   self.cleanse = []
   self.is_positive = true

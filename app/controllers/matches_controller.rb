@@ -5,8 +5,8 @@ class MatchesController < ApplicationController
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
     #MinMaxStrategy.reset_cache
-    name1 = 'Indoraptor'
-    name2 = 'Utarinex'
+    name1 = 'Geminititan'
+    name2 = 'Thoradolosaur'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     TQStrategy.load
@@ -14,10 +14,10 @@ class MatchesController < ApplicationController
     MinMaxStrategy.reset
     MinMax2Strategy.reset
     #MinMaxStrategy.load
-    NNStrategy.load
-    #NNStrategy.reset
+    #NNStrategy.load
+    NNStrategy.reset
     EventSink.reset
-    1000.times do
+    100.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = NNStrategy

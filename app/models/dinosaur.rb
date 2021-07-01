@@ -86,7 +86,7 @@ class Dinosaur < ApplicationRecord
   # for each attack modifier reduce count and delete if depleted
   def tick_attack_count
     modifiers.delete_if do |modifier|
-      modifier.is_attack && modifier.tick_attacks
+      modifier.tick_when_attacking && modifier.tick_attacks
     end
   end
 
@@ -94,7 +94,7 @@ class Dinosaur < ApplicationRecord
   # example: shields that take a hit, get their count decremented
   def tick_defense_count
     modifiers.delete_if do |modifier|
-      modifier.is_defense && modifier.tick_attacks
+      modifier.tick_when_attacked && modifier.tick_attacks
     end
   end
 
