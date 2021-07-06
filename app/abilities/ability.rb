@@ -52,6 +52,10 @@ class Ability
     @current_delay = self.delay # delay is only until the first use of an ability afterwards it is don't care.
   end
 
+  def is_available?
+    current_delay <= 0 && current_cooldown <= 0
+  end
+
   def tick
     if @current_delay > 0
       @current_delay -= 1

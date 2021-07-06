@@ -4,4 +4,8 @@ class RandomStrategy < Strategy
   def self.next_move(attacker, defender)
     attacker.available_abilities.sample
   end
+
+  def self.stats
+    {}
+  end
 end

@@ -72,9 +72,8 @@ class Dinosaur < ApplicationRecord
     attributes
   end
 
-  # ToDo: cap at zero, to prevent it from going negative?
   def current_speed
-    (speed_with_boosts * current_attributes[:speed] / 100).to_i
+    [0, (speed_with_boosts * current_attributes[:speed] / 100).to_i].max
   end
 
   # attempt to add a modifiers
@@ -166,7 +165,7 @@ class Dinosaur < ApplicationRecord
 
   # available abilities are those where both delay and cooldown is 0
   def available_abilities
-    abilities.select {|ability| ability.current_delay <= 0 && ability.current_cooldown == 0 && ability.is_implemented}
+    abilities.select {|ability| ability.is_available? && ability.is_implemented}
   end
 
   # Pick the next ability (need to add order dependency or strikes)

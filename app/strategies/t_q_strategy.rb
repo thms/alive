@@ -7,7 +7,7 @@ require 'logger'
 class TQStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.00
+  EPSILON = 0.0
   @@q_table = {}
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = []

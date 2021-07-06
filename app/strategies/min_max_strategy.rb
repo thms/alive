@@ -11,7 +11,7 @@ class MinMaxStrategy < Strategy
   @@games_played = 0
   @@error_rate = 0.0
   @@root = nil
-  @@max_depth = 10
+  @@max_depth = 4
   @@logger = Logger.new(STDOUT)
   @@logger.level = :warn
 # returns a single availabe ability from the attacker

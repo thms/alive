@@ -14,7 +14,12 @@ class ForcedStrategy < Strategy
     @@moves = {
       'Dracoceratops' => ['CleansingImpact', 'FierceImpact'],
       'Suchotator' => ['LethalWound', 'SuperiorityStrike'],
-      'Trykosaurus' => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike']
+      'Trykosaurus' => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
+      'Thoradolosaur' => ['FierceImpact', 'GroupShatteringRampage', 'InstantCharge', 'FierceImpact']
     }
+  end
+
+  def self.stats
+    {}
   end
 end

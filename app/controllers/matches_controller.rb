@@ -11,28 +11,27 @@ class MatchesController < ApplicationController
     @logs = []
     TQStrategy.load
     #TQStrategy.reset
-    MinMaxStrategy.reset
+    #MinMaxStrategy.reset
     MinMax2Strategy.reset
     #MinMaxStrategy.load
-    #NNStrategy.load
-    NNStrategy.reset
+    NNStrategy.load
     EventSink.reset
-    100.times do
+    10.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = NNStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = TQStrategy
+      @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
-      @d1.strategy.learn(result[:outcome_value])
-      @d2.strategy.learn(result[:outcome_value])
+      #@d1.strategy.learn(result[:outcome_value])
+      #@d2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-    TQStrategy.save
-    NNStrategy.save
+    #TQStrategy.save
+    #NNStrategy.save
     if @logs.size > 10
       @graph = generate_graph([@logs.last], name1, name2)
     else
