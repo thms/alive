@@ -230,7 +230,7 @@ class Dinosaur < ApplicationRecord
     (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
   end
 
-  # caluclate damamge at specific level from level @ 26 includng stat boosts
+  # caluclate damage at specific level from level @ 26 includng stat boosts
   def damage
     (damage_26 * (100.0 + attack_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
   end

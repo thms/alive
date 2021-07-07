@@ -114,7 +114,8 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the TQ player GT:TH" do
-    #skip
+    # gets to about 75-80% wins
+    skip
     name1 = 'Geminititan'
     name2 = 'Thoradolosaur'
     puts "#{name1} : #{name2}"
@@ -123,7 +124,7 @@ class NNStrategyTest < ActiveSupport::TestCase
     #NNStrategy.reset({outputs: 4})
     NNStrategy.load
     logs = []
-    10000.times do
+    30000.times do
       d1 = Dinosaur.find_by_name(name1)
       d1.strategy = NNStrategy
       d2 = Dinosaur.find_by_name(name2)

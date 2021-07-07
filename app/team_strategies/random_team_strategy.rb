@@ -11,7 +11,7 @@ class RandomTeamStrategy < TeamStrategy
   # pick a new dinosaur at random and a move, or just a move for the current dinosaur
   def self.next_move(team1, team2)
     # in 20% attempt to swap randomly
-    if rand > 0.8 && team1.can_swap?
+    if rand <= 0.2 && team1.can_swap?
       result = next_dinosaur(team1, team2)
       return result[:ability]
     elsif team1.current_dinosaur.nil? || team1.current_dinosaur.current_health <= 0
@@ -22,7 +22,11 @@ class RandomTeamStrategy < TeamStrategy
       # current dinosaur exists and is healthy, so pick a move
       return team1.current_dinosaur.available_abilities.sample
     end
+  end
 
+  # Team should swap with 20% probability
+  def self.should_swap?(team1, team2)
+    team1.current_dinosaur.current_health <= 0 || rand <= 0.2
   end
 
 end

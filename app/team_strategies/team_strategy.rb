@@ -12,4 +12,12 @@ class TeamStrategy
   def self.learn(outcome)
   end
 
+  # Should the team swap to another dinosaur?
+  def should_swap?(team1, team2)
+  end
+
+  def self.stats
+    {}
+  end
+
 end

@@ -8,7 +8,8 @@ class TQTeamStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
   EPSILON = 0.05 # eplison greedy strategy: pick suboptimal move in 5% of cases
-  @@q_table = {}
+  @@q_table = {} # state to ability + dinosaur mapping
+  @@q_table_swap = {} # state to swapp in new dinosaur mapping
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = []
   @@random_mode = false
@@ -21,9 +22,30 @@ class TQTeamStrategy < Strategy
   # pick the next dinosaur, either at the start of the game or when a swap is needed
   # TODO: need to pick these also depending on the q table
   # Not being used
-  def self.next_dinosaur(team1, team2)
-    target_dinosaur = (team1.available_dinosaurs - [team1.current_dinosaur, team1.recent_dinosaur]).sample
-    team1.swap(target_dinosaur)
+  def self.next_dinosaur(attacker, defender)
+    target_dinosaur = (attacker.available_dinosaurs - [attacker.current_dinosaur, attacker.recent_dinosaur]).sample
+    attacker.swap(target_dinosaur)
+  end
+
+  def self.should_swap?(attacker, defender)
+    # must swap if dead
+    return true if attacker.current_dinosaur.current_health <= 0
+    # ask the q table if it should swap
+    available_dinosaur_names = attacker.available_dinosaurs.map(&:name)
+    hash = TeamMatch.hash_value(attacker, defender)
+    dinosaurs = @@q_table_swap
+    # if empty, initialize and pick a random dinosaur
+    if dinosaurs.nil?
+      @@q_table_swap[hash] = available_dinosaur_names.map {|d| [d, INITIAL_Q_VALUE]}.to_h
+      dinosaur_name = available_dinosaur_names.sample
+    elsif rand < EPSILON
+      dinosaur_name = available_dinosaur_names.sample
+    else
+      highest_value = dinosaurs.sort_by {|k, v| v}.last.last
+      dinosaur_name = dinosaur.map {|k, v| highest_value == v ? k : nil}.compact.sample
+    end
+    # return true if the new selection is a swap, false otherwise
+    dinosaur_name != attacker.current_dinosaur.name
   end
 
   def self.next_move(attacker, defender)

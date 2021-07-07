@@ -1,4 +1,4 @@
-# For testing always pick the first availbe dinosaur and the first avaialble ability
+# For testing always pick the first availabe dinosaur and the first avaialble ability
 class DefaultTeamStrategy < TeamStrategy
 
   # Pick first available dinosaur that is not the current or most recent one
@@ -17,5 +17,13 @@ class DefaultTeamStrategy < TeamStrategy
     else
       return team1.current_dinosaur.available_abilities.first
     end
+  end
+
+  # Team should swap if other dino is likely to kill this one
+  # this could be much more refined, with expected
+  def self.should_swap?(team1, team2)
+    puts team1.current_dinosaur.current_health
+    puts team2.current_dinosaur.damage
+    team1.current_dinosaur.current_health <= 0 || (team1.current_dinosaur.current_health <= team2.current_dinosaur.damage) 
   end
 end

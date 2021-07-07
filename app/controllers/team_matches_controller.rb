@@ -4,7 +4,7 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Erlikospyx']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Suchotator']
     name2 = 'D'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
@@ -15,8 +15,8 @@ class TeamMatchesController < ApplicationController
     team1.each {|name| @survivors1["#{name1}:#{name}"] = 0}
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
-    TQTeamStrategy.reset
-    1000.times do
+    #TQTeamStrategy.reset
+    100.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
@@ -79,7 +79,7 @@ class TeamMatchesController < ApplicationController
       elsif d.name.include?('Monolometrodon')
         d.level = 28
         d.health_boosts = 3
-        d.attack_boosts = 15
+        d.attack_boosts = 16
         d.speed_boosts = 9
       elsif d.name.include?('Indoraptor')
         d.level = 28
@@ -94,6 +94,11 @@ class TeamMatchesController < ApplicationController
       elsif d.name.include?('Dracoceratops')
         d.level = 28
         d.health_boosts = 1
+        d.attack_boosts = 0
+        d.speed_boosts = 0
+      elsif d.name.include?('Suchotator')
+        d.level = 28
+        d.health_boosts = 0
         d.attack_boosts = 0
         d.speed_boosts = 0
       else
