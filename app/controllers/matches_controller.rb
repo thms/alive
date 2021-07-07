@@ -16,7 +16,7 @@ class MatchesController < ApplicationController
     #MinMaxStrategy.load
     NNStrategy.load
     EventSink.reset
-    10.times do
+    100.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = NNStrategy

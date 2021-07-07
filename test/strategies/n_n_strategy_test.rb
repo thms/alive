@@ -3,7 +3,7 @@ require 'test_helper'
 class NNStrategyTest < ActiveSupport::TestCase
 
   test "should learn from a number of games against the default player and always win" do
-    #skip
+    skip
     puts 'NN : Default'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -31,7 +31,7 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the highest damage player to always use impact" do
-    #skip
+    skip
     puts 'NN : Default'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -59,7 +59,7 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the random player " do
-    #skip
+    skip
     puts 'NN : Random'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -86,7 +86,7 @@ class NNStrategyTest < ActiveSupport::TestCase
     puts "Testing: #{stats}"
   end
 
-  test "should learn from a number of games against the random player GT:TH" do
+  test "should learn from a number of games against the minmax player GT:TH" do
     skip
     name1 = 'Geminititan'
     name2 = 'Thoradolosaur'
@@ -95,8 +95,6 @@ class NNStrategyTest < ActiveSupport::TestCase
     #NNStrategy.load
     NNStrategy.reset({outputs: 4})
     MinMaxStrategy.reset
-    TQStrategy.load
-    #TQStrategy.reset
     logs = []
     1000.times do
       d1 = Dinosaur.find_by_name(name1)
@@ -113,23 +111,33 @@ class NNStrategyTest < ActiveSupport::TestCase
     puts "Training: #{stats}"
     puts NNStrategy.stats
     #NNStrategy.save
-    #TQStrategy.save
-    #pp logs
+  end
 
-    # stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, draw: 0})
-    # log = []
-    # 10.times do
-    #   d1 = Dinosaur.find_by_name(name1)
-    #   d1.strategy = NNStrategy
-    #   d2 = Dinosaur.find_by_name(name2)
-    #   d2.strategy = MinMaxStrategy
-    #   match = Match.new(d1, d2)
-    #   result = match.execute
-    #   log.push result[:log]
-    #   stats[result[:outcome]] += 1
-    # end
-    # puts "Testing: #{stats}"
-    # puts NNStrategy.stats
+  test "should learn from a number of games against the TQ player GT:TH" do
+    #skip
+    name1 = 'Geminititan'
+    name2 = 'Thoradolosaur'
+    puts "#{name1} : #{name2}"
+    stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, draw: 0})
+    TQStrategy.load
+    #NNStrategy.reset({outputs: 4})
+    NNStrategy.load
+    logs = []
+    10000.times do
+      d1 = Dinosaur.find_by_name(name1)
+      d1.strategy = NNStrategy
+      d2 = Dinosaur.find_by_name(name2)
+      d2.strategy = TQStrategy
+      match = Match.new(d1, d2)
+      result = match.execute
+      d1.strategy.learn(result[:outcome_value])
+      d2.strategy.learn(result[:outcome_value])
+      stats[result[:outcome]] += 1
+      logs << result[:log]
+    end
+    puts "Training: #{stats}"
+    puts NNStrategy.stats
+    NNStrategy.save
   end
 
 end
