@@ -85,7 +85,7 @@ class Ability
   end
 
   # update defender's shields, etc.
-  # need to push the modifyers onto the defender's list
+  # need to push the modifiers onto the defender's list
   def update_defender(attacker, defender)
   end
 
@@ -101,6 +101,8 @@ class Ability
 
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
+    # Tick down the attacker's shields at the top if his turn
+    attacker.tick_shields
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
     if is_rending_attack
@@ -133,7 +135,7 @@ class Ability
     # count down the attack ticks on the attacker's attack modifiers
     attacker.tick_attack_count
     # count down and defender's active modifiers and delete them if used up
-    # TODO: this is not working correctly yet - it counts downmodifiers that were part of the attackers attack
+    # TODO: this is not working correctly yet - it counts down modifiers that were part of the attackers attack
     defender.tick_defense_count
     # count down attacker's distraction (should also tick distraction when the attacker is stunned)
     attacker.tick_distraction

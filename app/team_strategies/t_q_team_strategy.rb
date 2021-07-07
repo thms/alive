@@ -150,6 +150,10 @@ class TQTeamStrategy < Strategy
     @@log
   end
 
+  def self.stats
+    {games_played: @@games_played, size: @@q_table.size}
+  end
+
   def self.games_played
     @@games_played
   end

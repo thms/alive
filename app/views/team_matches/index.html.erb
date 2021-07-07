@@ -3,13 +3,13 @@
 <%= render 'team_matches/data', team: @t2 %>
 <b>Stats</b>
 <div><%= @stats %></div>
-<b>Health</b>
-<div><%= @t1.health %></div>
-<div><%= @t2.health %></div>
 <b>Survivors</b>
 <div><%= @survivors1 %></div>
 <div><%= @survivors2 %></div>
-<div><%= TQTeamStrategy.q_table.size %>
+<b>Health</b>
+<div><%= @t1.health %></div>
+<div><%= @t2.health %></div>
+<div><%= TQTeamStrategy.stats %>
 <div><%= @graph.html_safe %></div>
 <% if @logs.size < 10 %>
 <div><%= EventSink.events %></div>

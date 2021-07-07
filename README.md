@@ -35,12 +35,15 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Build neural network for the Q-function for team matches
 
 ## TODO
-Refactor turn logic to be more accurate
+Review current game mechanics for consistency across match, team match, minmax and simulation
+Refactor turn logic to be more accurate of when modifiers expire - TBD
+Strategies: factor expected damage into the rewards for TQ and NN
+MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
 Remaining abilities
+Build neural network for the Q-function for team matches
 
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
@@ -79,6 +82,8 @@ Implement boost calculations
 Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, etc, and player specific , e.g. level, boosts
 4:4 matches
 Cloak attack increases
+Basic neural network for 1:1 play
+Refine game mechanics around shield expiry (they expire at the to of the shielded dino's turn)
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json

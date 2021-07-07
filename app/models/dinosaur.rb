@@ -104,6 +104,13 @@ class Dinosaur < ApplicationRecord
     end
   end
 
+  # Shields tick down at top of the attacker's turn
+  def tick_shields
+    modifiers.delete_if do |modifier|
+      modifier.class == Modifiers::Shields && modifier.tick
+    end
+  end
+
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
@@ -119,7 +126,7 @@ class Dinosaur < ApplicationRecord
     end
     # Count down modifiers and delete expired ones, except distraction, this is handled after each action
     modifiers.delete_if do |modifier|
-      modifier.tick unless modifier.class == Modifiers::Distraction
+      modifier.tick unless [Modifiers::Distraction, Modifiers::Shields].include? modifier.class
     end
   end
 
