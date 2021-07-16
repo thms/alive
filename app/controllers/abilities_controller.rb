@@ -12,6 +12,12 @@ class AbilitiesController < ApplicationController
     @abilities.reverse! if sort_direction == 'desc'
   end
 
+  # GET /abilities/{ClassName}.json
+  def show
+    class_name = params[:id].gsub('-','_').classify
+    @ability = class_name.constantize.new
+  end
+
   private
   def sort_column
     ['name', 'is_implemented'].include?(params[:sort]) ? params[:sort] : "name"

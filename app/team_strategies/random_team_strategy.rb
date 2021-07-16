@@ -29,4 +29,8 @@ class RandomTeamStrategy < TeamStrategy
     team1.current_dinosaur.current_health <= 0 || rand <= 0.2
   end
 
+  def self.stats
+    {}
+  end
+
 end

@@ -46,6 +46,9 @@ class Ability
   attr_accessor :current_delay
   attr_accessor :current_cooldown
 
+  def name
+    self.class.name
+  end
 
   def initialize
     @current_cooldown = 0 # cooldown only starts after an ability has been used, so initially there is none.
@@ -152,6 +155,10 @@ class Ability
 
   # TODO: performs swapping out effects,
   def on_escape(attacker, defender)
+  end
+
+  def to_param
+    self.class.name.parameterize
   end
 
 end

@@ -1,4 +1,4 @@
-# Match of 4:1
+# Match of 4:4 or similar
 require 'digest'
 class TeamMatch
 
@@ -7,17 +7,19 @@ class TeamMatch
   attr_accessor :logger
   attr_accessor :log
   attr_accessor :round
+  attr_accessor :mode # :pvp, :campaign, :raid
 
-  def initialize(attacker, defender)
+  def initialize(attacker, defender, mode = :pvp)
     @attacker = attacker.reset_attributes!
     @attacker.value = Constants::MATCH[:max_player]
     @defender = defender.reset_attributes!
     @defender.value = Constants::MATCH[:min_player]
     @round = 0
     @logger = Logger.new(STDOUT)
-    @logger.level = :warn
+    @logger.level = :info
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
     @events = []
+    @mode = mode
   end
 
 
@@ -108,12 +110,12 @@ class TeamMatch
       dinosaurs.last.tick
     end
     # three possible outcomes: draw, attacker wins, defender wins
-    if @attacker.healthy_members <= 1 && @defender.healthy_members <= 1
+    if is_draw?
       outcome = 'draw'
       outcome_value = Constants::MATCH[:draw]
     else
-      outcome = @attacker.healthy_members > 1 ? "#{@attacker.name}" : "#{@defender.name}"
-      outcome_value = @attacker.healthy_members > 1 ? @attacker.value : @defender.value
+      outcome = @attacker.is_defeated?(@mode) ? "#{@defender.name}" : "#{@attacker.name}"
+      outcome_value = @attacker.is_defeated?(@mode) ? @defender.value : @attacker.value
     end
     # write the outcome log entry
     @log << {event: outcome, stats: {}, health: health(dinosaurs)}
@@ -158,7 +160,12 @@ class TeamMatch
 
   # Is the current state a win for one of the teams?
   def is_win?
-    @attacker.healthy_members <= 1 || @defender.healthy_members <= 1
+    @attacker.is_defeated?(@mode) || @defender.is_defeated?(@mode)
+  end
+
+  # is the current state a draw this can happen in due to damage over time
+  def is_draw?
+    @attacker.is_defeated?(@mode) && @defender.is_defeated?(@mode)
   end
 
   def health(dinosaurs)

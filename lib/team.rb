@@ -55,6 +55,21 @@ class Team
     @dinosaurs.select {|d| d.current_health > 0}
   end
 
+  # depending on the mode a team is defeated if a set number of dinos are dead
+  def is_defeated?(mode)
+    if dinosaurs.size == 1 && healthy_members == 0
+      return true
+    elsif dinosaurs.size == 1 && healthy_members == 1
+      return false
+    elsif mode == :raid && healthy_members == 0
+      return true
+    elsif (mode == :pvp || mode == :campaign) && healthy_members == 1
+      return true
+    else
+      return false
+    end
+  end
+
   # all available dinosaurs, this excludes the recently swapped out, becuase we cannot swap to him
   def available_dinosaurs
     healthy_dinosaurs - [@recent_dinosaur]

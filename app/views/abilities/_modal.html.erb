@@ -1,0 +1,18 @@
+<div id="<%= ability.name %>" class="modal">
+  <div class="modal-content">
+    <h4><%= ability.name %></h4>
+    <div class="row">
+      <div class="col xs-3">Damage: <%= ability.damage_multiplier %>x</div>
+      <div class="col xs-3">Delay: <%= ability.delay %></div>
+      <div class="col xs-3">Cooldown: <%= ability.cooldown %></div>
+      <div class="col xs-3">Priority: <%= ability.is_priority %></div>
+    </div>
+    <div class="row">
+      <div class="col xs-3">Bypass: <%= ability.bypass %></div>
+      <div class="col xs-3">Rending: <%= ability.is_rending_attack %></div>
+      <div class="col xs-3">Counter: <%= ability.is_counter %></div>
+      <div class="col xs-3">Swap Out: <%= ability.is_swap_out %></div>
+
+    </div>
+  </div>
+</div>

@@ -16,3 +16,6 @@
 <div><%= render partial: 'q_table' if false%></div>
 <div><%= EventSink.events if @logs.size < 10 %></div>
 <div><%= render partial: 'team_matches/logs' if @logs.size < 10 %></div>
+<script>
+  $('.modal').modal();
+</script>

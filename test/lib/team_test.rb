@@ -98,4 +98,9 @@ class TeamTest < ActiveSupport::TestCase
     assert_equal false, d2.is_revenge
   end
 
+  test "is_defeated? should not be true for a new, one-dino team" do
+    team = Team.new('a', ['Geminititan']).reset_attributes!
+    assert_equal false, team.is_defeated?(:pvp)
+  end
+
 end

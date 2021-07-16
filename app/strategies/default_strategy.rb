@@ -16,4 +16,11 @@ class DefaultStrategy < Strategy
   def self.next_move(attacker, defender)
     attacker.available_abilities.first
   end
+
+  def self.stats
+    {}
+  end
+
+  def self.learn(outcome)
+  end
 end

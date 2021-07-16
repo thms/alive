@@ -9,15 +9,19 @@
   <%= dinosaur.strategy %><br/>
   <% if dinosaur.abilities.class == Array %>
   <% dinosaur.abilities.each do |ability| %>
-    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+    <a class="modal-trigger" href="#<%= ability.name %>"><%= ability.class %><%= "*" if ability.is_implemented %></a><br/>
+    <%= render partial: 'abilities/modal', locals: {ability: ability} %>
   <% end %>
   <% dinosaur.abilities_counter.each do |ability| %>
-    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <a class="modal-trigger" href="#<%= ability.name %>"><%= ability.class %><%= "*" if ability.is_implemented %></a><br/>
+  <%= render partial: 'abilities/modal', locals: {ability: ability} %>
   <% end %>
   <% dinosaur.abilities_swap_in.each do |ability| %>
-    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <a class="modal-trigger" href="#<%= ability.name %>"><%= ability.class %><%= "*" if ability.is_implemented %></a><br/>
+  <%= render partial: 'abilities/modal', locals: {ability: ability} %>
   <% end %>
   <% dinosaur.abilities_on_escape.each do |ability| %>
-    <%= ability.class %><%= "*" if ability.is_implemented %><br/>
+  <a class="modal-trigger" href="#<%= ability.name %>"><%= ability.class %><%= "*" if ability.is_implemented %></a><br/>
+  <%= render partial: 'abilities/modal', locals: {ability: ability} %>
   <% end %>
   <% end %>
