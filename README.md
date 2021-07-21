@@ -35,10 +35,10 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
+Refactor turn logic to be more accurate of when modifiers expire - TBD
 
 ## TODO
-Refactor turn logic to be more accurate of when modifiers expire - TBD
-Review current game mechanics for consistency across match, team match, minmax and simulation
+Refactor current game mechanics for consistency across match, team match, minmax and simulation
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
@@ -48,6 +48,7 @@ Build neural network for the Q-function for team matches
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
+Try out LSTM networks
 
 ## DONE
 Basic model that shows relationships for Hybrids
