@@ -48,7 +48,7 @@ Build neural network for the Q-function for team matches
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
-Try out LSTM networks
+Try out RNN/LSTM networks
 
 ## DONE
 Basic model that shows relationships for Hybrids
@@ -85,6 +85,7 @@ Refactor model into two parts: generic Dinosaur info, e.g. abilities, health, et
 Cloak attack increases
 Basic neural network for 1:1 play
 Refine game mechanics around shield expiry (they expire at the to of the shielded dino's turn)
+Implement vulnerability (modifier and in damage defender)
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json

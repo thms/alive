@@ -105,6 +105,7 @@ class Ability
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
     # Tick down the attacker's shields at the top if his turn
+    # TODO: this should be done before installing new shields, so in execute before update_attacker.
     attacker.tick_shields
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
@@ -119,7 +120,8 @@ class Ability
     # note: modifiers may reduce critical chance to zero, in the current attributes
     is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
     damage = damage * 1.25 if is_critical_hit
-    # TODO: filter through attacker's modifiers (distraction, increase attack)
+    # Apply vulnerability
+    damage = damage * (1.0 + 0.25 * (100.0 - defender.resistance(:vulnerable)) / 100.0) if defender.current_attributes[:vulnerable]
     # Apply distraction
     damage = (damage * (100.0 - attacker.current_attributes[:distraction] * (100.0 - attacker.resistance(:distraction)) / 100.0) / 100.0)
     # Attack increase

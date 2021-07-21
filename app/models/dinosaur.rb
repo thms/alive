@@ -65,7 +65,7 @@ class Dinosaur < ApplicationRecord
   # TODO: decide the mechanism to use, this is currently a mix of two.
   # if percentage values: this is an absolute delta.
   def current_attributes
-    attributes = {speed: 100, shields: 0, damage: 0, distraction: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0 }
+    attributes = {speed: 100, shields: 0, damage: 0, distraction: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0, vulnerable: false }
     modifiers.each do |modifier|
       modifier.execute(attributes)
     end
