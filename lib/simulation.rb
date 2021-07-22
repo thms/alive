@@ -11,6 +11,7 @@
 require 'logger'
 
 class Simulation
+  include ::Mechanics
 
   attr_accessor :dinosaur1
   attr_accessor :dinosaur2
@@ -67,7 +68,7 @@ class Simulation
 
   # prunes children of one node
   # logic: if there is at least one leaf / win in the children and all
-  # chidlren have the same dino doing the action
+  # children have the same dino doing the action
   # then the non-leaves get deleted
   def prune_node(node)
     is_final = false
@@ -103,105 +104,58 @@ class Simulation
 
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
-        # make deep clones of both dinosaurs
+        # make deep clones of both dinosaurs, including the cooldown, delay and tick counts of abilities and modifiers
         dinosaur1 = deep_clone(current_node.data[:dinosaur1])
         dinosaur2 = deep_clone(current_node.data[:dinosaur2])
-        # use the cloned abilities to get correct cooldown and delay behaviours from the original ones, rather than the clones
-        a1 = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
-        a2 = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
-        abilities = [a1, a2]
-        # order them
-        if dinosaur1.current_speed == dinosaur2.current_speed
-          dinosaurs = dinosaur1.level > dinosaur2.level ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-          abilities = dinosaur1.level > dinosaur2.level ? [ a1, a2 ] : [ a2, a1 ]
-          # random shuffling, if speed and level are the same
-          if dinosaur1.level == dinosaur2.level
-            if rand < 0.5
-              dinosaurs = [ dinosaur1, dinosaur2 ]
-              abilities = [ a1, a2 ]
-            else
-              dinosaurs = [ dinosaur2, dinosaur1 ]
-              abilities = [ a2, a1 ]
-            end
-          end
-        else
-          dinosaurs = dinosaur1.current_speed > dinosaur2.current_speed ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-          abilities = dinosaur1.current_speed > dinosaur2.current_speed ? [a1, a2 ] : [ a2, a1 ]
-        end
-        if abilities.last.is_priority && !abilities.first.is_priority
-          dinosaurs.reverse!
-          abilities.reverse!
-        end
+        # set the ability to use in this round
+        dinosaur1.selected_ability = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
+        dinosaur2.selected_ability = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
 
+        # order them
+        dinosaurs = order_dinosaurs([dinosaur1, dinosaur2])
         # First attacks
-        if dinosaurs.first.is_stunned
-          #@logger.info("#{dinosaurs.first.name} is stunned")
-          @log << "#{dinosaurs.first.name}::stunned"
-          dinosaurs.first.is_stunned = false
-          node = current_node.add_or_update_child( "#{dinosaurs.first.name}::stunned", '', {
+        hit_stats, swapped_out = attack(dinosaurs.first, dinosaurs.last, @log, @logger)
+        node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{dinosaurs.first.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+          dinosaurs.first.selected_ability.class,
+          {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
             health: health(dinosaurs)
           } )
-        else
-          #@logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-          @log << "#{dinosaurs.first.name}::#{abilities.first.class}"
-          hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
-            abilities.first.class,
-            {
-              dinosaur1: dinosaurs.first,
-              dinosaur2: dinosaurs.last,
-              depth: depth,
-              health: health(dinosaurs)
-            } )
-        end
         # call next, and mark the most recent node as a win for the first dinosaur
         # due to counter attacks or or both may be dead, and we need to apply damage over time to find out the final outcome
-        if is_win?(dinosaurs)
-          apply_damage_over_time(node, dinosaurs)
+        if has_ended?(dinosaurs) || !swapped_out.nil?
+          apply_damage_over_time(dinosaurs)
           update_final_node(node, dinosaurs)
           next
         end
 
         # Second attacks
-        if dinosaurs.last.is_stunned
-          #@logger.info("#{dinosaurs.last.name} is stunned")
-          @log << "#{dinosaurs.last.name}::stunned"
-          dinosaurs.last.is_stunned = false
-          node = node.add_or_update_child( "#{dinosaurs.last.name}::stunned", '', {
-            dinosaur1: dinosaurs.first,
-            dinosaur2: dinosaurs.last,
-            depth: depth,
-            health: health(dinosaurs)
-    }  )
-        else
-          #@logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-          @log << "#{dinosaurs.last.name}::#{abilities.last.class}"
-          hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
-            abilities.last.class,
-            {
-            dinosaur1: dinosaurs.first,
-            dinosaur2: dinosaurs.last,
-            depth: depth,
-            health: health(dinosaurs)
-          } )
-        end
-        if is_win?(dinosaurs)
-          apply_damage_over_time(node, dinosaurs)
+        hit_stats, swapped_out = attack(dinosaurs.last, dinosaurs.first, @log, @logger)
+        node = node.add_or_update_child("#{dinosaurs.last.name}::#{dinosaurs.last.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+          dinosaurs.last.selected_ability.class,
+          {
+          dinosaur1: dinosaurs.first,
+          dinosaur2: dinosaurs.last,
+          depth: depth,
+          health: health(dinosaurs)
+        } )
+        if has_ended?(dinosaurs) || !swapped_out.nil?
+          apply_damage_over_time(dinosaurs)
           update_final_node(node, dinosaurs)
           next
         end
 
         # Advance the clock
         @round += 1
-        # since both survived, push last node onto the stack for the next round of simulation, unless DoT led to both being dead
-        apply_damage_over_time(node, dinosaurs)
-        if is_win?(dinosaurs)
+        # both survived, apply damage over time
+        apply_damage_over_time(dinosaurs)
+        if has_ended?(dinosaurs)
           update_final_node(node, dinosaurs)
         else
+          # if they are still both alive, tick and push for next round
+          tick(dinosaurs)
           next_round_nodes << node
         end
       end
@@ -210,18 +164,6 @@ class Simulation
     next_round_nodes.each do |node|
       one_round(node)
     end
-  end
-
-  # true if at least one is dead
-  def is_win?(dinosaurs)
-    dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
-  end
-
-  # there are three places where we need to apply DoT and update nodes
-  # returns true if DoT led to both dinos being dead
-  def apply_damage_over_time(node, dinosaurs)
-    dinosaurs.first.tick
-    dinosaurs.last.tick
   end
 
   def update_final_node(node, dinosaurs)
@@ -248,15 +190,6 @@ class Simulation
   def deep_clone(object)
     Marshal.load(Marshal.dump(object))
   end
-
-  def health(dinosaurs)
-    if dinosaurs.first.name < dinosaurs.last.name
-      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
-    else
-      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
-    end
-  end
-
 
 
 end

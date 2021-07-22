@@ -16,7 +16,7 @@ module Mechanics
     logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
     swapped_out = attacker.name if attacker.selected_ability.is_swap_out
     logger.info("#{attacker.name}: swapped_out") unless swapped_out.nil?
-    return swapped_out
+    return hit_stats, swapped_out
   end
 
   # returns true if the match has ended, false otherwise
@@ -73,6 +73,16 @@ module Mechanics
     dinosaurs.first.apply_damage_over_time
     dinosaurs.last.apply_damage_over_time
   end
+
+  # Move the clock
+  # Update abilities' delay and cooldown counts
+  # Update / expire effects on self and opponents
+  def tick(dinosaurs)
+    dinosaurs.first.tick
+    dinosaurs.last.tick
+  end
+
+
 
 
 

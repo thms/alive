@@ -31,7 +31,7 @@ class Match
       dinosaurs = order_dinosaurs([@dinosaur1, @dinosaur2])
 
       # First attacks
-      swapped_out = attack(dinosaurs.first, dinosaurs.last, @log, @logger)
+      hits_stats, swapped_out = attack(dinosaurs.first, dinosaurs.last, @log, @logger)
       # matchs ends if either is dead or first has swapped out
       if has_ended?(dinosaurs) || !swapped_out.nil?
         apply_damage_over_time(dinosaurs)
@@ -39,7 +39,7 @@ class Match
       end
 
       # Second attacks
-      swapped_out = attack(dinosaurs.last, dinosaurs.first, @log, @logger)
+      hit_stats, swapped_out = attack(dinosaurs.last, dinosaurs.first, @log, @logger)
       # match ends if either is dead or second has swapped out
       if has_ended?(dinosaurs) || !swapped_out.nil?
         apply_damage_over_time(dinosaurs)
@@ -50,7 +50,8 @@ class Match
       apply_damage_over_time(dinosaurs)
       break if has_ended?(dinosaurs)
       # if both are still alive, tick down modifiers and head into the next round
-      tick
+      tick(dinosaurs)
+      @round += 1
     end
 
     # if damage over time has changed the health from the last log entry write another log entry
@@ -61,15 +62,6 @@ class Match
   end
 
 
-
-  # Move the clock
-  # Update abilities' delay and cooldown counts
-  # Update / expire effects on self and opponents
-  def tick
-    @round += 1
-    @dinosaur1.tick
-    @dinosaur2.tick
-  end
 
 
 end
