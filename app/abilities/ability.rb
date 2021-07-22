@@ -71,7 +71,9 @@ class Ability
   def execute(attacker, defender)
     # destroy shields, cloak dodge, before attacking
     update_defender(attacker, defender)
-    # increase damage, tick down own shields
+    # Tick down the attacker's shields at the top if his turn
+    attacker.tick_shields
+    # increase damage
     update_attacker(attacker, defender)
     stats = damage_defender(attacker, defender)
     # TODO: move new modifiers for the defender over here, so they don't get ticked down during the attack already
@@ -104,9 +106,6 @@ class Ability
 
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
-    # Tick down the attacker's shields at the top if his turn
-    # TODO: this should be done before installing new shields, so in execute before update_attacker.
-    attacker.tick_shields
     # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
     return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
     if is_rending_attack

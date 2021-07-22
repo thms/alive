@@ -49,6 +49,7 @@ Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might 
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
 Try out RNN/LSTM networks
+Update to latest release: flocks, and other new creatures and abilities
 
 ## DONE
 Basic model that shows relationships for Hybrids
