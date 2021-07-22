@@ -8,7 +8,7 @@ class MatchTest < ActiveSupport::TestCase
     match = Match.new(d1, d2)
     d1.pick_ability(d1, d2)
     d2.pick_ability(d2, d1)
-    result = match.order_dinosaurs
+    result = match.order_dinosaurs([d1, d2])
     assert_equal 'd1', result.first.name
   end
 
@@ -18,7 +18,7 @@ class MatchTest < ActiveSupport::TestCase
     match = Match.new(d1, d2)
     d1.pick_ability(d1, d2)
     d2.pick_ability(d2, d1)
-    result = match.order_dinosaurs
+    result = match.order_dinosaurs([d1, d2])
     assert_equal 'd2', result.first.name
   end
 
