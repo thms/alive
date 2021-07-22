@@ -73,10 +73,12 @@ class Ability
     update_defender(attacker, defender)
     # Tick down the attacker's shields at the top if his turn
     attacker.tick_shields
+    # Tick down the attacker's shields at the top if his turn
+    attacker.tick_dodge
     # increase damage
     update_attacker(attacker, defender)
     stats = damage_defender(attacker, defender)
-    # TODO: move new modifiers for the defender over here, so they don't get ticked down during the attack already
+    # add new modifiers for the defender, so they don't already get ticked down in damage _defender.
     update_defender_after_damage(attacker, defender)
     # execute counter attack, if defender survived and was attacked
     if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
@@ -106,44 +108,48 @@ class Ability
 
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
-    # Bail out if there is no defender (testing) or there is no damage to be done, e.g. when healing
-    return {is_critical_hit: false, did_dodge: false} if damage_multiplier == 0 || defender.nil?
-    if is_rending_attack
-      # in a rending attack the damage is based of the max health of the defender, apply resistence
-      damage = defender.health * damage_multiplier * (100.0 - defender.resistance(:rend)) / 100.0
+    # Don't deal damage if there is no defender (testing) or there is no damage to be done, e.g. when healing
+    # don't tick down defender shields and others when healing, since there is no attack on them
+    if damage_multiplier == 0 || defender.nil?
+      retval = {is_critical_hit: false, did_dodge: false}
     else
-      # attacker's original damage times the type of attack
-      damage = attacker.damage * damage_multiplier
+      if is_rending_attack
+        # in a rending attack the damage is based of the max health of the defender, apply resistence
+        damage = defender.health * damage_multiplier * (100.0 - defender.resistance(:rend)) / 100.0
+      else
+        # attacker's original damage times the type of attack
+        damage = attacker.damage * damage_multiplier
+      end
+      # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
+      # note: modifiers may reduce critical chance to zero, in the current attributes
+      is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
+      damage = damage * 1.25 if is_critical_hit
+      # Apply vulnerability
+      damage = damage * (1.0 + 0.25 * (100.0 - defender.resistance(:vulnerable)) / 100.0) if defender.current_attributes[:vulnerable]
+      # Apply distraction
+      damage = (damage * (100.0 - attacker.current_attributes[:distraction] * (100.0 - attacker.resistance(:distraction)) / 100.0) / 100.0)
+      # Attack increase
+      damage = (damage * (100.0 + attacker.current_attributes[:damage]) / 100.0)
+      # TODO: filter through defender's modifiers (dogde)
+      did_dodge = (100 * rand < defender.current_attributes[:dodge]) && !bypass.include?(:dodge)
+      damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge)
+      # filter through defender's shields
+      damage = (damage * (100 - defender.current_attributes[:shields]) / 100)
+      # filter through defender's armor if any and the strike does not bypass armor
+      damage = (damage * (100 - defender.armor) / 100) unless bypass.include?(:armor)
+      # damage must no go below zero
+      damage = [damage, 0].max
+      # update defender's health and clamp all death to value 0
+      defender.current_health = [(defender.current_health - damage).round, 0].max
+      retval = {is_critical_hit: is_critical_hit, did_dodge: did_dodge}
+      # count down defender's active modifiers and delete them if used up
+      defender.tick_defense_count
     end
-    # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
-    # note: modifiers may reduce critical chance to zero, in the current attributes
-    is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
-    damage = damage * 1.25 if is_critical_hit
-    # Apply vulnerability
-    damage = damage * (1.0 + 0.25 * (100.0 - defender.resistance(:vulnerable)) / 100.0) if defender.current_attributes[:vulnerable]
-    # Apply distraction
-    damage = (damage * (100.0 - attacker.current_attributes[:distraction] * (100.0 - attacker.resistance(:distraction)) / 100.0) / 100.0)
-    # Attack increase
-    damage = (damage * (100.0 + attacker.current_attributes[:damage]) / 100.0)
-    # TODO: filter through defender's modifiers (dogde)
-    did_dodge = (100 * rand < defender.current_attributes[:dodge]) && !bypass.include?(:dodge)
-    damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge)
-    # filter through defender's shields
-    damage = (damage * (100 - defender.current_attributes[:shields]) / 100)
-    # filter through defender's armor if any and the strike does not bypass armor
-    damage = (damage * (100 - defender.armor) / 100) unless bypass.include?(:armor)
-    # damage must no go below zero
-    damage = [damage, 0].max
-    # update defender's health and clamp all death to value 0
-    defender.current_health = [(defender.current_health - damage).round, 0].max
-    # count down the attack ticks on the attacker's attack modifiers
+    # count down the attack ticks on the attacker's attack modifiers, after attacking and healing
     attacker.tick_attack_count
-    # count down and defender's active modifiers and delete them if used up
-    # TODO: this is not working correctly yet - it counts down modifiers that were part of the attackers attack
-    defender.tick_defense_count
     # count down attacker's distraction (should also tick distraction when the attacker is stunned)
     attacker.tick_distraction
-    {is_critical_hit: is_critical_hit, did_dodge: did_dodge}
+    retval
   end
 
   # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown

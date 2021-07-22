@@ -7,7 +7,7 @@ class Modifiers::DecreaseSpeed < Modifiers::Modifier
   self.is_positive = false
 
   # API: decrease is the amount in % to decrease speed: speed = (1 - decrease/100 ) * speed
-  # turns: the number of turns to be active after this current turn ends, need to set to t+1 to account for the current turn
+  # turns: start to count down at the end of the target's next turn, hence turns + 1
   # attacks: the number of attacks
   def initialize(decrease, turns, attacks = nil)
     @value = decrease

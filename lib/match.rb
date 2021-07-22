@@ -15,74 +15,52 @@ class Match
     @dinosaur2 = dinosaur2.reset_attributes!
     @dinosaur2.value = Constants::MATCH[:min_player]
     @logger = Logger.new(STDOUT)
-    @logger.level = :warn
+    @logger.level = :info
     @round = 1
     @log = [] # [{event: "D1::Strike", stats: {}, health: {}}, {event: "D2::CleansingStrike" stats: , ...]
   end
 
   def execute
-    swapped_out = ""
+    swapped_out = nil
     while @dinosaur1.current_health > 0 && @dinosaur2.current_health > 0
-      @logger.info("Round: #{@round}")
-      @logger.info("#{@dinosaur1.name}: #{@dinosaur1.current_speed}")
-      @logger.info("#{@dinosaur2.name}: #{@dinosaur2.current_speed}")
+      # Each picks an ability to use
+      @dinosaur1.pick_ability(@dinosaur1, @dinosaur2)
+      @dinosaur2.pick_ability(@dinosaur2, @dinosaur1)
       # order them by speed, to decide who goes first
       dinosaurs = order_dinosaurs
-      # Each picks an ability to use
-      abilities = []
-      abilities << dinosaurs.first.pick_ability(dinosaurs.first, dinosaurs.last)
-      abilities << dinosaurs.last.pick_ability(dinosaurs.last, dinosaurs.first)
-      # if the second picked priority move and the first one did not, swap them around
-      # in all other cases they are already in the correct order
-      if abilities.last.is_priority && !abilities.first.is_priority
-        dinosaurs.reverse!
-        abilities.reverse!
-      end
+
       # First attacks
-      if dinosaurs.first.is_stunned
-        @logger.info("#{dinosaurs.first.name} is stunned")
-        @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
-        dinosaurs.first.is_stunned = false
-        # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
-      else
-        hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-        swapped_out = dinosaurs.first.name if abilities.first.is_swap_out
-        @logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-        @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
+      swapped_out = attack(dinosaurs.first, dinosaurs.last)
+      # matchs ends if either is dead or first has swapped out
+      if has_ended?(dinosaurs) || !swapped_out.nil?
+        apply_damage_over_time
+        break
       end
-      # matchs ends if second is dead or first has swapped out
-      break if dinosaurs.last.current_health <= 0 || !swapped_out.empty?
 
       # Second attacks
-      if dinosaurs.last.is_stunned
-        @logger.info("#{dinosaurs.last.name} is stunned")
-        @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
-        dinosaurs.last.is_stunned = false
-        # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
-      else
-        hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-        swapped_out = dinosaurs.last.name if abilities.last.is_swap_out
-        @logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-        @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
+      swapped_out = attack(dinosaurs.last, dinosaurs.first)
+      # match ends if either is dead or second has swapped out
+      if has_ended?(dinosaurs) || !swapped_out.nil?
+        apply_damage_over_time
+        break
       end
-      # match ends if first is dead or second has swapped out
-      break if dinosaurs.first.current_health <= 0|| !swapped_out.empty?
-      # Advance the clock, to apply DoT and tick down modifiers
+
+      # end of the round, both are still alive, apply DoT
+      apply_damage_over_time
+      break if has_ended?(dinosaurs)
+      # if both are still alive, tick down modifiers and head into the next round
       tick
-      if health(dinosaurs) != @log.last[:health]
-        @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
-      end
-      # After DoT has been applied, we may have a draw, or one of the dinosaurs may have won, so we need to check for it again.
-      break if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
     end
-    # if only has died, we still need to apply damage over time - if both have died, we already have ticked
-    tick unless dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+
     # if damage over time has changed the health from the last log entry write another log entry
     if health(dinosaurs) != @log.last[:health]
       @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
     end
+    # four possible outcomes: draw, d1 wins, d2 wins, one dino swapped out
+    determine_outcome
+  end
+
+  def determine_outcome
     # four possible outcomes: draw, d1 wins, d2 wins, one dino swapped out
     if @dinosaur1.current_health <= 0 && @dinosaur2.current_health <= 0
       outcome = 'draw'
@@ -95,19 +73,46 @@ class Match
       outcome_value  = Constants::MATCH[:swap_out] * (@dinosaur1.name == swapped_out ? @dinosaur1.value : @dinosaur2.value)
     end
     # write the outcome log entry
-    @log << {event: outcome, stats: {}, health: health(dinosaurs)}
+    @log << {event: outcome, stats: {}, health: health([@dinosaur1, @dinosaur2])}
     {outcome: outcome, outcome_value: outcome_value, log: @log}
+  end
+
+  # returns true if the match has ended, false otherwise
+  def has_ended?(dinosaurs)
+    dinosaurs.any? {|d| d.current_health <= 0}
   end
 
   # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
   def order_dinosaurs
     if @dinosaur1.current_speed == @dinosaur2.current_speed
-      retval = @dinosaur1.level > @dinosaur2.level ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
-      retval.shuffle! if @dinosaur1.level == @dinosaur2.level
+      dinosaurs = @dinosaur1.level > @dinosaur2.level ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
+      dinosaurs.shuffle! if @dinosaur1.level == @dinosaur2.level
     else
-      retval = @dinosaur1.current_speed > @dinosaur2.current_speed ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
+      dinosaurs = @dinosaur1.current_speed > @dinosaur2.current_speed ? [ @dinosaur1, @dinosaur2 ] : [ @dinosaur2, @dinosaur1 ]
     end
-    retval
+    # if the second picked priority move and the first one did not, swap them around
+    # in all other cases they are already in the correct order
+    if dinosaurs.last.selected_ability.is_priority && !dinosaurs.first.selected_ability.is_priority
+      dinosaurs.reverse!
+    end
+    dinosaurs
+  end
+
+  def attack(attacker, defender)
+    swapped_out = nil
+    if attacker.is_stunned
+      @logger.info("#{attacker.name} is stunned")
+      # update cooldown on what the attacker selected, even if he did not get around to use it
+      attacker.selected_ability.update_cooldown_attacker(attacker, defender)
+      # replace with do nothing ability
+      attacker.selected_ability = IsStunned.new
+    end
+    hit_stats = attacker.selected_ability.execute(attacker, defender)
+    @log << {event: "#{attacker.name}::#{attacker.selected_ability.class}", stats: hit_stats, health: health([attacker, defender])}
+    @logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
+    swapped_out = attacker.name if attacker.selected_ability.is_swap_out
+    @logger.info("#{attacker.name}: swapped_out") unless swapped_out.nil?
+    return swapped_out
   end
 
   def health(dinosaurs)
@@ -129,6 +134,11 @@ class Match
     @round += 1
     @dinosaur1.tick
     @dinosaur2.tick
+  end
+
+  def apply_damage_over_time
+    @dinosaur1.apply_damage_over_time
+    @dinosaur2.apply_damage_over_time
   end
 
 end

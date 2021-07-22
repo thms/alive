@@ -19,7 +19,7 @@ class Modifiers::Cloak < Modifiers::Modifier
     super()
   end
 
-  # this should be additive with respect to the original shields
+  # this should be additive with respect to the original dodge
   # only one dodge can be active for a given creature
   def execute(attributes)
     attributes[:dodge] = @probability

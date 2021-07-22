@@ -7,7 +7,7 @@ class Modifiers::IncreaseSpeed < Modifiers::Modifier
   self.destroy = []
 
   # API: increase is the amount in % to decrease speed: speed = (1 + decrease/100 ) * speed
-  # turns: the number of turns to be active after this current turn ends
+  # turns: start to count down at the end of the target's next turn, hence turns + 1
   # attacks: the number of attacks
   def initialize(increase, turns, attacks = nil)
     @value = increase

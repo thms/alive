@@ -8,6 +8,7 @@ class Modifiers::PreventSwap < Modifiers::Modifier
   self.cleanse = []
   self.is_positive = false
 
+  # turns: start to count down at the end of the target's next turn, hence turns + 1
   def initialize(turns, source)
     self.turns = turns + 1
     self.attacks = nil

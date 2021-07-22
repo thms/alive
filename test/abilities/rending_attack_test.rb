@@ -5,7 +5,6 @@ class RendingTest < ActiveSupport::TestCase
   test "Rending attack should reduce defender's health by 40%" do
     attacker = Dinosaur.new(damage_26: 500, level: 26, speed: 130, name: 'attacker', abilities: []).reset_attributes!
     defender = Dinosaur.new(health_26: 1000, level: 26, speed: 125, armor: 0, name: 'defender', resistances: [0] * 9, abilities: []).reset_attributes!
-    puts defender.resistance(:rend).inspect
     RendingAttack.new.execute(attacker, defender)
     assert_equal 600, defender.current_health
   end

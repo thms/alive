@@ -1,4 +1,5 @@
-# Does nothing, used when swapping in and the dino has no swap-in ability
+# Does nothing, used when swapping in when the previous dino is still alive and the dino has no swap-in ability
+# On swap in, when the previous dino is still alive, the the dino does not get to choose the action
 class SwapIn < Ability
 
   self.is_implemented = true

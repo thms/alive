@@ -8,11 +8,11 @@ class Modifiers::Taunt < Modifiers::Modifier
   self.is_positive = false
 
   # API:
-  # turns: the number of turns to be active after this current turn ends
+  # turns: start to count down at the end of the target's next turn, hence turns + 1
   # attacks: the number of attacks  ignored
   def initialize(turns, attacks = nil)
     @value = nil
-    self.turns = turns
+    self.turns = turns + 1
     self.attacks = attacks
     super()
   end

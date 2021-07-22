@@ -17,6 +17,7 @@ class Modifiers::Distraction < Modifiers::Modifier
 
   # this should be additive with respect to the original damage
   # and this works on the other, not on self, by reducing their damage attribute
+  # Counts down at the end of the tartget's turn / action
   def execute(attributes)
     attributes[:distraction] += @value
   end

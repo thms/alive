@@ -31,6 +31,7 @@ class Dinosaur < ApplicationRecord
   attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
   attr_accessor :team # used in team matches
   attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
+  attr_accessor :selected_ability # stores the abiity selected for the next round, to simplify the code base
 
   def to_param
     name.parameterize
@@ -44,6 +45,7 @@ class Dinosaur < ApplicationRecord
     @is_stunned = false
     @modifiers = []
     @is_revenge = false
+    @selected_ability = nil
     # Instantiate the abilities
     self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
     self.abilities_swap_in = self.abilities_swap_in.map{|klass| klass.new} if self.abilities_swap_in.first.class == Class
@@ -111,6 +113,13 @@ class Dinosaur < ApplicationRecord
     end
   end
 
+  # Dodge ticks down at top of the attacker's turn
+  def tick_dodge
+    modifiers.delete_if do |modifier|
+      modifier.class == Modifiers::Dodge && modifier.tick
+    end
+  end
+
   # affects cooldown and delay of all abilities after each round
   # delay is only initially, cooldown only after a ability is used.
   # tick runs after all other updates
@@ -119,14 +128,16 @@ class Dinosaur < ApplicationRecord
     abilities.each do |ability|
       ability.tick
     end
-    # Apply damage over time, if any, taking resistance into account
+    # Count down modifiers and delete expired ones, except distraction, this is handled after each action
+    modifiers.delete_if do |modifier|
+      modifier.tick unless [Modifiers::Distraction, Modifiers::Shields, Modifiers::Dodge].include? modifier.class
+    end
+  end
+
+  def apply_damage_over_time
     if current_attributes[:damage_over_time] != 0
       self.current_health -= (current_attributes[:damage_over_time] / 100.0 * self.health * (100.0 - self.resistance(:damage_over_time)) / 100.0).round
       self.current_health = 0 if self.current_health < 0
-    end
-    # Count down modifiers and delete expired ones, except distraction, this is handled after each action
-    modifiers.delete_if do |modifier|
-      modifier.tick unless [Modifiers::Distraction, Modifiers::Shields].include? modifier.class
     end
   end
 
@@ -179,7 +190,7 @@ class Dinosaur < ApplicationRecord
   # returns the instance
   # For now just return the first available ability defined later use strategies
   def pick_ability(attacker, defender)
-    strategy.next_move(attacker, defender)
+    @selected_ability = strategy.next_move(attacker, defender)
   end
 
   def has_counter?
