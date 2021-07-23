@@ -75,7 +75,7 @@ class MinMax3Strategy < Strategy
     combinations = []
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
-        combinations << {d1: deep_clone(current_node.data[:dinosaur1]), d2: deep_clone(current_node.data[:dinosaur2]), a1_class: d1_ability.class, a2_class: d2_ability.class}
+        combinations << {d1: Utilities.deep_clone(current_node.data[:dinosaur1]), d2: Utilities.deep_clone(current_node.data[:dinosaur2]), a1_class: d1_ability.class, a2_class: d2_ability.class}
       end # inner loop ability combinations
     end # outer loop ability combinations
     combinations.each do |combination|
@@ -338,10 +338,6 @@ end
     else
       return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
     end
-  end
-
-  def self.deep_clone(object)
-    Marshal.load(Marshal.dump(object))
   end
 
   def self.order_dinosaurs_and_abilities(dinosaur1, dinosaur2, ability1, ability2)

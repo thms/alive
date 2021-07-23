@@ -8,7 +8,6 @@ require 'logger'
 # Repeat until one is dead
 # Tick represent the rounds in the match, to be used to expire effects of abilities on the opponent after the correct time has expired.
 class Match
-  include Mechanics
 
   def initialize(dinosaur1, dinosaur2)
     @dinosaur1 = dinosaur1.reset_attributes!
@@ -28,37 +27,39 @@ class Match
       @dinosaur1.pick_ability(@dinosaur1, @dinosaur2)
       @dinosaur2.pick_ability(@dinosaur2, @dinosaur1)
       # order them by speed, to decide who goes first
-      dinosaurs = order_dinosaurs([@dinosaur1, @dinosaur2])
+      dinosaurs = Mechanics.order_dinosaurs([@dinosaur1, @dinosaur2])
+      @logger.info @dinosaur1.selected_ability
+      @logger.info @dinosaur2.selected_ability
 
       # First attacks
-      hits_stats, swapped_out = attack(dinosaurs.first, dinosaurs.last, @log, @logger)
+      hits_stats, swapped_out = Mechanics.attack(dinosaurs.first, dinosaurs.last, @log, @logger)
       # matchs ends if either is dead or first has swapped out
-      if has_ended?(dinosaurs) || !swapped_out.nil?
-        apply_damage_over_time(dinosaurs)
+      if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+        Mechanics.apply_damage_over_time(dinosaurs)
         break
       end
 
       # Second attacks
-      hit_stats, swapped_out = attack(dinosaurs.last, dinosaurs.first, @log, @logger)
+      hit_stats, swapped_out = Mechanics.attack(dinosaurs.last, dinosaurs.first, @log, @logger)
       # match ends if either is dead or second has swapped out
-      if has_ended?(dinosaurs) || !swapped_out.nil?
-        apply_damage_over_time(dinosaurs)
+      if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+        Mechanics.apply_damage_over_time(dinosaurs)
         break
       end
 
       # end of the round, both are still alive, apply DoT
-      apply_damage_over_time(dinosaurs)
-      break if has_ended?(dinosaurs)
+      Mechanics.apply_damage_over_time(dinosaurs)
+      break if Mechanics.has_ended?(dinosaurs)
       # if both are still alive, tick down modifiers and head into the next round
-      tick(dinosaurs)
+      Mechanics.tick(dinosaurs)
       @round += 1
     end
 
     # if damage over time has changed the health from the last log entry write another log entry
-    if health(dinosaurs) != @log.last[:health]
+    if Mechanics.health(dinosaurs) != @log.last[:health]
       @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
     end
-    determine_outcome(dinosaurs, swapped_out, @log)
+    Mechanics.determine_outcome(dinosaurs, swapped_out, @log)
   end
 
 

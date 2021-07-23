@@ -14,7 +14,7 @@ class SwapInStunningStrike < Ability
   def damage_defender(attacker, defender)
     result = super
     # 66% chance to stun the defender, with probability depending on the resistance of the defender
-    defender.is_stunned = rand(100) < 0.66 * (100 - defender.resistance(:stun))
+    defender.is_stunned = rand(100) < 66.0 * (100.0 - defender.resistance(:stun)) / 100.0
     result
   end
 

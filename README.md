@@ -35,10 +35,10 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Refactor turn logic to be more accurate of when modifiers expire - TBD
+Refactor current game mechanics for consistency across match, team match, minmax and simulation
+Check all resistance implementations
 
 ## TODO
-Refactor current game mechanics for consistency across match, team match, minmax and simulation
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
@@ -87,6 +87,7 @@ Cloak attack increases
 Basic neural network for 1:1 play
 Refine game mechanics around shield expiry (they expire at the to of the shielded dino's turn)
 Implement vulnerability (modifier and in damage defender)
+Refactor turn logic to be more accurate of when modifiers expire - TBD
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json

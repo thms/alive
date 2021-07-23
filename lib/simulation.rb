@@ -11,7 +11,6 @@
 require 'logger'
 
 class Simulation
-  include ::Mechanics
 
   attr_accessor :dinosaur1
   attr_accessor :dinosaur2
@@ -55,6 +54,7 @@ class Simulation
 
 
   # prune an entire graph of nodes that are errors by one player
+  # TODO: rethink this whole thing to what want out of it
   def prune(result)
     queue = [result]
     while !queue.empty? do
@@ -105,44 +105,44 @@ class Simulation
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
         # make deep clones of both dinosaurs, including the cooldown, delay and tick counts of abilities and modifiers
-        dinosaur1 = deep_clone(current_node.data[:dinosaur1])
-        dinosaur2 = deep_clone(current_node.data[:dinosaur2])
+        dinosaur1 = Utilities.deep_clone(current_node.data[:dinosaur1])
+        dinosaur2 = Utilities.deep_clone(current_node.data[:dinosaur2])
         # set the ability to use in this round
         dinosaur1.selected_ability = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
         dinosaur2.selected_ability = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
 
         # order them
-        dinosaurs = order_dinosaurs([dinosaur1, dinosaur2])
+        dinosaurs = Mechanics.order_dinosaurs([dinosaur1, dinosaur2])
         # First attacks
-        hit_stats, swapped_out = attack(dinosaurs.first, dinosaurs.last, @log, @logger)
+        hit_stats, swapped_out = Mechanics.attack(dinosaurs.first, dinosaurs.last, @log, @logger)
         node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{dinosaurs.first.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
           dinosaurs.first.selected_ability.class,
           {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
-            health: health(dinosaurs)
+            health: Mechanics.health(dinosaurs)
           } )
         # call next, and mark the most recent node as a win for the first dinosaur
         # due to counter attacks or or both may be dead, and we need to apply damage over time to find out the final outcome
-        if has_ended?(dinosaurs) || !swapped_out.nil?
-          apply_damage_over_time(dinosaurs)
+        if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+          Mechanics.apply_damage_over_time(dinosaurs)
           update_final_node(node, dinosaurs)
           next
         end
 
         # Second attacks
-        hit_stats, swapped_out = attack(dinosaurs.last, dinosaurs.first, @log, @logger)
+        hit_stats, swapped_out = Mechanics.attack(dinosaurs.last, dinosaurs.first, @log, @logger)
         node = node.add_or_update_child("#{dinosaurs.last.name}::#{dinosaurs.last.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
           dinosaurs.last.selected_ability.class,
           {
           dinosaur1: dinosaurs.first,
           dinosaur2: dinosaurs.last,
           depth: depth,
-          health: health(dinosaurs)
+          health: Mechanics.health(dinosaurs)
         } )
-        if has_ended?(dinosaurs) || !swapped_out.nil?
-          apply_damage_over_time(dinosaurs)
+        if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+          Mechanics.apply_damage_over_time(dinosaurs)
           update_final_node(node, dinosaurs)
           next
         end
@@ -150,12 +150,12 @@ class Simulation
         # Advance the clock
         @round += 1
         # both survived, apply damage over time
-        apply_damage_over_time(dinosaurs)
-        if has_ended?(dinosaurs)
+        Mechanics.apply_damage_over_time(dinosaurs)
+        if Mechanics.has_ended?(dinosaurs)
           update_final_node(node, dinosaurs)
         else
           # if they are still both alive, tick and push for next round
-          tick(dinosaurs)
+          Mechanics.tick(dinosaurs)
           next_round_nodes << node
         end
       end
@@ -168,7 +168,7 @@ class Simulation
 
   def update_final_node(node, dinosaurs)
     node.is_final = true
-    node.data[:health] = health(dinosaurs)
+    node.data[:health] = Mechanics.health(dinosaurs)
     if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
       node.value = Constants::MATCH[:draw]
       node.winner = nil
@@ -186,10 +186,5 @@ class Simulation
       node.color = dinosaurs.last.color
     end
   end
-
-  def deep_clone(object)
-    Marshal.load(Marshal.dump(object))
-  end
-
 
 end

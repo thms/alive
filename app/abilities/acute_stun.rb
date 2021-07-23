@@ -11,7 +11,7 @@ class AcuteStun < Ability
   def damage_defender(attacker, defender)
     result = super
     # stun the defender, with probability depending on the resitance of the defender
-    defender.is_stunned = rand(100) < (100 - defender.resistance(:stun))
+    defender.is_stunned = rand(100) < 100.0 * (100.0 - defender.resistance(:stun)) / 100.0
     result
   end
 

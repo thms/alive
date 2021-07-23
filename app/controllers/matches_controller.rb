@@ -9,10 +9,10 @@ class MatchesController < ApplicationController
     name2 = 'Thoradolosaur'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    #TQStrategy.load
-    #TQStrategy.reset
-    #MinMaxStrategy.reset
-    MinMax2Strategy.reset
+    TQStrategy.load
+    TQStrategy.reset
+    MinMaxStrategy.reset
+    #MinMax2Strategy.reset
     #MinMaxStrategy.load
     NNStrategy.load
     EventSink.reset
@@ -25,12 +25,12 @@ class MatchesController < ApplicationController
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       result = Match.new(@d1, @d2).execute
-      #@d1.strategy.learn(result[:outcome_value])
-      #@d2.strategy.learn(result[:outcome_value])
+      @d1.strategy.learn(result[:outcome_value])
+      @d2.strategy.learn(result[:outcome_value])
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-    #TQStrategy.save
+    TQStrategy.save
     #NNStrategy.save
     if @logs.size > 10
       @graph = generate_graph([@logs.last], name1, name2)

@@ -39,7 +39,7 @@ class TeamMatch
         EventSink.add "#{dinosaurs.first.name}::stunned"
         dinosaurs.first.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.first.update_cooldown_attacker(dinosaurs.first, dinosaurs.last)
+        abilities.first.start_cooldown
       else
         hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
         @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
@@ -77,7 +77,7 @@ class TeamMatch
         EventSink.add "#{dinosaurs.last.name}::stunned"
         dinosaurs.last.is_stunned = false
         # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.last.update_cooldown_attacker(dinosaurs.last, dinosaurs.first)
+        abilities.last.start_cooldown
       else
         hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
         @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}

@@ -14,6 +14,8 @@ class MinMaxStrategy < Strategy
   @@max_depth = 4
   @@logger = Logger.new(STDOUT)
   @@logger.level = :warn
+  @@log = []
+
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)
     @@games_played += 1
@@ -36,6 +38,8 @@ class MinMaxStrategy < Strategy
       @@logger.info("Moves: #{moves}")
       EventSink.add "#{attacker.name}: #{moves}"
       move = attacker.available_abilities.select {|a| a.class.name == moves.first.first}.first
+      ## TODO: when the dino gets stunned, it brings back IsStunned as the move, and since that is not a valid choice....
+      move = attacker.available_abilities.sample if move.nil?
     end
     return move
   end
@@ -49,6 +53,7 @@ class MinMaxStrategy < Strategy
         return @@cache[cache_key]
       end
     end
+
     # Store the abilities for the attacker and their respective outcome value
     ability_outcomes = {}
     # Safety valve to only look so far into the future
@@ -58,135 +63,56 @@ class MinMaxStrategy < Strategy
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
         # make deep clones of both dinosaurs
-        dinosaur1 = deep_clone(current_node.data[:dinosaur1])
-        dinosaur2 = deep_clone(current_node.data[:dinosaur2])
-        # use the cloned abilities to get correct cooldown and delay behaviours from the original ones, rather than the clones
-        a1 = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
-        a2 = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
-        abilities = [a1, a2]
+        dinosaur1 = Utilities.deep_clone(current_node.data[:dinosaur1])
+        dinosaur2 = Utilities.deep_clone(current_node.data[:dinosaur2])
+        # set the ability to use in this round
+        dinosaur1.selected_ability = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
+        dinosaur2.selected_ability = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
+
         # order them
-        if dinosaur1.current_speed == dinosaur2.current_speed
-          dinosaurs = dinosaur1.level > dinosaur2.level ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-          abilities = dinosaur1.level > dinosaur2.level ? [ a1, a2 ] : [ a2, a1 ]
-          # random shuffling, if speed and level are the same
-          if dinosaur1.level == dinosaur2.level
-            if rand < 0.5
-              dinosaurs = [ dinosaur1, dinosaur2 ]
-              abilities = [ a1, a2 ]
-            else
-              dinosaurs = [ dinosaur2, dinosaur1 ]
-              abilities = [ a2, a1 ]
-            end
-          end
-        else
-          dinosaurs = dinosaur1.current_speed > dinosaur2.current_speed ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-          abilities = dinosaur1.current_speed > dinosaur2.current_speed ? [a1, a2 ] : [ a2, a1 ]
-        end
-        if abilities.last.is_priority && !abilities.first.is_priority
-          dinosaurs.reverse!
-          abilities.reverse!
-        end
-        swapped_out = ""
+        dinosaurs = Mechanics.order_dinosaurs([dinosaur1, dinosaur2])
+
         # First attacks
-        if dinosaurs.first.is_stunned
-          @@logger.info("#{dinosaurs.first.name} is stunned")
-          dinosaurs.first.is_stunned = false
-          node = current_node.add_or_update_child( "#{dinosaurs.first.name}::stunned", '', {
+        hit_stats, swapped_out = Mechanics.attack(dinosaurs.first, dinosaurs.last, @@log, @@logger)
+        node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{dinosaurs.first.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+          dinosaurs.first.selected_ability.class,
+          {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
-            health: health(dinosaurs)
-          } )
-        else
-          @@logger.info("#{dinosaurs.first.name}: #{abilities.first.class}")
-          hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-          swapped_out = dinosaurs.first.name if abilities.first.is_swap_out
-          node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{abilities.first.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
-            abilities.first.class,
-            {
-              dinosaur1: dinosaurs.first,
-              dinosaur2: dinosaurs.last,
-              depth: depth,
-              health: health(dinosaurs)
-            } )
-        end
-        # call next, and mark the most recent node as a win for the first dinosaur
-        if dinosaurs.last.current_health <= 0
-          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
-            node.is_final = true
-            node.winner = dinosaurs.first.name
-            node.looser = dinosaurs.last.name
-            node.value = dinosaurs.first.value
-            @@logger.info("1: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-            if dinosaurs.first.name == attacker.name
-              # store this as a winning node for the attacker (who may have value -1.0)
-              ability_outcomes[abilities.first.class.name] = node.value
-            else
-              # store the selection of the attacker as a loss
-              ability_outcomes[abilities.last.class.name] = node.value
-            end
-          end
-          @@logger.info ability_outcomes
-          next
-        elsif !swapped_out.empty?
-          node.is_final = true
-          node.winner = ""
-          node.looser = ""
-          node.value = dinosaurs.first.value * Constants::MATCH[:swap_out]
-          ability_outcomes[abilities.first.class.name] = node.value
+            health: Mechanics.health(dinosaurs)
+          }
+        )
+        # if at least one has died, mark as win / draw and evaulate next combiation of moves
+        if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+          Mechanics.apply_damage_over_time(dinosaurs)
+          determine_outcome(node, dinosaurs, ability_outcomes, attacker, swapped_out)
           next
         end
+
         # Second attacks
-        if dinosaurs.last.is_stunned
-          @@logger.info("#{dinosaurs.last.name} is stunned")
-          dinosaurs.last.is_stunned = false
-          node = node.add_or_update_child( "#{dinosaurs.last.name}::stunned", '', {
+        hit_stats, swapped_out = Mechanics.attack(dinosaurs.last, dinosaurs.first, @@log, @@logger)
+        node = current_node.add_or_update_child("#{dinosaurs.last.name}::#{dinosaurs.last.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+          dinosaurs.last.selected_ability.class,
+          {
             dinosaur1: dinosaurs.first,
             dinosaur2: dinosaurs.last,
             depth: depth,
-            health: health(dinosaurs)
-          })
-        else
-          @@logger.info("#{dinosaurs.last.name}: #{abilities.last.class}")
-          hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-          swapped_out = dinosaurs.last.name if abilities.last.is_swap_out
-          node = node.add_or_update_child("#{dinosaurs.last.name}::#{abilities.last.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
-            abilities.last.class,
-            {
-            dinosaur1: dinosaurs.first,
-            dinosaur2: dinosaurs.last,
-            depth: depth,
-            health: health(dinosaurs)
+            health: Mechanics.health(dinosaurs)
           } )
-        end
-        if dinosaurs.first.current_health <= 0
-          unless apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
-            @@logger.info("#{dinosaurs.last.name} wins")
-            node.is_final = true
-            node.winner = dinosaurs.last.name
-            node.looser = dinosaurs.first.name
-            node.value = dinosaurs.last.value
-            @@logger.info("2: Winner: #{node.winner}, looser: #{node.looser}, attacker: #{attacker.name}, #{node.winner == attacker.name}")
-            if dinosaurs.last.name == attacker.name
-              # store this as a winning node for the attacker (who may have value -1.0)
-              ability_outcomes[abilities.last.class.name] = node.value
-            else
-              # mark the move above as a loosing move for the attacker
-              ability_outcomes[abilities.first.class.name] = node.value
-            end
-          end
-          @@logger.info ability_outcomes
-          next
-        elsif !swapped_out.empty?
-          node.is_final = true
-          node.winner = ""
-          node.looser = ""
-          node.value = dinosaurs.last.value * Constants::MATCH[:swap_out]
-          ability_outcomes[abilities.last.class.name] = node.value
+        # if at least one has died, mark as win / draw and evaulate next combiation of moves
+        if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+          Mechanics.apply_damage_over_time(dinosaurs)
+          determine_outcome(node, dinosaurs, ability_outcomes, attacker, swapped_out)
           next
         end
-        # Advance the clock & apply damage over time and skip to next if both are dead
-        next if apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
+
+        # if both are still alive, apply damage over time and evaluate outcome
+        Mechanics.apply_damage_over_time(dinosaurs)
+        next if determine_outcome(node, dinosaurs, ability_outcomes, attacker, nil)
+        # Advance the clock
+        dinosaurs.map(&:tick)
+
         # since both survived, explore further into the future
         # the move the dinosaur chose above either leads to a win or a loss further down the line, so we need find the most favourable outcome
         # for the attacker and mark the move chosen above with that outcome
@@ -195,9 +121,9 @@ class MinMaxStrategy < Strategy
           best_outcome = outcomes.sort_by {|k, v| attacker.value * v}.last.last
           worst_outcome = outcomes.sort_by {|k, v| attacker.value * v}.first.last
           if attacker.name == dinosaurs.first.name
-            ability_outcomes[abilities.first.class.name] = worst_outcome
+            ability_outcomes[dinosaurs.first.selected_ability.class.name] = worst_outcome
           else
-            ability_outcomes[abilities.last.class.name] = worst_outcome
+            ability_outcomes[dinosaurs.last.selected_ability.class.name] = worst_outcome
           end
           @@logger.info ability_outcomes
         end
@@ -254,48 +180,60 @@ class MinMaxStrategy < Strategy
 
   private
 
-  # tick both dinosaurs to apply damage over time
   # returns true if one or more are dead, false otherwise
-  def self.apply_damage_over_time(node, dinosaurs, ability_outcomes, abilities, attacker)
-    dinosaurs.first.tick
-    dinosaurs.last.tick
-    if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+  def self.determine_outcome(node, dinosaurs, ability_outcomes, attacker, swapped_out)
+    if dinosaurs.first.current_health == 0 && dinosaurs.last.current_health == 0
       @@logger.info("Draw")
       node.is_final = true
       node.winner = nil
       node.looser = nil
       node.value = Constants::MATCH[:draw]
-      node.data[:health] = health(dinosaurs)
+      node.data[:health] = Mechanics.health(dinosaurs)
       if attacker.name == dinosaurs.first.name
-        ability_outcomes[abilities.first.class.name] = Constants::MATCH[:draw]
+        ability_outcomes[dinosaurs.first.selected_ability.class.name] = Constants::MATCH[:draw]
       else
-        ability_outcomes[abilities.last.class.name] = Constants::MATCH[:draw]
+        ability_outcomes[dinosaurs.last.selected_ability.class.name] = Constants::MATCH[:draw]
       end
       return true
-    elsif dinosaurs.first.current_health <= 0
+    elsif dinosaurs.first.current_health == 0
       node.is_final = true
       node.winner = dinosaurs.last.name
       node.looser = dinosaurs.first.name
       node.value = dinosaurs.last.value
-      node.data[:health] = health(dinosaurs)
+      node.data[:health] = Mechanics.health(dinosaurs)
       if attacker.name == dinosaurs.first.name
-        ability_outcomes[abilities.first.class.name] = node.value
+        ability_outcomes[dinosaurs.first.selected_ability.class.name] = node.value
       else
-        ability_outcomes[abilities.last.class.name] = node.value
+        ability_outcomes[dinosaurs.last.selected_ability.class.name] = node.value
       end
       return true
-    elsif dinosaurs.last.current_health <= 0
+    elsif dinosaurs.last.current_health == 0
       node.is_final = true
       node.winner = dinosaurs.first.name
       node.looser = dinosaurs.last.name
       node.value = dinosaurs.first.value
-      node.data[:health] = health(dinosaurs)
+      node.data[:health] = Mechanics.health(dinosaurs)
       if attacker.name == dinosaurs.first.name
-        ability_outcomes[abilities.first.class.name] = node.value
+        ability_outcomes[dinosaurs.first.selected_ability.class.name] = node.value
       else
-        ability_outcomes[abilities.last.class.name] = node.value
+        ability_outcomes[dinosaurs.last.selected_ability.class.name] = node.value
       end
       return true
+    elsif !swapped_out.nil?
+      node.is_final = true
+      node.winner = ""
+      node.looser = ""
+      node.data[:health] = Mechanics.health(dinosaurs)
+      if swapped_out == dinosaurs.first.name
+        node.value = dinosaurs.first.value * Constants::MATCH[:swap_out]
+      else
+        node.value = dinosaurs.last.value * Constants::MATCH[:swap_out]
+      end
+      if attacker.name == dinosaurs.first.name
+        ability_outcomes[dinosaurs.first.selected_ability.class.name] = node.value
+      else
+        ability_outcomes[dinosaurs.last.selected_ability.class.name] = node.value
+      end
     else
       return false
     end
@@ -314,18 +252,6 @@ class MinMaxStrategy < Strategy
     d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     result
-  end
-
-  def self.health(dinosaurs)
-    if dinosaurs.first.name < dinosaurs.last.name
-      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
-    else
-      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
-    end
-  end
-
-  def self.deep_clone(object)
-    Marshal.load(Marshal.dump(object))
   end
 
 end

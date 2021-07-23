@@ -10,8 +10,8 @@ class InstantCharge < Ability
 
   def damage_defender(attacker, defender)
     result = super
-    # stun the defender
-    defender.is_stunned = rand(100) < 75 * (100.0 - defender.resistance(:stun) / 100.0)
+    # stun the defender with 75% probability, subject to resistance
+    defender.is_stunned = rand(100) < 75.0 * (100.0 - defender.resistance(:stun)) / 100.0
     result
   end
 

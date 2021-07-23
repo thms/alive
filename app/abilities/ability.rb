@@ -84,8 +84,8 @@ class Ability
     if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
       stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
     end
-    # update the abiltities usage stats
-    update_cooldown_attacker(attacker, defender)
+    # start the cooldown period
+    start_cooldown
     # trigger on escape ability of the attacker, if any
     on_escape(attacker, defender)
     stats
@@ -152,9 +152,9 @@ class Ability
     retval
   end
 
-  # if there is a cooldown on the ability, update the attacker's ability stats, to start the cooldown
+  # if there is a cooldown on the ability, update the ability's stats, to start the cooldown
   # since this is executed before tick, cooldown needs to be +1
-  def update_cooldown_attacker(attacker, defender)
+  def start_cooldown
     if self.cooldown > 0
       @current_cooldown = self.cooldown + 1
     end
