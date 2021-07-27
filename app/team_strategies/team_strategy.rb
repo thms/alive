@@ -9,7 +9,7 @@ class TeamStrategy
   end
 
   # Interface for learning from the outcome of a match
-  def self.learn(outcome)
+  def self.learn(outcome, attacker_value = nil)
   end
 
   # Should the team swap to another dinosaur?

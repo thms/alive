@@ -8,7 +8,7 @@ class Strategy
 
   # Override in derived class, if the strategy can learn
   # Input: -1.0: loss, 0.0: draw, 1.0: win from the attacker's point of view
-  def self.learn(outcome)
+  def self.learn(outcome, attacker_value = nil)
   end
 
   # Override in derived class to save the state, e.g. Q table, or neural network, or cache

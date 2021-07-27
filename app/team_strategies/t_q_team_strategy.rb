@@ -11,7 +11,7 @@ class TQTeamStrategy < Strategy
   @@q_table = {} # state to ability + dinosaur mapping
   @@q_table_swap = {} # state to swapp in new dinosaur mapping
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
-  @@log = []
+  @@log = {1.0 => [], -1.0 => []}
   @@random_mode = false
   @@swap_penalty = 0.5 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
   @@games_played = 0
@@ -78,7 +78,7 @@ class TQTeamStrategy < Strategy
       # find all moves that have the highest value and pick one at random
       ability = abilities.map {|k, v| highest_value == v ? k : nil}.compact.sample
     end
-    @@log.push [hash, available_ability_names, attacker.value, ability]
+    @@log[attacker.value].push [hash, available_ability_names, attacker.value, ability]
 
     # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can / have to swap dinosaurs
     dinosaur_name, ability_name = ability.split('::')
@@ -92,22 +92,21 @@ class TQTeamStrategy < Strategy
     end
   end
 
-  def self.learn(outcome)
-    return if @@log.empty?
+  def self.learn(outcome, attacker_value)
+    return if @@log[attacker_value].empty?
     @@games_played += 1
-    update_q_table(outcome)
+    update_q_table(outcome, attacker_value)
   end
   # log is an array of shape: [[hash, attacker, defender before action, player value, action]], outcome is 0.0, 0.5 or 1.0
   # distribute reward backwards from the last move with discount and apply learning
   # action is "FierceStrike", etc
   # player value = 1.0 or -1.0
   # log does not include the final state of the game, since it is not needed for training
-  def self.update_q_table(outcome)
+  def self.update_q_table(outcome, attacker_value)
     learning_rate = 0.01
     discount = 0.95
-    attacker_value = @@log.first[2]
     # calcuate average of outcomes for the final move
-    hash_value = @@log.last[0]
+    hash_value = @@log[attacker_value].last[0]
     if @@max_a_s[hash_value].nil?
       @@max_a_s[hash_value] = [(1.0 + attacker_value * outcome)/2.0]
     else
@@ -115,7 +114,7 @@ class TQTeamStrategy < Strategy
     end
     max_a = @@max_a_s[hash_value].sum(0.0) / @@max_a_s[hash_value].size
     last_entry = true
-    while entry = @@log.pop
+    while entry = @@log[attacker_value].pop
       hash_value = entry[0]
       available_ability_names = entry[1]
       action = entry[3]
@@ -138,8 +137,9 @@ class TQTeamStrategy < Strategy
 
   def self.reset
     @@q_table = {}
-    @@log = []
+    @@log = {1.0 => [], -1.0 => []}
     @@games_played = 0
+    @@max_a_s = {}
   end
 
   def self.q_table

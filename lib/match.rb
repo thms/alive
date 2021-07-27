@@ -59,8 +59,4 @@ class Match
     end
     Mechanics.determine_outcome(dinosaurs, swapped_out, @log)
   end
-
-
-
-
 end

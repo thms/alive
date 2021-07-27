@@ -30,10 +30,10 @@ class TQStrategyTest < ActiveSupport::TestCase
     outcome = result[:outcome] == d1.name ? d1.value : d2.value
     puts "Outcome: #{outcome}"
     log = TQStrategy.log.clone
-    TQStrategy.learn(result[:outcome_value])
+    TQStrategy.learn(result[:outcome_value], d1.value)
     # replay the game
     TQStrategy.set_log(log)
-    TQStrategy.learn(result[:outcome_value])
+    TQStrategy.learn(result[:outcome_value], d1.value)
 
   end
 
@@ -47,7 +47,7 @@ class TQStrategyTest < ActiveSupport::TestCase
       d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
       match = Match.new(d1, d2)
       result = match.execute
-      TQStrategy.learn(result[:outcome_value])
+      TQStrategy.learn(result[:outcome_value], d2.value)
       stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
@@ -73,7 +73,7 @@ class TQStrategyTest < ActiveSupport::TestCase
       d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: TQStrategy)
       match = Match.new(d1, d2)
       result = match.execute
-      TQStrategy.learn(result[:outcome_value])
+      TQStrategy.learn(result[:outcome_value], d2.value)
     end
     TQStrategy.save
     games_played = TQStrategy.games_played

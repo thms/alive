@@ -39,6 +39,7 @@ Refactor current game mechanics for consistency across match, team match, minmax
 
 ## TODO
 Fix swap mechanics in team matches
+Fix TQ Team Strategy: split data structures by attacker value, so TQStrategy as example
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy

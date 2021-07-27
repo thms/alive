@@ -4,8 +4,8 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    name1 = 'Dracorex'
-    name2 = 'Allosaurus'
+    name1 = 'Dracoceratosaurus'
+    name2 = 'Erlikospyx'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     TQStrategy.load
@@ -15,18 +15,18 @@ class MatchesController < ApplicationController
     #MinMaxStrategy.load
     NNStrategy.load
     EventSink.reset
-    1.times do
+    10.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = MinMax2Strategy
+      @d1.strategy = TQStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMax2Strategy
+      @d2.strategy = TQStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
-      @start_node_title = start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)
+      @start_node_title = "Start" # start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)
       result = Match.new(@d1, @d2).execute
-      @d1.strategy.learn(result[:outcome_value])
-      @d2.strategy.learn(result[:outcome_value])
+      @d1.strategy.learn(result[:outcome_value], @d1.value)
+      @d2.strategy.learn(result[:outcome_value], @d2.value)
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end

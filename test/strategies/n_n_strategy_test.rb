@@ -131,8 +131,8 @@ class NNStrategyTest < ActiveSupport::TestCase
       d2.strategy = TQStrategy
       match = Match.new(d1, d2)
       result = match.execute
-      d1.strategy.learn(result[:outcome_value])
-      d2.strategy.learn(result[:outcome_value])
+      d1.strategy.learn(result[:outcome_value], d1.value)
+      d2.strategy.learn(result[:outcome_value], d2.value)
       stats[result[:outcome]] += 1
       logs << result[:log]
     end

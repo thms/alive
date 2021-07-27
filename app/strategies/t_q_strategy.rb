@@ -1,16 +1,16 @@
 require 'logger'
 # Tabular Q Function strategy
-# Learning over teh course of a numbe of games what works best in a gven state of the game
+# Learning over the course of a number of games what works best in a given state of the game
 # Inputs to learning: state == attacker, defender
-# outputs: value for each of the dinosaurs abilties (max of four per dinosaur)
-# Q_Table stores a hash of the availble abilities to the q value : {"CunningStrike" => 0.3, "FierceImpact" => 0.6}
+# outputs: value for each of the dinosaurs abilities (max of four per dinosaur)
+# Q_Table stores a hash of the available abilities to the q value : {"CunningStrike" => 0.3, "FierceImpact" => 0.6}
 class TQStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.0
+  EPSILON = 0.00
   @@q_table = {}
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
-  @@log = []
+  @@log = {1.0 => [], -1.0 => []} # log is split to allow to dinos to use the strategy (mighthave to make the instanitable in the future)
   @@random_mode = false
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
@@ -21,39 +21,41 @@ class TQStrategy < Strategy
     # abilities according to the Q table
     abilities = @@q_table[hash_value(attacker, defender)]
     # if empty, initialize and pick a random available ability
+    #byebug if attacker.value == -1.0
     if abilities.nil?
       @@q_table[hash_value(attacker, defender)] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h
-      ability = attacker.available_abilities.sample.class.name
+      ability = available_ability_names.sample
     elsif @@random_mode || rand < EPSILON
       # pick a random ability to do a broad learning in initial training
       ability = available_ability_names.sample
     else
       # What is the highest value
       highest_value = abilities.sort_by {|k, v| v}.last.last
-      # find all moves that have the highest value and pick one at random
+      # find all moves that have the highest value and pick one at random if more than one
       ability = abilities.map {|k, v| highest_value == v ? k : nil}.compact.sample
     end
-    @@log.push [hash_value(attacker, defender), available_ability_names, attacker.value, ability]
+    @@log[attacker.value].push [hash_value(attacker, defender), available_ability_names, attacker.value, ability]
     # Return the actual ability instance of the attacker
     return attacker.abilities.select {|a| a.class.name == ability}.first
   end
 
-  def self.learn(outcome)
-    return if @@log.empty?
+  def self.learn(outcome, attacker_value)
+    return if @@log[attacker_value].empty?
     @@games_played += 1
-    update_q_table(outcome)
+    update_q_table(outcome, attacker_value)
   end
-  # log is an array of shape: [[hash, attacker, defender before action, player value, action]], outcome is 0.0, 0.5 or 1.0
+  # log is an array of shape: [[hash, attacker, defender before action, player value, action]], outcome is -1.0, 0.0 or 1.0
   # distribute reward backwards from the last move with discount and apply learning
   # action is "FierceStrike", etc
   # player value = 1.0 or -1.0
   # log does not include the final state of the game, since it is not needed for training
-  def self.update_q_table(outcome)
+  def self.update_q_table(outcome, attacker_value)
     learning_rate = 0.01
     discount = 0.95
-    attacker_value = @@log.first[2]
+    ## attacker_value = @@log.first[2]
     # calcuate average of outcomes for the final move
-    hash_value = @@log.last[0]
+    hash_value = @@log[attacker_value].last[0]
+    # transform from -1.0 .. 1.0 to 0.0 (worst outcome) to 1.0 (best outcome no matter what teh attacker's value is)
     if @@max_a_s[hash_value].nil?
       @@max_a_s[hash_value] = [(1.0 + attacker_value * outcome)/2.0]
     else
@@ -61,7 +63,7 @@ class TQStrategy < Strategy
     end
     max_a = @@max_a_s[hash_value].sum(0.0) / @@max_a_s[hash_value].size
     last_entry = true
-    while entry = @@log.pop
+    while entry = @@log[attacker_value].pop
       hash_value = entry[0]
       available_ability_names = entry[1]
       action = entry[3]
@@ -84,12 +86,17 @@ class TQStrategy < Strategy
 
   def self.reset
     @@q_table = {}
-    @@log = []
+    @@log = {1.0 => [], -1.0 => []}
     @@games_played = 0
+    @@max_a_s = {}
   end
 
   def self.q_table
     return @@q_table
+  end
+
+  def self.max_a_s
+    return @@max_a_s
   end
 
   def self.log

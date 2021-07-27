@@ -20,8 +20,8 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
       t1.color = '#03a9f4'
       t2.color = '#03f4a9'
       result = TeamMatch.new(t1, t2).execute
-      t1.strategy.learn(result[:outcome_value])
-      t2.strategy.learn(result[:outcome_value])
+      t1.strategy.learn(result[:outcome_value], t1.value)
+      t2.strategy.learn(result[:outcome_value], t2.value)
       stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
@@ -35,7 +35,7 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
       t1.color = '#03a9f4'
       t2.color = '#03f4a9'
       result = TeamMatch.new(t1, t2).execute
-      t1.strategy.learn(result[:outcome_value])
+      t1.strategy.learn(result[:outcome_value], t1.value)
       stats[result[:outcome]] += 1
     end
     assert_operator stats['Attacker'], :>,  2*stats["Defender"]
@@ -59,8 +59,8 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
       t1.color = '#03a9f4'
       t2.color = '#03f4a9'
       result = TeamMatch.new(t1, t2).execute
-      t1.strategy.learn(result[:outcome_value])
-      t2.strategy.learn(result[:outcome_value])
+      t1.strategy.learn(result[:outcome_value], t1.value)
+      t2.strategy.learn(result[:outcome_value], t2.value)
       stats[result[:outcome]] += 1
     end
     puts "Training: #{stats}"
@@ -74,7 +74,7 @@ class TQTeamStrategyTest < ActiveSupport::TestCase
       t1.color = '#03a9f4'
       t2.color = '#03f4a9'
       result = TeamMatch.new(t1, t2).execute
-      t1.strategy.learn(result[:outcome_value])
+      t1.strategy.learn(result[:outcome_value], t1.value)
       stats[result[:outcome]] += 1
     end
     puts "Test: #{stats}"
