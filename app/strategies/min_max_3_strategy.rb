@@ -13,7 +13,7 @@ class MinMax3Strategy < Strategy
   @@error_rate = 0.0
   @@max_depth = 6
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
   @@log = []
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)

@@ -13,7 +13,7 @@ class MinMax2Strategy < Strategy
   @@error_rate = 0.0
   @@max_depth = 5
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
   @@log = []
 
 # returns a single availabe ability from the attacker

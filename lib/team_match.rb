@@ -16,7 +16,7 @@ class TeamMatch
     @defender.value = Constants::MATCH[:min_player]
     @round = 0
     @logger = Logger.new(STDOUT)
-    @logger.level = :info
+    @logger.level = :warn
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
     @events = []
     @mode = mode
