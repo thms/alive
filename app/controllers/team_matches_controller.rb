@@ -4,7 +4,7 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Dracoceratops']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Tarbosaurus']
     name2 = 'D'
     team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
@@ -16,7 +16,7 @@ class TeamMatchesController < ApplicationController
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
     #TQTeamStrategy.reset
-    1000.times do
+    100.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
@@ -30,8 +30,8 @@ class TeamMatchesController < ApplicationController
       add_team_name_to_dinosaur_name(@t1)
       add_team_name_to_dinosaur_name(@t2)
       result = match.execute
-      @t1.strategy.learn(result[:outcome_value])
-      @t2.strategy.learn(result[:outcome_value])
+      @t1.strategy.learn(result[:outcome_value], @t1.value)
+      @t2.strategy.learn(result[:outcome_value], @t2.value)
       @stats[result[:outcome]]+=1
       @logs << result[:log]
       @events << result[:events]
@@ -75,7 +75,7 @@ class TeamMatchesController < ApplicationController
         d.level = 28
         d.health_boosts = 2
         d.attack_boosts = 4
-        d.speed_boosts = 9
+        d.speed_boosts = 12
       elsif d.name.include?('Monolometrodon')
         d.level = 28
         d.health_boosts = 3

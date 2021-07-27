@@ -171,7 +171,7 @@ class TQTeamStrategy < Strategy
   end
 
   def self.save
-    state = Marshal.dump({q_table: @@q_table, games_played: @@games_played})
+    state = Marshal.dump({q_table: @@q_table, games_played: @@games_played, max_a_s: @@max_a_s})
     File.open("#{Rails.root}/tmp/t_q_team_strategy.state", "wb") do |file|
       file.write state
     end
@@ -181,22 +181,8 @@ class TQTeamStrategy < Strategy
     state = Marshal.load(File.binread("#{Rails.root}/tmp/t_q_team_strategy.state"))
     @@q_table = state[:q_table]
     @@games_played = state[:games_played]
+    @@max_a_s = state[:max_a_s]
   end
 
-  private
-  # calculate a unique key for the cache that represents the game state
-  def self.hash_value(attacker, defender)
-    d = attacker
-    result = "#{attacker.value} "
-    result << "#{d.name} #{d.current_health} #{d.level} "
-    d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
-    d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
-    result << "- "
-    d = defender
-    result << "#{d.name} #{d.current_health} #{d.level} "
-    d.abilities.each {|a| result << "#{a.class.name} #{a.current_cooldown} #{a.current_delay} " }
-    d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
-    result
-  end
 
 end
