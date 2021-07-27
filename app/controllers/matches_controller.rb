@@ -4,26 +4,26 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    #MinMaxStrategy.reset_cache
-    name1 = 'Geminititan'
-    name2 = 'Thoradolosaur'
+    name1 = 'Dracorex'
+    name2 = 'Allosaurus'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     TQStrategy.load
-    TQStrategy.reset
+    #TQStrategy.reset
     MinMaxStrategy.reset
-    #MinMax2Strategy.reset
+    MinMax2Strategy.reset
     #MinMaxStrategy.load
     NNStrategy.load
     EventSink.reset
-    1000.times do
+    1.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = TQStrategy
+      @d1.strategy = MinMax2Strategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = TQStrategy
+      @d2.strategy = MinMax2Strategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
+      @start_node_title = start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)
       result = Match.new(@d1, @d2).execute
       @d1.strategy.learn(result[:outcome_value])
       @d2.strategy.learn(result[:outcome_value])
@@ -33,20 +33,24 @@ class MatchesController < ApplicationController
     TQStrategy.save
     #NNStrategy.save
     if @logs.size > 10
-      @graph = generate_graph([@logs.last], name1, name2)
+      @graph = generate_graph([@logs.last], name1, name2, @start_node_title)
     else
-      @graph = generate_graph(@logs, name1, name2)
+      @graph = generate_graph(@logs, name1, name2, @start_node_title)
     end
 
   end
 
   private
 
-  def generate_graph(logs, name1, name2)
+  def start_node_title(dinosaur1, dinosaur2)
+    Mechanics.health([dinosaur1, dinosaur2])
+  end
+
+  def generate_graph(logs, name1, name2, start_node_title)
     g = Graphviz::Graph.new()
-    g.add_node('Start')
+    g.add_node(start_node_title)
     logs.each do |log|
-      last_node = g.get_node('Start').first
+      last_node = g.get_node(start_node_title).first
       # don't need the last node at the moment.
       log.pop
       log.each do |entry|

@@ -8,13 +8,13 @@ class MinMax2Strategy < Strategy
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
-  @@cache_is_enabled = true
+  @@cache_is_enabled = false
   @@games_played = 0
   @@error_rate = 0.0
   @@max_depth = 5
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :warn
-  @@break_on_winning_move = false
+  @@logger.level = :info
+  @@log = []
 
 # returns a single availabe ability from the attacker
   def self.next_move(attacker, defender)
@@ -33,7 +33,6 @@ class MinMax2Strategy < Strategy
         dinosaur2: defender,
         depth: 0
       }
-
 
       result = one_round(root, attacker, defender)
       @@logger.info("Moves: #{result[:ability_outcomes]}")
@@ -62,107 +61,105 @@ class MinMax2Strategy < Strategy
       end
     end
     # Store the abilities for the attacker and their respective outcome value
+    # only use the abilities the attacker can perform
+    # ability_outcomes = attacker.available_abilities.map {|ability| [ability.class.name, nil]}.to_h
     ability_outcomes = {}
     # Safety valve to only look so far into the future
     depth = current_node.data[:depth] + 1
-    @@logger.info "Depth: #{depth}"
-    if depth > @@max_depth
-      return {value: 0.0, ability_outcomes: {}}
-    end
+    return {value: 0.0, ability_outcomes: {}} if depth > @@max_depth
     # create all possible combinations of abilities of the two dinosaurs
     combinations = []
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
-        combinations << {d1: Utilities.deep_clone(current_node.data[:dinosaur1]), d2: Utilities.deep_clone(current_node.data[:dinosaur2]), a1_class: d1_ability.class, a2_class: d2_ability.class}
+        # make deep clones of both dinosaurs
+        dinosaur1 = Utilities.deep_clone(current_node.data[:dinosaur1])
+        dinosaur2 = Utilities.deep_clone(current_node.data[:dinosaur2])
+        # set the ability to use in this round
+        dinosaur1.selected_ability = dinosaur1.abilities.find {|a| a.class == d1_ability.class}
+        dinosaur2.selected_ability = dinosaur2.abilities.find {|a| a.class == d2_ability.class}
+        combinations << {d1: dinosaur1, d2: dinosaur2}
       end # inner loop ability combinations
     end # outer loop ability combinations
     combinations.each do |combination|
-      # make deep clones of both dinosaurs
       dinosaur1 = combination[:d1]
       dinosaur2 = combination[:d2]
-      # use the cloned abilities to get correct cooldown and delay behaviours, and not impact the original behaviours
-      ability1 = dinosaur1.abilities.find {|a| a.class == combination[:a1_class]}
-      ability2 = dinosaur2.abilities.find {|a| a.class == combination[:a2_class]}
-      # order them according to speed, level and priority moves
-      dinosaurs, abilities = order_dinosaurs_and_abilities(dinosaur1, dinosaur2, ability1, ability2)
+      # order the dinosaurs
+      dinosaurs = Mechanics.order_dinosaurs([dinosaur1, dinosaur2])
 
       # first dino attacks
-      swapped_out = nil
-      if dinosaurs.first.is_stunned
-        # no attack if stunned
-        first_node = add_or_update_child(current_node, dinosaurs, abilities, FIRST, {}, depth)
-        dinosaurs.first.is_stunned = false
-      else
-        # attack, counter attack, etc if not stunned
-        hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-        swapped_out = dinosaurs.first if abilities.first.is_swap_out
-        first_node = add_or_update_child(current_node, dinosaurs, abilities, FIRST, hit_stats, depth)
-      end
-      if is_final_state?(dinosaurs, swapped_out)
-        apply_damage_over_time(dinosaurs)
-        update_final_node(first_node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
-        # skip the other attack, since the state is already final
+      hit_stats, swapped_out = Mechanics.attack(dinosaurs.first, dinosaurs.last, @@log, @@logger)
+      first_node = current_node.add_or_update_child("#{dinosaurs.first.name}::#{dinosaurs.first.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+        dinosaurs.first.selected_ability.class,
+        {
+          dinosaur1: dinosaur1,
+          dinosaur2: dinosaur2,
+          depth: depth,
+          health: Mechanics.health(dinosaurs)
+        }
+      )
+      # if at least one has died, mark as win / draw and evaulate next combiation of moves
+      if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+        Mechanics.apply_damage_over_time(dinosaurs)
+        update_final_node(first_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(current_node, first_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        first_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       end
 
       # second dino attacks
-      swapped_out = nil
-      if dinosaurs.last.is_stunned
-        # no attack if stunned
-        second_node = add_or_update_child(first_node, dinosaurs, abilities, LAST, {}, depth)
-        dinosaurs.last.is_stunned = false
-      else
-        # attack, counterattack, etc if not stunned
-        hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-        swapped_out = dinosaurs.last if abilities.last.is_swap_out
-        second_node = add_or_update_child(first_node, dinosaurs, abilities, LAST, hit_stats, depth)
-      end
-      if is_final_state?(dinosaurs, swapped_out)
-        apply_damage_over_time(dinosaurs)
-        update_final_node(second_node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
-        # bubble value up to the first node
+      hit_stats, swapped_out = Mechanics.attack(dinosaurs.last, dinosaurs.first, @@log, @@logger)
+      second_node = first_node.add_or_update_child("#{dinosaurs.last.name}::#{dinosaurs.last.selected_ability.class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}",
+        dinosaurs.last.selected_ability.class,
+        {
+          dinosaur1: dinosaur1,
+          dinosaur2: dinosaur2,
+          depth: depth,
+          health: Mechanics.health(dinosaurs)
+        }
+      )
+      # if at least one has died, mark as win / draw and evaulate next combination of moves
+      if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
+        Mechanics.apply_damage_over_time(dinosaurs)
+        update_final_node(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(first_node, second_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        second_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       end
-      # at this point both dinos are still alive and we are at the bottom of a round
-      # apply damage over time
-      apply_damage_over_time(dinosaurs)
-      if is_final_state?(dinosaurs, nil)
-        update_final_node(second_node, dinosaurs, abilities, attacker, nil, ability_outcomes)
+
+      # both are still alive, apply damage over time
+      Mechanics.apply_damage_over_time(dinosaurs)
+      if Mechanics.has_ended?(dinosaurs)
+        update_final_node(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(first_node, second_node.value, attacker)
-        # stop exploring if the attacker found a winning move
-        second_node.winner == attacker.name && @@break_on_winning_move ? break : next
+        next
       else
-        result = one_round(second_node, attacker, defender)
+        # advance the clock and recurse down
+        dinosaurs.map(&:tick)
+        result = one_round(second_node, dinosaur1, dinosaur2)
         second_node.value = result[:value]
         bubble_value_to_parent(first_node, second_node.value, attacker)
-        update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, result[:value])
+        update_ability_outcomes(ability_outcomes, attacker, dinosaurs, result[:value])
       end
     end # combinations.each
 
-    # now we have evaluated all combinations (and done so recursively), so it is time to evaluate.
-    # for the choice made in current_node, we need to propagate the best possible outcome of all the combinations in this round as the current_node's value
+    # now we have evaluated all combinations (and done so recursively), it is time to evaluate.
+    # for the choice made in current_node, we need to propagate the worst possible outcome of all the combinations in this round as the current_node's value
     if attacker.value == 1.0
-      best_outcome = current_node.children.max_by {|node| node.value}.value
+      worst_outcome = current_node.children.min_by {|node| node.value || 1.0}.value
     else
-      best_outcome = current_node.children.min_by {|node| node.value}.value
+      worst_outcome = current_node.children.max_by {|node| node.value || -1.0}.value
     end
-    bubble_value_to_parent(current_node, best_outcome, attacker)
+    bubble_value_to_parent(current_node, worst_outcome, attacker)
     current_node.children.each do |child|
       @@logger.info "#{child.ability_name} #{child.value}"
       child.children.each do |grand_child|
         @@logger.info "- #{grand_child.ability_name} #{grand_child.value}"
       end
     end
-
+# When hitting the boundaries of depth search, nodes may have a nil value, reject them here
     result = {}
-    result[:value] = best_outcome
-    result[:ability_outcomes] = ability_outcomes
-    @@logger.info best_outcome
-    @@logger.info ability_outcomes
+    @@logger.info "Worst outcome: #{worst_outcome}"
+    @@logger.info "Ability outcomes: #{ability_outcomes}"
+    result[:value] = worst_outcome
+    result[:ability_outcomes] = ability_outcomes.compact
 
     # update cache
     if @@cache_is_enabled
@@ -214,6 +211,7 @@ class MinMax2Strategy < Strategy
   # if the attacker is minimizing only update the if new value is lower than current
   # to make shorter paths to victory more at attractive, reduce value during bubbling
   def self.bubble_value_to_parent(parent, value, attacker)
+    return if parent.nil? || value.nil?
     bubble_factor = 1.0
     value = bubble_factor * value
     if attacker.value == 1.0
@@ -223,85 +221,54 @@ class MinMax2Strategy < Strategy
     end
   end
 
-  def self.add_or_update_child(current_node, dinosaurs, abilities, index, hit_stats, depth)
-    if dinosaurs[index].is_stunned
-      title = "#{dinosaurs[index].name}::stunned"
-    else
-      title = "#{dinosaurs[index].name}::#{abilities[index].class} #{hit_stats[:is_critical_hit] ? 'crit' : ''}"
-    end
-    current_node.add_or_update_child(title,
-      abilities[index].class,
-      {
-        dinosaur1: dinosaurs[index],
-        dinosaur2: dinosaurs[(index + 1).modulo(1)],
-        depth: depth,
-        health: health(dinosaurs)
-      } )
-  end
-
-  # tick both dinosaurs to apply damage over time
-  # returns true if one or more are dead, false otherwise
-  def self.apply_damage_over_time(dinosaurs)
-    dinosaurs.first.tick
-    dinosaurs.last.tick
-end
-
-  # Returns true if the state is a final state of the game
-  def self.is_final_state?(dinosaurs, swapped_out)
-    dinosaurs.any? {|d| d.current_health <= 0} || !swapped_out.nil?
-  end
-
   # update final node depending on the current state of the game
   # swapped_out holds the dinosaur who swapped out as a consequence of x-and-run or is nil
-  def self.update_final_node(node, dinosaurs, abilities, attacker, swapped_out, ability_outcomes)
+  def self.update_final_node(node, dinosaurs, ability_outcomes, attacker, swapped_out)
     bubble_factor = 0.95
-    if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
-      @@logger.info("Draw")
-      node.is_final = true
+    node.is_final = true
+    if dinosaurs.first.current_health == 0 && dinosaurs.last.current_health == 0
       node.winner = nil
       node.looser = nil
       node.value = Constants::MATCH[:draw] * (bubble_factor ** (node.data[:depth] - 1))
-      node.data[:health] = health(dinosaurs)
-      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
+      node.data[:health] = Mechanics.health(dinosaurs)
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true
-    elsif dinosaurs.first.current_health <= 0
-      node.is_final = true
+    elsif dinosaurs.first.current_health == 0
       node.winner = dinosaurs.last.name
       node.looser = dinosaurs.first.name
       node.value = dinosaurs.last.value * (bubble_factor ** (node.data[:depth] - 1))
-      node.data[:health] = health(dinosaurs)
-      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
+      node.data[:health] = Mechanics.health(dinosaurs)
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true
-    elsif dinosaurs.last.current_health <= 0
-      node.is_final = true
+    elsif dinosaurs.last.current_health == 0
       node.winner = dinosaurs.first.name
       node.looser = dinosaurs.last.name
       node.value = dinosaurs.first.value * (bubble_factor ** (node.data[:depth] - 1))
-      node.data[:health] = health(dinosaurs)
-      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
+      node.data[:health] = Mechanics.health(dinosaurs)
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true
     elsif !swapped_out.nil?
-      node.is_final = true
       node.winner = ""
       node.looser = ""
       node.value = swapped_out.value * Constants::MATCH[:swap_out] * (bubble_factor ** (node.data[:depth] - 1))
-      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, node.value)
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true
     else
+      node.is_final = false
       return false
     end
   end
 
-  def self.update_ability_outcomes(ability_outcomes, attacker, dinosaurs, abilities, value)
+  def self.update_ability_outcomes(ability_outcomes, attacker, dinosaurs, value)
     if attacker.name == dinosaurs.first.name
       index = FIRST
     else
       index = LAST
     end
     if attacker.value == 1.0
-      ability_outcomes[abilities[index].class.name] = [value, ability_outcomes[abilities[index].class.name]].min rescue value
+      ability_outcomes[dinosaurs[index].selected_ability.class.name] = [value, ability_outcomes[dinosaurs[index].selected_ability.class.name]].min rescue value
     else
-      ability_outcomes[abilities[index].class.name] = [value, ability_outcomes[abilities[index].class.name]].max rescue value
+      ability_outcomes[dinosaurs[index].selected_ability.class.name] = [value, ability_outcomes[dinosaurs[index].selected_ability.class.name]].max rescue value
     end
   end
 
@@ -320,40 +287,5 @@ end
     d.modifiers.each {|m| result << "#{m.class.name} #{m.current_turns} #{m.current_attacks} " }
     result
   end
-
-  def self.health(dinosaurs)
-    if dinosaurs.first.name < dinosaurs.last.name
-      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
-    else
-      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
-    end
-  end
-
-  def self.order_dinosaurs_and_abilities(dinosaur1, dinosaur2, ability1, ability2)
-    # order them
-    if dinosaur1.current_speed == dinosaur2.current_speed
-      dinosaurs = dinosaur1.level > dinosaur2.level ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-      abilities = dinosaur1.level > dinosaur2.level ? [ ability1, ability2 ] : [ ability2, ability1 ]
-      # random shuffling, if speed and level are the same
-      if dinosaur1.level == dinosaur2.level
-        if rand < 0.5
-          dinosaurs = [ dinosaur1, dinosaur2 ]
-          abilities = [ ability1, ability2 ]
-        else
-          dinosaurs = [ dinosaur2, dinosaur1 ]
-          abilities = [ ability2, ability1 ]
-        end
-      end
-    else
-      dinosaurs = dinosaur1.current_speed > dinosaur2.current_speed ? [ dinosaur1, dinosaur2 ] : [ dinosaur2, dinosaur1 ]
-      abilities = dinosaur1.current_speed > dinosaur2.current_speed ? [ ability1, ability2 ] : [ ability2, ability1 ]
-    end
-    if abilities.last.is_priority && !abilities.first.is_priority
-      dinosaurs.reverse!
-      abilities.reverse!
-    end
-    return dinosaurs, abilities
-  end
-
 
 end

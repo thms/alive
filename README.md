@@ -36,9 +36,9 @@ Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
 Refactor current game mechanics for consistency across match, team match, minmax and simulation
-Check all resistance implementations
 
 ## TODO
+Fix swap mechanics in team matches
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy

@@ -15,7 +15,7 @@ class Match
     @dinosaur2 = dinosaur2.reset_attributes!
     @dinosaur2.value = Constants::MATCH[:min_player]
     @logger = Logger.new(STDOUT)
-    @logger.level = :info
+    @logger.level = :warn
     @round = 1
     @log = [] # [{event: "D1::Strike", stats: {}, health: {}}, {event: "D2::CleansingStrike" stats: , ...]
   end
@@ -28,8 +28,6 @@ class Match
       @dinosaur2.pick_ability(@dinosaur2, @dinosaur1)
       # order them by speed, to decide who goes first
       dinosaurs = Mechanics.order_dinosaurs([@dinosaur1, @dinosaur2])
-      @logger.info @dinosaur1.selected_ability
-      @logger.info @dinosaur2.selected_ability
 
       # First attacks
       hits_stats, swapped_out = Mechanics.attack(dinosaurs.first, dinosaurs.last, @log, @logger)
@@ -57,7 +55,7 @@ class Match
 
     # if damage over time has changed the health from the last log entry write another log entry
     if Mechanics.health(dinosaurs) != @log.last[:health]
-      @log << {event: "DoT", stats: {}, health: health(dinosaurs)}
+      @log << {event: "DoT", stats: {}, health: Mechanics.health(dinosaurs)}
     end
     Mechanics.determine_outcome(dinosaurs, swapped_out, @log)
   end

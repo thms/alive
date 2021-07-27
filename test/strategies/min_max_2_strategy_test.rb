@@ -53,7 +53,6 @@ class MinMax2StrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should find shortest path to vicory for minimising player quetzorion" do
-
     attacker = Dinosaur.find_by_name('Velociraptor').reset_attributes!
     defender = Dinosaur.find_by_name('Quetzorion').reset_attributes!
     attacker.strategy = MinMax2Strategy

@@ -16,7 +16,7 @@ class TeamMatchesController < ApplicationController
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
     #TQTeamStrategy.reset
-    100.times do
+    1000.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy

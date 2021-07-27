@@ -229,6 +229,28 @@ class Dinosaur < ApplicationRecord
     team.run
   end
 
+  # returns the 'better' value from the point of view of the dinosaur
+  def maximize(a, b)
+    return b if a.nil?
+    return a if b.nil?
+    if self.value == 1.0
+      return [a, b].max
+    else
+      return [a, b].min
+    end
+  end
+
+  # returns the worse value from the point of view of the dinosaur
+  def minimize(a, b)
+    return b if a.nil?
+    return a if b.nil?
+    if self.value == 1.0
+      return [a, b].min
+    else
+      return [a, b].max
+    end
+  end
+
   # Hash value for lookup tables etc.
   def hash_value
     result = "#{name} #{current_health} #{level} "

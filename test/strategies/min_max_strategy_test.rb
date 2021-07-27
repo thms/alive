@@ -30,7 +30,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should find strongest move when there is a clear path to victory" do
-    #skip
+    skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -57,7 +57,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should use damage over time" do
-    #skip
+    skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -80,12 +80,12 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       abilities: [Strike, HighPounce]).reset_attributes!
       MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
-    assert_equal InstantDistraction, result.class
+    assert_equal LethalWound, result.class
 
   end
 
   test "MinMax Strategy should find a good move for Quetzorion" do
-    #skip
+    skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -113,6 +113,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "should save state to disk and load back" do
+    skip
     MinMaxStrategy.reset
     10.times do
       d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
@@ -129,4 +130,23 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     assert_equal games_played, MinMaxStrategy.games_played
   end
 
+  test "MinMax should find path to victory for GT over Thor" do
+    skip
+    MinMaxStrategy.reset
+    attacker = Dinosaur.find_by_name('Geminititan').reset_attributes!
+    defender = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
+    attacker.strategy = MinMaxStrategy
+    defender.strategy = HighestDamageStrategy
+    attacker.value = 1.0
+    defender.value = -1.0
+    ability_attacker = attacker.strategy.next_move(attacker, defender)
+    ability_defender = defender.strategy.next_move(defender, attacker)
+    ability_attacker.execute(attacker, defender)
+    ability_defender.execute(defender, attacker)
+    attacker.tick
+    defender.tick
+    ability_attacker = attacker.strategy.next_move(attacker, defender)
+
+    assert_equal "DefiniteShieldAdvantage", ability_attacker.class.name
+  end
 end

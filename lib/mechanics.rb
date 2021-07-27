@@ -8,7 +8,7 @@ class Mechanics
       logger.info("#{attacker.name} is stunned")
       # start cooldown on what the attacker selected, even if he did not get around to use it
       attacker.selected_ability.start_cooldown
-      # exuecte do nothing ability
+      # execute do nothing ability
       hit_stats = IsStunned.new.execute(attacker, defender)
       log << {event: "#{attacker.name}::IsStunned", stats: hit_stats, health: health([attacker, defender])}
       logger.info("#{attacker.name}: IsStunned")
@@ -17,23 +17,6 @@ class Mechanics
       log << {event: "#{attacker.name}::#{attacker.selected_ability.class}", stats: hit_stats, health: health([attacker, defender])}
       logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
     end
-    swapped_out = attacker.name if attacker.selected_ability.is_swap_out
-    logger.info("#{attacker.name}: swapped_out") unless swapped_out.nil?
-    return hit_stats, swapped_out
-  end
-
-  def self.attack_orig(attacker, defender, log, logger)
-    swapped_out = nil
-    if attacker.is_stunned
-      logger.info("#{attacker.name} is stunned")
-      # start cooldown on what the attacker selected, even if he did not get around to use it
-      attacker.selected_ability.start_cooldown
-      # replace with do nothing ability
-      attacker.selected_ability = IsStunned.new
-    end
-    hit_stats = attacker.selected_ability.execute(attacker, defender)
-    log << {event: "#{attacker.name}::#{attacker.selected_ability.class}", stats: hit_stats, health: health([attacker, defender])}
-    logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
     swapped_out = attacker.name if attacker.selected_ability.is_swap_out
     logger.info("#{attacker.name}: swapped_out") unless swapped_out.nil?
     return hit_stats, swapped_out
