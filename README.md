@@ -35,11 +35,13 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Refactor current game mechanics for consistency across match, team match, minmax and simulation
+Refactor current game mechanics for consistency in team match to be equal to 1:1 match
 
 ## TODO
 Fix swap mechanics in team matches
-Fix TQ Team Strategy: split data structures by attacker value, so TQStrategy as example
+Fix NN strategy to use separate logs for each dinosaur
+Strategies: in case of winning, favour paths that preserve more own health
+Strategies: in case of loosing, favour paths that reduce opponents health as much as possible 
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
@@ -89,6 +91,8 @@ Basic neural network for 1:1 play
 Refine game mechanics around shield expiry (they expire at the to of the shielded dino's turn)
 Implement vulnerability (modifier and in damage defender)
 Refactor turn logic to be more accurate of when modifiers expire - TBD
+Refactor current game mechanics for consistency across match, minmax and simulation
+Fix TQ Team Strategy: split data structures by attacker value, so TQStrategy as example
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
