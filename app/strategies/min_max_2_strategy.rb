@@ -8,7 +8,7 @@ class MinMax2Strategy < Strategy
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
-  @@cache_is_enabled = false
+  @@cache_is_enabled = true
   @@games_played = 0
   @@error_rate = 0.0
   @@max_depth = 5

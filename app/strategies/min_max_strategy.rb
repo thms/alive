@@ -36,11 +36,16 @@ class MinMaxStrategy < Strategy
       result = one_round(root, attacker, defender)
       @@logger.info("Moves: #{result[:ability_outcomes]}")
       EventSink.add "#{attacker.name}: #{result[:ability_outcomes]}"
-      # select best move
-      move_name = [result[:ability_outcomes].sort_by {|k,v| attacker.value * v}.last].first.first
-      @@logger.info("move: #{move_name}")
-
-      move = attacker.available_abilities.select {|a| a.class.name == move_name}.first
+      # pick one of the best moves if there are more than one with the same best value
+      if attacker.value == 1.0
+        best_outcome = result[:ability_outcomes].values.max
+        result[:ability_outcomes].delete_if {|k,v| v < best_outcome}
+      else
+        best_outcome = result[:ability_outcomes].values.min
+        result[:ability_outcomes].delete_if {|k,v| v > best_outcome}
+      end
+      ability_name = result[:ability_outcomes].keys.sample
+      move = attacker.available_abilities.select {|a| a.class.name == ability_name}.first
     end
     return move
   end
@@ -62,7 +67,6 @@ class MinMaxStrategy < Strategy
     return {value: 0.0, ability_outcomes: {}} if depth > @@max_depth
     # create all possible combinations of abilities of the two dinosaurs
     current_node.data[:dinosaur1].available_abilities.each do |d1_ability|
-      #ability_outcomes[d1_ability.class.name] = nil
       current_node.data[:dinosaur2].available_abilities.each do |d2_ability|
         # make deep clones of both dinosaurs
         dinosaur1 = Utilities.deep_clone(current_node.data[:dinosaur1])

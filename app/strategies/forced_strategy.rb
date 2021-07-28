@@ -13,9 +13,10 @@ class ForcedStrategy < Strategy
   def self.reset
     @@moves = {
       'Dracoceratops' => ['CleansingImpact', 'FierceImpact'],
-      'Suchotator' => ['LethalWound', 'SuperiorityStrike'],
-      'Trykosaurus' => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
-      'Thoradolosaur' => ['FierceImpact', 'GroupShatteringRampage', 'InstantCharge', 'FierceImpact']
+      'Suchotator'    => ['LethalWound', 'SuperiorityStrike'],
+      'Trykosaurus'   => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
+      'Thoradolosaur' => ['FierceImpact', 'GroupShatteringRampage', 'InstantCharge', 'FierceImpact'],
+      'Monolorhino'   => ['CunningStrike', 'DefiniteImpact', 'CunningStrike', 'DefiniteImpact']
     }
   end
 

@@ -1,14 +1,14 @@
 require 'logger'
 
 class MinMax3Strategy < Strategy
-# like mina max 2, but breadth first instead of depth first
+# like min max 2, but breadth first instead of depth first
   FIRST = 0 # indexes for passing around
   LAST  = 1
 
   @@cache = {}
   @@cache_hits = 0
   @@cache_misses = 0
-  @@cache_is_enabled = false
+  @@cache_is_enabled = true
   @@games_played = 0
   @@error_rate = 0.0
   @@max_depth = 6
