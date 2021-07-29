@@ -147,6 +147,7 @@ class Team
   def next_move(opponent)
     ability = @strategy.next_move(self, opponent)
     EventSink.add "#{name} picked #{ability.class.name}"
+    self.current_dinosaur.selected_ability = ability
     ability
   end
 

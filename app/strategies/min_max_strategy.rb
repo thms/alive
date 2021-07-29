@@ -209,14 +209,18 @@ class MinMaxStrategy < Strategy
     elsif dinosaurs.first.current_health == 0
       node.winner = dinosaurs.last.name
       node.looser = dinosaurs.first.name
-      node.value = attacker.minimize(dinosaurs.last.value, node.value)
+      # factor in remaining health of self or other
+      value = dinosaurs.last.value * (dinosaurs.last.current_health.to_f / dinosaurs.last.health.to_f)
+      node.value = attacker.minimize(value, node.value)
       node.data[:health] = Mechanics.health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true
     elsif dinosaurs.last.current_health == 0
       node.winner = dinosaurs.first.name
       node.looser = dinosaurs.last.name
-      node.value = attacker.minimize(dinosaurs.first.value, node.value)
+      # factor in remaining health of self or other
+      value = dinosaurs.first.value * (dinosaurs.first.current_health.to_f / dinosaurs.first.health.to_f)
+      node.value = attacker.minimize(value, node.value)
       node.data[:health] = Mechanics.health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
       return true

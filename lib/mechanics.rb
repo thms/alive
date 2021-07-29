@@ -11,10 +11,12 @@ class Mechanics
       # execute do nothing ability
       hit_stats = IsStunned.new.execute(attacker, defender)
       log << {event: "#{attacker.name}::IsStunned", stats: hit_stats, health: health([attacker, defender])}
+      EventSink.add "#{attacker.name}::stunned"
       logger.info("#{attacker.name}: IsStunned")
     else
       hit_stats = attacker.selected_ability.execute(attacker, defender)
       log << {event: "#{attacker.name}::#{attacker.selected_ability.class}", stats: hit_stats, health: health([attacker, defender])}
+      EventSink.add "#{attacker.name}::#{attacker.selected_ability.class}"
       logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
     end
     swapped_out = attacker.name if attacker.selected_ability.is_swap_out
@@ -34,7 +36,12 @@ class Mechanics
       outcome_value = Constants::MATCH[:draw]
     elsif dinosaurs.any? {|d| d.current_health == 0}
       outcome = dinosaurs.first.current_health > 0 ? "#{dinosaurs.first.name}" : "#{dinosaurs.last.name}"
-      outcome_value = dinosaurs.first.current_health > 0 ? dinosaurs.first.value : dinosaurs.last.value
+      # favour preserving more of own health / reducing more of other's health
+      if dinosaurs.first.current_health > 0
+        outcome_value = dinosaurs.first.value * dinosaurs.first.current_health.to_f / dinosaurs.first.health.to_f
+      else
+        outcome_value = dinosaurs.last.value * dinosaurs.last.current_health.to_f / dinosaurs.last.health.to_f
+      end
     elsif !swapped_out.nil?
       outcome = "#{swapped_out} swapped out"
       outcome_value  = Constants::MATCH[:swap_out] * (dinosaurs.first.name == swapped_out ? dinosaurs.first.value : dinosaurs.last.value)
