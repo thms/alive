@@ -117,7 +117,7 @@ class Team
   # this may fail, e.g. if the dinosaur cannot swap
   # after: current_dinosaur is set to either the new or the old one
   # returns {has_swapped: true, was_healthy: false} if the swap was successfuly
-  def swap(target_dinosaur, target_ability)
+  def try_to_swap(target_dinosaur, target_ability)
     was_healthy = @current_dinosaur.current_health > 0 rescue false
     is_revenge = @current_dinosaur && @current_dinosaur.current_health == 0
     retval = {has_swapped: false, was_healthy: was_healthy, ability: target_ability}

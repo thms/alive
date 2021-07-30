@@ -4,19 +4,19 @@ require 'logger'
 # Inputs to learning: state == attacker, defender (teams)
 # outputs: value for each of the dinosaurs abilties (max of four per dinosaur) and wheter it is best to swap
 # Q_Table stores a hash of the availble abilities to the q value per dinosaur: {Indoraptor::CunningStrike" => 0.3, "Thoradolosaur::FierceImpact" => 0.6}}
-class TQTeamStrategy < Strategy
+class TQTeamStrategy < TeamStrategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.0 # eplison greedy strategy: pick suboptimal move in 5% of cases
+  EPSILON = 0.05 # eplison greedy strategy: pick suboptimal move in 5% of cases
   @@q_table = {} # state to ability + dinosaur mapping
   @@q_table_swap = {} # state to swapp in new dinosaur mapping
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = {1.0 => [], -1.0 => []}
   @@random_mode = false
-  @@swap_penalty = 0.8 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
+  @@swap_penalty = 0.2 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
 
 
   # pick the next dinosaur, either at the start of the game or when a swap is needed
@@ -59,13 +59,15 @@ class TQTeamStrategy < Strategy
     end
     hash = TeamMatch.hash_value(attacker, defender)
     # abilities according to the Q table
-    abilities = @@q_table[hash]
+    abilities = @@q_table[hash].clone
     # if empty, initialize and pick a random available ability from the current dinosaur or swap randomly
     if abilities.nil?
+      @@logger.info "No q-table entry found"
       @@q_table[hash] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h
       target_dinosaur = attacker.available_dinosaurs.sample
       ability = "#{target_dinosaur.name}::#{target_dinosaur.available_abilities.sample.class.name}"
     elsif @@random_mode || rand < EPSILON
+      @@logger.info "Picking random ability"
       # pick a random dinosaur and ability to do a broad learning in initial training
       ability = available_ability_names.sample
     else
@@ -86,10 +88,10 @@ class TQTeamStrategy < Strategy
       # no need to swap, current dinosaur is the best choice
       return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
     else
-      # need to swap, other dinosaur is better, if that fails the current satys and does nothing
+      # need to swap, other dinosaur is better, if that fails the current stays and does nothing
       target_dinosaur = attacker.dinosaurs.select {|d| d.name == dinosaur_name}.first
       target_ability = target_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
-      result = attacker.swap(target_dinosaur, target_ability)
+      result = attacker.try_to_swap(target_dinosaur, target_ability)
       return result[:ability]
     end
   end
@@ -107,7 +109,7 @@ class TQTeamStrategy < Strategy
   def self.update_q_table(outcome, attacker_value)
     learning_rate = 0.01
     discount = 0.95
-    # calcuate average of outcomes for the final move
+    # calcuate average of outcomes for the final move to account for probabilities
     hash_value = @@log[attacker_value].last[0]
     if @@max_a_s[hash_value].nil?
       @@max_a_s[hash_value] = [(1.0 + attacker_value * outcome)/2.0]
@@ -133,7 +135,7 @@ class TQTeamStrategy < Strategy
       end
       # get max a of all possible actions for the entry in the table
       max_a = @@q_table[hash_value].sort_by {|k, v| v }.last.last
-      @@logger.info "max(a): #{max_a}, table: #{@@q_table[hash_value]}"
+      # @@logger.info "max(a): #{max_a}, table: #{@@q_table[hash_value]}"
     end
   end
 
@@ -152,12 +154,12 @@ class TQTeamStrategy < Strategy
     @@log
   end
 
-  def self.stats
-    {games_played: @@games_played, size: @@q_table.size}
-  end
-
   def self.games_played
     @@games_played
+  end
+
+  def self.max_a_s
+    @@max_a_s
   end
 
   def self.set_log(log)
@@ -170,6 +172,10 @@ class TQTeamStrategy < Strategy
 
   def self.disable_random_mode
     @@random_mode = false
+  end
+
+  def self.stats
+    {games: @@games_played, size: @@q_table.size, max_a_s: @@max_a_s.size}
   end
 
   def self.save

@@ -88,6 +88,7 @@ class TeamMatch
     result += attacker.current_dinosaur.nil? ? "-" : attacker.current_dinosaur.name
     result += " #{defender.value} #{defender.hash_value} "
     result += defender.current_dinosaur.nil? ? "-" : defender.current_dinosaur.name
+    Digest::MD5.hexdigest(result)
   end
 
 end

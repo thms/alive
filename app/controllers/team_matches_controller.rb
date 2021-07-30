@@ -4,9 +4,9 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Thoradolosaur', 'Indoraptor'] #['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Dracoceratops']
+    team1 = ['Thoradolosaur', 'Indoraptor', 'Monolometrodon', 'Dracoceratops']
     name2 = 'D'
-    team2 = ['Trykosaurus', 'Utarinex'] #['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
+    team2 = ['Trykosaurus', 'Utarinex', 'Magnapyritor', 'Smilonemys']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
@@ -129,50 +129,6 @@ class TeamMatchesController < ApplicationController
         last_node = node
       end
     end
-    File.open("tmp/graph.dot", "w") do |output|
-      g.dump_graph(output)
-    end
-    `dot -T svg tmp/graph.dot > tmp/graph.svg`
-    graph = File.read('tmp/graph.svg')
-    graph
-  end
-
-  # Original version, quite clumsy
-  def generate_graph_orig(logs, name1, name2)
-    g = Graphviz::Graph.new()
-    t1_wins_graph = g.add_subgraph(name1)
-    t2_wins_graph = g.add_subgraph(name2)
-    draw_graph = g.add_subgraph('draw')
-    t1_start_node = t1_wins_graph.add_node("#{name1} wins")
-    t2_start_node = t2_wins_graph.add_node("#{name2} wins")
-    draw_start_node = draw_graph.add_node("draw")
-    t1_wins_node = t1_wins_graph.add_node("#{name1} - #{@stats[name1]}")
-    t2_wins_node = t2_wins_graph.add_node("#{name2} - #{@stats[name2]}")
-    draw_node = draw_graph.add_node("draw - #{@stats['draw']}")
-    @logs.each do |log|
-      outcome = log.last
-      if outcome == name1
-        last_node = t1_start_node
-        log[-1] = "#{name1} - #{@stats[name1]}"
-        subgraph = t1_wins_graph
-      elsif outcome == name2
-        last_node = t2_start_node
-        log[-1] = "#{name2} - #{@stats[name2]}"
-        subgraph = t2_wins_graph
-      else
-        last_node = draw_start_node
-        log[-1] = "draw - #{@stats['draw']}"
-        subgraph = draw_graph
-      end
-      log.each_with_index do |entry, index|
-        title = (entry == log.last) ? entry : "#{outcome} - #{index} - #{entry}"
-        node = subgraph.get_node(title).first || subgraph.add_node(title)
-        edge = last_node.connected?(node) || last_node.connect(node, {label: 0})
-        edge.attributes[:label] += 1
-        last_node = node
-      end
-    end
-
     File.open("tmp/graph.dot", "w") do |output|
       g.dump_graph(output)
     end
