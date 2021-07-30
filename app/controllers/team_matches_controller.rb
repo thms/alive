@@ -122,8 +122,9 @@ class TeamMatchesController < ApplicationController
         else
           title = entry[:health]
           node = g.get_node(title).first || g.add_node(title)
-          edge = last_node.connected?(node) || last_node.connect(node, {label: entry[:event]})
-          edge.attributes[:label] += ", #{entry[:event]}" unless edge.attributes[:label].include?(entry[:event])
+          edge_label = "#{entry[:event]}#{' - crit' if entry[:stats][:is_critical_hit]}#{' - dodged' if entry[:stats][:did_dodge]}"
+          edge = last_node.connected?(node) || last_node.connect(node, {label: edge_label})
+          edge.attributes[:label] += ", #{edge_label}" unless edge.attributes[:label].include?(edge_label)
         end
         last_node = node
       end
