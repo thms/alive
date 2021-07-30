@@ -7,16 +7,16 @@ require 'logger'
 class TQTeamStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.05 # eplison greedy strategy: pick suboptimal move in 5% of cases
+  EPSILON = 0.0 # eplison greedy strategy: pick suboptimal move in 5% of cases
   @@q_table = {} # state to ability + dinosaur mapping
   @@q_table_swap = {} # state to swapp in new dinosaur mapping
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = {1.0 => [], -1.0 => []}
   @@random_mode = false
-  @@swap_penalty = 0.5 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
+  @@swap_penalty = 0.8 # penalty on swapping moves, no adjustment would be 1.0, use to make the game less swappy
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :warn
+  @@logger.level = :info
 
 
   # pick the next dinosaur, either at the start of the game or when a swap is needed
@@ -45,6 +45,7 @@ class TQTeamStrategy < Strategy
       dinosaur_name = dinosaur.map {|k, v| highest_value == v ? k : nil}.compact.sample
     end
     # return true if the new selection is a swap, false otherwise
+    # TODO: should probably say which dinosaur to use and if this is a swap
     dinosaur_name != attacker.current_dinosaur.name
   end
 
@@ -54,9 +55,9 @@ class TQTeamStrategy < Strategy
     attacker.available_dinosaurs.each do |dinosaur|
       dinosaur.available_abilities.each do |ability|
          available_ability_names.push "#{dinosaur.name}::#{ability.class.name}"
-       end
-     end
-     hash = TeamMatch.hash_value(attacker, defender)
+      end
+    end
+    hash = TeamMatch.hash_value(attacker, defender)
     # abilities according to the Q table
     abilities = @@q_table[hash]
     # if empty, initialize and pick a random available ability from the current dinosaur or swap randomly
@@ -65,12 +66,11 @@ class TQTeamStrategy < Strategy
       target_dinosaur = attacker.available_dinosaurs.sample
       ability = "#{target_dinosaur.name}::#{target_dinosaur.available_abilities.sample.class.name}"
     elsif @@random_mode || rand < EPSILON
-      # pick a random ability to do a broad learning in initial training
+      # pick a random dinosaur and ability to do a broad learning in initial training
       ability = available_ability_names.sample
     else
       # adjust values for swapping moves to discourage swapping - current learning leads to excessive swapping
       abilities.each do |k, v|
-        #abilities[k] = (0.8 * v) if (!attacker.current_dinosaur.nil? && !k.include?(attacker.current_dinosaur.name))
         abilities[k] = (@@swap_penalty * v) unless (attacker.current_dinosaur.nil? || k.include?(attacker.current_dinosaur.name))
       end
       # What is the highest value
@@ -83,8 +83,10 @@ class TQTeamStrategy < Strategy
     # At this stage we have something like "Indoraptor::CleansingStrike", and need to test if we can / have to swap dinosaurs
     dinosaur_name, ability_name = ability.split('::')
     if !attacker.current_dinosaur.nil? && dinosaur_name == attacker.current_dinosaur.name
+      # no need to swap, current dinosaur is the best choice
       return attacker.current_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
     else
+      # need to swap, other dinosaur is better, if that fails the current satys and does nothing
       target_dinosaur = attacker.dinosaurs.select {|d| d.name == dinosaur_name}.first
       target_ability = target_dinosaur.abilities.select {|a| a.class.name == ability_name}.first
       result = attacker.swap(target_dinosaur, target_ability)

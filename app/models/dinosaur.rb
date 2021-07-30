@@ -225,8 +225,16 @@ class Dinosaur < ApplicationRecord
     end
   end
 
-  def run
-    team.run
+  def try_to_run
+    team.try_to_run
+  end
+
+  # when swapping out, all cooldowns and delays get reset
+  def reset_abilities
+    abilities.each do |ability|
+      ability.current_cooldown = 0
+      ability.current_delay = ability.delay
+    end
   end
 
   # returns the 'better' value from the point of view of the dinosaur

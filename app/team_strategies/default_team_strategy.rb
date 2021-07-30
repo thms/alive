@@ -11,7 +11,10 @@ class DefaultTeamStrategy < TeamStrategy
   # pick first available ability for the current dinosaur
   # if no current dinosaur, pick one first
   def self.next_move(team1, team2)
-    if team1.current_dinosaur.nil? || team1.current_dinosaur.current_health <= 0
+    if team1.current_dinosaur.nil? || team1.current_dinosaur.current_health == 0
+      result = next_dinosaur(team1, team2)
+      return result[:ability]
+    elsif should_swap?(team1, team2)
       result = next_dinosaur(team1, team2)
       return result[:ability]
     else
@@ -20,10 +23,8 @@ class DefaultTeamStrategy < TeamStrategy
   end
 
   # Team should swap if other dino is likely to kill this one
-  # this could be much more refined, with expected
+  # this could be much more refined, with expected damage, etc
   def self.should_swap?(team1, team2)
-    puts team1.current_dinosaur.current_health
-    puts team2.current_dinosaur.damage
-    team1.current_dinosaur.current_health <= 0 || (team1.current_dinosaur.current_health <= team2.current_dinosaur.damage) 
+    team1.current_dinosaur.current_health <= team2.current_dinosaur.damage rescue false
   end
 end

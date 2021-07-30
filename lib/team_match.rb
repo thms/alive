@@ -14,7 +14,7 @@ class TeamMatch
     @attacker.value = Constants::MATCH[:max_player]
     @defender = defender.reset_attributes!
     @defender.value = Constants::MATCH[:min_player]
-    @round = 0
+    @round = 1
     @logger = Logger.new(STDOUT)
     @logger.level = :warn
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
@@ -24,157 +24,62 @@ class TeamMatch
 
 
   def execute
-    while !is_win? && @round < 100 # safetly valve only
-      @round += 1
-      # each team picks a dinosaur and a move.
-      abilities = [@attacker.next_move(@defender), @defender.next_move(@attacker)]
-      dinosaurs = [@attacker.current_dinosaur, @defender.current_dinosaur]
+    while !TeamMechanics.has_ended?(@attacker, @defender, @mode) && @round < 100 # safety valve only
+      # each team picks a dinosaur and an ability.
+      @attacker.next_move(@defender)
+      @defender.next_move(@attacker)
       # order the dinosaurs by level, speeds etc
-      order_dinosaurs_and_abilities(dinosaurs, abilities)
+      dinosaurs = Mechanics.order_dinosaurs([@attacker.current_dinosaur, @defender.current_dinosaur])
 
       # first one attacks
-      if dinosaurs.first.is_stunned
-        @log << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
-        @events << {event: "#{dinosaurs.first.name}::stunned", stats:{}, health: health(dinosaurs)}
-        EventSink.add "#{dinosaurs.first.name}::stunned"
-        dinosaurs.first.is_stunned = false
-        # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.first.start_cooldown
-      else
-        hit_stats = abilities.first.execute(dinosaurs.first, dinosaurs.last)
-        @log << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
-        @events << {event: "#{dinosaurs.first.name}::#{abilities.first.class}", stats: hit_stats, health: health(dinosaurs)}
-        EventSink.add "#{dinosaurs.first.name}::#{abilities.first.class}"
-        if abilities.first.is_swap_out
-          team = dinosaurs.first.team
-          name = dinosaurs.first.name
-          if dinosaurs.last.has_on_escape?
-            EventSink.add "#{dinosaurs.last.name}::#{dinosaurs.last.abilities_on_escape.first.class}"
-            dinosaurs.last.abilities_on_escape.first.execute(dinosaurs.last, dinosaurs.first)
-          end
-          if dinosaurs.first.run
-            dinosaurs[0] = team.current_dinosaur
-            @events << {event: "#{name} swapped out", stats: {}, health: health(dinosaurs)}
-          else
-            @events << {event: "#{name} prevented from swapping out", stats: {}, health: health(dinosaurs)}
-          end
-        end
-      end
-      # if that leads to death, the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
-      if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
-        apply_damage_over_time(dinosaurs)
-        if is_win?
+      TeamMechanics.attack(dinosaurs.first, dinosaurs.last, @log, @events)
+      # at this point the match may be over, the round may be over or we may continue
+      # , the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
+      if TeamMechanics.has_ended?(@attacker, @defender, @mode) || (dinosaurs.first.current_health == 0 || dinosaurs.last.current_health == 0)
+        Mechanics.apply_damage_over_time(dinosaurs)
+        # Check again if the match has now ended
+        if TeamMechanics.has_ended?(@attacker, @defender, @mode)
           # match is over
           break
         else
+          # one is still alive, so tick down and enter the next round
+          Mechanics.tick(dinosaurs)
           next
         end
       end
       # second one attacks
-      if dinosaurs.last.is_stunned
-        @log << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
-        @events << {event: "#{dinosaurs.last.name}::stunned", stats:{}, health: health(dinosaurs)}
-        EventSink.add "#{dinosaurs.last.name}::stunned"
-        dinosaurs.last.is_stunned = false
-        # cooldown whatever the player selected, even if he did not get around to using it
-        abilities.last.start_cooldown
-      else
-        hit_stats = abilities.last.execute(dinosaurs.last, dinosaurs.first)
-        @log << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
-        @events << {event: "#{dinosaurs.last.name}::#{abilities.last.class}", stats: hit_stats, health: health(dinosaurs)}
-        EventSink.add "#{dinosaurs.last.name}::#{abilities.last.class}"
-        if abilities.last.is_swap_out
-          if dinosaurs.first.has_on_escape?
-            EventSink.add "#{dinosaurs.first.name}::#{dinosaurs.first.abilities_on_escape.first.class}"
-            dinosaurs.first.abilities_on_escape.first.execute(dinosaurs.first, dinosaurs.last)
-          end
-          if dinosaurs.last.team.run
-            @events << {event: "#{dinosaurs.last.name} swapped out", stats: {}, health: health(dinosaurs)}
-          else
-            @events << {event: "#{dinosaurs.last.name} prevented from swapping out", stats: {}, health: health(dinosaurs)}
-          end
-        end
-
-      end
-      # if that leads to death, the round ends
-      if dinosaurs.first.current_health <= 0 || dinosaurs.last.current_health <= 0
-        apply_damage_over_time(dinosaurs)
-        if is_win?
+      TeamMechanics.attack(dinosaurs.last, dinosaurs.first, @log, @events)
+      # at this point the match may be over, the round may be over or we may continue
+      # , the round ends and the team will attempt to pick a new dinosaur, but we also need to tick down the other dinosaur
+      if TeamMechanics.has_ended?(@attacker, @defender, @mode) || (dinosaurs.first.current_health == 0 || dinosaurs.last.current_health == 0)
+        Mechanics.apply_damage_over_time(dinosaurs)
+        # Check again if the match has now ended
+        if TeamMechanics.has_ended?(@attacker, @defender, @mode)
+          # match is over
           break
         else
+          # one is still alive, so tick down and enter the next round
+          Mechanics.tick(dinosaurs)
           next
         end
       end
-      # neither has died, tick down both before the next round
-      dinosaurs.first.tick
-      dinosaurs.last.tick
+      # neither has died, apply damage over time
+      Mechanics.apply_damage_over_time(dinosaurs)
+      # match ends if either team is defeated
+      break if TeamMechanics.has_ended?(@attacker, @defender, @mode)
+      # tick down both before the next round
+      Mechanics.tick(dinosaurs)
+      @round += 1
     end
     # three possible outcomes: draw, attacker wins, defender wins
-    if is_draw?
-      outcome = 'draw'
-      outcome_value = Constants::MATCH[:draw]
-    else
-      outcome = @attacker.is_defeated?(@mode) ? "#{@defender.name}" : "#{@attacker.name}"
-      outcome_value = @attacker.is_defeated?(@mode) ? @defender.value : @attacker.value
-    end
+    outcome, outcome_value = TeamMechanics.determine_outcome(@attacker, @defender, @mode)
     # write the outcome log entry
-    @log << {event: outcome, stats: {}, health: health(dinosaurs)}
-    @events << {event: outcome, stats: {}, health: health(dinosaurs)}
+    @log << {event: outcome, stats: {}, health: Mechanics.health(dinosaurs)}
+    @events << {event: outcome, stats: {}, health: Mechanics.health(dinosaurs)}
     EventSink.add "#{@attacker.health} : #{@defender.health}"
     {outcome: outcome, outcome_value: outcome_value, log: @log, events: @events}
-
   end
 
-  def apply_damage_over_time(dinosaurs)
-    dinosaurs.first.tick
-    dinosaurs.last.tick
-  end
-
-  # faster dinosaur wins, if both are equal use level, then random (in games: who pressed faster)
-  def order_dinosaurs_and_abilities(dinosaurs, abilities)
-    if dinosaurs.first.current_speed == dinosaurs.last.current_speed
-      if dinosaurs.first.level < dinosaurs.last.level
-        # same speed but different level, higher level goes first
-        dinosaurs.reverse!
-        abilities.reverse!
-      elsif dinosaurs.first.level == dinosaurs.last.level && rand < 0.5
-        # random order if level and speed are the same
-        dinosaurs.reverse!
-        abilities.reverse!
-      end
-    else
-      if dinosaurs.first.current_speed < dinosaurs.last.current_speed
-        # faster goes always first
-        dinosaurs.reverse!
-        abilities.reverse!
-      end
-    end
-    # handle priority moves
-    # if the second picked priority move and the first one did not, swap them around
-    # in all other cases they are already in the correct order
-    if abilities.last.is_priority && !abilities.first.is_priority
-      dinosaurs.reverse!
-      abilities.reverse!
-    end
-  end
-
-  # Is the current state a win for one of the teams?
-  def is_win?
-    @attacker.is_defeated?(@mode) || @defender.is_defeated?(@mode)
-  end
-
-  # is the current state a draw this can happen in due to damage over time
-  def is_draw?
-    @attacker.is_defeated?(@mode) && @defender.is_defeated?(@mode)
-  end
-
-  def health(dinosaurs)
-    if dinosaurs.first.name < dinosaurs.last.name
-      return "#{dinosaurs.first.name}:#{dinosaurs.first.current_health}, #{dinosaurs.last.name}:#{dinosaurs.last.current_health}"
-    else
-      return "#{dinosaurs.last.name}:#{dinosaurs.last.current_health}, #{dinosaurs.first.name}:#{dinosaurs.first.current_health}"
-    end
-  end
 
   # Hash value expressing the state of the game
   def self.hash_value(attacker, defender)

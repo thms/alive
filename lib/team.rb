@@ -57,9 +57,9 @@ class Team
 
   # depending on the mode a team is defeated if a set number of dinos are dead
   def is_defeated?(mode)
-    if dinosaurs.size == 1 && healthy_members == 0
+    if @dinosaurs.size == 1 && healthy_members == 0
       return true
-    elsif dinosaurs.size == 1 && healthy_members == 1
+    elsif @dinosaurs.size == 1 && healthy_members == 1
       return false
     elsif mode == :raid && healthy_members == 0
       return true
@@ -76,28 +76,37 @@ class Team
   end
 
   def can_swap?
-    (current_dinosaur.nil? || current_dinosaur.can_swap? ) && (available_dinosaurs - [@current_dinosaur]).count > 0
+    (@current_dinosaur.nil? || @current_dinosaur.can_swap? ) && (available_dinosaurs - [@current_dinosaur]).count > 0
   end
 
   # Called from swap out abilities to try and run away. This may fail
-  def run
-    EventSink.add("#{current_dinosaur.name} tries to run")
+  def try_to_run
+    EventSink.add("#{@current_dinosaur.name} tries to run")
     if can_swap?
-      EventSink.add("#{current_dinosaur.name} managed to run")
+      EventSink.add("#{@current_dinosaur.name} managed to run")
+      # remove all modifiers
+      @current_dinosaur.modifiers = []
+      # remove stun
+      @current_dinosaur.is_stunned = false
+      # remove revenge
+      @current_dinosaur.is_revenge = false
+      # reset cooldown on all abilities
+      @current_dinosaur.reset_abilities
       # make sure we cannot swap the same dinosaur in right away again and force next available dinosaur in order
       @recent_dinosaur = @current_dinosaur
       @current_dinosaur = next_available_dinosaur
       return true
     else
       # do nothing, not allowed to swap
-      EventSink.add("#{current_dinosaur.name} failed to run")
+      EventSink.add("#{@current_dinosaur.name} failed to run")
       return false
     end
   end
 
-  # pick the one on the right in the array, with modulo
+  # pick the one on the right in the array, with wrap around
+  # used on swap out abilities to select the next dino
   def next_available_dinosaur
-    dinos = dinosaurs.clone
+    dinos = @dinosaurs.clone
     dinos.delete_if {|d| d.current_health <= 0 && d != @current_dinosaur}
     current_index = dinos.find_index(@current_dinosaur)
     next_index = (current_index + 1).modulo(dinos.size)
@@ -110,7 +119,7 @@ class Team
   # returns {has_swapped: true, was_healthy: false} if the swap was successfuly
   def swap(target_dinosaur, target_ability)
     was_healthy = @current_dinosaur.current_health > 0 rescue false
-    is_revenge = @current_dinosaur && @current_dinosaur.current_health <= 0
+    is_revenge = @current_dinosaur && @current_dinosaur.current_health == 0
     retval = {has_swapped: false, was_healthy: was_healthy, ability: target_ability}
 
     if can_swap?
@@ -123,8 +132,10 @@ class Team
         @current_dinosaur.is_stunned = false
         # remove revenge
         @current_dinosaur.is_revenge = false
+        # reset cooldown on all abilities
+        @current_dinosaur.reset_abilities
       end
-      @recent_dinosaur = nil # @current_dinosaur
+      @recent_dinosaur = @current_dinosaur
       @current_dinosaur = target_dinosaur
       if was_healthy
         retval[:ability] = @current_dinosaur.has_swap_in? ? @current_dinosaur.abilities_swap_in.first : SwapIn.new
