@@ -2,7 +2,7 @@ class Modifiers::ReduceCriticalChance < Modifiers::Modifier
 
   self.tick_when_attacked = false
   self.tick_when_attacking = true
-  self.cleanse = [:all]
+  self.cleanse = [:all, :critical]
   self.destroy = []
   self.is_positive = false
 

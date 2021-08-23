@@ -175,6 +175,7 @@ class Dinosaur < ApplicationRecord
   end
 
   def remove_attack_increase
+    modifiers.delete_if{|modifier| modifier.class == Modifiers::IncreaseDamage}
   end
 
   def remove_speed_increase

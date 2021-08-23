@@ -1,7 +1,5 @@
-
-# TODO:
-# possibly update the templates
-
+# Read all abilities from the dinodex and generate a class file for each that does not yet exit
+# Does not fill in any of the data
 require 'json'
 require 'generators/ability/ability_generator'
 

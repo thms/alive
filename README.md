@@ -35,11 +35,12 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Refactor current game mechanics for consistency in team match to be equal to 1:1 match
 TQTeam: favuor preserving own health / maximising damage to other via mechanics
 
 ## TODO
-Fix swap mechanics in team matches
+Fix swap mechanics in team matches - are they still wrong?
+Why is the team strategy so swappy?
+Explore different team strategy topologies: separate q function for swapping, and combine with either TQ or minmax for each indivodual dinosaur
 Fix NN strategy to use separate logs for each dinosaur
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
@@ -47,7 +48,6 @@ MinMax and other strategies: if there is no good move, use highest damage or som
 Remaining abilities
 Build neural network for the Q-function for team matches
 
-Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
 Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
 Try out RNN/LSTM networks
@@ -94,6 +94,8 @@ Refactor current game mechanics for consistency across match, minmax and simulat
 Fix TQ Team Strategy: split data structures by attacker value, so TQStrategy as example
 Strategies: in case of winning, favour paths that preserve more own health (e.g. outcome = value * self.current_health / self.health)
 Strategies: in case of loosing, favour paths that reduce opponents health as much as possible (i.e. outcome = value * (other.current_health / other.health)
+Refactor current game mechanics for consistency in team match to be equal to 1:1 match
+Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
