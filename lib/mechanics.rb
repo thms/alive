@@ -19,7 +19,7 @@ class Mechanics
       EventSink.add "#{attacker.name}::#{attacker.selected_ability.class}"
       logger.info("#{attacker.name}: #{attacker.selected_ability.class}")
     end
-    swapped_out = attacker.name if attacker.selected_ability.is_swap_out
+    swapped_out = attacker if attacker.selected_ability.is_swap_out
     logger.info("#{attacker.name}: swapped_out") unless swapped_out.nil?
     return hit_stats, swapped_out
   end
@@ -43,8 +43,8 @@ class Mechanics
         outcome_value = dinosaurs.last.value * dinosaurs.last.current_health.to_f / dinosaurs.last.health.to_f
       end
     elsif !swapped_out.nil?
-      outcome = "#{swapped_out} swapped out"
-      outcome_value  = Constants::MATCH[:swap_out] * (dinosaurs.first.name == swapped_out ? dinosaurs.first.value : dinosaurs.last.value)
+      outcome = "#{swapped_out.name} swapped out"
+      outcome_value  = Constants::MATCH[:swap_out] * (dinosaurs.first == swapped_out ? dinosaurs.first.value : dinosaurs.last.value)
     end
     # write the outcome log entry
     log << {event: outcome, stats: {}, health: health(dinosaurs)}

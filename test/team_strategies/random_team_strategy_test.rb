@@ -17,6 +17,8 @@ class RandomTeamStrategyTest < ActiveSupport::TestCase
     20.times do
       ability = team1.next_move(nil)
       stats[ability.class.name] += 1
+      # normally this gets recent in the ability, but we are not calling one here:
+      team1.recent_dinosaur = nil
     end
     assert_in_delta 10, stats['Strike'], 5
   end
@@ -26,10 +28,13 @@ class RandomTeamStrategyTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike, Impact], strategy: DefaultStrategy)
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.strategy = RandomTeamStrategy
-    stats = {'Strike' => 0, 'Impact' => 0, 'SwapIn' => 0, 'SwapInSavagery' => 0}
+    team.current_dinosaur = d2
+    stats = {'Strike' => 0, 'Impact' => 0, 'SwapIn' => 0, 'SwapInSavagery' => 0, 'SwapFailed' => 0}
     50.times do
       ability = team.next_move(nil)
       stats[ability.class.name] += 1
+      # normally this gets recent in the ability, but we are not calling one here:
+      team.recent_dinosaur = nil
     end
     assert_operator stats['SwapInSavagery'], :>, 0
     assert_operator stats['SwapIn'], :>, 0

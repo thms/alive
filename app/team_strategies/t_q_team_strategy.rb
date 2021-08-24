@@ -24,7 +24,7 @@ class TQTeamStrategy < TeamStrategy
   # Not being used
   def self.next_dinosaur(attacker, defender)
     target_dinosaur = (attacker.available_dinosaurs - [attacker.current_dinosaur, attacker.recent_dinosaur]).sample
-    attacker.swap(target_dinosaur)
+    attacker.try_to_swap(target_dinosaur)
   end
 
   def self.should_swap?(attacker, defender)

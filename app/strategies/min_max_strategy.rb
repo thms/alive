@@ -228,7 +228,7 @@ class MinMaxStrategy < Strategy
       node.winner = ""
       node.looser = ""
       node.data[:health] = Mechanics.health(dinosaurs)
-      if swapped_out == dinosaurs.first.name
+      if swapped_out == dinosaurs.first
         node.value = attacker.minimize(dinosaurs.first.value * Constants::MATCH[:swap_out], node.value)
       else
         node.value = attacker.minimize(dinosaurs.last.value * Constants::MATCH[:swap_out], node.value)

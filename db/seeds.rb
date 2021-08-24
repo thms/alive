@@ -2,13 +2,13 @@
 # This has the generic data, non-player specific only
 require 'json'
 
-file = File.read(Rails.root.join('db', './dinodex.json'))
+file = File.read(Rails.root.join('db', './dinodex_2021_08_21.json'))
 data =  JSON.parse(file)
 
 # Iterate over dinosaurs and create entry for each
-data['pageProps']['creatures'].each do |creature|
-  slug = creature['name']
-  name = (creature['name'].split('_').map {|word| word.camelize}).join(' ')
+data['props']['pageProps']['creatures'].each do |creature|
+  slug = creature['uuid']
+  name = creature['name']
   rarity = creature['rarity']
   abilities = (creature['moves'].map {|ability| ability.camelize.constantize})
   abilities_counter = (creature['moves_counter'].map {|ability| ability.camelize.constantize})
@@ -44,11 +44,11 @@ data['pageProps']['creatures'].each do |creature|
 end
 
 # Establish links for hybrids
-data['pageProps']['creatures'].each do |creature|
+data['props']['pageProps']['creatures'].each do |creature|
   next if creature['ingredients'].empty?
   left_id  = Dinosaur.find_by_slug(creature['ingredients'].first).id
   right_id = Dinosaur.find_by_slug(creature['ingredients'].last).id
-  d = Dinosaur.find_by_slug(creature['name'])
+  d = Dinosaur.find_by_slug(creature['uuid'])
   d.left_id = left_id
   d.right_id = right_id
   d.save

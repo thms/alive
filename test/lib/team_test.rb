@@ -36,7 +36,7 @@ class TeamTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
-    team.swap(d2, d2.available_abilities.first)
+    team.try_to_swap(d2, d2.available_abilities.first)
     assert_equal 'd2', team.current_dinosaur.name
   end
 
@@ -45,7 +45,7 @@ class TeamTest < ActiveSupport::TestCase
     d2 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 125, level: 20, name: 'd2', abilities: [Strike], abilities_swap_in: [SwapInSavagery], strategy: DefaultStrategy)
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
-    result = team.swap(d2, d2.available_abilities.first)
+    result = team.try_to_swap(d2, d2.available_abilities.first)
     assert_equal SwapInSavagery, result[:ability].class
     assert_equal true, result[:has_swapped]
   end
@@ -56,7 +56,7 @@ class TeamTest < ActiveSupport::TestCase
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
     d1.current_health = 0
-    result = team.swap(d2, d2.available_abilities.first)
+    result = team.try_to_swap(d2, d2.available_abilities.first)
     assert_equal Strike, result[:ability].class
   end
 
@@ -66,7 +66,7 @@ class TeamTest < ActiveSupport::TestCase
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
     d1.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
-    result = team.swap(d2, d2.available_abilities.first)
+    result = team.try_to_swap(d2, d2.available_abilities.first)
     assert_equal SwapFailed, result[:ability].class
   end
 
@@ -84,7 +84,7 @@ class TeamTest < ActiveSupport::TestCase
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
     team.current_dinosaur.current_health = 0
-    team.swap(d2, d2.abilities.first)
+    team.try_to_swap(d2, d2.abilities.first)
     assert_equal true, d2.is_revenge
   end
 
@@ -94,7 +94,7 @@ class TeamTest < ActiveSupport::TestCase
     team = Team.new('attacker', [d1, d2]).reset_attributes!
     team.current_dinosaur = d1
     team.current_dinosaur.current_health = 1
-    team.swap(d2, d2.abilities.first)
+    team.try_to_swap(d2, d2.abilities.first)
     assert_equal false, d2.is_revenge
   end
 

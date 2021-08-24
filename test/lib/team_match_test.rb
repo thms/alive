@@ -53,6 +53,7 @@ class TeamMatchTest < ActiveSupport::TestCase
 
 
   test "Team match with one player each should work" do
+    #skip
     team1 = Team.new('A', ['Geminititan'])
     team1.strategy = DefaultTeamStrategy
     team2 = Team.new('D', ['Thoradolosaur'])

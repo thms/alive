@@ -1,4 +1,3 @@
-# TODO: implement swap out
 class RampageAndRun < Ability
 
   self.is_implemented = true

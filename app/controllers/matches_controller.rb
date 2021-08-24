@@ -8,7 +8,7 @@ class MatchesController < ApplicationController
     name2 = 'Smilonemys'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    TQStrategy.load
+    #TQStrategy.load
     #TQStrategy.reset
     MinMaxStrategy.reset
     MinMax2Strategy.reset
@@ -30,7 +30,7 @@ class MatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-    TQStrategy.save
+    #TQStrategy.save
     #NNStrategy.save
     if @logs.size > 10
       @graph = generate_graph([@logs.last], name1, name2, @start_node_title)

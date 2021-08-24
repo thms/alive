@@ -5,12 +5,11 @@ class RandomTeamStrategy < TeamStrategy
   def self.next_dinosaur(team1, team2)
     target_dinosaur = (team1.available_dinosaurs - [team1.current_dinosaur]).sample
     target_ability = target_dinosaur.available_abilities.sample
-    team1.swap(target_dinosaur, target_ability)
+    team1.try_to_swap(target_dinosaur, target_ability)
   end
 
   # pick a new dinosaur at random and a move, or just a move for the current dinosaur
   def self.next_move(team1, team2)
-    # in 20% attempt to swap randomly
     if team1.current_dinosaur.nil? || team1.current_dinosaur.current_health == 0
       # if there is no current dinosaur, or the current has died pick a new one
       result = next_dinosaur(team1, team2)

@@ -147,6 +147,7 @@ class Team
       # if swapping is denied for some reason the dinosaur looses this turn's ability
       EventSink.add("Swap to #{target_dinosaur.name} failed")
       retval[:ability] = SwapFailed.new
+      puts 'cannot swap'
     end
     return retval
   end

@@ -1,15 +1,14 @@
-class GreaterEmergencyHeal < Ability
+class CounterPowerHeal < Ability
 
   self.is_implemented = true
-  self.cooldown = 2
+  self.cooldown = 0
   self.delay = 0
-  self.is_priority = true
+  self.is_priority = false
   self.damage_multiplier = 0
   self.bypass = []
 
   def update_attacker(attacker, defender)
-    attacker.cleanse(:all)
-    attacker.heal(2 * attacker.damage)
+    attacker.heal(0.11 * attacker.health)
   end
 
 end
