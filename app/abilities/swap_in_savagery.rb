@@ -9,7 +9,7 @@ class SwapInSavagery < Ability
   self.is_rending_attack = true
 
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
   end
 

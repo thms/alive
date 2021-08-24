@@ -8,7 +8,7 @@ class GroupShatteringRampage < Ability
   self.damage_multiplier = 2
   self.bypass = [:armor]
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.destroy_shields
     defender.remove_taunt
   end

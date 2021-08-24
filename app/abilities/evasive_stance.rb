@@ -7,7 +7,7 @@ class EvasiveStance < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::Dodge.new(75, 3, 4))
   end
 

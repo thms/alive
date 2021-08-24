@@ -8,7 +8,7 @@ class RakingCounterAttack < Ability
   self.bypass = []
   self.is_counter = true
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.remove_cloak
     defender.remove_dodge
   end

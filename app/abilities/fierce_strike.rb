@@ -8,11 +8,11 @@ class FierceStrike < Ability
   self.damage_multiplier = 1
   self.bypass = [:armor]
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:vulnerable)
   end
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.destroy_shields
     defender.remove_taunt
   end

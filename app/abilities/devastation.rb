@@ -7,7 +7,7 @@ class Devastation < Ability
   self.damage_multiplier = 3
   self.bypass = [:dodge, :cloak]
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::Taunt.new(1))
   end
 end

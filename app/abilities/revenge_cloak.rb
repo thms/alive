@@ -7,7 +7,7 @@ class RevengeCloak < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     if attacker.is_revenge
       self.cooldown = 1
       attacker.add_modifier(Modifiers::Cloak.new(75, 200, 1, 1))

@@ -12,7 +12,7 @@ class Sidestep < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:all)
     attacker.add_modifier(Modifiers::Dodge.new(100, 0, 2))
     attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))

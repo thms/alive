@@ -10,7 +10,7 @@ class CraftyStrike < Ability
   self.damage_multiplier = 1
   self.bypass = [:armor, :dodge]
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.remove_critical_chance_increase
     defender.remove_attack_increase
   end

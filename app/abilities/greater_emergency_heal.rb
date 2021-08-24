@@ -7,7 +7,7 @@ class GreaterEmergencyHeal < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:all)
     attacker.heal(2 * attacker.damage)
   end

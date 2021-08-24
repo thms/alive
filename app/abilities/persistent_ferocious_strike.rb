@@ -7,7 +7,7 @@ class PersistentFerociousStrike < Ability
   self.damage_multiplier = 1
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 2))
   end
 

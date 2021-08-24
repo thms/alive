@@ -8,7 +8,7 @@ class AdrenalinePulse < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.heal(attacker.damage)
   end
 

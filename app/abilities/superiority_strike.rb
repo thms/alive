@@ -8,7 +8,7 @@ class SuperiorityStrike < Ability
   self.bypass = []
   self.bypass = [:dodge, :cloak]
 
-  def update_defender_after_damage(attacker, defender)
+  def update_defender_after_damage(defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 1))
   end
 end

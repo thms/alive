@@ -7,7 +7,7 @@ class CunningRampage < Ability
   self.damage_multiplier = 2
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.remove_critical_chance_increase
     defender.remove_attack_increase
     defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))

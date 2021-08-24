@@ -7,7 +7,7 @@ class GroupAcceleration < Ability
   self.damage_multiplier = 1
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:decrease_speed)
     attacker.add_modifier(Modifiers::IncreaseSpeed.new(50, 3))
   end

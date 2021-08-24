@@ -9,7 +9,7 @@ class GroupShield < Ability
   self.bypass = []
 
   # TODO: extend to group
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::Shields.new(50, 2, 2))
   end
 end

@@ -7,7 +7,7 @@ class ReadyToCrush < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:distraction)
     attacker.cleanse(:critical)
     attacker.add_modifier(Modifiers::IncreaseCriticalChance.new(30, 4, 2))

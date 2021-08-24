@@ -7,7 +7,7 @@ class NullifyingCounter < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.nullify
   end
 

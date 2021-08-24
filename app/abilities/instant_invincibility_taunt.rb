@@ -7,7 +7,7 @@ class InstantInvincibilityTaunt < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::InstantShields.new(100, 0, 4))
     attacker.add_modifier(Modifiers::Taunt.new(1))
   end

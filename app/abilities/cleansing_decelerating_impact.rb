@@ -7,11 +7,11 @@ class CleansingDeceleratingImpact < Ability
   self.damage_multiplier = 1.5
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:all)
   end
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2))
   end
 

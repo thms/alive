@@ -8,7 +8,7 @@ class MinorRendingAttack < Ability
   self.bypass = [:armor]
   self.is_rending_attack = true
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.destroy_shields
   end
 end

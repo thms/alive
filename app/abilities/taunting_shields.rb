@@ -8,7 +8,7 @@ class TauntingShields < Ability
   self.damage_multiplier = 1
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::Taunt.new(1, nil))
     attacker.add_modifier(Modifiers::Shields.new(40, 2, 4))
   end

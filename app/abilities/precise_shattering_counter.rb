@@ -7,7 +7,7 @@ class PreciseShatteringCounter < Ability
   self.damage_multiplier = 1
   self.bypass = [:armor, :dodge, :cloak]
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.destroy_shields
   end
 

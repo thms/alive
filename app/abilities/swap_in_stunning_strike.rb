@@ -7,7 +7,7 @@ class SwapInStunningStrike < Ability
   self.damage_multiplier = 1
   self.bypass = [:armor]
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
   end
 

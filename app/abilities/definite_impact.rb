@@ -7,7 +7,7 @@ class DefiniteImpact < Ability
   self.damage_multiplier = 1.5
   self.bypass = [:armor]
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.remove_cloak
     defender.remove_dodge
     defender.destroy_shields

@@ -7,17 +7,17 @@ class ResilientStrike < Ability
   self.damage_multiplier = 1
   self.bypass = []
 
-  def update_attacker(attacker, defender)
+  def update_attacker(attacker)
     attacker.cleanse(:distraction)
   end
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.remove_dodge
     defender.remove_cloak
     defender.remove_speed_increase
   end
 
-  def update_defender_after_damage(attacker, defender)
+  def update_defender_after_damage(defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 1))
   end
 

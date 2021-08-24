@@ -10,7 +10,7 @@ class NullifyingRampage < Ability
   self.damage_multiplier = 2
   self.bypass = []
 
-  def update_defender(attacker, defender)
+  def update_defender(defender)
     defender.nullify
   end
 
