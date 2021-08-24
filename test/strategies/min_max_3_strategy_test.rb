@@ -9,7 +9,7 @@ class MinMax3StrategyTest < ActiveSupport::TestCase
     defender = Dinosaur.find_by_name('Velociraptor').reset_attributes!
     defender.value = -1.0
     result = MinMax3Strategy.next_move(attacker, defender)
-    assert_includes [FierceImpact, FierceStrike], result.class
+    assert_includes [GroupShatteringImpact, FierceStrike], result.class
   end
 
   test "MinMax Strategy should find path to vicory for maximising player" do
@@ -49,7 +49,7 @@ class MinMax3StrategyTest < ActiveSupport::TestCase
     attacker.value = 1.0
     defender.value = -1.0
     result = MinMax3Strategy.next_move(attacker, defender)
-    assert_includes [FierceImpact, FierceStrike], result.class
+    assert_includes [GroupShatteringImpact, FierceStrike], result.class
   end
 
   test "MinMax Strategy should find shortest path to vicory for minimising player quetzorion" do

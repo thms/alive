@@ -13,7 +13,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       armor: 0,
       critical_chance: 40,
       name: 'Thoradolosaur',
-      abilities: [FierceStrike, FierceImpact, GroupShatteringRampage, InstantCharge]).reset_attributes!
+      abilities: [FierceStrike, GroupShatteringImpact, FierceRampage, InstantCharge]).reset_attributes!
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -26,7 +26,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       abilities: [Strike, HighPounce]).reset_attributes!
 
     result = MinMaxStrategy.next_move(attacker, defender)
-    assert_includes [FierceImpact, FierceStrike], result.class
+    assert_includes [GroupShatteringImpact, FierceStrike], result.class
   end
 
   test "MinMax Strategy should find strongest move when there is a clear path to victory" do
@@ -40,7 +40,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       armor: 0,
       critical_chance: 40,
       name: 'Thoradolosaur',
-      abilities: [FierceStrike, FierceImpact, GroupShatteringRampage, InstantCharge]).reset_attributes!
+      abilities: [FierceStrike, GroupShatteringImpact, FierceRampage, InstantCharge]).reset_attributes!
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -95,7 +95,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
       armor: 0,
       critical_chance: 40,
       name: 'Thoradolosaur',
-      abilities: [FierceStrike, FierceImpact, GroupShatteringRampage, InstantCharge]).reset_attributes!
+      abilities: [FierceStrike, GroupShatteringImpact, FierceRampage, InstantCharge]).reset_attributes!
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,

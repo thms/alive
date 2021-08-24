@@ -28,7 +28,7 @@ class PreventSwapTest < ActiveSupport::TestCase
       defender.add_modifier(Modifiers::PreventSwap.new(1, 'other'))
       stats += 1 if defender.can_swap?
     end
-    assert_in_delta 30, stats, 10
+    assert_in_delta 30, stats, 15
   end
 
 end

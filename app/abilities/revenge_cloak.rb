@@ -3,17 +3,46 @@ class RevengeCloak < Ability
   self.is_implemented = true
   self.cooldown = 3
   self.delay = 0
+  self.trigger = "regular"
   self.is_priority = true
   self.damage_multiplier = 0
   self.bypass = []
+  self.is_rending_attack = false
+  self.is_counter = false
+  self.is_swap_out = false
 
+  # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    if attacker.is_revenge
-      self.cooldown = 1
-      attacker.add_modifier(Modifiers::Cloak.new(75, 200, 1, 1))
-    else
-      attacker.add_modifier(Modifiers::Cloak.new(75, 100, 2, 1))
-    end
+    attacker.add_modifier(Modifiers::Cloak.new(75, 100, 2, nil))
+  end
+
+  # same as above but called when the attacker is in revenge mode
+  def update_attacker_revenge(attacker)
+    attacker.add_modifier(Modifiers::Cloak.new(75, 200, 1, nil))
+    self.delay = 0
+    self.cooldown = 1
+  end
+
+  # remove modifiers for the defender before damage is done
+  def update_defender(defender)
+  end
+
+  # remove modifiers for the defender before damage is done in revenge mode
+  def update_defender_revenge(defender)
+  end
+
+  # add modifiers for the defender after damage is done
+  def update_defender_after_damage(defender)
+  end
+
+  # add modifiers for the defender after damage is done in revenge mode
+  def update_defender_after_damage_revenge(defender)
+  end
+
+  # special logic for some attacks
+  def damage_defender(attacker, defender)
+    result = super
+    result
   end
 
 end

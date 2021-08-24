@@ -15,7 +15,7 @@ class ForcedStrategy < Strategy
       'Dracoceratops' => ['CleansingImpact', 'FierceImpact'],
       'Suchotator'    => ['LethalWound', 'SuperiorityStrike'],
       'Trykosaurus'   => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
-      'Thoradolosaur' => ['FierceImpact', 'GroupShatteringRampage', 'InstantCharge', 'FierceImpact'],
+      'Thoradolosaur' => ['FierceImpact', 'FierceRampage', 'InstantCharge', 'FierceImpact'],
       'Monolorhino'   => ['CunningStrike', 'DefiniteImpact', 'CunningStrike', 'DefiniteImpact']
     }
   end

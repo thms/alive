@@ -61,6 +61,10 @@ class AbilityGenerator < Rails::Generators::NamedBase
     gsub_file full_path, "self.damage_multiplier = 0", "self.damage_multiplier = #{effect['multiplier']}"
   end
 
+  def run(effect)
+    gsub_file full_path, "self.is_swap_out = false", "self.is_swap_out = true"
+  end
+
   def revenge_attack(effect)
     # do nothing - check with other revnge attacks
     # attack multipler is the same for revenge rampage in both modes

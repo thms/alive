@@ -22,6 +22,9 @@ class Ability
   class_attribute :delay
   class_attribute :cooldown
 
+  # What triggers the move
+  class_attribute :trigger
+
   # is this a priority move?
   class_attribute :is_priority
 

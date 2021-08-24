@@ -85,15 +85,15 @@ Dinosaur_1:
   rarity: legendary
   speed: 112
   dna: 0
-  left_id: 25
+  left_id: 28
   right_id: 2
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.165371000 Z
+    utc: &1 2021-08-23 14:38:04.251219000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.735870000 Z
+    utc: &3 2021-08-23 14:38:06.091871000 Z
     zone: *2
     time: *3
   abilities:
@@ -129,12 +129,12 @@ Dinosaur_2:
   speed: 103
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.172123000 Z
+    utc: &1 2021-08-23 14:38:04.258614000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.172123000 Z
+    utc: &3 2021-08-23 14:38:04.258614000 Z
     zone: *2
     time: *3
   abilities:
@@ -159,14 +159,14 @@ Dinosaur_3:
   speed: 114
   dna: 0
   left_id: 4
-  right_id: 17
+  right_id: 19
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.186151000 Z
+    utc: &1 2021-08-23 14:38:04.267590000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.743110000 Z
+    utc: &3 2021-08-23 14:38:06.099509000 Z
     zone: *2
     time: *3
   abilities:
@@ -194,12 +194,12 @@ Dinosaur_4:
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.192264000 Z
+    utc: &1 2021-08-23 14:38:04.273793000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.192264000 Z
+    utc: &3 2021-08-23 14:38:04.273793000 Z
     zone: *2
     time: *3
   abilities:
@@ -220,20 +220,60 @@ Dinosaur_4:
 
 Dinosaur_5:
   id: 5
+  name: Albertosaurus
+  level: 26
+  rarity: rare
+  speed: 106
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.280997000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.280997000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FierceStrike'
+  - !ruby/class 'KillerInstinct'
+  - !ruby/class 'FierceImpact'
+  armor: 0
+  critical_chance: 30
+  slug: albertosaurus
+  resistances:
+  - 100
+  - 50
+  - 0
+  - 0
+  - 100
+  - 0
+  - 100
+  - 0
+  - 25
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: fierce
+  health_26: 4350
+  damage_26: 1750
+
+Dinosaur_6:
+  id: 6
   name: Alloraptor
   level: 26
   rarity: legendary
   speed: 126
   dna: 0
-  left_id: 50
-  right_id: 7
+  left_id: 61
+  right_id: 8
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.198620000 Z
+    utc: &1 2021-08-23 14:38:04.287513000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.752337000 Z
+    utc: &3 2021-08-23 14:38:59.398031000 Z
     zone: *2
     time: *3
   abilities:
@@ -257,24 +297,25 @@ Dinosaur_5:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 3000
   damage_26: 1700
 
-Dinosaur_6:
-  id: 6
+Dinosaur_7:
+  id: 7
   name: Allosaurus
   level: 26
   rarity: common
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.205339000 Z
+    utc: &1 2021-08-23 14:38:04.293423000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.205339000 Z
+    utc: &3 2021-08-23 14:38:59.405708000 Z
     zone: *2
     time: *3
   abilities:
@@ -292,28 +333,29 @@ Dinosaur_6:
   - 0
   - 0
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
-  health_26: 4620
+  health_26: 4650
   damage_26: 1750
 
-Dinosaur_7:
-  id: 7
-  name: Allosaurus Gen 2
+Dinosaur_8:
+  id: 8
+  name: Allosaurus Gen2
   level: 26
   rarity: epic
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.212283000 Z
+    utc: &1 2021-08-23 14:38:04.299413000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.212283000 Z
+    utc: &3 2021-08-23 14:38:04.299413000 Z
     zone: *2
     time: *3
   abilities:
@@ -332,7 +374,7 @@ Dinosaur_7:
   - 0
   - 100
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -340,22 +382,22 @@ Dinosaur_7:
   health_26: 4500
   damage_26: 1800
 
-Dinosaur_8:
-  id: 8
+Dinosaur_9:
+  id: 9
   name: Allosinosaurus
   level: 26
   rarity: legendary
   speed: 106
   dna: 0
-  left_id: 6
-  right_id: 193
+  left_id: 7
+  right_id: 215
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.218311000 Z
+    utc: &1 2021-08-23 14:38:04.305917000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.760040000 Z
+    utc: &3 2021-08-23 14:38:59.417030000 Z
     zone: *2
     time: *3
   abilities:
@@ -369,24 +411,25 @@ Dinosaur_8:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1800
 
-Dinosaur_9:
-  id: 9
+Dinosaur_10:
+  id: 10
   name: Amargasaurus
   level: 26
   rarity: rare
   speed: 103
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.224345000 Z
+    utc: &1 2021-08-23 14:38:04.312044000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.224345000 Z
+    utc: &3 2021-08-23 14:38:59.423092000 Z
     zone: *2
     time: *3
   abilities:
@@ -399,26 +442,27 @@ Dinosaur_9:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 5250
   damage_26: 1000
 
-Dinosaur_10:
-  id: 10
+Dinosaur_11:
+  id: 11
   name: Amargocephalus
   level: 26
   rarity: epic
   speed: 104
   dna: 0
-  left_id: 9
-  right_id: 93
+  left_id: 10
+  right_id: 106
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.230501000 Z
+    utc: &1 2021-08-23 14:38:04.319550000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.767288000 Z
+    utc: &3 2021-08-23 14:38:59.429678000 Z
     zone: *2
     time: *3
   abilities:
@@ -444,24 +488,25 @@ Dinosaur_10:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 900
 
-Dinosaur_11:
-  id: 11
+Dinosaur_12:
+  id: 12
   name: Amphicyon
   level: 26
   rarity: common
   speed: 122
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.237028000 Z
+    utc: &1 2021-08-23 14:38:04.325570000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.237028000 Z
+    utc: &3 2021-08-23 14:38:04.325570000 Z
     zone: *2
     time: *3
   abilities:
@@ -489,20 +534,20 @@ Dinosaur_11:
   health_26: 3150
   damage_26: 1300
 
-Dinosaur_12:
-  id: 12
+Dinosaur_13:
+  id: 13
   name: Andrewsarchus
   level: 26
   rarity: rare
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.242933000 Z
+    utc: &1 2021-08-23 14:38:04.331443000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.242933000 Z
+    utc: &3 2021-08-23 14:38:59.438718000 Z
     zone: *2
     time: *3
   abilities:
@@ -527,26 +572,72 @@ Dinosaur_12:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3300
   damage_26: 1400
 
-Dinosaur_13:
-  id: 13
+Dinosaur_14:
+  id: 14
+  name: Andrewtherium
+  level: 26
+  rarity: epic
+  speed: 119
+  dna: 0
+  left_id: 13
+  right_id: 60
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.343708000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.128248000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'GroupCleansingStrike'
+  - !ruby/class 'FerociousStrike'
+  - !ruby/class 'GroupWarningSqueal'
+  - !ruby/class 'RendingAttack'
+  armor: 5
+  critical_chance: 25
+  slug: andrewtherium
+  abilities_on_escape:
+  - !ruby/class 'NoEscape'
+  resistances:
+  - 100
+  - 0
+  - 50
+  - 0
+  - 50
+  - 50
+  - 100
+  - 0
+  - 50
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: wild_card
+  health_26: 3600
+  damage_26: 1300
+
+Dinosaur_15:
+  id: 15
   name: Andrewtodon
   level: 26
   rarity: epic
   speed: 112
   dna: 0
-  left_id: 12
-  right_id: 98
+  left_id: 13
+  right_id: 111
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.249653000 Z
+    utc: &1 2021-08-23 14:38:04.360608000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.774518000 Z
+    utc: &3 2021-08-23 14:38:06.137819000 Z
     zone: *2
     time: *3
   abilities:
@@ -570,7 +661,7 @@ Dinosaur_13:
   - 50
   - 0
   - 0
-  - 25
+  - 0
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -578,22 +669,22 @@ Dinosaur_13:
   health_26: 3450
   damage_26: 1300
 
-Dinosaur_14:
-  id: 14
+Dinosaur_16:
+  id: 16
   name: Ankylocodon
   level: 26
   rarity: rare
   speed: 107
   dna: 0
-  left_id: 155
-  right_id: 17
+  left_id: 172
+  right_id: 19
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.255926000 Z
+    utc: &1 2021-08-23 14:38:04.367606000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.781924000 Z
+    utc: &3 2021-08-23 14:38:59.450073000 Z
     zone: *2
     time: *3
   abilities:
@@ -617,26 +708,27 @@ Dinosaur_14:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce_resilient
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_15:
-  id: 15
+Dinosaur_17:
+  id: 17
   name: Ankylodicurus
   level: 26
   rarity: epic
   speed: 108
   dna: 0
-  left_id: 66
-  right_id: 14
+  left_id: 79
+  right_id: 16
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.262074000 Z
+    utc: &1 2021-08-23 14:38:04.375795000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.789190000 Z
+    utc: &3 2021-08-23 14:38:06.151777000 Z
     zone: *2
     time: *3
   abilities:
@@ -664,20 +756,20 @@ Dinosaur_15:
   health_26: 4200
   damage_26: 1150
 
-Dinosaur_16:
-  id: 16
+Dinosaur_18:
+  id: 18
   name: Ankylosaurus
   level: 26
   rarity: epic
   speed: 116
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.267535000 Z
+    utc: &1 2021-08-23 14:38:04.381271000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.267535000 Z
+    utc: &3 2021-08-23 14:38:59.459421000 Z
     zone: *2
     time: *3
   abilities:
@@ -700,24 +792,25 @@ Dinosaur_16:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4650
   damage_26: 1000
 
-Dinosaur_17:
-  id: 17
+Dinosaur_19:
+  id: 19
   name: Ankylosaurus Gen 2
   level: 26
   rarity: common
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.273364000 Z
+    utc: &1 2021-08-23 14:38:04.386701000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.273364000 Z
+    utc: &3 2021-08-23 14:38:59.465566000 Z
     zone: *2
     time: *3
   abilities:
@@ -739,26 +832,27 @@ Dinosaur_17:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_18:
-  id: 18
+Dinosaur_20:
+  id: 20
   name: Ankyntrosaurus
   level: 26
   rarity: legendary
   speed: 109
   dna: 0
-  left_id: 16
-  right_id: 121
+  left_id: 18
+  right_id: 136
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.279829000 Z
+    utc: &1 2021-08-23 14:38:04.394831000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.796448000 Z
+    utc: &3 2021-08-23 14:38:06.161621000 Z
     zone: *2
     time: *3
   abilities:
@@ -788,20 +882,20 @@ Dinosaur_18:
   health_26: 3900
   damage_26: 900
 
-Dinosaur_19:
-  id: 19
+Dinosaur_21:
+  id: 21
   name: Antarctopelta
   level: 26
   rarity: epic
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.286535000 Z
+    utc: &1 2021-08-23 14:38:04.402795000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.286535000 Z
+    utc: &3 2021-08-23 14:38:04.402795000 Z
     zone: *2
     time: *3
   abilities:
@@ -830,29 +924,29 @@ Dinosaur_19:
   health_26: 3750
   damage_26: 1000
 
-Dinosaur_20:
-  id: 20
+Dinosaur_22:
+  id: 22
   name: Antarctovenator
   level: 26
   rarity: unique
   speed: 110
   dna: 0
-  left_id: 65
-  right_id: 19
+  left_id: 76
+  right_id: 21
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.293131000 Z
+    utc: &1 2021-08-23 14:38:04.411437000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.803757000 Z
+    utc: &3 2021-08-23 14:38:06.170586000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'CunningStrike'
   - !ruby/class 'RevengeInstantFerocity'
   - !ruby/class 'VulnerabilityImpact'
-  - !ruby/class 'DefiniteRampage'
+  - !ruby/class 'RevengeDefiniteRampage'
   armor: 20
   critical_chance: 10
   slug: antarctovenator
@@ -875,22 +969,22 @@ Dinosaur_20:
   speed_boosts: 0
   klass: wild_card
   health_26: 4200
-  damage_26: 1150
+  damage_26: 1200
 
-Dinosaur_21:
-  id: 21
+Dinosaur_23:
+  id: 23
   name: Apatosaurus
   level: 26
   rarity: common
   speed: 101
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.303877000 Z
+    utc: &1 2021-08-23 14:38:04.417596000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.303877000 Z
+    utc: &3 2021-08-23 14:38:59.482798000 Z
     zone: *2
     time: *3
   abilities:
@@ -902,26 +996,27 @@ Dinosaur_21:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 6000
   damage_26: 900
 
-Dinosaur_22:
-  id: 22
+Dinosaur_24:
+  id: 24
   name: Aquilamimus
   level: 26
   rarity: epic
   speed: 130
   dna: 0
-  left_id: 94
-  right_id: 107
+  left_id: 107
+  right_id: 120
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.311105000 Z
+    utc: &1 2021-08-23 14:38:04.424942000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.811019000 Z
+    utc: &3 2021-08-23 14:38:06.181451000 Z
     zone: *2
     time: *3
   abilities:
@@ -949,20 +1044,20 @@ Dinosaur_22:
   health_26: 2850
   damage_26: 1150
 
-Dinosaur_23:
-  id: 23
+Dinosaur_25:
+  id: 25
   name: Arambourgiania
   level: 26
   rarity: rare
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.317857000 Z
+    utc: &1 2021-08-23 14:38:04.431650000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.317857000 Z
+    utc: &3 2021-08-23 14:38:04.431650000 Z
     zone: *2
     time: *3
   abilities:
@@ -981,20 +1076,62 @@ Dinosaur_23:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_24:
-  id: 24
+Dinosaur_26:
+  id: 26
+  name: Archaeopteryx
+  level: 26
+  rarity: rare
+  speed: 127
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.442029000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.442029000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'AlertBuffAndStrike'
+  - !ruby/class 'EvasiveImpact'
+  - !ruby/class 'DelayedCunningRampage'
+  armor: 0
+  critical_chance: 10
+  slug: archaeopteryx
+  abilities_on_escape:
+  - !ruby/class 'AlertOnEscapeEvasion'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 33
+  - 0
+  - 0
+  - 75
+  - 100
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3300
+  damage_26: 1250
+
+Dinosaur_27:
+  id: 27
   name: Archaeotherium
   level: 26
   rarity: common
   speed: 121
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.323919000 Z
+    utc: &1 2021-08-23 14:38:04.448688000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.323919000 Z
+    utc: &3 2021-08-23 14:38:04.448688000 Z
     zone: *2
     time: *3
   abilities:
@@ -1012,7 +1149,7 @@ Dinosaur_24:
   - 100
   - 0
   - 0
-  - 0
+  - 100
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -1020,20 +1157,20 @@ Dinosaur_24:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_25:
-  id: 25
+Dinosaur_28:
+  id: 28
   name: Arctops
   level: 26
   rarity: rare
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.329455000 Z
+    utc: &1 2021-08-23 14:38:04.455411000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.329455000 Z
+    utc: &3 2021-08-23 14:38:04.455411000 Z
     zone: *2
     time: *3
   abilities:
@@ -1060,22 +1197,22 @@ Dinosaur_25:
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_26:
-  id: 26
+Dinosaur_29:
+  id: 29
   name: Ardentismaxima
   level: 26
   rarity: unique
   speed: 109
   dna: 0
-  left_id: 34
-  right_id: 27
+  left_id: 38
+  right_id: 30
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.335612000 Z
+    utc: &1 2021-08-23 14:38:04.461942000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.817337000 Z
+    utc: &3 2021-08-23 14:38:59.504418000 Z
     zone: *2
     time: *3
   abilities:
@@ -1099,26 +1236,27 @@ Dinosaur_26:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce_resilient
   health_26: 5700
   damage_26: 1200
 
-Dinosaur_27:
-  id: 27
+Dinosaur_30:
+  id: 30
   name: Ardontosaurus
   level: 26
   rarity: legendary
   speed: 108
   dna: 0
-  left_id: 28
-  right_id: 192
+  left_id: 32
+  right_id: 214
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.341362000 Z
+    utc: &1 2021-08-23 14:38:04.467491000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.824322000 Z
+    utc: &3 2021-08-23 14:38:59.511227000 Z
     zone: *2
     time: *3
   abilities:
@@ -1142,24 +1280,65 @@ Dinosaur_27:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce_resilient
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_28:
-  id: 28
+Dinosaur_31:
+  id: 31
+  name: Argentavis
+  level: 26
+  rarity: rare
+  speed: 128
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.478597000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.478597000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'Distraction'
+  - !ruby/class 'FearlessFlap'
+  - !ruby/class 'EvasiveImpact'
+  armor: 0
+  critical_chance: 10
+  slug: argentavis
+  resistances:
+  - 100
+  - 0
+  - 0
+  - 50
+  - 50
+  - 50
+  - 100
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 4050
+  damage_26: 1050
+
+Dinosaur_32:
+  id: 32
   name: Argentinosaurus
   level: 26
   rarity: rare
   speed: 102
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.347186000 Z
+    utc: &1 2021-08-23 14:38:04.484477000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.347186000 Z
+    utc: &3 2021-08-23 14:38:04.484477000 Z
     zone: *2
     time: *3
   abilities:
@@ -1176,20 +1355,20 @@ Dinosaur_28:
   health_26: 5400
   damage_26: 1100
 
-Dinosaur_29:
-  id: 29
+Dinosaur_33:
+  id: 33
   name: Bajadasaurus
   level: 26
   rarity: rare
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.353567000 Z
+    utc: &1 2021-08-23 14:38:04.492003000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.353567000 Z
+    utc: &3 2021-08-23 14:38:04.492003000 Z
     zone: *2
     time: *3
   abilities:
@@ -1218,22 +1397,22 @@ Dinosaur_29:
   health_26: 4350
   damage_26: 900
 
-Dinosaur_30:
-  id: 30
+Dinosaur_34:
+  id: 34
   name: Bajatonodon
   level: 26
   rarity: legendary
   speed: 106
   dna: 0
-  left_id: 76
-  right_id: 29
+  left_id: 89
+  right_id: 33
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.360360000 Z
+    utc: &1 2021-08-23 14:38:04.499308000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.832325000 Z
+    utc: &3 2021-08-23 14:38:59.531982000 Z
     zone: *2
     time: *3
   abilities:
@@ -1257,24 +1436,25 @@ Dinosaur_30:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_31:
-  id: 31
+Dinosaur_35:
+  id: 35
   name: Baryonyx
   level: 26
   rarity: epic
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.366539000 Z
+    utc: &1 2021-08-23 14:38:04.506288000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.366539000 Z
+    utc: &3 2021-08-23 14:38:04.506288000 Z
     zone: *2
     time: *3
   abilities:
@@ -1293,7 +1473,7 @@ Dinosaur_31:
   - 0
   - 0
   - 0
-  - 100
+  - 75
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -1301,20 +1481,20 @@ Dinosaur_31:
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_32:
-  id: 32
+Dinosaur_36:
+  id: 36
   name: Baryonyx Gen 2
   level: 26
   rarity: rare
   speed: 123
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.372241000 Z
+    utc: &1 2021-08-23 14:38:04.512711000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.372241000 Z
+    utc: &3 2021-08-23 14:38:59.541145000 Z
     zone: *2
     time: *3
   abilities:
@@ -1337,24 +1517,25 @@ Dinosaur_32:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_33:
-  id: 33
+Dinosaur_37:
+  id: 37
   name: Blue
   level: 26
   rarity: epic
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.378393000 Z
+    utc: &1 2021-08-23 14:38:04.519437000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.378393000 Z
+    utc: &3 2021-08-23 14:38:59.547499000 Z
     zone: *2
     time: *3
   abilities:
@@ -1377,24 +1558,25 @@ Dinosaur_33:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2400
   damage_26: 1300
 
-Dinosaur_34:
-  id: 34
+Dinosaur_38:
+  id: 38
   name: Brachiosaurus
   level: 26
   rarity: epic
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.384252000 Z
+    utc: &1 2021-08-23 14:38:04.525152000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.384252000 Z
+    utc: &3 2021-08-23 14:38:59.554321000 Z
     zone: *2
     time: *3
   abilities:
@@ -1417,26 +1599,27 @@ Dinosaur_34:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 6000
   damage_26: 1000
 
-Dinosaur_35:
-  id: 35
+Dinosaur_39:
+  id: 39
   name: Brontolasmus
   level: 26
   rarity: epic
   speed: 108
   dna: 0
-  left_id: 80
-  right_id: 36
+  left_id: 93
+  right_id: 40
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.389699000 Z
+    utc: &1 2021-08-23 14:38:04.531249000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.841000000 Z
+    utc: &3 2021-08-23 14:38:06.209023000 Z
     zone: *2
     time: *3
   abilities:
@@ -1464,20 +1647,20 @@ Dinosaur_35:
   health_26: 3900
   damage_26: 1300
 
-Dinosaur_36:
-  id: 36
+Dinosaur_40:
+  id: 40
   name: Brontotherium
   level: 26
   rarity: common
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.396008000 Z
+    utc: &1 2021-08-23 14:38:04.536950000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.396008000 Z
+    utc: &3 2021-08-23 14:38:04.536950000 Z
     zone: *2
     time: *3
   abilities:
@@ -1505,20 +1688,62 @@ Dinosaur_36:
   health_26: 4200
   damage_26: 1200
 
-Dinosaur_37:
-  id: 37
+Dinosaur_41:
+  id: 41
+  name: Bumpy
+  level: 26
+  rarity: epic
+  speed: 113
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.546287000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.546287000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'SuperiorVulnerability'
+  - !ruby/class 'InstantInvincibilityTaunt'
+  - !ruby/class 'GroupTauntingShieldImpact'
+  armor: 25
+  critical_chance: 10
+  slug: bumpy
+  abilities_swap_in:
+  - !ruby/class 'StunningAlert'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 50
+  - 0
+  - 0
+  - 0
+  - 100
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: resilient
+  health_26: 4200
+  damage_26: 1050
+
+Dinosaur_42:
+  id: 42
   name: Carbonemys
   level: 26
   rarity: epic
   speed: 103
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.403395000 Z
+    utc: &1 2021-08-23 14:38:04.553357000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.403395000 Z
+    utc: &3 2021-08-23 14:38:59.571223000 Z
     zone: *2
     time: *3
   abilities:
@@ -1541,26 +1766,27 @@ Dinosaur_37:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3300
   damage_26: 900
 
-Dinosaur_38:
-  id: 38
+Dinosaur_43:
+  id: 43
   name: Carbotoceratops
   level: 26
   rarity: legendary
   speed: 104
   dna: 0
-  left_id: 37
-  right_id: 150
+  left_id: 42
+  right_id: 167
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.411137000 Z
+    utc: &1 2021-08-23 14:38:04.560378000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.848507000 Z
+    utc: &3 2021-08-23 14:38:06.215892000 Z
     zone: *2
     time: *3
   abilities:
@@ -1590,22 +1816,22 @@ Dinosaur_38:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_39:
-  id: 39
+Dinosaur_44:
+  id: 44
   name: Carnotarkus
   level: 26
   rarity: legendary
   speed: 110
   dna: 0
-  left_id: 245
-  right_id: 178
+  left_id: 268
+  right_id: 195
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.418794000 Z
+    utc: &1 2021-08-23 14:38:04.567983000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.855492000 Z
+    utc: &3 2021-08-23 14:38:06.225728000 Z
     zone: *2
     time: *3
   abilities:
@@ -1625,20 +1851,20 @@ Dinosaur_39:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_40:
-  id: 40
+Dinosaur_45:
+  id: 45
   name: Carnotaurus
   level: 26
   rarity: rare
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.428419000 Z
+    utc: &1 2021-08-23 14:38:04.573875000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.428419000 Z
+    utc: &3 2021-08-23 14:38:04.573875000 Z
     zone: *2
     time: *3
   abilities:
@@ -1657,20 +1883,20 @@ Dinosaur_40:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_41:
-  id: 41
+Dinosaur_46:
+  id: 46
   name: Ceramagnus
   level: 26
   rarity: apex
   speed: 114
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.434452000 Z
+    utc: &1 2021-08-23 14:38:04.582034000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.434452000 Z
+    utc: &3 2021-08-23 14:38:59.589091000 Z
     zone: *2
     time: *3
   abilities:
@@ -1692,28 +1918,29 @@ Dinosaur_41:
   - 100
   - 0
   - 0
-  - 50
+  - 0
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_42:
-  id: 42
+Dinosaur_47:
+  id: 47
   name: Charlie
   level: 26
   rarity: rare
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.442713000 Z
+    utc: &1 2021-08-23 14:38:04.592802000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.442713000 Z
+    utc: &3 2021-08-23 14:38:04.592802000 Z
     zone: *2
     time: *3
   abilities:
@@ -1730,20 +1957,241 @@ Dinosaur_42:
   health_26: 2100
   damage_26: 1450
 
-Dinosaur_43:
-  id: 43
+Dinosaur_48:
+  id: 48
+  name: Coelhaast
+  level: 26
+  rarity: legendary
+  speed: 130
+  dna: 0
+  left_id: 49
+  right_id: 119
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.601835000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.233772000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'PrecisePiercingStrike'
+  - !ruby/class 'FearlessAlert'
+  - !ruby/class 'PreciseImpactAndRun'
+  - !ruby/class 'RestrictedGroupDistraction'
+  armor: 0
+  critical_chance: 10
+  slug: coelhaast
+  abilities_on_escape:
+  - !ruby/class 'AlertRoost'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 33
+  - 0
+  - 100
+  - 100
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: wild_card
+  health_26: 3150
+  damage_26: 1250
+
+Dinosaur_49:
+  id: 49
+  name: Coelurosauravus
+  level: 26
+  rarity: common
+  speed: 126
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.608965000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.608965000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'Distraction'
+  - !ruby/class 'ImpactAndRun'
+  armor: 0
+  critical_chance: 15
+  slug: coelurosauravus
+  abilities_swap_in:
+  - !ruby/class 'AlertTheFlock'
+  abilities_on_escape:
+  - !ruby/class 'AlertRoost'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 33
+  - 0
+  - 100
+  - 100
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3450
+  damage_26: 1050
+
+Dinosaur_50:
+  id: 50
+  name: Compsocaulus
+  level: 26
+  rarity: unique
+  speed: 127
+  dna: 0
+  left_id: 51
+  right_id: 73
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.615741000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.242945000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'HopAndMock'
+  - !ruby/class 'RestrictedGroupDistraction'
+  - !ruby/class 'AlertScurry'
+  armor: 0
+  critical_chance: 10
+  slug: compsocaulus
+  abilities_swap_in:
+  - !ruby/class 'SwapInDistraction'
+  resistances:
+  - 0
+  - 0
+  - 33
+  - 33
+  - 100
+  - 50
+  - 0
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3750
+  damage_26: 1350
+
+Dinosaur_51:
+  id: 51
+  name: Compsognathus
+  level: 26
+  rarity: epic
+  speed: 128
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.622300000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.622300000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'HopAndMock'
+  - !ruby/class 'AlertScurry'
+  armor: 0
+  critical_chance: 5
+  slug: compsognathus
+  abilities_swap_in:
+  - !ruby/class 'AlertTheFlock'
+  abilities_on_escape:
+  - !ruby/class 'AlertSwarm'
+  resistances:
+  - 0
+  - 0
+  - 66
+  - 33
+  - 0
+  - 100
+  - 50
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3600
+  damage_26: 1200
+
+Dinosaur_52:
+  id: 52
+  name: Compsognathus Gen 2
+  level: 26
+  rarity: rare
+  speed: 127
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.628598000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.628598000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CourageousAlert'
+  - !ruby/class 'HopAndMock'
+  - !ruby/class 'ImpactAndRun'
+  armor: 0
+  critical_chance: 10
+  slug: compsognathus_gen_2
+  abilities_swap_in:
+  - !ruby/class 'AlertTheFlock'
+  abilities_on_escape:
+  - !ruby/class 'AlertSwarm'
+  resistances:
+  - 0
+  - 0
+  - 66
+  - 33
+  - 0
+  - 100
+  - 25
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3750
+  damage_26: 1100
+
+Dinosaur_53:
+  id: 53
   name: Concavenator
   level: 26
   rarity: epic
   speed: 106
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.448482000 Z
+    utc: &1 2021-08-23 14:38:04.634918000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.448482000 Z
+    utc: &3 2021-08-23 14:38:59.614332000 Z
     zone: *2
     time: *3
   abilities:
@@ -1751,33 +2199,44 @@ Dinosaur_43:
   - !ruby/class 'TauntingShields'
   - !ruby/class 'DefenseShatteringImpact'
   armor: 0
-  critical_chance: 5
+  critical_chance: 10
   slug: concavenator
   abilities_counter:
   - !ruby/class 'DefenseShatteringCounter'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce_resilient
   health_26: 3750
   damage_26: 1150
 
-Dinosaur_44:
-  id: 44
+Dinosaur_54:
+  id: 54
   name: Dakotanops
   level: 26
   rarity: legendary
   speed: 131
   dna: 0
-  left_id: 99
-  right_id: 45
+  left_id: 112
+  right_id: 55
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.454786000 Z
+    utc: &1 2021-08-23 14:38:04.643300000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.862718000 Z
+    utc: &3 2021-08-23 14:38:06.252083000 Z
     zone: *2
     time: *3
   abilities:
@@ -1805,20 +2264,20 @@ Dinosaur_44:
   health_26: 3300
   damage_26: 1200
 
-Dinosaur_45:
-  id: 45
+Dinosaur_55:
+  id: 55
   name: Dakotaraptor
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.460895000 Z
+    utc: &1 2021-08-23 14:38:04.650889000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.460895000 Z
+    utc: &3 2021-08-23 14:38:59.623604000 Z
     zone: *2
     time: *3
   abilities:
@@ -1841,26 +2300,27 @@ Dinosaur_45:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3150
   damage_26: 1200
 
-Dinosaur_46:
-  id: 46
+Dinosaur_56:
+  id: 56
   name: Darwezopteryx
   level: 26
   rarity: legendary
   speed: 127
   dna: 0
-  left_id: 47
-  right_id: 109
+  left_id: 57
+  right_id: 123
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.468445000 Z
+    utc: &1 2021-08-23 14:38:04.659201000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.870317000 Z
+    utc: &3 2021-08-23 14:38:06.260048000 Z
     zone: *2
     time: *3
   abilities:
@@ -1890,20 +2350,20 @@ Dinosaur_46:
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_47:
-  id: 47
+Dinosaur_57:
+  id: 57
   name: Darwinopterus
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.474157000 Z
+    utc: &1 2021-08-23 14:38:04.664965000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.474157000 Z
+    utc: &3 2021-08-23 14:38:04.664965000 Z
     zone: *2
     time: *3
   abilities:
@@ -1922,20 +2382,20 @@ Dinosaur_47:
   health_26: 2700
   damage_26: 1000
 
-Dinosaur_48:
-  id: 48
+Dinosaur_58:
+  id: 58
   name: Deinocheirus
   level: 26
   rarity: common
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.480849000 Z
+    utc: &1 2021-08-23 14:38:04.670759000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.480849000 Z
+    utc: &3 2021-08-23 14:38:59.634993000 Z
     zone: *2
     time: *3
   abilities:
@@ -1947,24 +2407,25 @@ Dinosaur_48:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2700
   damage_26: 1350
 
-Dinosaur_49:
-  id: 49
+Dinosaur_59:
+  id: 59
   name: Deinonychus
   level: 26
   rarity: common
   speed: 132
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.486111000 Z
+    utc: &1 2021-08-23 14:38:04.675808000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.486111000 Z
+    utc: &3 2021-08-23 14:38:59.640807000 Z
     zone: *2
     time: *3
   abilities:
@@ -1976,24 +2437,65 @@ Dinosaur_49:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2100
   damage_26: 1200
 
-Dinosaur_50:
-  id: 50
+Dinosaur_60:
+  id: 60
+  name: Deinotherium
+  level: 26
+  rarity: rare
+  speed: 115
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.682290000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.682290000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'SuperiorityStrike'
+  - !ruby/class 'FerociousImpact'
+  - !ruby/class 'InstantRumble'
+  armor: 5
+  critical_chance: 10
+  slug: deinotherium
+  resistances:
+  - 100
+  - 0
+  - 50
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 50
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: wild_card
+  health_26: 3900
+  damage_26: 1050
+
+Dinosaur_61:
+  id: 61
   name: Delta
   level: 26
   rarity: rare
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.492029000 Z
+    utc: &1 2021-08-23 14:38:04.688443000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.492029000 Z
+    utc: &3 2021-08-23 14:38:04.688443000 Z
     zone: *2
     time: *3
   abilities:
@@ -2010,22 +2512,22 @@ Dinosaur_50:
   health_26: 2400
   damage_26: 1300
 
-Dinosaur_51:
-  id: 51
+Dinosaur_62:
+  id: 62
   name: Dilophoboa
   level: 26
   rarity: legendary
   speed: 124
   dna: 0
-  left_id: 223
-  right_id: 53
+  left_id: 245
+  right_id: 64
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.497906000 Z
+    utc: &1 2021-08-23 14:38:04.697077000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.878115000 Z
+    utc: &3 2021-08-23 14:38:06.269795000 Z
     zone: *2
     time: *3
   abilities:
@@ -2057,20 +2559,20 @@ Dinosaur_51:
   health_26: 3600
   damage_26: 1100
 
-Dinosaur_52:
-  id: 52
+Dinosaur_63:
+  id: 63
   name: Dilophosaurus
   level: 26
   rarity: rare
   speed: 124
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.504679000 Z
+    utc: &1 2021-08-23 14:38:04.704045000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.504679000 Z
+    utc: &3 2021-08-23 14:38:59.654352000 Z
     zone: *2
     time: *3
   abilities:
@@ -2083,24 +2585,25 @@ Dinosaur_52:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3600
   damage_26: 1300
 
-Dinosaur_53:
-  id: 53
+Dinosaur_64:
+  id: 64
   name: Dilophosaurus Gen 2
   level: 26
   rarity: common
   speed: 121
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.512812000 Z
+    utc: &1 2021-08-23 14:38:04.709423000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.512812000 Z
+    utc: &3 2021-08-23 14:38:59.666221000 Z
     zone: *2
     time: *3
   abilities:
@@ -2122,26 +2625,27 @@ Dinosaur_53:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2550
   damage_26: 1850
 
-Dinosaur_54:
-  id: 54
+Dinosaur_65:
+  id: 65
   name: Diloracheirus
   level: 26
   rarity: unique
   speed: 124
   dna: 0
-  left_id: 48
-  right_id: 55
+  left_id: 58
+  right_id: 66
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.520455000 Z
+    utc: &1 2021-08-23 14:38:04.714792000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.885912000 Z
+    utc: &3 2021-08-23 14:38:06.277651000 Z
     zone: *2
     time: *3
   abilities:
@@ -2169,22 +2673,22 @@ Dinosaur_54:
   health_26: 4350
   damage_26: 1500
 
-Dinosaur_55:
-  id: 55
+Dinosaur_66:
+  id: 66
   name: Diloranosaurus
   level: 26
   rarity: legendary
   speed: 116
   dna: 0
-  left_id: 52
-  right_id: 157
+  left_id: 63
+  right_id: 174
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.526387000 Z
+    utc: &1 2021-08-23 14:38:04.719693000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.893536000 Z
+    utc: &3 2021-08-23 14:38:06.284653000 Z
     zone: *2
     time: *3
   abilities:
@@ -2212,20 +2716,20 @@ Dinosaur_55:
   health_26: 4200
   damage_26: 1500
 
-Dinosaur_56:
-  id: 56
+Dinosaur_67:
+  id: 67
   name: Dimetrodon
   level: 26
   rarity: rare
   speed: 113
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.532527000 Z
+    utc: &1 2021-08-23 14:38:04.726378000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.532527000 Z
+    utc: &3 2021-08-23 14:38:04.726378000 Z
     zone: *2
     time: *3
   abilities:
@@ -2252,20 +2756,20 @@ Dinosaur_56:
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_57:
-  id: 57
+Dinosaur_68:
+  id: 68
   name: Dimetrodon Gen 2
   level: 26
   rarity: common
   speed: 112
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.538438000 Z
+    utc: &1 2021-08-23 14:38:04.732153000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.538438000 Z
+    utc: &3 2021-08-23 14:38:59.679880000 Z
     zone: *2
     time: *3
   abilities:
@@ -2287,26 +2791,27 @@ Dinosaur_57:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1200
 
-Dinosaur_58:
-  id: 58
+Dinosaur_69:
+  id: 69
   name: Dimodactylus
   level: 26
   rarity: epic
   speed: 126
   dna: 0
-  left_id: 234
-  right_id: 59
+  left_id: 257
+  right_id: 70
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.546583000 Z
+    utc: &1 2021-08-23 14:38:04.738667000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.901257000 Z
+    utc: &3 2021-08-23 14:38:06.291613000 Z
     zone: *2
     time: *3
   abilities:
@@ -2338,20 +2843,20 @@ Dinosaur_58:
   health_26: 3000
   damage_26: 1000
 
-Dinosaur_59:
-  id: 59
+Dinosaur_70:
+  id: 70
   name: Dimorphodon
   level: 26
   rarity: common
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.552533000 Z
+    utc: &1 2021-08-23 14:38:04.747198000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.552533000 Z
+    utc: &3 2021-08-23 14:38:04.747198000 Z
     zone: *2
     time: *3
   abilities:
@@ -2371,7 +2876,7 @@ Dinosaur_59:
   - 0
   - 100
   - 0
-  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -2379,22 +2884,22 @@ Dinosaur_59:
   health_26: 2700
   damage_26: 500
 
-Dinosaur_60:
-  id: 60
+Dinosaur_71:
+  id: 71
   name: Diorajasaur
   level: 26
   rarity: unique
   speed: 108
   dna: 0
-  left_id: 183
-  right_id: 232
+  left_id: 200
+  right_id: 255
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.558506000 Z
+    utc: &1 2021-08-23 14:38:04.754234000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.909588000 Z
+    utc: &3 2021-08-23 14:38:59.691812000 Z
     zone: *2
     time: *3
   abilities:
@@ -2410,24 +2915,25 @@ Dinosaur_60:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1200
 
-Dinosaur_61:
-  id: 61
+Dinosaur_72:
+  id: 72
   name: Diplocaulus
   level: 26
   rarity: common
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.563965000 Z
+    utc: &1 2021-08-23 14:38:04.762549000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.563965000 Z
+    utc: &3 2021-08-23 14:38:59.697826000 Z
     zone: *2
     time: *3
   abilities:
@@ -2449,24 +2955,25 @@ Dinosaur_61:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2850
   damage_26: 1600
 
-Dinosaur_62:
-  id: 62
+Dinosaur_73:
+  id: 73
   name: Diplocaulus Gen 2
   level: 26
   rarity: rare
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.570167000 Z
+    utc: &1 2021-08-23 14:38:04.769687000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.570167000 Z
+    utc: &3 2021-08-23 14:38:04.769687000 Z
     zone: *2
     time: *3
   abilities:
@@ -2495,20 +3002,20 @@ Dinosaur_62:
   health_26: 4050
   damage_26: 1000
 
-Dinosaur_63:
-  id: 63
+Dinosaur_74:
+  id: 74
   name: Diplodocus
   level: 26
   rarity: epic
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.576123000 Z
+    utc: &1 2021-08-23 14:38:04.777809000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.576123000 Z
+    utc: &3 2021-08-23 14:38:04.777809000 Z
     zone: *2
     time: *3
   abilities:
@@ -2537,22 +3044,22 @@ Dinosaur_63:
   health_26: 6000
   damage_26: 1500
 
-Dinosaur_64:
-  id: 64
+Dinosaur_75:
+  id: 75
   name: Diplotator
   level: 26
   rarity: rare
   speed: 127
   dna: 0
-  left_id: 61
-  right_id: 118
+  left_id: 72
+  right_id: 133
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.582844000 Z
+    utc: &1 2021-08-23 14:38:04.784428000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.916561000 Z
+    utc: &3 2021-08-23 14:38:06.309000000 Z
     zone: *2
     time: *3
   abilities:
@@ -2580,22 +3087,22 @@ Dinosaur_64:
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_65:
-  id: 65
+Dinosaur_76:
+  id: 76
   name: Diplovenator
   level: 26
   rarity: legendary
   speed: 110
   dna: 0
-  left_id: 62
-  right_id: 43
+  left_id: 73
+  right_id: 53
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.589270000 Z
+    utc: &1 2021-08-23 14:38:04.791638000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.923347000 Z
+    utc: &3 2021-08-23 14:38:06.315881000 Z
     zone: *2
     time: *3
   abilities:
@@ -2625,25 +3132,108 @@ Dinosaur_65:
   health_26: 4050
   damage_26: 1000
 
-Dinosaur_66:
-  id: 66
+Dinosaur_77:
+  id: 77
+  name: Dodo
+  level: 26
+  rarity: epic
+  speed: 123
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.800956000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:04.800956000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FlightlessStrike'
+  - !ruby/class 'ProtectiveAlert'
+  - !ruby/class 'AlertDecoy'
+  armor: 0
+  critical_chance: 5
+  slug: dodo
+  resistances:
+  - 100
+  - 0
+  - 0
+  - 33
+  - 100
+  - 0
+  - 0
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3900
+  damage_26: 1200
+
+Dinosaur_78:
+  id: 78
+  name: Dodocevia
+  level: 26
+  rarity: legendary
+  speed: 126
+  dna: 0
+  left_id: 77
+  right_id: 131
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:04.810813000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.324810000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FlightlessStrike'
+  - !ruby/class 'ProtectiveAlert'
+  - !ruby/class 'RevengeDistractingImpact'
+  - !ruby/class 'AlertDecoy'
+  armor: 0
+  critical_chance: 5
+  slug: dodocevia
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 33
+  - 50
+  - 50
+  - 0
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: wild_card
+  health_26: 4050
+  damage_26: 1400
+
+Dinosaur_79:
+  id: 79
   name: Doedicurus
   level: 26
   rarity: rare
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.595588000 Z
+    utc: &1 2021-08-23 14:38:04.817307000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.595588000 Z
+    utc: &3 2021-08-23 14:38:59.719717000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'ResilientStrike'
-  - !ruby/class 'ResilientRampage'
+  - !ruby/class 'DeceleratingRampage'
   - !ruby/class 'GroupTauntingShields'
   armor: 50
   critical_chance: 5
@@ -2661,26 +3251,27 @@ Dinosaur_66:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1200
 
-Dinosaur_67:
-  id: 67
+Dinosaur_80:
+  id: 80
   name: Dracoceratops
   level: 26
   rarity: legendary
   speed: 115
   dna: 0
-  left_id: 70
-  right_id: 227
+  left_id: 83
+  right_id: 249
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.601628000 Z
+    utc: &1 2021-08-23 14:38:04.824175000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.932855000 Z
+    utc: &3 2021-08-23 14:38:59.726223000 Z
     zone: *2
     time: *3
   abilities:
@@ -2706,33 +3297,34 @@ Dinosaur_67:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4200
   damage_26: 1500
 
-Dinosaur_68:
-  id: 68
+Dinosaur_81:
+  id: 81
   name: Dracoceratosaurus
   level: 26
   rarity: unique
-  speed: 117
+  speed: 119
   dna: 0
-  left_id: 67
-  right_id: 171
+  left_id: 80
+  right_id: 188
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.609104000 Z
+    utc: &1 2021-08-23 14:38:04.830050000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.940600000 Z
+    utc: &3 2021-08-23 14:38:59.732295000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'CunningStrike'
-  - !ruby/class 'CunningImpact'
-  - !ruby/class 'AcuteStun'
   - !ruby/class 'CleansingImpact'
+  - !ruby/class 'AcuteStun'
+  - !ruby/class 'CunningRampage'
   armor: 0
   critical_chance: 5
   slug: dracoceratosaurus
@@ -2743,7 +3335,7 @@ Dinosaur_68:
   - 0
   - 0
   - 0
-  - 0
+  - 100
   - 0
   - 100
   - 0
@@ -2751,24 +3343,25 @@ Dinosaur_68:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3900
   damage_26: 1600
 
-Dinosaur_69:
-  id: 69
+Dinosaur_82:
+  id: 82
   name: Dracorex
   level: 26
   rarity: rare
   speed: 124
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.616246000 Z
+    utc: &1 2021-08-23 14:38:04.836100000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.616246000 Z
+    utc: &3 2021-08-23 14:38:04.836100000 Z
     zone: *2
     time: *3
   abilities:
@@ -2787,20 +3380,20 @@ Dinosaur_69:
   health_26: 4800
   damage_26: 1100
 
-Dinosaur_70:
-  id: 70
+Dinosaur_83:
+  id: 83
   name: Dracorex Gen 2
   level: 26
   rarity: common
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.621749000 Z
+    utc: &1 2021-08-23 14:38:04.842848000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.621749000 Z
+    utc: &3 2021-08-23 14:38:59.741471000 Z
     zone: *2
     time: *3
   abilities:
@@ -2814,26 +3407,27 @@ Dinosaur_70:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3600
   damage_26: 1500
 
-Dinosaur_71:
-  id: 71
+Dinosaur_84:
+  id: 84
   name: Dsungaia
   level: 26
   rarity: legendary
   speed: 113
   dna: 0
-  left_id: 141
-  right_id: 72
+  left_id: 158
+  right_id: 85
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.626954000 Z
+    utc: &1 2021-08-23 14:38:04.853001000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.948380000 Z
+    utc: &3 2021-08-23 14:38:06.345623000 Z
     zone: *2
     time: *3
   abilities:
@@ -2853,20 +3447,20 @@ Dinosaur_71:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_72:
-  id: 72
+Dinosaur_85:
+  id: 85
   name: Dsungaripterus
   level: 26
   rarity: rare
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.632970000 Z
+    utc: &1 2021-08-23 14:38:04.860680000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.632970000 Z
+    utc: &3 2021-08-23 14:38:04.860680000 Z
     zone: *2
     time: *3
   abilities:
@@ -2887,20 +3481,20 @@ Dinosaur_72:
   health_26: 3450
   damage_26: 1000
 
-Dinosaur_73:
-  id: 73
+Dinosaur_86:
+  id: 86
   name: Echo
   level: 26
   rarity: rare
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.637925000 Z
+    utc: &1 2021-08-23 14:38:04.866451000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.637925000 Z
+    utc: &3 2021-08-23 14:38:59.753962000 Z
     zone: *2
     time: *3
   abilities:
@@ -2913,26 +3507,27 @@ Dinosaur_73:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2100
   damage_26: 1350
 
-Dinosaur_74:
-  id: 74
+Dinosaur_87:
+  id: 87
   name: Edaphocevia
   level: 26
   rarity: legendary
   speed: 127
   dna: 0
-  left_id: 116
-  right_id: 75
+  left_id: 131
+  right_id: 88
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.644113000 Z
+    utc: &1 2021-08-23 14:38:04.873774000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.955234000 Z
+    utc: &3 2021-08-23 14:38:59.761563000 Z
     zone: *2
     time: *3
   abilities:
@@ -2956,24 +3551,25 @@ Dinosaur_74:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_75:
-  id: 75
+Dinosaur_88:
+  id: 88
   name: Edaphosaurus
   level: 26
   rarity: epic
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.650191000 Z
+    utc: &1 2021-08-23 14:38:04.878891000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.650191000 Z
+    utc: &3 2021-08-23 14:38:59.768072000 Z
     zone: *2
     time: *3
   abilities:
@@ -2996,26 +3592,27 @@ Dinosaur_75:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_76:
-  id: 76
+Dinosaur_89:
+  id: 89
   name: Edmontoguanodon
   level: 26
   rarity: epic
   speed: 110
   dna: 0
-  left_id: 77
-  right_id: 110
+  left_id: 90
+  right_id: 125
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.657898000 Z
+    utc: &1 2021-08-23 14:38:04.884773000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.963086000 Z
+    utc: &3 2021-08-23 14:38:06.362500000 Z
     zone: *2
     time: *3
   abilities:
@@ -3043,20 +3640,20 @@ Dinosaur_76:
   health_26: 4500
   damage_26: 1200
 
-Dinosaur_77:
-  id: 77
+Dinosaur_90:
+  id: 90
   name: Edmontosaurus
   level: 26
   rarity: rare
   speed: 113
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.663182000 Z
+    utc: &1 2021-08-23 14:38:04.913846000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.663182000 Z
+    utc: &3 2021-08-23 14:38:04.913846000 Z
     zone: *2
     time: *3
   abilities:
@@ -3073,22 +3670,22 @@ Dinosaur_77:
   health_26: 4800
   damage_26: 1000
 
-Dinosaur_78:
-  id: 78
+Dinosaur_91:
+  id: 91
   name: Einiasuchus
   level: 26
   rarity: rare
   speed: 111
   dna: 0
-  left_id: 79
-  right_id: 154
+  left_id: 92
+  right_id: 171
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.669325000 Z
+    utc: &1 2021-08-23 14:38:04.922699000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.970516000 Z
+    utc: &3 2021-08-23 14:38:59.781222000 Z
     zone: *2
     time: *3
   abilities:
@@ -3104,24 +3701,25 @@ Dinosaur_78:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_79:
-  id: 79
+Dinosaur_92:
+  id: 92
   name: Einiosaurus
   level: 26
   rarity: common
   speed: 110
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.674986000 Z
+    utc: &1 2021-08-23 14:38:04.932043000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.674986000 Z
+    utc: &3 2021-08-23 14:38:59.791291000 Z
     zone: *2
     time: *3
   abilities:
@@ -3135,24 +3733,25 @@ Dinosaur_79:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_80:
-  id: 80
+Dinosaur_93:
+  id: 93
   name: Elasmotherium
   level: 26
   rarity: rare
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.680368000 Z
+    utc: &1 2021-08-23 14:38:04.943651000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.680368000 Z
+    utc: &3 2021-08-23 14:38:04.943651000 Z
     zone: *2
     time: *3
   abilities:
@@ -3179,22 +3778,22 @@ Dinosaur_80:
   health_26: 4500
   damage_26: 1250
 
-Dinosaur_81:
-  id: 81
+Dinosaur_94:
+  id: 94
   name: Entelochops
   level: 26
   rarity: epic
   speed: 126
   dna: 0
-  left_id: 149
-  right_id: 82
+  left_id: 166
+  right_id: 95
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.685789000 Z
+    utc: &1 2021-08-23 14:38:04.957278000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.977983000 Z
+    utc: &3 2021-08-23 14:38:06.380686000 Z
     zone: *2
     time: *3
   abilities:
@@ -3216,7 +3815,7 @@ Dinosaur_81:
   - 100
   - 0
   - 0
-  - 0
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -3224,20 +3823,20 @@ Dinosaur_81:
   health_26: 4200
   damage_26: 1100
 
-Dinosaur_82:
-  id: 82
+Dinosaur_95:
+  id: 95
   name: Entelodon
   level: 26
   rarity: rare
   speed: 122
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.691725000 Z
+    utc: &1 2021-08-23 14:38:04.967426000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.691725000 Z
+    utc: &3 2021-08-23 14:38:04.967426000 Z
     zone: *2
     time: *3
   abilities:
@@ -3256,7 +3855,7 @@ Dinosaur_82:
   - 100
   - 0
   - 0
-  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -3264,22 +3863,22 @@ Dinosaur_82:
   health_26: 3600
   damage_26: 1200
 
-Dinosaur_83:
-  id: 83
+Dinosaur_96:
+  id: 96
   name: Entelolania
   level: 26
   rarity: unique
   speed: 107
   dna: 0
-  left_id: 140
-  right_id: 84
+  left_id: 157
+  right_id: 97
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.696965000 Z
+    utc: &1 2021-08-23 14:38:04.975910000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.985679000 Z
+    utc: &3 2021-08-23 14:38:59.806486000 Z
     zone: *2
     time: *3
   abilities:
@@ -3303,26 +3902,27 @@ Dinosaur_83:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_84:
-  id: 84
+Dinosaur_97:
+  id: 97
   name: Entelomoth
   level: 26
   rarity: legendary
   speed: 120
   dna: 0
-  left_id: 82
-  right_id: 243
+  left_id: 95
+  right_id: 266
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.703391000 Z
+    utc: &1 2021-08-23 14:38:04.985628000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.993271000 Z
+    utc: &3 2021-08-23 14:38:06.394436000 Z
     zone: *2
     time: *3
   abilities:
@@ -3352,22 +3952,22 @@ Dinosaur_84:
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_85:
-  id: 85
+Dinosaur_98:
+  id: 98
   name: Eremoceros
   level: 26
   rarity: legendary
   speed: 126
   dna: 0
-  left_id: 86
-  right_id: 92
+  left_id: 99
+  right_id: 105
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.710503000 Z
+    utc: &1 2021-08-23 14:38:04.994746000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.001385000 Z
+    utc: &3 2021-08-23 14:38:06.403023000 Z
     zone: *2
     time: *3
   abilities:
@@ -3395,20 +3995,20 @@ Dinosaur_85:
   health_26: 3900
   damage_26: 1300
 
-Dinosaur_86:
-  id: 86
+Dinosaur_99:
+  id: 99
   name: Eremotherium
   level: 26
   rarity: common
   speed: 102
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.718479000 Z
+    utc: &1 2021-08-23 14:38:05.003118000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.718479000 Z
+    utc: &3 2021-08-23 14:38:05.003118000 Z
     zone: *2
     time: *3
   abilities:
@@ -3436,22 +4036,22 @@ Dinosaur_86:
   health_26: 3150
   damage_26: 1050
 
-Dinosaur_87:
-  id: 87
+Dinosaur_100:
+  id: 100
   name: Erlidominus
   level: 26
   rarity: unique
   speed: 129
   dna: 0
-  left_id: 89
-  right_id: 111
+  left_id: 102
+  right_id: 126
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.725625000 Z
+    utc: &1 2021-08-23 14:38:05.011351000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.008939000 Z
+    utc: &3 2021-08-23 14:38:59.822608000 Z
     zone: *2
     time: *3
   abilities:
@@ -3471,30 +4071,31 @@ Dinosaur_87:
   - 100
   - 100
   - 0
-  - 50
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3300
   damage_26: 1500
 
-Dinosaur_88:
-  id: 88
+Dinosaur_101:
+  id: 101
   name: Erlikogamma
   level: 26
   rarity: epic
   speed: 130
   dna: 0
-  left_id: 90
-  right_id: 42
+  left_id: 103
+  right_id: 47
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.731120000 Z
+    utc: &1 2021-08-23 14:38:05.020660000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.017030000 Z
+    utc: &3 2021-08-23 14:38:06.417492000 Z
     zone: *2
     time: *3
   abilities:
@@ -3522,20 +4123,20 @@ Dinosaur_88:
   health_26: 3000
   damage_26: 1450
 
-Dinosaur_89:
-  id: 89
+Dinosaur_102:
+  id: 102
   name: Erlikosaurus
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.736210000 Z
+    utc: &1 2021-08-23 14:38:05.029119000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.736210000 Z
+    utc: &3 2021-08-23 14:38:59.830840000 Z
     zone: *2
     time: *3
   abilities:
@@ -3558,24 +4159,25 @@ Dinosaur_89:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_90:
-  id: 90
+Dinosaur_103:
+  id: 103
   name: Erlikosaurus Gen 2
   level: 26
   rarity: rare
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.741393000 Z
+    utc: &1 2021-08-23 14:38:05.037206000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.741393000 Z
+    utc: &3 2021-08-23 14:38:05.037206000 Z
     zone: *2
     time: *3
   abilities:
@@ -3602,22 +4204,22 @@ Dinosaur_90:
   health_26: 3000
   damage_26: 1350
 
-Dinosaur_91:
-  id: 91
+Dinosaur_104:
+  id: 104
   name: Erlikospyx
   level: 26
   rarity: unique
   speed: 128
   dna: 0
-  left_id: 90
-  right_id: 201
+  left_id: 103
+  right_id: 223
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.746892000 Z
+    utc: &1 2021-08-23 14:38:05.045019000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.023337000 Z
+    utc: &3 2021-08-23 14:38:59.838558000 Z
     zone: *2
     time: *3
   abilities:
@@ -3641,24 +4243,25 @@ Dinosaur_91:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 4200
   damage_26: 1500
 
-Dinosaur_92:
-  id: 92
+Dinosaur_105:
+  id: 105
   name: Eucladoceros
   level: 26
   rarity: epic
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.753194000 Z
+    utc: &1 2021-08-23 14:38:05.052811000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.753194000 Z
+    utc: &3 2021-08-23 14:38:05.052811000 Z
     zone: *2
     time: *3
   abilities:
@@ -3687,20 +4290,20 @@ Dinosaur_92:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_93:
-  id: 93
+Dinosaur_106:
+  id: 106
   name: Euoplocephalus
   level: 26
   rarity: common
   speed: 112
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.759055000 Z
+    utc: &1 2021-08-23 14:38:05.060103000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.759055000 Z
+    utc: &3 2021-08-23 14:38:59.846061000 Z
     zone: *2
     time: *3
   abilities:
@@ -3722,24 +4325,25 @@ Dinosaur_93:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 900
 
-Dinosaur_94:
-  id: 94
+Dinosaur_107:
+  id: 107
   name: Gallimimus
   level: 26
   rarity: common
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.766820000 Z
+    utc: &1 2021-08-23 14:38:05.065900000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.766820000 Z
+    utc: &3 2021-08-23 14:38:05.065900000 Z
     zone: *2
     time: *3
   abilities:
@@ -3765,22 +4369,22 @@ Dinosaur_94:
   health_26: 2700
   damage_26: 1300
 
-Dinosaur_95:
-  id: 95
+Dinosaur_108:
+  id: 108
   name: Geminititan
   level: 26
   rarity: unique
   speed: 110
   dna: 0
-  left_id: 63
-  right_id: 123
+  left_id: 74
+  right_id: 138
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.772602000 Z
+    utc: &1 2021-08-23 14:38:05.072507000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.030439000 Z
+    utc: &3 2021-08-23 14:38:59.853496000 Z
     zone: *2
     time: *3
   abilities:
@@ -3804,26 +4408,27 @@ Dinosaur_95:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 5400
   damage_26: 1300
 
-Dinosaur_96:
-  id: 96
+Dinosaur_109:
+  id: 109
   name: Gigaspikasaur
   level: 26
   rarity: legendary
   speed: 108
   dna: 0
-  left_id: 151
-  right_id: 9
+  left_id: 168
+  right_id: 10
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.778361000 Z
+    utc: &1 2021-08-23 14:38:05.081031000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.038107000 Z
+    utc: &3 2021-08-23 14:38:06.437525000 Z
     zone: *2
     time: *3
   abilities:
@@ -3843,20 +4448,20 @@ Dinosaur_96:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_97:
-  id: 97
+Dinosaur_110:
+  id: 110
   name: Giraffatitan
   level: 26
   rarity: rare
   speed: 107
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.783836000 Z
+    utc: &1 2021-08-23 14:38:05.086414000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.783836000 Z
+    utc: &3 2021-08-23 14:38:05.086414000 Z
     zone: *2
     time: *3
   abilities:
@@ -3885,20 +4490,20 @@ Dinosaur_97:
   health_26: 5700
   damage_26: 1000
 
-Dinosaur_98:
-  id: 98
+Dinosaur_111:
+  id: 111
   name: Glyptodon
   level: 26
   rarity: common
   speed: 103
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.790458000 Z
+    utc: &1 2021-08-23 14:38:05.092282000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.790458000 Z
+    utc: &3 2021-08-23 14:38:59.864851000 Z
     zone: *2
     time: *3
   abilities:
@@ -3920,24 +4525,25 @@ Dinosaur_98:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_99:
-  id: 99
+Dinosaur_112:
+  id: 112
   name: Gorgonops
   level: 26
   rarity: rare
   speed: 132
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.796147000 Z
+    utc: &1 2021-08-23 14:38:05.097271000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.796147000 Z
+    utc: &3 2021-08-23 14:38:05.097271000 Z
     zone: *2
     time: *3
   abilities:
@@ -3964,20 +4570,20 @@ Dinosaur_99:
   health_26: 3150
   damage_26: 1100
 
-Dinosaur_100:
-  id: 100
+Dinosaur_113:
+  id: 113
   name: Gorgosaurus
   level: 26
   rarity: rare
   speed: 102
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.801717000 Z
+    utc: &1 2021-08-23 14:38:05.102050000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.801717000 Z
+    utc: &3 2021-08-23 14:38:05.102050000 Z
     zone: *2
     time: *3
   abilities:
@@ -3996,7 +4602,7 @@ Dinosaur_100:
   - 0
   - 0
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -4004,22 +4610,22 @@ Dinosaur_100:
   health_26: 4200
   damage_26: 1700
 
-Dinosaur_101:
-  id: 101
+Dinosaur_114:
+  id: 114
   name: Gorgosuchus
   level: 26
   rarity: epic
   speed: 120
   dna: 0
-  left_id: 100
-  right_id: 119
+  left_id: 113
+  right_id: 134
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.807156000 Z
+    utc: &1 2021-08-23 14:38:05.107850000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.045512000 Z
+    utc: &3 2021-08-23 14:38:06.444643000 Z
     zone: *2
     time: *3
   abilities:
@@ -4047,20 +4653,20 @@ Dinosaur_101:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_102:
-  id: 102
+Dinosaur_115:
+  id: 115
   name: Gorgotrebax
   level: 26
   rarity: apex
   speed: 113
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.814121000 Z
+    utc: &1 2021-08-23 14:38:05.114814000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.814121000 Z
+    utc: &3 2021-08-23 14:38:05.114814000 Z
     zone: *2
     time: *3
   abilities:
@@ -4088,22 +4694,22 @@ Dinosaur_102:
   health_26: 4500
   damage_26: 1600
 
-Dinosaur_103:
-  id: 103
+Dinosaur_116:
+  id: 116
   name: Grylenken
   level: 26
   rarity: legendary
   speed: 126
   dna: 0
-  left_id: 120
-  right_id: 105
+  left_id: 135
+  right_id: 118
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.821998000 Z
+    utc: &1 2021-08-23 14:38:05.122616000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.053220000 Z
+    utc: &3 2021-08-23 14:38:06.451195000 Z
     zone: *2
     time: *3
   abilities:
@@ -4133,22 +4739,22 @@ Dinosaur_103:
   health_26: 3600
   damage_26: 1500
 
-Dinosaur_104:
-  id: 104
+Dinosaur_117:
+  id: 117
   name: Grypolyth
   level: 26
   rarity: unique
   speed: 106
   dna: 0
-  left_id: 105
-  right_id: 175
+  left_id: 118
+  right_id: 192
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.829235000 Z
+    utc: &1 2021-08-23 14:38:05.129710000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.061309000 Z
+    utc: &3 2021-08-23 14:38:06.458623000 Z
     zone: *2
     time: *3
   abilities:
@@ -4180,20 +4786,20 @@ Dinosaur_104:
   health_26: 4200
   damage_26: 1250
 
-Dinosaur_105:
-  id: 105
+Dinosaur_118:
+  id: 118
   name: Gryposuchus
   level: 26
   rarity: epic
   speed: 116
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.834988000 Z
+    utc: &1 2021-08-23 14:38:05.135256000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.834988000 Z
+    utc: &3 2021-08-23 14:38:05.135256000 Z
     zone: *2
     time: *3
   abilities:
@@ -4212,20 +4818,20 @@ Dinosaur_105:
   health_26: 4200
   damage_26: 1200
 
-Dinosaur_106:
-  id: 106
+Dinosaur_119:
+  id: 119
   name: Haast Eagle
   level: 26
   rarity: epic
   speed: 132
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.839877000 Z
+    utc: &1 2021-08-23 14:38:05.140109000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.839877000 Z
+    utc: &3 2021-08-23 14:38:05.140109000 Z
     zone: *2
     time: *3
   abilities:
@@ -4252,20 +4858,20 @@ Dinosaur_106:
   health_26: 2700
   damage_26: 1150
 
-Dinosaur_107:
-  id: 107
+Dinosaur_120:
+  id: 120
   name: Haast Eagle Gen 2
   level: 26
   rarity: rare
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.845383000 Z
+    utc: &1 2021-08-23 14:38:05.145837000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.845383000 Z
+    utc: &3 2021-08-23 14:38:05.145837000 Z
     zone: *2
     time: *3
   abilities:
@@ -4292,20 +4898,63 @@ Dinosaur_107:
   health_26: 3000
   damage_26: 1000
 
-Dinosaur_108:
-  id: 108
+Dinosaur_121:
+  id: 121
+  name: Haast Maximus
+  level: 26
+  rarity: apex
+  speed: 128
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.157335000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:05.157335000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'PredatoryPeck'
+  - !ruby/class 'FearlessFlap'
+  - !ruby/class 'PiercingScreech'
+  - !ruby/class 'RavenousRampage'
+  armor: 0
+  critical_chance: 25
+  slug: haast_maximus
+  abilities_on_escape:
+  - !ruby/class 'ObstructionToFlight'
+  resistances:
+  - 100
+  - 50
+  - 0
+  - 50
+  - 0
+  - 75
+  - 0
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 4350
+  damage_26: 1550
+
+Dinosaur_122:
+  id: 122
   name: Hadros Lux
   level: 26
   rarity: apex
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.851281000 Z
+    utc: &1 2021-08-23 14:38:05.163644000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.851281000 Z
+    utc: &3 2021-08-23 14:38:05.163644000 Z
     zone: *2
     time: *3
   abilities:
@@ -4327,7 +4976,7 @@ Dinosaur_108:
   - 100
   - 0
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -4335,20 +4984,20 @@ Dinosaur_108:
   health_26: 5100
   damage_26: 1500
 
-Dinosaur_109:
-  id: 109
+Dinosaur_123:
+  id: 123
   name: Hatzegopteryx
   level: 26
   rarity: common
   speed: 114
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.856944000 Z
+    utc: &1 2021-08-23 14:38:05.169303000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.856944000 Z
+    utc: &3 2021-08-23 14:38:05.169303000 Z
     zone: *2
     time: *3
   abilities:
@@ -4366,20 +5015,65 @@ Dinosaur_109:
   health_26: 4500
   damage_26: 1150
 
-Dinosaur_110:
-  id: 110
+Dinosaur_124:
+  id: 124
+  name: Hydra Boa
+  level: 26
+  rarity: apex
+  speed: 122
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.179304000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:05.179304000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'InstantNullifyingStrike'
+  - !ruby/class 'SlipperyAlert'
+  - !ruby/class 'PreciseImpact'
+  - !ruby/class 'FabledFangs'
+  armor: 10
+  critical_chance: 30
+  slug: hydra_boa
+  abilities_counter:
+  - !ruby/class 'AlertDeception'
+  abilities_on_escape:
+  - !ruby/class 'ConstrictingRampage'
+  resistances:
+  - 0
+  - 0
+  - 50
+  - 0
+  - 50
+  - 75
+  - 75
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 4200
+  damage_26: 1150
+
+Dinosaur_125:
+  id: 125
   name: Iguanodon
   level: 26
   rarity: common
   speed: 112
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.862443000 Z
+    utc: &1 2021-08-23 14:38:05.186492000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.862443000 Z
+    utc: &3 2021-08-23 14:38:05.186492000 Z
     zone: *2
     time: *3
   abilities:
@@ -4395,22 +5089,22 @@ Dinosaur_110:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_111:
-  id: 111
+Dinosaur_126:
+  id: 126
   name: Indominus Rex
   level: 26
   rarity: legendary
   speed: 107
   dna: 0
-  left_id: 236
-  right_id: 241
+  left_id: 259
+  right_id: 264
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.867847000 Z
+    utc: &1 2021-08-23 14:38:05.192134000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.069111000 Z
+    utc: &3 2021-08-23 14:38:59.912413000 Z
     zone: *2
     time: *3
   abilities:
@@ -4430,30 +5124,31 @@ Dinosaur_111:
   - 100
   - 100
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_112:
-  id: 112
+Dinosaur_127:
+  id: 127
   name: Indominus Rex Gen 2
   level: 26
   rarity: epic
   speed: 108
   dna: 0
-  left_id: 237
-  right_id: 73
+  left_id: 260
+  right_id: 86
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.876078000 Z
+    utc: &1 2021-08-23 14:38:05.197317000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.076856000 Z
+    utc: &3 2021-08-23 14:38:06.477980000 Z
     zone: *2
     time: *3
   abilities:
@@ -4481,22 +5176,22 @@ Dinosaur_112:
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_113:
-  id: 113
+Dinosaur_128:
+  id: 128
   name: Indoraptor
   level: 26
   rarity: unique
   speed: 128
   dna: 0
-  left_id: 111
-  right_id: 241
+  left_id: 126
+  right_id: 264
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.881864000 Z
+    utc: &1 2021-08-23 14:38:05.202533000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.084363000 Z
+    utc: &3 2021-08-23 14:38:59.921285000 Z
     zone: *2
     time: *3
   abilities:
@@ -4520,26 +5215,27 @@ Dinosaur_113:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_114:
-  id: 114
+Dinosaur_129:
+  id: 129
   name: Indoraptor Gen 2
   level: 26
   rarity: legendary
   speed: 128
   dna: 0
-  left_id: 112
-  right_id: 33
+  left_id: 127
+  right_id: 37
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.887957000 Z
+    utc: &1 2021-08-23 14:38:05.207989000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.092011000 Z
+    utc: &3 2021-08-23 14:38:06.491826000 Z
     zone: *2
     time: *3
   abilities:
@@ -4567,22 +5263,22 @@ Dinosaur_114:
   health_26: 3900
   damage_26: 1450
 
-Dinosaur_115:
-  id: 115
+Dinosaur_130:
+  id: 130
   name: Inostherium
   level: 26
   rarity: rare
   speed: 131
   dna: 0
-  left_id: 116
-  right_id: 24
+  left_id: 131
+  right_id: 27
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.893853000 Z
+    utc: &1 2021-08-23 14:38:05.213837000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.101134000 Z
+    utc: &3 2021-08-23 14:38:06.498693000 Z
     zone: *2
     time: *3
   abilities:
@@ -4610,20 +5306,20 @@ Dinosaur_115:
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_116:
-  id: 116
+Dinosaur_131:
+  id: 131
   name: Inostrancevia
   level: 26
   rarity: common
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.899579000 Z
+    utc: &1 2021-08-23 14:38:05.218794000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.899579000 Z
+    utc: &3 2021-08-23 14:38:05.218794000 Z
     zone: *2
     time: *3
   abilities:
@@ -4649,20 +5345,20 @@ Dinosaur_116:
   health_26: 3900
   damage_26: 1200
 
-Dinosaur_117:
-  id: 117
+Dinosaur_132:
+  id: 132
   name: Irritator
   level: 26
   rarity: rare
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.904704000 Z
+    utc: &1 2021-08-23 14:38:05.224721000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.904704000 Z
+    utc: &3 2021-08-23 14:38:05.224721000 Z
     zone: *2
     time: *3
   abilities:
@@ -4689,20 +5385,20 @@ Dinosaur_117:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_118:
-  id: 118
+Dinosaur_133:
+  id: 133
   name: Irritator Gen 2
   level: 26
   rarity: common
   speed: 124
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.910332000 Z
+    utc: &1 2021-08-23 14:38:05.230294000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.910332000 Z
+    utc: &3 2021-08-23 14:38:05.230294000 Z
     zone: *2
     time: *3
   abilities:
@@ -4730,20 +5426,20 @@ Dinosaur_118:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_119:
-  id: 119
+Dinosaur_134:
+  id: 134
   name: Kaprosuchus
   level: 26
   rarity: rare
   speed: 125
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.916830000 Z
+    utc: &1 2021-08-23 14:38:05.235439000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.916830000 Z
+    utc: &3 2021-08-23 14:38:05.235439000 Z
     zone: *2
     time: *3
   abilities:
@@ -4770,20 +5466,20 @@ Dinosaur_119:
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_120:
-  id: 120
+Dinosaur_135:
+  id: 135
   name: Kelenken
   level: 26
   rarity: rare
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.924392000 Z
+    utc: &1 2021-08-23 14:38:05.241240000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.924392000 Z
+    utc: &3 2021-08-23 14:38:05.241240000 Z
     zone: *2
     time: *3
   abilities:
@@ -4812,20 +5508,20 @@ Dinosaur_120:
   health_26: 3000
   damage_26: 1600
 
-Dinosaur_121:
-  id: 121
+Dinosaur_136:
+  id: 136
   name: Kentrosaurus
   level: 26
   rarity: epic
   speed: 112
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.930559000 Z
+    utc: &1 2021-08-23 14:38:05.246848000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.930559000 Z
+    utc: &3 2021-08-23 14:38:05.246848000 Z
     zone: *2
     time: *3
   abilities:
@@ -4844,22 +5540,22 @@ Dinosaur_121:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_122:
-  id: 122
+Dinosaur_137:
+  id: 137
   name: Keratoporcus
   level: 26
   rarity: legendary
   speed: 110
   dna: 0
-  left_id: 24
-  right_id: 244
+  left_id: 27
+  right_id: 267
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.935684000 Z
+    utc: &1 2021-08-23 14:38:05.254153000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.108051000 Z
+    utc: &3 2021-08-23 14:38:06.505341000 Z
     zone: *2
     time: *3
   abilities:
@@ -4887,22 +5583,22 @@ Dinosaur_122:
   health_26: 4500
   damage_26: 1200
 
-Dinosaur_123:
-  id: 123
+Dinosaur_138:
+  id: 138
   name: Koolabourgiana
   level: 26
   rarity: legendary
   speed: 117
   dna: 0
-  left_id: 23
-  right_id: 125
+  left_id: 25
+  right_id: 140
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.940384000 Z
+    utc: &1 2021-08-23 14:38:05.260808000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.114227000 Z
+    utc: &3 2021-08-23 14:38:06.512619000 Z
     zone: *2
     time: *3
   abilities:
@@ -4932,20 +5628,20 @@ Dinosaur_123:
   health_26: 4950
   damage_26: 1000
 
-Dinosaur_124:
-  id: 124
+Dinosaur_139:
+  id: 139
   name: Koolasuchus
   level: 26
   rarity: epic
   speed: 127
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.945829000 Z
+    utc: &1 2021-08-23 14:38:05.276857000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.945829000 Z
+    utc: &3 2021-08-23 14:38:05.276857000 Z
     zone: *2
     time: *3
   abilities:
@@ -4972,20 +5668,20 @@ Dinosaur_124:
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_125:
-  id: 125
+Dinosaur_140:
+  id: 140
   name: Koolasuchus Gen 2
   level: 26
   rarity: rare
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.951545000 Z
+    utc: &1 2021-08-23 14:38:05.286244000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.951545000 Z
+    utc: &3 2021-08-23 14:38:59.954900000 Z
     zone: *2
     time: *3
   abilities:
@@ -4998,24 +5694,25 @@ Dinosaur_125:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_126:
-  id: 126
+Dinosaur_141:
+  id: 141
   name: Lythronax
   level: 26
   rarity: common
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.958330000 Z
+    utc: &1 2021-08-23 14:38:05.292097000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.958330000 Z
+    utc: &3 2021-08-23 14:38:59.962087000 Z
     zone: *2
     time: *3
   abilities:
@@ -5029,26 +5726,27 @@ Dinosaur_126:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_127:
-  id: 127
+Dinosaur_142:
+  id: 142
   name: Magnapyritor
   level: 26
   rarity: unique
   speed: 128
   dna: 0
-  left_id: 56
-  right_id: 180
+  left_id: 67
+  right_id: 197
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.964052000 Z
+    utc: &1 2021-08-23 14:38:05.297542000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.120812000 Z
+    utc: &3 2021-08-23 14:38:59.977504000 Z
     zone: *2
     time: *3
   abilities:
@@ -5072,24 +5770,25 @@ Dinosaur_127:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 3900
   damage_26: 1450
 
-Dinosaur_128:
-  id: 128
+Dinosaur_143:
+  id: 143
   name: Maiasaura
   level: 26
   rarity: epic
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.970744000 Z
+    utc: &1 2021-08-23 14:38:05.303731000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.970744000 Z
+    utc: &3 2021-08-23 14:38:05.303731000 Z
     zone: *2
     time: *3
   abilities:
@@ -5106,22 +5805,22 @@ Dinosaur_128:
   health_26: 3000
   damage_26: 1300
 
-Dinosaur_129:
-  id: 129
+Dinosaur_144:
+  id: 144
   name: Majundaboa
   level: 26
   rarity: epic
   speed: 110
   dna: 0
-  left_id: 224
-  right_id: 130
+  left_id: 246
+  right_id: 145
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.976439000 Z
+    utc: &1 2021-08-23 14:38:05.309145000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.127754000 Z
+    utc: &3 2021-08-23 14:38:06.529808000 Z
     zone: *2
     time: *3
   abilities:
@@ -5153,22 +5852,22 @@ Dinosaur_129:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_130:
-  id: 130
+Dinosaur_145:
+  id: 145
   name: Majundasuchus
   level: 26
   rarity: rare
   speed: 108
   dna: 0
-  left_id: 131
-  right_id: 154
+  left_id: 146
+  right_id: 171
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.984520000 Z
+    utc: &1 2021-08-23 14:38:05.314829000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.135063000 Z
+    utc: &3 2021-08-23 14:38:06.536360000 Z
     zone: *2
     time: *3
   abilities:
@@ -5190,20 +5889,20 @@ Dinosaur_130:
   health_26: 3450
   damage_26: 1000
 
-Dinosaur_131:
-  id: 131
+Dinosaur_146:
+  id: 146
   name: Majungasaurus
   level: 26
   rarity: common
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.990676000 Z
+    utc: &1 2021-08-23 14:38:05.319897000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:01.990676000 Z
+    utc: &3 2021-08-23 14:38:05.319897000 Z
     zone: *2
     time: *3
   abilities:
@@ -5216,6 +5915,16 @@ Dinosaur_131:
   - !ruby/class 'SwapInFerocity'
   abilities_counter:
   - !ruby/class 'ArmorPiercingCounter'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -5223,22 +5932,22 @@ Dinosaur_131:
   health_26: 3450
   damage_26: 1000
 
-Dinosaur_132:
-  id: 132
+Dinosaur_147:
+  id: 147
   name: Mammolania
   level: 26
   rarity: unique
   speed: 115
   dna: 0
-  left_id: 133
-  right_id: 140
+  left_id: 148
+  right_id: 157
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:01.996046000 Z
+    utc: &1 2021-08-23 14:38:05.325849000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.142558000 Z
+    utc: &3 2021-08-23 14:38:59.995489000 Z
     zone: *2
     time: *3
   abilities:
@@ -5262,26 +5971,27 @@ Dinosaur_132:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 5100
   damage_26: 1000
 
-Dinosaur_133:
-  id: 133
+Dinosaur_148:
+  id: 148
   name: Mammotherium
   level: 26
   rarity: legendary
   speed: 115
   dna: 0
-  left_id: 80
-  right_id: 243
+  left_id: 93
+  right_id: 266
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.001724000 Z
+    utc: &1 2021-08-23 14:38:05.330847000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.150282000 Z
+    utc: &3 2021-08-23 14:39:00.001249000 Z
     zone: *2
     time: *3
   abilities:
@@ -5305,24 +6015,25 @@ Dinosaur_133:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 1500
 
-Dinosaur_134:
-  id: 134
+Dinosaur_149:
+  id: 149
   name: Marsupial Lion
   level: 26
   rarity: rare
   speed: 117
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.008027000 Z
+    utc: &1 2021-08-23 14:38:05.336744000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.008027000 Z
+    utc: &3 2021-08-23 14:38:05.336744000 Z
     zone: *2
     time: *3
   abilities:
@@ -5351,20 +6062,20 @@ Dinosaur_134:
   health_26: 4050
   damage_26: 1000
 
-Dinosaur_135:
-  id: 135
+Dinosaur_150:
+  id: 150
   name: Megaloceros
   level: 26
   rarity: rare
   speed: 127
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.014026000 Z
+    utc: &1 2021-08-23 14:38:05.341915000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.014026000 Z
+    utc: &3 2021-08-23 14:38:05.341915000 Z
     zone: *2
     time: *3
   abilities:
@@ -5393,22 +6104,22 @@ Dinosaur_135:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_136:
-  id: 136
+Dinosaur_151:
+  id: 151
   name: Megalogaia
   level: 26
   rarity: epic
   speed: 122
   dna: 0
-  left_id: 135
-  right_id: 141
+  left_id: 150
+  right_id: 158
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.020226000 Z
+    utc: &1 2021-08-23 14:38:05.347572000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.158031000 Z
+    utc: &3 2021-08-23 14:38:06.560289000 Z
     zone: *2
     time: *3
   abilities:
@@ -5438,20 +6149,64 @@ Dinosaur_136:
   health_26: 3750
   damage_26: 1000
 
-Dinosaur_137:
-  id: 137
+Dinosaur_152:
+  id: 152
+  name: Megalonyx
+  level: 26
+  rarity: rare
+  speed: 103
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.357727000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:05.357727000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'Camouflage'
+  - !ruby/class 'CautiousRampage'
+  armor: 0
+  critical_chance: 10
+  slug: megalonyx
+  abilities_counter:
+  - !ruby/class 'MaximalCounterAttack'
+  abilities_on_escape:
+  - !ruby/class 'CamouflageOnEscape'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 100
+  - 0
+  - 0
+  - 0
+  - 0
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 3450
+  damage_26: 1200
+
+Dinosaur_153:
+  id: 153
   name: Megalosaurus
   level: 26
   rarity: rare
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.025784000 Z
+    utc: &1 2021-08-23 14:38:05.364071000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.025784000 Z
+    utc: &3 2021-08-23 14:38:05.364071000 Z
     zone: *2
     time: *3
   abilities:
@@ -5472,7 +6227,7 @@ Dinosaur_137:
   - 0
   - 0
   - 0
-  - 0
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -5480,22 +6235,22 @@ Dinosaur_137:
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_138:
-  id: 138
+Dinosaur_154:
+  id: 154
   name: Megalosuchus
   level: 26
   rarity: legendary
   speed: 109
   dna: 0
-  left_id: 101
-  right_id: 137
+  left_id: 114
+  right_id: 153
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.031269000 Z
+    utc: &1 2021-08-23 14:38:05.369539000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.165350000 Z
+    utc: &3 2021-08-23 14:38:06.569419000 Z
     zone: *2
     time: *3
   abilities:
@@ -5525,20 +6280,67 @@ Dinosaur_138:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_139:
-  id: 139
+Dinosaur_155:
+  id: 155
+  name: Megistocurus
+  level: 26
+  rarity: legendary
+  speed: 115
+  dna: 0
+  left_id: 156
+  right_id: 79
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.376473000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.579916000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FierceStrike'
+  - !ruby/class 'GroupShield'
+  - !ruby/class 'ResilientImpact'
+  - !ruby/class 'DefensiveRendingAttack'
+  armor: 15
+  critical_chance: 30
+  slug: megistocurus
+  abilities_swap_in:
+  - !ruby/class 'SwapInShatteringStrike'
+  abilities_on_escape:
+  - !ruby/class 'NoEscape'
+  resistances:
+  - 0
+  - 0
+  - 50
+  - 0
+  - 75
+  - 50
+  - 0
+  - 100
+  - 75
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: fierce_resilient
+  health_26: 3750
+  damage_26: 1400
+
+Dinosaur_156:
+  id: 156
   name: Megistotherium
   level: 26
   rarity: epic
   speed: 120
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.037144000 Z
+    utc: &1 2021-08-23 14:38:05.383516000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.037144000 Z
+    utc: &3 2021-08-23 14:38:05.383516000 Z
     zone: *2
     time: *3
   abilities:
@@ -5569,20 +6371,20 @@ Dinosaur_139:
   health_26: 3600
   damage_26: 1350
 
-Dinosaur_140:
-  id: 140
+Dinosaur_157:
+  id: 157
   name: Meiolania
   level: 26
   rarity: rare
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.043811000 Z
+    utc: &1 2021-08-23 14:38:05.389655000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.043811000 Z
+    utc: &3 2021-08-23 14:38:05.389655000 Z
     zone: *2
     time: *3
   abilities:
@@ -5599,20 +6401,20 @@ Dinosaur_140:
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_141:
-  id: 141
+Dinosaur_158:
+  id: 158
   name: Miragaia
   level: 26
   rarity: common
   speed: 109
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.050726000 Z
+    utc: &1 2021-08-23 14:38:05.395237000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.050726000 Z
+    utc: &3 2021-08-23 14:38:05.395237000 Z
     zone: *2
     time: *3
   abilities:
@@ -5630,38 +6432,38 @@ Dinosaur_141:
   health_26: 3000
   damage_26: 1000
 
-Dinosaur_142:
-  id: 142
+Dinosaur_159:
+  id: 159
   name: Monolometrodon
   level: 26
   rarity: legendary
   speed: 125
   dna: 0
-  left_id: 57
-  right_id: 144
+  left_id: 68
+  right_id: 161
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.057374000 Z
+    utc: &1 2021-08-23 14:38:05.401028000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.173098000 Z
+    utc: &3 2021-08-23 14:39:00.047907000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'DefenseShatteringStrike'
   - !ruby/class 'NullifyingStrike'
   - !ruby/class 'DistractingImpact'
-  - !ruby/class 'FierceRampage'
+  - !ruby/class 'FierceImpact'
   armor: 0
   critical_chance: 5
   slug: monolometrodon
   resistances:
-  - 50
+  - 0
   - 100
-  - 50
+  - 25
   - 75
-  - 100
+  - 75
   - 100
   - 75
   - 0
@@ -5669,24 +6471,25 @@ Dinosaur_142:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_143:
-  id: 143
+Dinosaur_160:
+  id: 160
   name: Monolophosaurus
   level: 26
   rarity: epic
   speed: 127
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.064076000 Z
+    utc: &1 2021-08-23 14:38:05.406611000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.064076000 Z
+    utc: &3 2021-08-23 14:38:05.406611000 Z
     zone: *2
     time: *3
   abilities:
@@ -5703,20 +6506,20 @@ Dinosaur_143:
   health_26: 3000
   damage_26: 1300
 
-Dinosaur_144:
-  id: 144
+Dinosaur_161:
+  id: 161
   name: Monolophosaurus Gen 2
   level: 26
   rarity: common
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.071225000 Z
+    utc: &1 2021-08-23 14:38:05.411795000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.071225000 Z
+    utc: &3 2021-08-23 14:39:00.055588000 Z
     zone: *2
     time: *3
   abilities:
@@ -5728,26 +6531,27 @@ Dinosaur_144:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 2700
   damage_26: 1350
 
-Dinosaur_145:
-  id: 145
+Dinosaur_162:
+  id: 162
   name: Monolorhino
   level: 26
   rarity: unique
   speed: 116
   dna: 0
-  left_id: 244
-  right_id: 142
+  left_id: 267
+  right_id: 159
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.078944000 Z
+    utc: &1 2021-08-23 14:38:05.417324000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.181190000 Z
+    utc: &3 2021-08-23 14:39:00.061395000 Z
     zone: *2
     time: *3
   abilities:
@@ -5773,26 +6577,27 @@ Dinosaur_145:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: wild_card
   health_26: 4500
   damage_26: 1250
 
-Dinosaur_146:
-  id: 146
+Dinosaur_163:
+  id: 163
   name: Monomimus
   level: 26
   rarity: legendary
   speed: 131
   dna: 0
-  left_id: 94
-  right_id: 143
+  left_id: 107
+  right_id: 160
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.085782000 Z
+    utc: &1 2021-08-23 14:38:05.423084000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.190598000 Z
+    utc: &3 2021-08-23 14:38:06.601531000 Z
     zone: *2
     time: *3
   abilities:
@@ -5822,22 +6627,22 @@ Dinosaur_146:
   health_26: 3750
   damage_26: 1350
 
-Dinosaur_147:
-  id: 147
+Dinosaur_164:
+  id: 164
   name: Monostegotops
   level: 26
   rarity: legendary
   speed: 116
   dna: 0
-  left_id: 207
-  right_id: 143
+  left_id: 229
+  right_id: 160
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.093202000 Z
+    utc: &1 2021-08-23 14:38:05.428479000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.198042000 Z
+    utc: &3 2021-08-23 14:39:00.072351000 Z
     zone: *2
     time: *3
   abilities:
@@ -5853,24 +6658,25 @@ Dinosaur_147:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: wild_card
   health_26: 3750
   damage_26: 1000
 
-Dinosaur_148:
-  id: 148
+Dinosaur_165:
+  id: 165
   name: Mortem Rex
   level: 26
   rarity: apex
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.102546000 Z
+    utc: &1 2021-08-23 14:38:05.434829000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.102546000 Z
+    utc: &3 2021-08-23 14:38:05.434829000 Z
     zone: *2
     time: *3
   abilities:
@@ -5887,10 +6693,10 @@ Dinosaur_148:
   - 0
   - 0
   - 100
-  - 75
+  - 50
   - 75
   - 0
-  - 50
+  - 0
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -5898,20 +6704,20 @@ Dinosaur_148:
   health_26: 4500
   damage_26: 2000
 
-Dinosaur_149:
-  id: 149
+Dinosaur_166:
+  id: 166
   name: Moschops
   level: 26
   rarity: rare
   speed: 113
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.109306000 Z
+    utc: &1 2021-08-23 14:38:05.440361000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.109306000 Z
+    utc: &3 2021-08-23 14:38:05.440361000 Z
     zone: *2
     time: *3
   abilities:
@@ -5940,20 +6746,20 @@ Dinosaur_149:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_150:
-  id: 150
+Dinosaur_167:
+  id: 167
   name: Nasutoceratops
   level: 26
   rarity: rare
   speed: 109
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.117920000 Z
+    utc: &1 2021-08-23 14:38:05.446456000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.117920000 Z
+    utc: &3 2021-08-23 14:38:05.446456000 Z
     zone: *2
     time: *3
   abilities:
@@ -5982,22 +6788,22 @@ Dinosaur_150:
   health_26: 4800
   damage_26: 1000
 
-Dinosaur_151:
-  id: 151
+Dinosaur_168:
+  id: 168
   name: Nodopatosaurus
   level: 26
   rarity: epic
   speed: 106
   dna: 0
-  left_id: 21
-  right_id: 153
+  left_id: 23
+  right_id: 170
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.126746000 Z
+    utc: &1 2021-08-23 14:38:05.453351000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.205445000 Z
+    utc: &3 2021-08-23 14:38:06.616085000 Z
     zone: *2
     time: *3
   abilities:
@@ -6025,22 +6831,22 @@ Dinosaur_151:
   health_26: 4800
   damage_26: 1000
 
-Dinosaur_152:
-  id: 152
+Dinosaur_169:
+  id: 169
   name: Nodopatotitan
   level: 26
   rarity: legendary
   speed: 108
   dna: 0
-  left_id: 97
-  right_id: 151
+  left_id: 110
+  right_id: 168
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.134478000 Z
+    utc: &1 2021-08-23 14:38:05.461197000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.212024000 Z
+    utc: &3 2021-08-23 14:38:06.623089000 Z
     zone: *2
     time: *3
   abilities:
@@ -6070,20 +6876,20 @@ Dinosaur_152:
   health_26: 5250
   damage_26: 1000
 
-Dinosaur_153:
-  id: 153
+Dinosaur_170:
+  id: 170
   name: Nodosaurus
   level: 26
   rarity: rare
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.141525000 Z
+    utc: &1 2021-08-23 14:38:05.467144000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.141525000 Z
+    utc: &3 2021-08-23 14:39:00.093239000 Z
     zone: *2
     time: *3
   abilities:
@@ -6106,24 +6912,25 @@ Dinosaur_153:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4350
   damage_26: 950
 
-Dinosaur_154:
-  id: 154
+Dinosaur_171:
+  id: 171
   name: Nundasuchus
   level: 26
   rarity: common
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.149732000 Z
+    utc: &1 2021-08-23 14:38:05.477147000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.149732000 Z
+    utc: &3 2021-08-23 14:38:05.477147000 Z
     zone: *2
     time: *3
   abilities:
@@ -6141,7 +6948,7 @@ Dinosaur_154:
   - 0
   - 0
   - 0
-  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -6149,20 +6956,20 @@ Dinosaur_154:
   health_26: 3000
   damage_26: 1500
 
-Dinosaur_155:
-  id: 155
+Dinosaur_172:
+  id: 172
   name: Ophiacodon
   level: 26
   rarity: common
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.169149000 Z
+    utc: &1 2021-08-23 14:38:05.482459000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.169149000 Z
+    utc: &3 2021-08-23 14:39:00.102986000 Z
     zone: *2
     time: *3
   abilities:
@@ -6184,24 +6991,25 @@ Dinosaur_155:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4350
   damage_26: 1400
 
-Dinosaur_156:
-  id: 156
+Dinosaur_173:
+  id: 173
   name: Ornithomimus
   level: 26
   rarity: rare
   speed: 131
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.190518000 Z
+    utc: &1 2021-08-23 14:38:05.489597000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.190518000 Z
+    utc: &3 2021-08-23 14:39:00.110043000 Z
     zone: *2
     time: *3
   abilities:
@@ -6224,24 +7032,25 @@ Dinosaur_156:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3000
   damage_26: 1600
 
-Dinosaur_157:
-  id: 157
+Dinosaur_174:
+  id: 174
   name: Ouranosaurus
   level: 26
   rarity: epic
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.196191000 Z
+    utc: &1 2021-08-23 14:38:05.494888000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.196191000 Z
+    utc: &3 2021-08-23 14:38:05.494888000 Z
     zone: *2
     time: *3
   abilities:
@@ -6258,22 +7067,22 @@ Dinosaur_157:
   health_26: 3600
   damage_26: 1500
 
-Dinosaur_158:
-  id: 158
+Dinosaur_175:
+  id: 175
   name: Ovilophosaurus
   level: 26
   rarity: epic
   speed: 125
   dna: 0
-  left_id: 159
-  right_id: 52
+  left_id: 176
+  right_id: 63
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.203513000 Z
+    utc: &1 2021-08-23 14:38:05.502413000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.218280000 Z
+    utc: &3 2021-08-23 14:38:06.633642000 Z
     zone: *2
     time: *3
   abilities:
@@ -6301,20 +7110,20 @@ Dinosaur_158:
   health_26: 2850
   damage_26: 1200
 
-Dinosaur_159:
-  id: 159
+Dinosaur_176:
+  id: 176
   name: Oviraptor
   level: 26
   rarity: rare
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.210358000 Z
+    utc: &1 2021-08-23 14:38:05.507861000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.210358000 Z
+    utc: &3 2021-08-23 14:38:05.507861000 Z
     zone: *2
     time: *3
   abilities:
@@ -6341,20 +7150,20 @@ Dinosaur_159:
   health_26: 2700
   damage_26: 1300
 
-Dinosaur_160:
-  id: 160
+Dinosaur_177:
+  id: 177
   name: Pachycephalosaurus
   level: 26
   rarity: epic
   speed: 121
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.216012000 Z
+    utc: &1 2021-08-23 14:38:05.515247000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.216012000 Z
+    utc: &3 2021-08-23 14:39:00.124508000 Z
     zone: *2
     time: *3
   abilities:
@@ -6369,26 +7178,27 @@ Dinosaur_160:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3900
   damage_26: 1200
 
-Dinosaur_161:
-  id: 161
+Dinosaur_178:
+  id: 178
   name: Paramoloch
   level: 26
   rarity: legendary
   speed: 126
   dna: 0
-  left_id: 162
-  right_id: 212
+  left_id: 179
+  right_id: 234
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.222716000 Z
+    utc: &1 2021-08-23 14:38:05.521614000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.224930000 Z
+    utc: &3 2021-08-23 14:38:06.641812000 Z
     zone: *2
     time: *3
   abilities:
@@ -6416,20 +7226,20 @@ Dinosaur_161:
   health_26: 4350
   damage_26: 1500
 
-Dinosaur_162:
-  id: 162
+Dinosaur_179:
+  id: 179
   name: Parasaurolophus
   level: 26
   rarity: common
   speed: 106
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.228271000 Z
+    utc: &1 2021-08-23 14:38:05.527111000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.228271000 Z
+    utc: &3 2021-08-23 14:38:05.527111000 Z
     zone: *2
     time: *3
   abilities:
@@ -6445,20 +7255,20 @@ Dinosaur_162:
   health_26: 4500
   damage_26: 1200
 
-Dinosaur_163:
-  id: 163
+Dinosaur_180:
+  id: 180
   name: Parasaurolophus Lux
   level: 26
   rarity: legendary
   speed: 106
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.234045000 Z
+    utc: &1 2021-08-23 14:38:05.533471000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.234045000 Z
+    utc: &3 2021-08-23 14:38:05.533471000 Z
     zone: *2
     time: *3
   abilities:
@@ -6469,29 +7279,41 @@ Dinosaur_163:
   armor: 0
   critical_chance: 5
   slug: parasaurolophus_lux
+  abilities_counter:
+  - !ruby/class 'CounterPowerHeal'
+  resistances:
+  - 0
+  - 0
+  - 50
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
   klass: resilient
-  health_26: 3900
-  damage_26: 1200
+  health_26: 4950
+  damage_26: 1250
 
-Dinosaur_164:
-  id: 164
+Dinosaur_181:
+  id: 181
   name: Phorusaura
   level: 26
   rarity: legendary
   speed: 130
   dna: 0
-  left_id: 165
-  right_id: 128
+  left_id: 182
+  right_id: 143
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.239612000 Z
+    utc: &1 2021-08-23 14:38:05.539707000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.231312000 Z
+    utc: &3 2021-08-23 14:38:06.649019000 Z
     zone: *2
     time: *3
   abilities:
@@ -6521,20 +7343,20 @@ Dinosaur_164:
   health_26: 3600
   damage_26: 1400
 
-Dinosaur_165:
-  id: 165
+Dinosaur_182:
+  id: 182
   name: Phorusrhacos
   level: 26
   rarity: common
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.245523000 Z
+    utc: &1 2021-08-23 14:38:05.544809000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.245523000 Z
+    utc: &3 2021-08-23 14:38:05.544809000 Z
     zone: *2
     time: *3
   abilities:
@@ -6562,22 +7384,22 @@ Dinosaur_165:
   health_26: 3000
   damage_26: 1500
 
-Dinosaur_166:
-  id: 166
+Dinosaur_183:
+  id: 183
   name: Postimetrodon
   level: 26
   rarity: epic
   speed: 124
   dna: 0
-  left_id: 167
-  right_id: 56
+  left_id: 184
+  right_id: 67
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.254247000 Z
+    utc: &1 2021-08-23 14:38:05.551452000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.239151000 Z
+    utc: &3 2021-08-23 14:38:06.655571000 Z
     zone: *2
     time: *3
   abilities:
@@ -6605,20 +7427,20 @@ Dinosaur_166:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_167:
-  id: 167
+Dinosaur_184:
+  id: 184
   name: Postosuchus
   level: 26
   rarity: rare
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.259944000 Z
+    utc: &1 2021-08-23 14:38:05.560031000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.259944000 Z
+    utc: &3 2021-08-23 14:38:05.560031000 Z
     zone: *2
     time: *3
   abilities:
@@ -6645,22 +7467,22 @@ Dinosaur_167:
   health_26: 3000
   damage_26: 1200
 
-Dinosaur_168:
-  id: 168
+Dinosaur_185:
+  id: 185
   name: Poukaidei
   level: 26
   rarity: legendary
   speed: 131
   dna: 0
-  left_id: 106
-  right_id: 49
+  left_id: 119
+  right_id: 59
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.265522000 Z
+    utc: &1 2021-08-23 14:38:05.567918000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.246480000 Z
+    utc: &3 2021-08-23 14:38:06.664143000 Z
     zone: *2
     time: *3
   abilities:
@@ -6688,31 +7510,31 @@ Dinosaur_168:
   health_26: 4050
   damage_26: 1500
 
-Dinosaur_169:
-  id: 169
+Dinosaur_186:
+  id: 186
   name: Poukandactylus
   level: 26
   rarity: unique
-  speed: 123
+  speed: 127
   dna: 0
-  left_id: 168
-  right_id: 234
+  left_id: 185
+  right_id: 257
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.271431000 Z
+    utc: &1 2021-08-23 14:38:05.573436000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.254253000 Z
+    utc: &3 2021-08-23 14:38:06.673391000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'Sideflap'
-  - !ruby/class 'Distraction'
+  - !ruby/class 'DistractingImpact'
   - !ruby/class 'FearlessFlap'
   - !ruby/class 'GroupInstantDistraction'
   armor: 0
-  critical_chance: 10
+  critical_chance: 15
   slug: poukandactylus
   abilities_counter:
   - !ruby/class 'DefenseShatteringCounter'
@@ -6721,34 +7543,34 @@ Dinosaur_169:
   - 0
   - 50
   - 0
-  - 0
+  - 50
   - 100
+  - 75
   - 0
-  - 0
-  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
   klass: cunning_fierce
-  health_26: 3750
-  damage_26: 1050
+  health_26: 4050
+  damage_26: 1200
 
-Dinosaur_170:
-  id: 170
+Dinosaur_187:
+  id: 187
   name: Procerathomimus
   level: 26
   rarity: epic
   speed: 127
   dna: 0
-  left_id: 171
-  right_id: 156
+  left_id: 188
+  right_id: 173
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.277782000 Z
+    utc: &1 2021-08-23 14:38:05.580070000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.261617000 Z
+    utc: &3 2021-08-23 14:39:00.158734000 Z
     zone: *2
     time: *3
   abilities:
@@ -6776,24 +7598,25 @@ Dinosaur_170:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3000
   damage_26: 1600
 
-Dinosaur_171:
-  id: 171
+Dinosaur_188:
+  id: 188
   name: Proceratosaurus
   level: 26
   rarity: rare
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.283249000 Z
+    utc: &1 2021-08-23 14:38:05.585713000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.283249000 Z
+    utc: &3 2021-08-23 14:38:05.585713000 Z
     zone: *2
     time: *3
   abilities:
@@ -6810,20 +7633,20 @@ Dinosaur_171:
   health_26: 3000
   damage_26: 1300
 
-Dinosaur_172:
-  id: 172
+Dinosaur_189:
+  id: 189
   name: Pteranodon
   level: 26
   rarity: epic
   speed: 127
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.289096000 Z
+    utc: &1 2021-08-23 14:38:05.591162000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.289096000 Z
+    utc: &3 2021-08-23 14:38:05.591162000 Z
     zone: *2
     time: *3
   abilities:
@@ -6844,22 +7667,22 @@ Dinosaur_172:
   health_26: 3300
   damage_26: 900
 
-Dinosaur_173:
-  id: 173
+Dinosaur_190:
+  id: 190
   name: Pteraquetzal
   level: 26
   rarity: legendary
   speed: 125
   dna: 0
-  left_id: 172
-  right_id: 181
+  left_id: 189
+  right_id: 198
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.295250000 Z
+    utc: &1 2021-08-23 14:38:05.596805000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.270632000 Z
+    utc: &3 2021-08-23 14:38:06.687278000 Z
     zone: *2
     time: *3
   abilities:
@@ -6879,22 +7702,22 @@ Dinosaur_173:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_174:
-  id: 174
+Dinosaur_191:
+  id: 191
   name: Pterovexus
   level: 26
   rarity: unique
   speed: 129
   dna: 0
-  left_id: 47
-  right_id: 146
+  left_id: 57
+  right_id: 163
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.300503000 Z
+    utc: &1 2021-08-23 14:38:05.602061000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.277859000 Z
+    utc: &3 2021-08-23 14:38:06.694847000 Z
     zone: *2
     time: *3
   abilities:
@@ -6924,22 +7747,22 @@ Dinosaur_174:
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_175:
-  id: 175
+Dinosaur_192:
+  id: 192
   name: Purrolyth
   level: 26
   rarity: rare
   speed: 105
   dna: 0
-  left_id: 126
-  right_id: 177
+  left_id: 141
+  right_id: 194
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.306097000 Z
+    utc: &1 2021-08-23 14:38:05.607468000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.285404000 Z
+    utc: &3 2021-08-23 14:38:06.701601000 Z
     zone: *2
     time: *3
   abilities:
@@ -6961,20 +7784,20 @@ Dinosaur_175:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_176:
-  id: 176
+Dinosaur_193:
+  id: 193
   name: Purussaurus
   level: 26
   rarity: rare
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.311708000 Z
+    utc: &1 2021-08-23 14:38:05.613078000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.311708000 Z
+    utc: &3 2021-08-23 14:38:05.613078000 Z
     zone: *2
     time: *3
   abilities:
@@ -6986,6 +7809,16 @@ Dinosaur_176:
   slug: purussaurus
   abilities_on_escape:
   - !ruby/class 'NoEscape'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -6993,20 +7826,20 @@ Dinosaur_176:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_177:
-  id: 177
+Dinosaur_194:
+  id: 194
   name: Purussaurus Gen 2
   level: 26
   rarity: common
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.316481000 Z
+    utc: &1 2021-08-23 14:38:05.618382000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.316481000 Z
+    utc: &3 2021-08-23 14:38:05.618382000 Z
     zone: *2
     time: *3
   abilities:
@@ -7017,6 +7850,16 @@ Dinosaur_177:
   slug: purussaurus_gen_2
   abilities_on_escape:
   - !ruby/class 'NoEscape'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -7024,22 +7867,22 @@ Dinosaur_177:
   health_26: 4200
   damage_26: 1250
 
-Dinosaur_178:
-  id: 178
+Dinosaur_195:
+  id: 195
   name: Purutaurus
   level: 26
   rarity: epic
   speed: 110
   dna: 0
-  left_id: 40
-  right_id: 176
+  left_id: 45
+  right_id: 193
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.321331000 Z
+    utc: &1 2021-08-23 14:38:05.624324000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.292594000 Z
+    utc: &3 2021-08-23 14:38:06.710453000 Z
     zone: *2
     time: *3
   abilities:
@@ -7061,20 +7904,20 @@ Dinosaur_178:
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_179:
-  id: 179
+Dinosaur_196:
+  id: 196
   name: Pyroraptor
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.327802000 Z
+    utc: &1 2021-08-23 14:38:05.629825000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.327802000 Z
+    utc: &3 2021-08-23 14:39:00.189733000 Z
     zone: *2
     time: *3
   abilities:
@@ -7087,26 +7930,27 @@ Dinosaur_179:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3150
   damage_26: 1500
 
-Dinosaur_180:
-  id: 180
+Dinosaur_197:
+  id: 197
   name: Pyrritator
   level: 26
   rarity: legendary
   speed: 129
   dna: 0
-  left_id: 179
-  right_id: 117
+  left_id: 196
+  right_id: 132
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.333013000 Z
+    utc: &1 2021-08-23 14:38:05.635084000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.299154000 Z
+    utc: &3 2021-08-23 14:39:00.197381000 Z
     zone: *2
     time: *3
   abilities:
@@ -7120,24 +7964,25 @@ Dinosaur_180:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 2550
   damage_26: 1400
 
-Dinosaur_181:
-  id: 181
+Dinosaur_198:
+  id: 198
   name: Quetzalcoatlus
   level: 26
   rarity: rare
   speed: 117
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.338583000 Z
+    utc: &1 2021-08-23 14:38:05.640354000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.338583000 Z
+    utc: &3 2021-08-23 14:38:05.640354000 Z
     zone: *2
     time: *3
   abilities:
@@ -7156,22 +8001,22 @@ Dinosaur_181:
   health_26: 5100
   damage_26: 1000
 
-Dinosaur_182:
-  id: 182
+Dinosaur_199:
+  id: 199
   name: Quetzorion
   level: 26
   rarity: unique
   speed: 130
   dna: 0
-  left_id: 216
-  right_id: 173
+  left_id: 238
+  right_id: 190
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.344328000 Z
+    utc: &1 2021-08-23 14:38:05.649192000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.305854000 Z
+    utc: &3 2021-08-23 14:38:06.724049000 Z
     zone: *2
     time: *3
   abilities:
@@ -7203,22 +8048,22 @@ Dinosaur_182:
   health_26: 4200
   damage_26: 1450
 
-Dinosaur_183:
-  id: 183
+Dinosaur_200:
+  id: 200
   name: Rajakylosaurus
   level: 26
   rarity: legendary
   speed: 104
   dna: 0
-  left_id: 184
-  right_id: 16
+  left_id: 201
+  right_id: 18
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.350809000 Z
+    utc: &1 2021-08-23 14:38:05.657601000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.312231000 Z
+    utc: &3 2021-08-23 14:38:06.730927000 Z
     zone: *2
     time: *3
   abilities:
@@ -7238,20 +8083,20 @@ Dinosaur_183:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_184:
-  id: 184
+Dinosaur_201:
+  id: 201
   name: Rajasaurus
   level: 26
   rarity: epic
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.358707000 Z
+    utc: &1 2021-08-23 14:38:05.663126000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.358707000 Z
+    utc: &3 2021-08-23 14:39:00.217028000 Z
     zone: *2
     time: *3
   abilities:
@@ -7266,24 +8111,70 @@ Dinosaur_184:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_185:
-  id: 185
+Dinosaur_202:
+  id: 202
+  name: Refrenantem
+  level: 26
+  rarity: apex
+  speed: 125
+  dna: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.673300000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:05.673300000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'AlertNullification'
+  - !ruby/class 'CunningRampage'
+  - !ruby/class 'SuperDistraction'
+  armor: 0
+  critical_chance: 10
+  slug: refrenantem
+  abilities_swap_in:
+  - !ruby/class 'SwapInDistraction'
+  abilities_counter:
+  - !ruby/class 'AlertCounterDistraction'
+  resistances:
+  - 100
+  - 25
+  - 50
+  - 25
+  - 0
+  - 50
+  - 0
+  - 0
+  - 50
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning
+  health_26: 4200
+  damage_26: 1600
+
+Dinosaur_203:
+  id: 203
   name: Rinchenia
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.364362000 Z
+    utc: &1 2021-08-23 14:38:05.678773000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.364362000 Z
+    utc: &3 2021-08-23 14:38:05.678773000 Z
     zone: *2
     time: *3
   abilities:
@@ -7310,22 +8201,22 @@ Dinosaur_185:
   health_26: 2700
   damage_26: 1450
 
-Dinosaur_186:
-  id: 186
+Dinosaur_204:
+  id: 204
   name: Sarcorixis
   level: 26
   rarity: epic
-  speed: 116
+  speed: 113
   dna: 0
-  left_id: 187
-  right_id: 78
+  left_id: 205
+  right_id: 91
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.370489000 Z
+    utc: &1 2021-08-23 14:38:05.683841000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.318359000 Z
+    utc: &3 2021-08-23 14:39:00.229819000 Z
     zone: *2
     time: *3
   abilities:
@@ -7343,7 +8234,7 @@ Dinosaur_186:
   - 0
   - 0
   - 0
-  - 100
+  - 75
   - 0
   - 0
   - 0
@@ -7351,24 +8242,25 @@ Dinosaur_186:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
-  health_26: 4200
-  damage_26: 1300
+  health_26: 4500
+  damage_26: 1100
 
-Dinosaur_187:
-  id: 187
+Dinosaur_205:
+  id: 205
   name: Sarcosuchus
   level: 26
   rarity: common
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.376830000 Z
+    utc: &1 2021-08-23 14:38:05.690168000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.376830000 Z
+    utc: &3 2021-08-23 14:39:00.236379000 Z
     zone: *2
     time: *3
   abilities:
@@ -7379,27 +8271,38 @@ Dinosaur_187:
   slug: sarcosuchus
   abilities_on_escape:
   - !ruby/class 'NoEscape'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_188:
-  id: 188
+Dinosaur_206:
+  id: 206
   name: Scaphognathus
   level: 26
   rarity: rare
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.382592000 Z
+    utc: &1 2021-08-23 14:38:05.696167000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.382592000 Z
+    utc: &3 2021-08-23 14:38:05.696167000 Z
     zone: *2
     time: *3
   abilities:
@@ -7420,22 +8323,22 @@ Dinosaur_188:
   health_26: 2700
   damage_26: 1000
 
-Dinosaur_189:
-  id: 189
+Dinosaur_207:
+  id: 207
   name: Scaphotator
   level: 26
   rarity: epic
   speed: 127
   dna: 0
-  left_id: 64
-  right_id: 188
+  left_id: 75
+  right_id: 206
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.388490000 Z
+    utc: &1 2021-08-23 14:38:05.701713000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.324587000 Z
+    utc: &3 2021-08-23 14:38:06.745058000 Z
     zone: *2
     time: *3
   abilities:
@@ -7455,20 +8358,20 @@ Dinosaur_189:
   health_26: 3000
   damage_26: 1000
 
-Dinosaur_190:
-  id: 190
+Dinosaur_208:
+  id: 208
   name: Scolosaurus
   level: 26
   rarity: common
   speed: 107
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.394165000 Z
+    utc: &1 2021-08-23 14:38:05.707008000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.394165000 Z
+    utc: &3 2021-08-23 14:38:05.707008000 Z
     zone: *2
     time: *3
   abilities:
@@ -7494,20 +8397,200 @@ Dinosaur_190:
   health_26: 4050
   damage_26: 1000
 
-Dinosaur_191:
-  id: 191
+Dinosaur_209:
+  id: 209
+  name: Scorpius Rex
+  level: 26
+  rarity: legendary
+  speed: 117
+  dna: 0
+  left_id: 195
+  right_id: 160
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.714791000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.751178000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FierceStrike'
+  - !ruby/class 'CunningImpact'
+  - !ruby/class 'Camouflage'
+  - !ruby/class 'LethalQuillShot'
+  armor: 0
+  critical_chance: 15
+  slug: scorpius_rex
+  abilities_swap_in:
+  - !ruby/class 'CriticalAmbush'
+  resistances:
+  - 0
+  - 0
+  - 25
+  - 0
+  - 100
+  - 75
+  - 75
+  - 0
+  - 25
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning_fierce
+  health_26: 3750
+  damage_26: 1300
+
+Dinosaur_210:
+  id: 210
+  name: Scorpius Rex Gen 2
+  level: 26
+  rarity: epic
+  speed: 118
+  dna: 0
+  left_id: 161
+  right_id: 45
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.722792000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.758212000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'StrikeAndRun'
+  - !ruby/class 'FierceImpact'
+  - !ruby/class 'QuillImpact'
+  armor: 0
+  critical_chance: 10
+  slug: scorpius_rex_gen_2
+  abilities_swap_in:
+  - !ruby/class 'DefensiveSwapIn'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 75
+  - 50
+  - 100
+  - 0
+  - 25
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning_fierce
+  health_26: 3600
+  damage_26: 1250
+
+Dinosaur_211:
+  id: 211
+  name: Scorpius Rex Gen 3
+  level: 26
+  rarity: unique
+  speed: 119
+  dna: 0
+  left_id: 210
+  right_id: 113
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.730432000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.767663000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'FierceStrike'
+  - !ruby/class 'InstantAmbush'
+  - !ruby/class 'CunningRampage'
+  - !ruby/class 'ToxicQuills'
+  armor: 0
+  critical_chance: 25
+  slug: scorpius_rex_gen_3
+  abilities_swap_in:
+  - !ruby/class 'CriticalAmbush'
+  resistances:
+  - 0
+  - 0
+  - 50
+  - 0
+  - 100
+  - 100
+  - 50
+  - 0
+  - 50
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: cunning_fierce
+  health_26: 4050
+  damage_26: 1350
+
+Dinosaur_212:
+  id: 212
+  name: Scutophicyon
+  level: 26
+  rarity: legendary
+  speed: 118
+  dna: 0
+  left_id: 12
+  right_id: 213
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.740504000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.779602000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'CleansingStrike'
+  - !ruby/class 'RevengeFierceImpact'
+  - !ruby/class 'RevengeProtection'
+  - !ruby/class 'DeceleratingRampage'
+  armor: 10
+  critical_chance: 25
+  slug: scutophicyon
+  abilities_on_escape:
+  - !ruby/class 'NoEscape'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 100
+  - 100
+  - 0
+  - 0
+  - 75
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: fierce_resilient
+  health_26: 3600
+  damage_26: 1350
+
+Dinosaur_213:
+  id: 213
   name: Scutosaurus
   level: 26
   rarity: epic
   speed: 116
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.400182000 Z
+    utc: &1 2021-08-23 14:38:05.746021000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.400182000 Z
+    utc: &3 2021-08-23 14:38:05.746021000 Z
     zone: *2
     time: *3
   abilities:
@@ -7534,20 +8617,20 @@ Dinosaur_191:
   health_26: 4800
   damage_26: 1200
 
-Dinosaur_192:
-  id: 192
+Dinosaur_214:
+  id: 214
   name: Secodontosaurus
   level: 26
   rarity: epic
   speed: 114
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.406806000 Z
+    utc: &1 2021-08-23 14:38:05.752039000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.406806000 Z
+    utc: &3 2021-08-23 14:39:00.279456000 Z
     zone: *2
     time: *3
   abilities:
@@ -7570,24 +8653,25 @@ Dinosaur_192:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3900
   damage_26: 1500
 
-Dinosaur_193:
-  id: 193
+Dinosaur_215:
+  id: 215
   name: Sinoceratops
   level: 26
   rarity: epic
   speed: 107
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.412115000 Z
+    utc: &1 2021-08-23 14:38:05.759245000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.412115000 Z
+    utc: &3 2021-08-23 14:39:00.292173000 Z
     zone: *2
     time: *3
   abilities:
@@ -7602,26 +8686,27 @@ Dinosaur_193:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_194:
-  id: 194
+Dinosaur_216:
+  id: 216
   name: Skoolasaurus
   level: 26
   rarity: legendary
   speed: 124
   dna: 0
-  left_id: 124
-  right_id: 190
+  left_id: 139
+  right_id: 208
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.418107000 Z
+    utc: &1 2021-08-23 14:38:05.766112000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.330860000 Z
+    utc: &3 2021-08-23 14:38:06.788865000 Z
     zone: *2
     time: *3
   abilities:
@@ -7641,7 +8726,7 @@ Dinosaur_194:
   - 75
   - 0
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -7649,32 +8734,34 @@ Dinosaur_194:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_195:
-  id: 195
+Dinosaur_217:
+  id: 217
   name: Skoonasaurus
   level: 26
   rarity: unique
   speed: 107
   dna: 0
-  left_id: 199
-  right_id: 194
+  left_id: 221
+  right_id: 216
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.423259000 Z
+    utc: &1 2021-08-23 14:38:05.772659000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.338861000 Z
+    utc: &3 2021-08-23 14:38:06.796727000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'ResilientStrike'
   - !ruby/class 'GroupDeceleratingRampage'
   - !ruby/class 'InstantInvincibilityTaunt'
-  - !ruby/class 'GroupDistraction'
+  - !ruby/class 'InstantGroupDistractionImpact'
   armor: 30
   critical_chance: 20
   slug: skoonasaurus
+  abilities_counter:
+  - !ruby/class 'MediumResilientCounterAttack'
   resistances:
   - 0
   - 0
@@ -7689,25 +8776,25 @@ Dinosaur_195:
   health_boosts: 0
   speed_boosts: 0
   klass: cunning_resilient
-  health_26: 5700
+  health_26: 5850
   damage_26: 1200
 
-Dinosaur_196:
-  id: 196
+Dinosaur_218:
+  id: 218
   name: Smilocephalosaurus
   level: 26
   rarity: legendary
   speed: 127
   dna: 0
-  left_id: 197
-  right_id: 160
+  left_id: 219
+  right_id: 177
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.430067000 Z
+    utc: &1 2021-08-23 14:38:05.778488000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.346863000 Z
+    utc: &3 2021-08-23 14:39:00.315077000 Z
     zone: *2
     time: *3
   abilities:
@@ -7733,24 +8820,25 @@ Dinosaur_196:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3750
   damage_26: 1400
 
-Dinosaur_197:
-  id: 197
+Dinosaur_219:
+  id: 219
   name: Smilodon
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.435834000 Z
+    utc: &1 2021-08-23 14:38:05.783590000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.435834000 Z
+    utc: &3 2021-08-23 14:38:05.783590000 Z
     zone: *2
     time: *3
   abilities:
@@ -7767,30 +8855,30 @@ Dinosaur_197:
   health_26: 3000
   damage_26: 1500
 
-Dinosaur_198:
-  id: 198
+Dinosaur_220:
+  id: 220
   name: Smilonemys
   level: 26
   rarity: unique
   speed: 127
   dna: 0
-  left_id: 196
-  right_id: 37
+  left_id: 218
+  right_id: 42
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.441088000 Z
+    utc: &1 2021-08-23 14:38:05.788785000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.356294000 Z
+    utc: &3 2021-08-23 14:38:06.810618000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'ShieldedDeceleratingStrike'
   - !ruby/class 'DeliberateProwl'
   - !ruby/class 'PrecisePounce'
-  - !ruby/class 'RampageAndRun'
-  armor: 50
+  - !ruby/class 'DelayedRampageAndRun'
+  armor: 40
   critical_chance: 5
   slug: smilonemys
   abilities_swap_in:
@@ -7802,30 +8890,30 @@ Dinosaur_198:
   - 0
   - 50
   - 100
-  - 40
+  - 60
   - 0
-  - 50
+  - 0
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
   klass: cunning_resilient
-  health_26: 3900
-  damage_26: 1100
+  health_26: 4200
+  damage_26: 1200
 
-Dinosaur_199:
-  id: 199
+Dinosaur_221:
+  id: 221
   name: Sonorasaurus
   level: 26
   rarity: epic
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.448695000 Z
+    utc: &1 2021-08-23 14:38:05.795040000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.448695000 Z
+    utc: &3 2021-08-23 14:38:05.795040000 Z
     zone: *2
     time: *3
   abilities:
@@ -7854,28 +8942,28 @@ Dinosaur_199:
   health_26: 5250
   damage_26: 1000
 
-Dinosaur_200:
-  id: 200
+Dinosaur_222:
+  id: 222
   name: Spinoconstrictor
   level: 26
   rarity: unique
-  speed: 122
+  speed: 126
   dna: 0
-  left_id: 51
-  right_id: 202
+  left_id: 62
+  right_id: 224
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.458521000 Z
+    utc: &1 2021-08-23 14:38:05.801784000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.364544000 Z
+    utc: &3 2021-08-23 14:38:06.817190000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'Distraction'
   - !ruby/class 'PreciseRampage'
-  - !ruby/class 'EvasiveStance'
+  - !ruby/class 'EvasiveWoundingStrike'
   - !ruby/class 'InstantDistraction'
   armor: 0
   critical_chance: 10
@@ -7889,8 +8977,8 @@ Dinosaur_200:
   - 0
   - 100
   - 0
-  - 50
-  - 0
+  - 75
+  - 75
   - 100
   - 0
   - 0
@@ -7898,25 +8986,25 @@ Dinosaur_200:
   health_boosts: 0
   speed_boosts: 0
   klass: cunning_fierce
-  health_26: 3600
-  damage_26: 1000
+  health_26: 4200
+  damage_26: 1300
 
-Dinosaur_201:
-  id: 201
+Dinosaur_223:
+  id: 223
   name: Spinonyx
   level: 26
   rarity: legendary
   speed: 124
   dna: 0
-  left_id: 203
-  right_id: 32
+  left_id: 225
+  right_id: 36
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.464642000 Z
+    utc: &1 2021-08-23 14:38:05.807877000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.372087000 Z
+    utc: &3 2021-08-23 14:38:06.824633000 Z
     zone: *2
     time: *3
   abilities:
@@ -7946,20 +9034,20 @@ Dinosaur_201:
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_202:
-  id: 202
+Dinosaur_224:
+  id: 224
   name: Spinosaurus
   level: 26
   rarity: rare
   speed: 122
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.470213000 Z
+    utc: &1 2021-08-23 14:38:05.812958000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.470213000 Z
+    utc: &3 2021-08-23 14:39:00.347423000 Z
     zone: *2
     time: *3
   abilities:
@@ -7974,24 +9062,25 @@ Dinosaur_202:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_203:
-  id: 203
+Dinosaur_225:
+  id: 225
   name: Spinosaurus Gen 2
   level: 26
   rarity: epic
   speed: 122
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.475895000 Z
+    utc: &1 2021-08-23 14:38:05.818488000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.475895000 Z
+    utc: &3 2021-08-23 14:39:00.354956000 Z
     zone: *2
     time: *3
   abilities:
@@ -8006,26 +9095,27 @@ Dinosaur_203:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_204:
-  id: 204
+Dinosaur_226:
+  id: 226
   name: Spinotahraptor
   level: 26
   rarity: epic
   speed: 126
   dna: 0
-  left_id: 202
-  right_id: 238
+  left_id: 224
+  right_id: 261
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.481514000 Z
+    utc: &1 2021-08-23 14:38:05.825849000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.379711000 Z
+    utc: &3 2021-08-23 14:38:06.831854000 Z
     zone: *2
     time: *3
   abilities:
@@ -8043,22 +9133,22 @@ Dinosaur_204:
   health_26: 2850
   damage_26: 1400
 
-Dinosaur_205:
-  id: 205
+Dinosaur_227:
+  id: 227
   name: Spinotasuchus
   level: 26
   rarity: legendary
   speed: 129
   dna: 0
-  left_id: 204
-  right_id: 119
+  left_id: 226
+  right_id: 134
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.487533000 Z
+    utc: &1 2021-08-23 14:38:05.831105000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.386307000 Z
+    utc: &3 2021-08-23 14:38:06.841151000 Z
     zone: *2
     time: *3
   abilities:
@@ -8088,20 +9178,20 @@ Dinosaur_205:
   health_26: 3750
   damage_26: 1000
 
-Dinosaur_206:
-  id: 206
+Dinosaur_228:
+  id: 228
   name: Stegoceras
   level: 26
   rarity: epic
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.493306000 Z
+    utc: &1 2021-08-23 14:38:05.836033000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.493306000 Z
+    utc: &3 2021-08-23 14:38:05.836033000 Z
     zone: *2
     time: *3
   abilities:
@@ -8130,22 +9220,22 @@ Dinosaur_206:
   health_26: 3600
   damage_26: 1250
 
-Dinosaur_207:
-  id: 207
+Dinosaur_229:
+  id: 229
   name: Stegoceratops
   level: 26
   rarity: epic
   speed: 107
   dna: 0
-  left_id: 226
-  right_id: 209
+  left_id: 248
+  right_id: 231
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.499625000 Z
+    utc: &1 2021-08-23 14:38:05.842818000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.394020000 Z
+    utc: &3 2021-08-23 14:39:00.366693000 Z
     zone: *2
     time: *3
   abilities:
@@ -8161,26 +9251,27 @@ Dinosaur_207:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_208:
-  id: 208
+Dinosaur_230:
+  id: 230
   name: Stegodeus
   level: 26
   rarity: legendary
   speed: 107
   dna: 0
-  left_id: 209
-  right_id: 151
+  left_id: 231
+  right_id: 168
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.505969000 Z
+    utc: &1 2021-08-23 14:38:05.848439000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.401202000 Z
+    utc: &3 2021-08-23 14:38:06.855830000 Z
     zone: *2
     time: *3
   abilities:
@@ -8198,20 +9289,20 @@ Dinosaur_208:
   health_26: 5100
   damage_26: 1100
 
-Dinosaur_209:
-  id: 209
+Dinosaur_231:
+  id: 231
   name: Stegosaurus
   level: 26
   rarity: common
   speed: 116
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.511792000 Z
+    utc: &1 2021-08-23 14:38:05.854116000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.511792000 Z
+    utc: &3 2021-08-23 14:39:00.376033000 Z
     zone: *2
     time: *3
   abilities:
@@ -8223,24 +9314,25 @@ Dinosaur_209:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_210:
-  id: 210
+Dinosaur_232:
+  id: 232
   name: Struthiomimus
   level: 26
   rarity: epic
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.517415000 Z
+    utc: &1 2021-08-23 14:38:05.860593000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.517415000 Z
+    utc: &3 2021-08-23 14:38:05.860593000 Z
     zone: *2
     time: *3
   abilities:
@@ -8267,22 +9359,22 @@ Dinosaur_210:
   health_26: 3300
   damage_26: 1300
 
-Dinosaur_211:
-  id: 211
+Dinosaur_233:
+  id: 233
   name: Stygidaryx
   level: 26
   rarity: unique
   speed: 128
   dna: 0
-  left_id: 46
-  right_id: 213
+  left_id: 56
+  right_id: 235
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.524562000 Z
+    utc: &1 2021-08-23 14:38:05.867310000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.410011000 Z
+    utc: &3 2021-08-23 14:38:06.866049000 Z
     zone: *2
     time: *3
   abilities:
@@ -8314,20 +9406,20 @@ Dinosaur_211:
   health_26: 4050
   damage_26: 1000
 
-Dinosaur_212:
-  id: 212
+Dinosaur_234:
+  id: 234
   name: Stygimoloch
   level: 26
   rarity: epic
   speed: 129
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.531941000 Z
+    utc: &1 2021-08-23 14:38:05.873252000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.531941000 Z
+    utc: &3 2021-08-23 14:38:05.873252000 Z
     zone: *2
     time: *3
   abilities:
@@ -8344,20 +9436,20 @@ Dinosaur_212:
   health_26: 3150
   damage_26: 1500
 
-Dinosaur_213:
-  id: 213
+Dinosaur_235:
+  id: 235
   name: Stygimoloch Gen 2
   level: 26
   rarity: common
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.537905000 Z
+    utc: &1 2021-08-23 14:38:05.878487000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.537905000 Z
+    utc: &3 2021-08-23 14:38:05.878487000 Z
     zone: *2
     time: *3
   abilities:
@@ -8373,20 +9465,20 @@ Dinosaur_213:
   health_26: 3000
   damage_26: 1300
 
-Dinosaur_214:
-  id: 214
+Dinosaur_236:
+  id: 236
   name: Suchomimus
   level: 26
   rarity: common
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.543171000 Z
+    utc: &1 2021-08-23 14:38:05.883549000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.543171000 Z
+    utc: &3 2021-08-23 14:39:00.394988000 Z
     zone: *2
     time: *3
   abilities:
@@ -8400,26 +9492,27 @@ Dinosaur_214:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 3900
   damage_26: 1000
 
-Dinosaur_215:
-  id: 215
+Dinosaur_237:
+  id: 237
   name: Suchotator
   level: 26
   rarity: rare
   speed: 116
   dna: 0
-  left_id: 214
-  right_id: 118
+  left_id: 236
+  right_id: 133
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.548587000 Z
+    utc: &1 2021-08-23 14:38:05.888972000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.418580000 Z
+    utc: &3 2021-08-23 14:39:00.402195000 Z
     zone: *2
     time: *3
   abilities:
@@ -8433,24 +9526,25 @@ Dinosaur_215:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: wild_card
   health_26: 4500
   damage_26: 1300
 
-Dinosaur_216:
-  id: 216
+Dinosaur_238:
+  id: 238
   name: Tanycolagreus
   level: 26
   rarity: common
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.554378000 Z
+    utc: &1 2021-08-23 14:38:05.893972000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.554378000 Z
+    utc: &3 2021-08-23 14:38:05.893972000 Z
     zone: *2
     time: *3
   abilities:
@@ -8476,20 +9570,20 @@ Dinosaur_216:
   health_26: 2850
   damage_26: 1560
 
-Dinosaur_217:
-  id: 217
+Dinosaur_239:
+  id: 239
   name: Tarbosaurus
   level: 26
   rarity: common
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.562106000 Z
+    utc: &1 2021-08-23 14:38:05.899989000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.562106000 Z
+    utc: &3 2021-08-23 14:39:00.409834000 Z
     zone: *2
     time: *3
   abilities:
@@ -8507,30 +9601,31 @@ Dinosaur_217:
   - 0
   - 0
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1700
 
-Dinosaur_218:
-  id: 218
+Dinosaur_240:
+  id: 240
   name: Tenontorex
   level: 26
   rarity: unique
   speed: 109
   dna: 0
-  left_id: 235
-  right_id: 219
+  left_id: 258
+  right_id: 241
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.567617000 Z
+    utc: &1 2021-08-23 14:38:05.908137000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.425230000 Z
+    utc: &3 2021-08-23 14:39:00.416500000 Z
     zone: *2
     time: *3
   abilities:
@@ -8554,24 +9649,25 @@ Dinosaur_218:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: wild_card
   health_26: 4500
   damage_26: 1900
 
-Dinosaur_219:
-  id: 219
+Dinosaur_241:
+  id: 241
   name: Tenontosaurus
   level: 26
   rarity: rare
   speed: 114
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.573580000 Z
+    utc: &1 2021-08-23 14:38:05.913302000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.573580000 Z
+    utc: &3 2021-08-23 14:38:05.913302000 Z
     zone: *2
     time: *3
   abilities:
@@ -8588,34 +9684,36 @@ Dinosaur_219:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_220:
-  id: 220
+Dinosaur_242:
+  id: 242
   name: Testacornibus
   level: 26
   rarity: unique
-  speed: 127
+  speed: 128
   dna: 0
-  left_id: 92
-  right_id: 38
+  left_id: 105
+  right_id: 43
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.579322000 Z
+    utc: &1 2021-08-23 14:38:05.919564000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.431717000 Z
+    utc: &3 2021-08-23 14:38:06.891542000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'SuperiorVulnerability'
   - !ruby/class 'DigInTaunt'
   - !ruby/class 'Devastation'
-  - !ruby/class 'ResilientImpact'
-  armor: 40
+  - !ruby/class 'CleansingDeceleratingImpact'
+  armor: 45
   critical_chance: 5
   slug: testacornibus
   abilities_swap_in:
   - !ruby/class 'SwapInHeal'
+  abilities_counter:
+  - !ruby/class 'CounterPowerHeal'
   abilities_on_escape:
   - !ruby/class 'MinorHealOnEscape'
   resistances:
@@ -8632,34 +9730,34 @@ Dinosaur_220:
   health_boosts: 0
   speed_boosts: 0
   klass: resilient
-  health_26: 4050
-  damage_26: 1000
+  health_26: 4200
+  damage_26: 1100
 
-Dinosaur_221:
-  id: 221
+Dinosaur_243:
+  id: 243
   name: Thoradolosaur
   level: 26
   rarity: unique
   speed: 105
   dna: 0
-  left_id: 8
-  right_id: 217
+  left_id: 9
+  right_id: 239
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.585935000 Z
+    utc: &1 2021-08-23 14:38:05.925499000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.441254000 Z
+    utc: &3 2021-08-23 14:38:06.899727000 Z
     zone: *2
     time: *3
   abilities:
   - !ruby/class 'FierceStrike'
-  - !ruby/class 'FierceImpact'
-  - !ruby/class 'GroupShatteringRampage'
+  - !ruby/class 'GroupShatteringImpact'
+  - !ruby/class 'FierceRampage'
   - !ruby/class 'InstantCharge'
   armor: 0
-  critical_chance: 40
+  critical_chance: 30
   slug: thoradolosaur
   resistances:
   - 0
@@ -8670,30 +9768,30 @@ Dinosaur_221:
   - 0
   - 100
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
   klass: fierce
   health_26: 4500
-  damage_26: 1700
+  damage_26: 1750
 
-Dinosaur_222:
-  id: 222
+Dinosaur_244:
+  id: 244
   name: Thylacotator
   level: 26
   rarity: epic
   speed: 117
   dna: 0
-  left_id: 134
-  right_id: 215
+  left_id: 149
+  right_id: 237
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.591920000 Z
+    utc: &1 2021-08-23 14:38:05.931465000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.449987000 Z
+    utc: &3 2021-08-23 14:38:06.907136000 Z
     zone: *2
     time: *3
   abilities:
@@ -8723,20 +9821,20 @@ Dinosaur_222:
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_223:
-  id: 223
+Dinosaur_245:
+  id: 245
   name: Titanoboa
   level: 26
   rarity: epic
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.598225000 Z
+    utc: &1 2021-08-23 14:38:05.937675000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.598225000 Z
+    utc: &3 2021-08-23 14:38:05.937675000 Z
     zone: *2
     time: *3
   abilities:
@@ -8765,20 +9863,20 @@ Dinosaur_223:
   health_26: 4500
   damage_26: 1300
 
-Dinosaur_224:
-  id: 224
+Dinosaur_246:
+  id: 246
   name: Titanoboa Gen 2
   level: 26
   rarity: rare
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.603955000 Z
+    utc: &1 2021-08-23 14:38:05.942728000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.603955000 Z
+    utc: &3 2021-08-23 14:38:05.942728000 Z
     zone: *2
     time: *3
   abilities:
@@ -8807,22 +9905,22 @@ Dinosaur_224:
   health_26: 4350
   damage_26: 1000
 
-Dinosaur_225:
-  id: 225
+Dinosaur_247:
+  id: 247
   name: Tragodistis
   level: 26
   rarity: legendary
   speed: 105
   dna: 0
-  left_id: 10
-  right_id: 162
+  left_id: 11
+  right_id: 179
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.610235000 Z
+    utc: &1 2021-08-23 14:38:05.948037000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.457429000 Z
+    utc: &3 2021-08-23 14:39:00.440611000 Z
     zone: *2
     time: *3
   abilities:
@@ -8846,24 +9944,25 @@ Dinosaur_225:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1000
 
-Dinosaur_226:
-  id: 226
+Dinosaur_248:
+  id: 248
   name: Triceratops
   level: 26
   rarity: rare
   speed: 111
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.615684000 Z
+    utc: &1 2021-08-23 14:38:05.953018000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.615684000 Z
+    utc: &3 2021-08-23 14:39:00.445993000 Z
     zone: *2
     time: *3
   abilities:
@@ -8878,24 +9977,25 @@ Dinosaur_226:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3300
   damage_26: 1000
 
-Dinosaur_227:
-  id: 227
+Dinosaur_249:
+  id: 249
   name: Triceratops Gen 2
   level: 26
   rarity: common
   speed: 110
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.620607000 Z
+    utc: &1 2021-08-23 14:38:05.959579000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.620607000 Z
+    utc: &3 2021-08-23 14:39:00.451156000 Z
     zone: *2
     time: *3
   abilities:
@@ -8909,24 +10009,25 @@ Dinosaur_227:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 3750
   damage_26: 1000
 
-Dinosaur_228:
-  id: 228
+Dinosaur_250:
+  id: 250
   name: Troodon
   level: 26
   rarity: epic
   speed: 130
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.626703000 Z
+    utc: &1 2021-08-23 14:38:05.966651000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.626703000 Z
+    utc: &3 2021-08-23 14:39:00.457127000 Z
     zone: *2
     time: *3
   abilities:
@@ -8949,26 +10050,27 @@ Dinosaur_228:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3000
   damage_26: 1200
 
-Dinosaur_229:
-  id: 229
+Dinosaur_251:
+  id: 251
   name: Trykosaurus
   level: 26
   rarity: unique
   speed: 108
   dna: 0
-  left_id: 236
-  right_id: 18
+  left_id: 259
+  right_id: 20
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.632327000 Z
+    utc: &1 2021-08-23 14:38:05.973218000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.464664000 Z
+    utc: &3 2021-08-23 14:39:00.463313000 Z
     zone: *2
     time: *3
   abilities:
@@ -8994,26 +10096,27 @@ Dinosaur_229:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce_resilient
   health_26: 4200
   damage_26: 1600
 
-Dinosaur_230:
-  id: 230
+Dinosaur_252:
+  id: 252
   name: Tryostronix
   level: 26
   rarity: legendary
   speed: 125
   dna: 0
-  left_id: 31
-  right_id: 166
+  left_id: 35
+  right_id: 183
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.638133000 Z
+    utc: &1 2021-08-23 14:38:05.979474000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.472018000 Z
+    utc: &3 2021-08-23 14:39:00.469516000 Z
     zone: *2
     time: *3
   abilities:
@@ -9033,28 +10136,72 @@ Dinosaur_230:
   - 100
   - 75
   - 0
-  - 100
+  - 50
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4200
   damage_26: 1400
 
-Dinosaur_231:
-  id: 231
+Dinosaur_253:
+  id: 253
+  name: Tsintamoth
+  level: 26
+  rarity: legendary
+  speed: 113
+  dna: 0
+  left_id: 266
+  right_id: 254
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-08-23 14:38:05.988264000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-08-23 14:38:06.934338000 Z
+    zone: *2
+    time: *3
+  abilities:
+  - !ruby/class 'PersistentFerociousStrike'
+  - !ruby/class 'GroupCleansingImpact'
+  - !ruby/class 'GroupHeal'
+  - !ruby/class 'GroupDeceleratingImpact'
+  armor: 10
+  critical_chance: 5
+  slug: tsintamoth
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 75
+  - 75
+  - 0
+  - 100
+  attack_boosts: 0
+  health_boosts: 0
+  speed_boosts: 0
+  klass: wild_card
+  health_26: 4950
+  damage_26: 1250
+
+Dinosaur_254:
+  id: 254
   name: Tsintaosaurus
   level: 26
   rarity: epic
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.644415000 Z
+    utc: &1 2021-08-23 14:38:05.996104000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.644415000 Z
+    utc: &3 2021-08-23 14:38:05.996104000 Z
     zone: *2
     time: *3
   abilities:
@@ -9081,20 +10228,20 @@ Dinosaur_231:
   health_26: 4350
   damage_26: 1250
 
-Dinosaur_232:
-  id: 232
+Dinosaur_255:
+  id: 255
   name: Tuojiangosaurus
   level: 26
   rarity: rare
   speed: 105
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.650249000 Z
+    utc: &1 2021-08-23 14:38:06.001277000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.650249000 Z
+    utc: &3 2021-08-23 14:38:06.001277000 Z
     zone: *2
     time: *3
   abilities:
@@ -9115,22 +10262,22 @@ Dinosaur_232:
   health_26: 3600
   damage_26: 1000
 
-Dinosaur_233:
-  id: 233
+Dinosaur_256:
+  id: 256
   name: Tuoramoloch
   level: 26
   rarity: unique
   speed: 126
   dna: 0
-  left_id: 161
-  right_id: 232
+  left_id: 178
+  right_id: 255
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.658345000 Z
+    utc: &1 2021-08-23 14:38:06.008271000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.479302000 Z
+    utc: &3 2021-08-23 14:39:00.485748000 Z
     zone: *2
     time: *3
   abilities:
@@ -9154,24 +10301,25 @@ Dinosaur_233:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1500
 
-Dinosaur_234:
-  id: 234
+Dinosaur_257:
+  id: 257
   name: Tupandactylus
   level: 26
   rarity: rare
   speed: 126
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.664080000 Z
+    utc: &1 2021-08-23 14:38:06.013508000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.664080000 Z
+    utc: &3 2021-08-23 14:38:06.013508000 Z
     zone: *2
     time: *3
   abilities:
@@ -9185,6 +10333,16 @@ Dinosaur_234:
   - !ruby/class 'SwapInFerocity'
   abilities_counter:
   - !ruby/class 'ArmorPiercingCounter'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 25
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
@@ -9192,22 +10350,22 @@ Dinosaur_234:
   health_26: 3000
   damage_26: 950
 
-Dinosaur_235:
-  id: 235
+Dinosaur_258:
+  id: 258
   name: Tyrannolophosaur
   level: 26
   rarity: legendary
   speed: 108
   dna: 0
-  left_id: 237
-  right_id: 53
+  left_id: 260
+  right_id: 64
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.669781000 Z
+    utc: &1 2021-08-23 14:38:06.019308000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.487872000 Z
+    utc: &3 2021-08-23 14:39:00.495307000 Z
     zone: *2
     time: *3
   abilities:
@@ -9221,24 +10379,25 @@ Dinosaur_235:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning_fierce
   health_26: 4200
   damage_26: 1650
 
-Dinosaur_236:
-  id: 236
+Dinosaur_259:
+  id: 259
   name: Tyrannosaurus Rex
   level: 26
   rarity: epic
   speed: 102
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.675459000 Z
+    utc: &1 2021-08-23 14:38:06.025076000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.675459000 Z
+    utc: &3 2021-08-23 14:39:00.505118000 Z
     zone: *2
     time: *3
   abilities:
@@ -9251,24 +10410,25 @@ Dinosaur_236:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4500
   damage_26: 1900
 
-Dinosaur_237:
-  id: 237
+Dinosaur_260:
+  id: 260
   name: Tyrannosaurus Rex Gen 2
   level: 26
   rarity: rare
   speed: 104
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.681725000 Z
+    utc: &1 2021-08-23 14:38:06.030915000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.681725000 Z
+    utc: &3 2021-08-23 14:39:00.511904000 Z
     zone: *2
     time: *3
   abilities:
@@ -9281,24 +10441,25 @@ Dinosaur_237:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: fierce
   health_26: 4350
   damage_26: 1800
 
-Dinosaur_238:
-  id: 238
+Dinosaur_261:
+  id: 261
   name: Utahraptor
   level: 26
   rarity: rare
   speed: 128
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.687515000 Z
+    utc: &1 2021-08-23 14:38:06.036208000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.687515000 Z
+    utc: &3 2021-08-23 14:38:06.036208000 Z
     zone: *2
     time: *3
   abilities:
@@ -9315,22 +10476,22 @@ Dinosaur_238:
   health_26: 2250
   damage_26: 1400
 
-Dinosaur_239:
-  id: 239
+Dinosaur_262:
+  id: 262
   name: Utarinex
   level: 26
   rarity: unique
   speed: 128
   dna: 0
-  left_id: 69
-  right_id: 240
+  left_id: 82
+  right_id: 263
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.693631000 Z
+    utc: &1 2021-08-23 14:38:06.042571000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.495385000 Z
+    utc: &3 2021-08-23 14:39:00.519623000 Z
     zone: *2
     time: *3
   abilities:
@@ -9338,13 +10499,13 @@ Dinosaur_239:
   - !ruby/class 'RampageAndRun'
   - !ruby/class 'DistractingImpact'
   - !ruby/class 'InstantCharge'
-  armor: 0
-  critical_chance: 20
+  armor: 10
+  critical_chance: 25
   slug: utarinex
   resistances:
   - 0
   - 50
-  - 50
+  - 75
   - 0
   - 0
   - 75
@@ -9354,26 +10515,27 @@ Dinosaur_239:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 3600
-  damage_26: 1600
+  damage_26: 1650
 
-Dinosaur_240:
-  id: 240
+Dinosaur_263:
+  id: 263
   name: Utasinoraptor
   level: 26
   rarity: legendary
   speed: 127
   dna: 0
-  left_id: 238
-  right_id: 193
+  left_id: 261
+  right_id: 215
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.699611000 Z
+    utc: &1 2021-08-23 14:38:06.049697000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.502392000 Z
+    utc: &3 2021-08-23 14:38:06.964069000 Z
     zone: *2
     time: *3
   abilities:
@@ -9391,20 +10553,20 @@ Dinosaur_240:
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_241:
-  id: 241
+Dinosaur_264:
+  id: 264
   name: Velociraptor
   level: 26
   rarity: common
   speed: 132
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.705412000 Z
+    utc: &1 2021-08-23 14:38:06.056221000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.705412000 Z
+    utc: &3 2021-08-23 14:39:00.528528000 Z
     zone: *2
     time: *3
   abilities:
@@ -9426,26 +10588,27 @@ Dinosaur_241:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: cunning
   health_26: 1650
   damage_26: 1550
 
-Dinosaur_242:
-  id: 242
+Dinosaur_265:
+  id: 265
   name: Velosrhacos
   level: 26
   rarity: epic
   speed: 130
   dna: 0
-  left_id: 50
-  right_id: 165
+  left_id: 61
+  right_id: 182
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.710877000 Z
+    utc: &1 2021-08-23 14:38:06.063545000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:03.509313000 Z
+    utc: &3 2021-08-23 14:38:06.973494000 Z
     zone: *2
     time: *3
   abilities:
@@ -9473,20 +10636,20 @@ Dinosaur_242:
   health_26: 3000
   damage_26: 1400
 
-Dinosaur_243:
-  id: 243
+Dinosaur_266:
+  id: 266
   name: Woolly Mammoth
   level: 26
   rarity: epic
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.716278000 Z
+    utc: &1 2021-08-23 14:38:06.070127000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.716278000 Z
+    utc: &3 2021-08-23 14:39:00.536548000 Z
     zone: *2
     time: *3
   abilities:
@@ -9509,24 +10672,25 @@ Dinosaur_243:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4200
   damage_26: 1000
 
-Dinosaur_244:
-  id: 244
+Dinosaur_267:
+  id: 267
   name: Woolly Rhino
   level: 26
   rarity: epic
   speed: 108
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.721294000 Z
+    utc: &1 2021-08-23 14:38:06.076155000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.721294000 Z
+    utc: &3 2021-08-23 14:39:00.542823000 Z
     zone: *2
     time: *3
   abilities:
@@ -9551,24 +10715,25 @@ Dinosaur_244:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1500
 
-Dinosaur_245:
-  id: 245
+Dinosaur_268:
+  id: 268
   name: Wuerhosaurus
   level: 26
   rarity: rare
   speed: 115
   dna: 0
   created_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &1 2021-06-18 13:03:02.726730000 Z
+    utc: &1 2021-08-23 14:38:06.083579000 Z
     zone: &2 !ruby/object:ActiveSupport::TimeZone
       name: Etc/UTC
     time: *1
   updated_at: !ruby/object:ActiveSupport::TimeWithZone
-    utc: &3 2021-06-18 13:03:02.726730000 Z
+    utc: &3 2021-08-23 14:39:00.548804000 Z
     zone: *2
     time: *3
   abilities:
@@ -9581,6 +10746,7 @@ Dinosaur_245:
   attack_boosts: 0
   health_boosts: 0
   speed_boosts: 0
+  is_implemented: true
   klass: resilient
   health_26: 4500
   damage_26: 1000

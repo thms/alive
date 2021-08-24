@@ -9,6 +9,7 @@ class <%= class_name %> < Ability
   self.bypass = []
   self.is_rending_attack = false
   self.is_counter = false
+  self.is_swap_out = false
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)

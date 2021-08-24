@@ -22,8 +22,8 @@ class TeamMatchTest < ActiveSupport::TestCase
 
   test "Stronger team should win" do
     #skip
-    team1 = create_team(1000, 300, 130, 20, 'attacker', [Strike], [], DefaultTeamStrategy)
-    team2 = create_team(1000, 300, 130, 20, 'defender', [Impact], [], DefaultTeamStrategy)
+    team1 = create_team(1000, 300, 130, 20, 'attacker', [FierceStrike, Strike], [], DefaultTeamStrategy)
+    team2 = create_team(1000, 300, 130, 20, 'defender', [Impact, Strike], [], DefaultTeamStrategy)
     match = TeamMatch.new(team1, team2)
     result = match.execute
     assert_equal "defender", result[:outcome]

@@ -1,8 +1,8 @@
 require 'graphviz'
 stats = HashWithIndifferentAccess.new({'d1': 0, 'd2':0})
 100.times do
-d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [DeceleratingStrike], strategy: DefaultStrategy)
-d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [CleansingStrike], strategy: DefaultStrategy)
+d1 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd1', abilities: [DeceleratingImpact], strategy: DefaultStrategy)
+d2 = Dinosaur.new(health: 1000, damage: 300, speed: 130, level: 20, name: 'd2', abilities: [CleansingImpact], strategy: DefaultStrategy)
 result = Match.new(d1, d2).execute
 stats[result[:winner]]+=1
 end
