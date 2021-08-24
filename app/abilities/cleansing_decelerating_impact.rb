@@ -11,7 +11,7 @@ class CleansingDeceleratingImpact < Ability
     attacker.cleanse(:all)
   end
 
-  def update_defender(defender)
+  def update_defender_after_damage(defender)
     defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2))
   end
 

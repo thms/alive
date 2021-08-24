@@ -91,8 +91,7 @@ class Ability
     stats
   end
 
-  # update defender's shields, etc.
-  # need to push the modifiers onto the defender's list
+  # remove defender's shields, etc. before receiving damage
   def update_defender(defender)
   end
 

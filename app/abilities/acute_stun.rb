@@ -1,4 +1,4 @@
-# Target highest damage: 100% chane to stun for 1 turn
+# Target highest damage: 100% chance to stun for 1 turn
 class AcuteStun < Ability
 
   self.is_implemented = true

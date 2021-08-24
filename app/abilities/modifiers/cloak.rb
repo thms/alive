@@ -1,4 +1,4 @@
-# reduces the attack damage by 67% with a probablity of x for n turns, m attacks
+# reduces the attack damage by 67% with a probability of x for n turns, m attacks
 # and increases the next hits attack
 # both expires when used on own attack
 class Modifiers::Cloak < Modifiers::Modifier
