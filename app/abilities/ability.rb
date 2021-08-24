@@ -70,16 +70,16 @@ class Ability
   # TODO: ability to force the random decisions (crit, dodge) one way or the other for the simulator
   def execute(attacker, defender)
     # destroy shields, cloak dodge, before attacking
-    update_defender(defender)
+    attacker.is_revenge ? update_defender_revenge(defender) : update_defender(defender)
     # Tick down the attacker's shields at the top if his turn
     attacker.tick_shields
     # Tick down the attacker's shields at the top if his turn
     attacker.tick_dodge
-    # increase damage
-    update_attacker(attacker)
+    # increase damage and add modifiers
+    attacker.is_revenge ? update_attacker_revenge(attacker) : update_attacker(attacker)
     stats = damage_defender(attacker, defender)
     # add new modifiers for the defender, so they don't already get ticked down in damage _defender.
-    update_defender_after_damage(defender)
+    attacker.is_revenge ? update_defender_after_damage_revenge(defender) : update_defender_after_damage(defender)
     # execute counter attack, if defender survived and was attacked
     if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
       stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
@@ -98,6 +98,12 @@ class Ability
   # update attacker's shields, etc.
   # need to push the modifiers onto the attacker's list
   def update_attacker(attacker)
+  end
+
+  # update attacker's shields, etc.
+  # need to push the modifiers onto the attacker's list
+  # called in revenge mode
+  def update_attacker_revenge(attacker)
   end
 
   # update defender's speed, distractions etc, after they have received a hit so they don't get ticked down during damage_defender already

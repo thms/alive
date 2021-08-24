@@ -7,7 +7,7 @@ Each modifier affects one thing only, one ability can have many modifiers that i
 ## Expiry
 "lasting N turns" - these get expired by tick()
 "for M attacks" - these get expired by attack()
-Keeping track: either with the same mechanism as abilities - ability_stats, or we instantiate the things and they keep tack of if themselves.
+Keeping track: we instantiate the things and they keep tack of if themselves.
 
 ## Calculating current attributes
 Modifiers act as a chain on the attributes to calculate the current attributes:

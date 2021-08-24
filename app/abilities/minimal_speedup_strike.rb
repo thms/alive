@@ -8,7 +8,7 @@ class MinimalSpeedupStrike < Ability
   self.bypass = []
 
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 30))
+    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 3))
   end
 
 end
