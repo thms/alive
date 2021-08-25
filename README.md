@@ -35,7 +35,7 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-TQTeam: favuor preserving own health / maximising damage to other via mechanics
+Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
 
 ## TODO
 Fix swap mechanics in team matches - are they still wrong?
@@ -45,13 +45,10 @@ Fix NN strategy to use separate logs for each dinosaur
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits
 MinMax and other strategies: if there is no good move, use highest damage or some other secondary strategy
-Remaining abilities
 Build neural network for the Q-function for team matches
 
 Matchups: allow picking dinosaurs from the UI, tweak their strength and then run the match
-Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
 Try out RNN/LSTM networks
-Update to latest release: flocks, and other new creatures and abilities
 
 ## DONE
 Basic model that shows relationships for Hybrids
@@ -96,6 +93,11 @@ Strategies: in case of winning, favour paths that preserve more own health (e.g.
 Strategies: in case of loosing, favour paths that reduce opponents health as much as possible (i.e. outcome = value * (other.current_health / other.health)
 Refactor current game mechanics for consistency in team match to be equal to 1:1 match
 Replace graphviz with d3.js for rendering outcome of matchups (dendrogram might be better?)
+TQTeam: favor preserving own health / maximising damage to other via mechanics
+Remaining abilities
+Update to latest release: flocks, and other new creatures and abilities
+
+
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
