@@ -6,6 +6,11 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  # for profiling runs, uncomment these
+  # config.cache_classes = true
+  # config.cache_template_loading = true
+  # end profiling runs
+
   # Do not eager load code on boot.
   config.eager_load = false
 

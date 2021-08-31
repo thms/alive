@@ -17,7 +17,8 @@ class Modifiers::Modifier
   # attributes to keep keep track for each instance of the ticking Clock
   attr_accessor :current_turns
   attr_accessor :current_attacks
-
+  attr_accessor :value
+  
   # set initial turns and attacks
   def initialize
     @current_attacks = self.attacks

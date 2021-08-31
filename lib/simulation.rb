@@ -19,6 +19,7 @@ class Simulation
     @dinosaur1 = dinosaur1
     @dinosaur2 = dinosaur2
     @logger = Logger.new(STDOUT)
+    @logger.level = :warn
     @round = 1
     @log = [] # ["D1::Strike", "D2::CleansingStrike", ...]
     @root = Node.new('Start')

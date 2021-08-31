@@ -5,7 +5,7 @@ class SimulationsController < ApplicationController
   def index
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
     d1 = Dinosaur.find_by_name('Dracoceratops')
-    d2 = Dinosaur.find_by_name('Erlikospyx')
+    d2 = Dinosaur.find_by_name('Triceratops Gen 2')
     d1.reset_attributes!
     d2.reset_attributes!
     if d1.name == d2.name

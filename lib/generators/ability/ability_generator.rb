@@ -1,4 +1,6 @@
 require 'rails/generators'
+module Generators
+  module Ability
 class AbilityGenerator < Rails::Generators::NamedBase
   source_root File.expand_path('templates', __dir__)
   argument :ability, type: :hash, default: {}
@@ -420,7 +422,6 @@ class AbilityGenerator < Rails::Generators::NamedBase
       "    attacker.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))\n"
     end
   end
-
-
-
+end
+end
 end

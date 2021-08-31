@@ -8,19 +8,21 @@ class MatchesController < ApplicationController
     name2 = 'Scorpius Rex Gen 3'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    TQStrategy.load
-    TQStrategy.reset
+    #TQStrategy.load
+    #TQStrategy.reset
     MinMaxStrategy.reset
-    MinMax2Strategy.reset
-    MinMax3Strategy.reset
+    #MinMax2Strategy.reset
+    #MinMax3Strategy.reset
     #NNStrategy.load
     EventSink.reset
-    1000.times do
+    1.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = MinMax2Strategy
+      @d1.strategy = MinMaxStrategy
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMax2Strategy
+      @d2.strategy = MinMaxStrategy
+      @d2 = Utilities.deep_clone2(d2)
+
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       @start_node_title = start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)
@@ -30,7 +32,7 @@ class MatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-    TQStrategy.save
+    #TQStrategy.save
     #NNStrategy.save
     if @logs.size > 10
       @graph = generate_graph([@logs.last], name1, name2, @start_node_title)
