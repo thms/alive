@@ -2,7 +2,7 @@ require 'logger'
 require 'dinosaurs/battle'
 
 # this class mirrors the normal dinosaur active record class, but without the overhead of active record
-# making it 10x faster to marshal
+# making it 10x faster to do a deep clone
 class Dinosaur2
 
   include Dinosaurs::Battle

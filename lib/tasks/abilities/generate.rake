@@ -19,7 +19,7 @@ namespace :abilities do
       abilities.flatten!
       abilities.each do |ability|
         class_name = ability['uuid'].camelize
-        AbilityGenerator.start [class_name, ability]
+        Generators::Ability::AbilityGenerator.start [class_name, ability]
       end
     end
   end

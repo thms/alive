@@ -13,6 +13,7 @@ class SwapInResilientStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
+    attacker.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
     attacker.cleanse(:distraction)
   end
 
@@ -33,7 +34,6 @@ class SwapInResilientStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::PreventSwap.new(2, 'other'))
     defender.add_modifier(Modifiers::Vulnerability.new(50, 2, 1))
   end
 

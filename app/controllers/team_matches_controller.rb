@@ -4,9 +4,9 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Tryostronix']
+    team1 = ['Monostegotops', 'Indoraptor', 'Monolometrodon', 'Erlikospyx']
     name2 = 'D'
-    team2 = ['Concavenator', 'Diorajasaur', 'Diplovenator']
+    team2 = ['Trykosaurus', 'Dracoceratops', 'Thoradolosaur', 'Geminititan']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
@@ -22,8 +22,8 @@ class TeamMatchesController < ApplicationController
       @t1.strategy = TQTeamStrategy
       @t2 = Team.new(name2, team2)
       @t2.strategy = TQTeamStrategy
-      pimp_defense_team
-      pimp_offense_team
+      #pimp_defense_team
+      #pimp_offense_team
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
       match = TeamMatch.new(@t1, @t2)

@@ -7,7 +7,7 @@ require 'logger'
 class TQTeamStrategy < TeamStrategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.05 # eplison greedy strategy: pick suboptimal move in 5% of cases
+  EPSILON = 0.00 # eplison greedy strategy: pick suboptimal move in 5% of cases
   @@q_table = {} # state to ability + dinosaur mapping
   @@q_table_swap = {} # state to swapp in new dinosaur mapping
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging

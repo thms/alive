@@ -98,6 +98,10 @@ class Ability
   def update_defender(defender)
   end
 
+  # revenge version, before receiving damage
+  def update_defender_revenge(defender)
+  end
+
   # update attacker's shields, etc.
   # need to push the modifiers onto the attacker's list
   def update_attacker(attacker)
@@ -114,6 +118,9 @@ class Ability
   def update_defender_after_damage(defender)
   end
 
+  def update_defender_after_damage_revenge(defender)
+  end
+  
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
     # Don't deal damage if there is no defender (testing) or there is no damage to be done, e.g. when healing

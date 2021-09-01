@@ -13,6 +13,7 @@ class SwapInInvincibility < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
+    attacker.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
     attacker.add_modifier(Modifiers::Taunt.new(0, nil))
     attacker.add_modifier(Modifiers::Shields.new(100, 0, 2))
   end
@@ -31,7 +32,6 @@ class SwapInInvincibility < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::PreventSwap.new(2, 'other'))
   end
 
   # add modifiers for the defender after damage is done in revenge mode
