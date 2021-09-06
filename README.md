@@ -39,7 +39,7 @@ Fusions: dna needed for one fusion for each level of rarity
 ## TODO
 Fix swap mechanics in team matches - are they still wrong?
 Why is the team strategy so swappy?
-Explore different team strategy topologies: separate q function for swapping, and combine with either TQ or minmax for each indivodual dinosaur
+Explore different team strategy topologies: separate q function for swapping, and combine with either TQ or minmax for each individual dinosaur
 Fix NN strategy to use separate logs for each dinosaur
 Strategies: factor expected damage into the rewards for TQ and NN
 MinMax: use expected damage to set value of non-leaf nodes, when hitting depth limits

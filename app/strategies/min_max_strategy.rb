@@ -111,6 +111,7 @@ class MinMaxStrategy < Strategy
           Mechanics.apply_damage_over_time(dinosaurs)
           determine_outcome(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
           # update the parent node's value with this nodes value
+          # TODO: check that this is the correct way
           first_node.value = attacker.minimize(second_node.value, first_node.value)
           next
         end

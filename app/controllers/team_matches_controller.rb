@@ -4,9 +4,9 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Monostegotops', 'Indoraptor', 'Monolometrodon', 'Erlikospyx']
+    team1 = ['Sarcorixis', 'Baryonyx', 'Suchotator', 'Entelochops']
     name2 = 'D'
-    team2 = ['Trykosaurus', 'Dracoceratops', 'Thoradolosaur', 'Geminititan']
+    team2 = ['Diplodocus', 'Indominus Rex Gen 2', 'Thylacotator', 'Brontolasmus']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
@@ -15,8 +15,8 @@ class TeamMatchesController < ApplicationController
     team1.each {|name| @survivors1["#{name1}:#{name}"] = 0}
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
-    TQTeamStrategy.reset
-    1000.times do
+    #TQTeamStrategy.reset
+    1.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy

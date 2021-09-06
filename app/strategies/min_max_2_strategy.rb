@@ -97,7 +97,7 @@ class MinMax2Strategy < Strategy
           health: Mechanics.health(dinosaurs)
         }
       )
-      # if at least one has died, mark as win / draw and evaulate next combiation of moves
+      # if at least one has died, mark as win / draw and evaluate next combination of moves
       if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
         Mechanics.apply_damage_over_time(dinosaurs)
         update_final_node(first_node, dinosaurs, ability_outcomes, attacker, swapped_out)
