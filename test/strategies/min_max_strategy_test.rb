@@ -3,7 +3,7 @@ require 'test_helper'
 class MinMaxStrategyTest < ActiveSupport::TestCase
 
   test "MinMax Strategy should find strong move even when there is no guarantee of a win" do
-    #skip
+    skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,

@@ -4,8 +4,8 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    name1 = 'Sarcorixis'
-    name2 = 'Thylacotator'
+    name2 = 'Magnapyritor'
+    name1 = 'Ardentismaxima'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     #TQStrategy.load

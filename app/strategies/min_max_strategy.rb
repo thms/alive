@@ -1,8 +1,9 @@
-# Combination of simulation and min max strategy to bemore efficient and combine caching
 require 'logger'
 
-
 class MinMaxStrategy < Strategy
+
+  FIRST = 0 # indexes for passing around
+  LAST  = 1
 
   @@cache = {}
   @@cache_hits = 0
@@ -119,7 +120,10 @@ class MinMaxStrategy < Strategy
         # if both are still alive, apply damage over time
         Mechanics.apply_damage_over_time(dinosaurs)
         # see if any of them has died. If so mark as final
-        next if determine_outcome(second_node, dinosaurs, ability_outcomes, attacker, nil)
+        if Mechanics.has_ended?(dinosaurs)
+          determine_outcome(second_node, dinosaurs, ability_outcomes, attacker, nil)
+          next
+        end
 
         # Both are still alive, advance the clock and explore depth first
         dinosaurs.map(&:tick)
@@ -129,7 +133,6 @@ class MinMaxStrategy < Strategy
         # so we need to find the worst possible outcome for that selection and bubble that up.
         outcomes = one_round(second_node, dinosaur1, dinosaur2)[:ability_outcomes]
         unless outcomes.empty?
-          best_outcome = outcomes.sort_by {|k, v| attacker.value * v}.last.last
           worst_outcome = outcomes.sort_by {|k, v| attacker.value * v}.first.last
           if attacker.name == dinosaurs.first.name
             ability_outcomes[dinosaurs.first.selected_ability.class.name] = worst_outcome
@@ -242,6 +245,19 @@ class MinMaxStrategy < Strategy
   end
 
   def self.update_ability_outcomes(ability_outcomes, attacker, dinosaurs, value)
+    if attacker.name == dinosaurs.first.name
+      index = FIRST
+    else
+      index = LAST
+    end
+    if attacker.value == 1.0
+      ability_outcomes[dinosaurs[index].selected_ability.class.name] = [value, ability_outcomes[dinosaurs[index].selected_ability.class.name]].min rescue value
+    else
+      ability_outcomes[dinosaurs[index].selected_ability.class.name] = [value, ability_outcomes[dinosaurs[index].selected_ability.class.name]].max rescue value
+    end
+  end
+
+  def self.update_ability_outcomes_orig(ability_outcomes, attacker, dinosaurs, value)
     if attacker.name == dinosaurs.first.name
       ability_outcomes[dinosaurs.first.selected_ability.class.name] = value
     else
