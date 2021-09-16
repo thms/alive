@@ -4,7 +4,6 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
 
   'One move away from victory'
   test "MinMax Strategy should find winning move if there is one" do
-    skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -29,10 +28,14 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
     MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
     assert_equal Impact, result.class
+    MinMaxStrategy.reset
+    attacker.value = -1.0
+    defender.value = 1.0
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal Impact, result.class
   end
 
   test "MinMax2 Strategy should find winning move if there is one" do
-    skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -57,11 +60,15 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
     MinMax2Strategy.reset
     result = MinMax2Strategy.next_move(attacker, defender)
     assert_equal Impact, result.class
+    attacker.value = -1.0
+    defender.value = 1.0
+    MinMax2Strategy.reset
+    result = MinMax2Strategy.next_move(attacker, defender)
+    assert_equal Impact, result.class
   end
 
   'defender two moves away from victory, but will loose if choosing badly'
-  test "Defender two moves MinMax Strategy should find winning move if there is one" do
-    skip
+  test "Defender two moves MinMax Strategy should find winning move" do
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -95,8 +102,7 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
   end
 
   'Defender two moves away from victory'
-  test "Two moves MinMax2 Strategy should find winning move if there is one" do
-    skip
+  test "Two moves MinMax2 Strategy should find winning move" do
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -127,15 +133,49 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
     assert_equal 'Defender', result[:outcome]
   end
 
-  test "Thyla vs Sarco" do
+
+  test "MinMax Thyla vs Sarco should be symmetric" do
     attacker = Dinosaur.find_by_name('Thylacotator').reset_attributes!
-    attacker.value = -1.0
+    attacker.value = 1.0
     defender = Dinosaur.find_by_name('Sarcorixis').reset_attributes!
+    defender.value = -1.0
+    MinMaxStrategy.reset
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal MaimingWound, result.class
+
+    attacker.value = -1.0
     defender.value = 1.0
+    MinMaxStrategy.reset
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal MaimingWound, result.class
+  end
+
+  test "MinMax2 Thyla vs Sarco should be symmetric" do
+    attacker = Dinosaur.find_by_name('Thylacotator').reset_attributes!
+    attacker.value = 1.0
+    defender = Dinosaur.find_by_name('Sarcorixis').reset_attributes!
+    defender.value = -1.0
     MinMax2Strategy.reset
     result = MinMax2Strategy.next_move(attacker, defender)
-    #result = MinMaxStrategy.next_move(defender, attacker)
     assert_equal MaimingWound, result.class
+
+    # attacker.value = -1.0
+    # defender.value = 1.0
+    # MinMax2Strategy.reset
+    # result = MinMax2Strategy.next_move(attacker, defender)
+    # assert_equal MaimingWound, result.class
+  end
+
+  focus
+  test "MinMax Erlikospyx vs Erlidominus" do
+    attacker = Dinosaur.find_by_name('Erlikospyx').reset_attributes!
+    attacker.value = 1.0
+    attacker.critical_chance = 50
+    defender = Dinosaur.find_by_name('Erlidominus').reset_attributes!
+    defender.value = -1.0
+    MinMaxStrategy.reset
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal PrecisePounce, result.class
   end
 
 end

@@ -120,7 +120,7 @@ class Ability
 
   def update_defender_after_damage_revenge(defender)
   end
-  
+
   # update defender's current_health with the corresponding damage
   def damage_defender(attacker, defender)
     # Don't deal damage if there is no defender (testing) or there is no damage to be done, e.g. when healing
@@ -137,7 +137,7 @@ class Ability
       end
       # Apply critical chance: with probility of dino.critical chance, increase the damage by 25%
       # note: modifiers may reduce critical chance to zero, in the current attributes
-      is_critical_hit = (100 * rand < attacker.current_attributes[:critical_chance])
+      is_critical_hit = ((100 * rand) <= attacker.current_attributes[:critical_chance])
       damage = damage * 1.25 if is_critical_hit
       # Apply vulnerability
       damage = damage * (1.0 + 0.25 * (100.0 - defender.resistance(:vulnerable)) / 100.0) if defender.current_attributes[:vulnerable]
@@ -146,12 +146,12 @@ class Ability
       # Attack increase
       damage = (damage * (100.0 + attacker.current_attributes[:damage]) / 100.0)
       # TODO: filter through defender's modifiers (dogde)
-      did_dodge = (100 * rand < defender.current_attributes[:dodge]) && !bypass.include?(:dodge)
+      did_dodge = ((100 * rand) < defender.current_attributes[:dodge]) && !bypass.include?(:dodge)
       damage = (damage * (100.0 - 66.7) / 100.0) if (did_dodge)
       # filter through defender's shields
-      damage = (damage * (100 - defender.current_attributes[:shields]) / 100)
+      damage = (damage * (100.0 - defender.current_attributes[:shields]) / 100.0)
       # filter through defender's armor if any and the strike does not bypass armor
-      damage = (damage * (100 - defender.armor) / 100) unless bypass.include?(:armor)
+      damage = (damage * (100.0 - defender.armor) / 100.0) unless bypass.include?(:armor)
       # damage must no go below zero
       damage = [damage, 0].max
       # update defender's health and clamp all death to value 0

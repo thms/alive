@@ -8,7 +8,8 @@ module Dinosaurs
     attr_accessor :current_health
     attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
     attr_accessor :is_stunned # when stunned, skip this attack and unstun.
-    attr_accessor :strategy
+    attr_accessor :strategy # single strategy to use
+    attr_accessor :strategies # allow an array of strategies and choose one for each move
     attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
     attr_accessor :team # used in team matches
     attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
@@ -30,6 +31,15 @@ module Dinosaurs
       self.abilities_counter = self.abilities_counter.map{|klass| klass.new} if self.abilities_counter.first.class == Class
       self.abilities_on_escape = self.abilities_on_escape.map{|klass| klass.new} if self.abilities_on_escape.first.class == Class
       self
+    end
+
+    # pick a strategy
+    def strategy
+      if @strategies.nil?
+        @strategy
+      else
+        @strategies.sample
+      end
     end
 
     # calculate modifications to current attributes by collecting all active modifiers to the attributes

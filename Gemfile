@@ -51,6 +51,7 @@ group :development do
   # Guard to automatically run tests on save
   gem 'guard'
   gem 'guard-minitest', '~> 2.4', '>= 2.4.6'
+  gem 'minitest-focus'
 
   # Ability to dump db to speeds
   gem 'seed_dump'

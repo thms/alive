@@ -3,7 +3,6 @@ require 'test_helper'
 class NNStrategyTest < ActiveSupport::TestCase
 
   test "should learn from a number of games against the default player and always win" do
-    skip
     puts 'NN : Default'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -31,7 +30,6 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the highest damage player to always use impact" do
-    skip
     puts 'NN : Default'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -59,7 +57,6 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the random player " do
-    skip
     puts 'NN : Random'
     stats = HashWithIndifferentAccess.new({d1: 0, d2: 0, draw: 0})
     NNStrategy.reset({outputs: 2})
@@ -87,7 +84,6 @@ class NNStrategyTest < ActiveSupport::TestCase
   end
 
   test "should learn from a number of games against the minmax player GT:TH" do
-    skip
     name1 = 'Geminititan'
     name2 = 'Thoradolosaur'
     puts "#{name1} : #{name2}"
@@ -115,7 +111,6 @@ class NNStrategyTest < ActiveSupport::TestCase
 
   test "should learn from a number of games against the TQ player GT:TH" do
     # gets to about 75-80% wins
-    skip
     name1 = 'Geminititan'
     name2 = 'Thoradolosaur'
     puts "#{name1} : #{name2}"

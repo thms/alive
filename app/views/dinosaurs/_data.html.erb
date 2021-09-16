@@ -6,7 +6,7 @@
     <%= "#{resistance.to_s.gsub('_',' ').capitalize}: #{dinosaur.resistance(resistance)}, " unless dinosaur.resistance(resistance) == 0 %>
   <% end %>
   <br />
-  <%= dinosaur.strategy %><br/>
+  <%= dinosaur.strategies || dinosaur.strategy%><br/>
   <% if dinosaur.abilities.class == Array %>
   <% dinosaur.abilities.each do |ability| %>
     <a class="modal-trigger" href="#<%= ability.name %>"><%= ability.class %><%= "*" if ability.is_implemented %></a><br/>

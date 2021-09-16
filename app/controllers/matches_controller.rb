@@ -4,21 +4,21 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    name2 = 'Magnapyritor'
-    name1 = 'Ardentismaxima'
+    name1 = 'Testacornibus'
+    name2 = 'Scorpius Rex Gen 3'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
-    #TQStrategy.load
+    TQStrategy.load
     #TQStrategy.reset
+    TQStrategy.disable_learning_mode
     MinMaxStrategy.reset
     MinMax2Strategy.reset
-    MinMax3Strategy.reset
-    #NNStrategy.load
     EventSink.reset
     10.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = MinMaxStrategy
+      #@d1.strategies = [ForcedStrategy, MinMaxStrategy, TQStrategy]
       @d2 = Dinosaur.find_by_name name2
       @d2.strategy = MinMaxStrategy
       @d1.color = '#03a9f4'
@@ -30,8 +30,8 @@ class MatchesController < ApplicationController
       @stats[result[:outcome]]+=1
       @logs << result[:log]
     end
-    #TQStrategy.save
-    #NNStrategy.save
+    TQStrategy.save
+    # NNStrategy.save
     if @logs.size > 10
       @graph = generate_graph([@logs.last], name1, name2, @start_node_title)
     else

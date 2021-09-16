@@ -170,7 +170,7 @@ class Simulation
   def update_final_node(node, dinosaurs)
     node.is_final = true
     node.data[:health] = Mechanics.health(dinosaurs)
-    if dinosaurs.first.current_health <= 0 && dinosaurs.last.current_health <= 0
+    if dinosaurs.first.current_health == 0 && dinosaurs.last.current_health == 0
       node.value = Constants::MATCH[:draw]
       node.winner = nil
       node.looser = nil

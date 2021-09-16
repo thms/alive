@@ -16,8 +16,23 @@ class ForcedStrategy < Strategy
       'Suchotator'    => ['LethalWound', 'SuperiorityStrike'],
       'Trykosaurus'   => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
       'Thoradolosaur' => ['FierceImpact', 'FierceRampage', 'InstantCharge', 'FierceImpact'],
-      'Monolorhino'   => ['CunningStrike', 'DefiniteImpact', 'CunningStrike', 'DefiniteImpact']
+      'Monolorhino'   => ['CunningStrike', 'DefiniteImpact', 'CunningStrike', 'DefiniteImpact'],
+      'Erlikospyx'    => ['MinimalSpeedupStrike', 'PrecisePounce', 'RevengeDistractingImpact'],
+      'Erlidominus'   => ['MinimalSpeedupStrike', 'Rampage', 'DistractingImpact'],
     }
+  end
+
+  def self.one_round(node, attacker, defender)
+    result = {value: 0.0, ability_outcomes: attacker.available_abilities.map {|a| [a.class.name, 0.0]}.to_h}
+    if @@moves[attacker.name]
+      move = @@moves[attacker.name].shift
+      if move.nil?
+        reset
+        move = @@moves[attacker.name].shift
+      end
+      result[:ability_outcomes][move] = attacker.value
+    end
+    result
   end
 
   def self.stats

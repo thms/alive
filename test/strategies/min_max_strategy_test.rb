@@ -149,4 +149,17 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
 
     assert_equal "DefiniteShieldAdvantage", ability_attacker.class.name
   end
+
+  focus
+  test "MinMax Erlikospyx vs Erlidominus" do
+    attacker = Dinosaur.find_by_name('Erlikospyx').reset_attributes!
+    attacker.value = 1.0
+    attacker.critical_chance = 20
+    defender = Dinosaur.find_by_name('Erlidominus').reset_attributes!
+    defender.value = -1.0
+    MinMaxStrategy.reset
+    result = MinMaxStrategy.next_move(attacker, defender)
+    assert_equal PrecisePounce, result.class
+  end
+
 end

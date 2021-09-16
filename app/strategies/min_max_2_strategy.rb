@@ -35,7 +35,7 @@ class MinMax2Strategy < Strategy
       }
 
       result = one_round(root, attacker, defender)
-      @@logger.info("Moves: #{result[:ability_outcomes]}")
+      @@logger.warn("Moves: #{result[:ability_outcomes]}")
       EventSink.add "#{attacker.name}: #{result[:ability_outcomes]}"
       # pick one of the best moves if there are more than one with the same best value
       if attacker.value == 1.0
@@ -100,7 +100,7 @@ class MinMax2Strategy < Strategy
       # if at least one has died, mark as win / draw and evaluate next combination of moves
       if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
         Mechanics.apply_damage_over_time(dinosaurs)
-        update_final_node(first_node, dinosaurs, ability_outcomes, attacker, swapped_out)
+        determine_outcome(first_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(current_node, first_node.value, attacker)
         next
       end
@@ -119,7 +119,7 @@ class MinMax2Strategy < Strategy
       # if at least one has died, mark as win / draw and evaulate next combination of moves
       if Mechanics.has_ended?(dinosaurs) || !swapped_out.nil?
         Mechanics.apply_damage_over_time(dinosaurs)
-        update_final_node(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
+        determine_outcome(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(first_node, second_node.value, attacker)
         next
       end
@@ -127,21 +127,23 @@ class MinMax2Strategy < Strategy
       # both are still alive, apply damage over time
       Mechanics.apply_damage_over_time(dinosaurs)
       if Mechanics.has_ended?(dinosaurs)
-        update_final_node(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
+        determine_outcome(second_node, dinosaurs, ability_outcomes, attacker, swapped_out)
         bubble_value_to_parent(first_node, second_node.value, attacker)
         next
-      else
-        # advance the clock and recurse down
-        dinosaurs.map(&:tick)
-        result = one_round(second_node, dinosaur1, dinosaur2)
-        second_node.value = result[:value]
-        bubble_value_to_parent(first_node, second_node.value, attacker)
-        update_ability_outcomes(ability_outcomes, attacker, dinosaurs, result[:value])
       end
+
+      # Both are still alive, advance the clock and explore depth first
+      dinosaurs.map(&:tick)
+
+      result = one_round(second_node, dinosaur1, dinosaur2)
+      second_node.value = result[:value]
+      bubble_value_to_parent(first_node, second_node.value, attacker)
+      update_ability_outcomes(ability_outcomes, attacker, dinosaurs, result[:value])
     end # combinations.each
 
     # now we have evaluated all combinations (and done so recursively), it is time to evaluate.
     # for the choice made in current_node, we need to propagate the worst possible outcome of all the combinations in this round as the current_node's value
+    # I think this is also not quote right
     if attacker.value == 1.0
       worst_outcome = current_node.children.min_by {|node| node.value || 1.0}.value
     else
@@ -154,11 +156,12 @@ class MinMax2Strategy < Strategy
         @@logger.info "- #{grand_child.ability_name} #{grand_child.value}"
       end
     end
-# When hitting the boundaries of depth search, nodes may have a nil value, reject them here
+
     result = {}
     @@logger.info "Worst outcome: #{worst_outcome}"
     @@logger.info "Ability outcomes: #{ability_outcomes}"
     result[:value] = worst_outcome
+    # When hitting the boundaries of depth search, nodes may have a nil value, reject them here
     result[:ability_outcomes] = ability_outcomes.compact
 
     # update cache
@@ -187,6 +190,7 @@ class MinMax2Strategy < Strategy
     @@cache_hits = 0
     @@cache_misses = 0
     @@games_played = 0
+    @@log = []
   end
 
   def self.save
@@ -206,24 +210,21 @@ class MinMax2Strategy < Strategy
 
   private
 
-  # update a node's value during bubbling
-  # if the attacker's value is positive: only update if new value is higher than current
-  # if the attacker is minimizing only update the if new value is lower than current
-  # to make shorter paths to victory more at attractive, reduce value during bubbling
+  # update a node's parent during bubbling
+  # the parent needs to eventually have the worst possible outcome of all subtrees
+  # Need to bubble the worst outcome upwards
   def self.bubble_value_to_parent(parent, value, attacker)
     return if parent.nil? || value.nil?
-    bubble_factor = 1.0
-    value = bubble_factor * value
     if attacker.value == 1.0
-      parent.value = [bubble_factor * parent.value, value].max rescue value
+      parent.value = [parent.value, value].min rescue value
     else
-      parent.value = [bubble_factor * parent.value, value].min rescue value
+      parent.value = [parent.value, value].max rescue value
     end
   end
 
   # update final node depending on the current state of the game
   # swapped_out holds the dinosaur who swapped out as a consequence of x-and-run or is nil
-  def self.update_final_node(node, dinosaurs, ability_outcomes, attacker, swapped_out)
+  def self.determine_outcome(node, dinosaurs, ability_outcomes, attacker, swapped_out)
     bubble_factor = 0.95
     node.is_final = true
     if dinosaurs.first.current_health == 0 && dinosaurs.last.current_health == 0
@@ -271,7 +272,6 @@ class MinMax2Strategy < Strategy
       ability_outcomes[dinosaurs[index].selected_ability.class.name] = [value, ability_outcomes[dinosaurs[index].selected_ability.class.name]].max rescue value
     end
   end
-
 
   # calculate a unique key for the cache that represents the game state
   def self.hash_value(node, attacker_value)

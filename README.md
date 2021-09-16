@@ -35,8 +35,12 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
+Use mixed strategy for a dinosaur to make it hard for opponent to adjust
 
 ## TODO
+Check revenge mode
+Check RevengeCloak ability - does it double the damage?
+
 Fix swap mechanics in team matches - are they still wrong?
 Why is the team strategy so swappy?
 Explore different team strategy topologies: separate q function for swapping, and combine with either TQ or minmax for each individual dinosaur

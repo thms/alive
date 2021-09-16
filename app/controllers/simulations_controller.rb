@@ -4,36 +4,8 @@ class SimulationsController < ApplicationController
 
   def index
     # Example: two monolometrodon, one slightly faster than the other (wthout the resistances yet ...) needs 15 stat boosts to be able to win.
-    d1 = Dinosaur.find_by_name('Dracoceratops')
-    d2 = Dinosaur.find_by_name('Triceratops Gen 2')
-    d1 = Dinosaur.new(
-      value: 1.0,
-      level: 26,
-      health_26: 1600,
-      damage_26: 500,
-      speed: 105,
-      armor: 0,
-      critical_chance: 0,
-      name: 'Attacker',
-      abilities: [CleansingStrike, Impact],
-      abilities_counter: [],
-      abilities_swap_in: [],
-      abilities_on_escape: []).reset_attributes!
-
-    d2 = Dinosaur.new(
-      value: -1.0,
-      level: 26,
-      health_26: 1600,
-      damage_26: 500,
-      speed: 104,
-      armor: 0,
-      critical_chance: 0,
-      name: 'Defender',
-      abilities: [Strike, DeceleratingImpact],
-      abilities_counter: [],
-      abilities_swap_in: [],
-      abilities_on_escape: []).reset_attributes!
-
+    d1 = Dinosaur.find_by_name('Erlikospyx')
+    d2 = Dinosaur.find_by_name('Erlidominus')
     d1.reset_attributes!
     d2.reset_attributes!
     if d1.name == d2.name

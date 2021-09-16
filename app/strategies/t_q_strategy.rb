@@ -7,11 +7,11 @@ require 'logger'
 class TQStrategy < Strategy
 
   INITIAL_Q_VALUE = 0.2
-  EPSILON = 0.0
+  EPSILON = 0.2 # randomness in learning mode
   @@q_table = {}
   @@max_a_s = {} # stores all outcomes for a given final move in a state to allow averaging
   @@log = {1.0 => [], -1.0 => []} # log is split to allow to dinos to use the strategy (mighthave to make the instanitable in the future)
-  @@random_mode = false
+  @@learning_mode = false
   @@games_played = 0
   @@logger = Logger.new(STDOUT)
   @@logger.level = :warn
@@ -25,7 +25,7 @@ class TQStrategy < Strategy
     if abilities.nil?
       @@q_table[hash_value(attacker, defender)] = available_ability_names.map {|a| [a, INITIAL_Q_VALUE]}.to_h
       ability = available_ability_names.sample
-    elsif @@random_mode || rand < EPSILON
+    elsif @@learning_mode && rand < EPSILON
       # pick a random ability to do a broad learning in initial training
       ability = available_ability_names.sample
     else
@@ -111,12 +111,12 @@ class TQStrategy < Strategy
     @@log = log
   end
 
-  def self.enable_random_mode
-    @@random_mode = true
+  def self.enable_learning_mode
+    @@learning_mode = true
   end
 
-  def self.disable_random_mode
-    @@random_mode = false
+  def self.disable_learning_mode
+    @@learning_mode = false
   end
 
   def self.stats

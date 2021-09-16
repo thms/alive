@@ -8,7 +8,7 @@ class NNStrategy
   DISCOUNT = 0.95
   LEARNING_RATE = 0.01
   EPSILON_DECAY = 100
-  EPSILON = 0.0
+  EPSILON = 0.2
   class_attribute :max_a_s
   class_attribute :value
   class_attribute :action_log
@@ -30,6 +30,8 @@ class NNStrategy
   @@use_experience_replay = false
   @@experience_replay_log = []
   @@train_on_softmax = false
+  @@learning_mode = false
+
 
   # reset the logs used during training after one episode
   def self.reset_logs
@@ -67,7 +69,7 @@ class NNStrategy
     # squash q_values to zero for unavailalble moves
     q_values_squashed = available_abilities_index.map.with_index {|v, i| v == true ? q_values[i] : 0.0 }
     # select a move either randomly or based on the strategy
-    if rand < EPSILON # ** @@games_played
+    if @@learning_mode && rand < EPSILON # ** @@games_played
       # pick a random available ability to do a broad learning in initial training
       #index = q_values.map.with_index {|v, i| v > -100 ? i : nil}.compact.sample
       index = available_abilities_index.map.with_index {|v, i| v == true ? i : nil}.compact.sample
@@ -94,7 +96,7 @@ class NNStrategy
     return ability
   end
 
-  def self.learn(outcome)
+  def self.learn(outcome, attacker_value = 1.0)
     return if @@action_log.empty?
     @@games_played += 1
 
@@ -211,7 +213,11 @@ class NNStrategy
 
     # current parameters (maybe that is enough, don't need the modifiers?)
     dinosaur.current_attributes.each do |k,v|
-      inputs.push v / 100.0
+      begin
+        inputs.push v / 100.0
+      rescue
+        inputs.push v ? 1.0 : 0.0
+      end
     end
 
     inputs.push dinosaur.is_stunned ? 1.0 : 0.0
@@ -243,6 +249,14 @@ class NNStrategy
 
   def self.fann
     @@fann
+  end
+
+  def self.enable_learning_mode
+    @@learning_mode = true
+  end
+
+  def self.disable_learning_mode
+    @@learning_mode = false
   end
 
   def self.save

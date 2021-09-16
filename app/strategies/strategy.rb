@@ -21,4 +21,8 @@ class Strategy
   def self.load
   end
 
+  def self.stats
+    {}
+  end
+
 end
