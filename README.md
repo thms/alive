@@ -35,7 +35,7 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Use mixed strategy for a dinosaur to make it hard for opponent to adjust
+Raids
 
 ## TODO
 Check revenge mode
@@ -55,6 +55,7 @@ Try out RNN/LSTM networks
 
 ## MAYBE TODO
 Use Rust to implement simulation and min max strategies to speed them up - might even open the possibility to use min max on 4:4
+Expected MinMax
 
 ## DONE
 Basic model that shows relationships for Hybrids
@@ -103,6 +104,7 @@ TQTeam: favor preserving own health / maximising damage to other via mechanics
 Remaining abilities
 Update to latest release: flocks, and other new creatures and abilities
 Performance improvements for minmax and simulations
+Use mixed strategy for a dinosaur to make it hard for opponent to adjust
 
 
 # get the dinodex from here

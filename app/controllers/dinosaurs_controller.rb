@@ -113,7 +113,7 @@ class DinosaursController < ApplicationController
         node.attributes[:id] = dinosaur.id
         node.attributes[:color] = Constants::COLORS[dinosaur.rarity.to_sym]
         node.attributes[:shape] = shape
-        node.attributes[:URL] = "/dinosaurs/" + dinosaur.id.to_s
+        node.attributes[:URL] = "/dinosaurs/" + dinosaur.slug
         parent.connect(node) unless parent.nil?
       end
       node

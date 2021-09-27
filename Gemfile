@@ -29,6 +29,8 @@ gem 'materialize-sass'
 gem 'json'
 gem 'ruby-fann', :git => 'https://github.com/thms/ruby-fann.git'
 
+gem 'thamble'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 

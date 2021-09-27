@@ -4,7 +4,7 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    name1 = 'Testacornibus'
+    name1 = 'Geminititan'
     name2 = 'Scorpius Rex Gen 3'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
@@ -17,10 +17,10 @@ class MatchesController < ApplicationController
     10.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
-      @d1.strategy = MinMaxStrategy
+      @d1.strategy = TQStrategy
       #@d1.strategies = [ForcedStrategy, MinMaxStrategy, TQStrategy]
       @d2 = Dinosaur.find_by_name name2
-      @d2.strategy = MinMaxStrategy
+      @d2.strategy = TQStrategy
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       @start_node_title = start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)
@@ -38,6 +38,43 @@ class MatchesController < ApplicationController
       @graph = generate_graph(@logs, name1, name2, @start_node_title)
     end
 
+  end
+
+  # Run a set of matches across a pool of dinos to determine who is most likely to win
+  # bit of an unusual way to use routing, but this is for trying stuff only.
+  def show
+    pool = ['Erlikospyx', 'Magnapyritor', 'Smilonemys', 'Thoradolosaur', 'Geminititan', 'Ardentismaxima']
+    @all_stats = {}
+    TQStrategy.load
+    #TQStrategy.reset
+    while pool.size > 1 do
+      name1 = pool.shift
+      @all_stats[name1] = {}
+      pool.each do |name2|
+        TQStrategy.enable_learning_mode
+        1000.times do
+          d1 = Dinosaur.find_by_name name1
+          d1.strategy = TQStrategy
+          d2 = Dinosaur.find_by_name name2
+          d2.strategy = TQStrategy
+          result = Match.new(d1, d2).execute
+          d1.strategy.learn(result[:outcome_value], d1.value)
+          d2.strategy.learn(result[:outcome_value], d2.value)
+        end
+        stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
+        TQStrategy.disable_learning_mode
+        10.times do
+          d1 = Dinosaur.find_by_name name1
+          d1.strategy = TQStrategy
+          d2 = Dinosaur.find_by_name name2
+          d2.strategy = TQStrategy
+          result = Match.new(d1, d2).execute
+          stats[result[:outcome]]+=1
+        end
+        @all_stats[name1][name2] = stats[name2] #.to_f / (stats[name1] + stats[name2]).to_f
+      end
+    end
+    TQStrategy.save
   end
 
   private
