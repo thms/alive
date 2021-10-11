@@ -1,4 +1,4 @@
-module Dinosaurs
+module Minions
   module Battle
 
     # Attributes for rendering simulations
@@ -11,7 +11,7 @@ module Dinosaurs
     attr_accessor :strategy # single strategy to use
     attr_accessor :strategies # allow an array of strategies and choose one for each move
     attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
-    attr_accessor :team # used in team matches
+    attr_accessor :team # used in team matches & raids
     attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
     attr_accessor :selected_ability # stores the abiity selected for the next round, to simplify the code base
 
@@ -186,7 +186,7 @@ module Dinosaurs
     # Pick the next ability (need to add order dependency or strikes)
     # returns the instance
     # For now just return the first available ability defined later use strategies
-    def pick_ability(attacker, defender, round = nil)
+    def pick_ability(attacker, defender)
       @selected_ability = strategy.next_move(attacker, defender)
     end
 
@@ -198,33 +198,6 @@ module Dinosaurs
       !abilities_swap_in.empty?
     end
 
-    def has_on_escape?
-      !abilities_on_escape.empty?
-    end
-
-    # can the dino swap out in the current state of the game
-    # this is determined exclusively by an active swap_prevention modifer
-    # two modes: if dino swaps in and swap rpevention is a consequence of that, resistance is not evaluated
-    # if another dino lays swap prevention modifier, then resistance is evaluated
-    def can_swap?
-      if modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'self'}
-        # cannot swap if own swap-in resulted the swap prevention
-        return false
-      elsif modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'other'}
-        if rand(100) <= resistance(:swap_prevention)
-          # can swap if other initated swap prevention and resistance is in its favor
-          return true
-        else
-          return false
-        end
-      else
-        return true
-      end
-    end
-
-    def try_to_run
-      team.try_to_run
-    end
 
     # when swapping out, all cooldowns and delays get reset
     def reset_abilities
@@ -272,17 +245,17 @@ module Dinosaurs
 
     # calculate health at specific level from level @ 26 includng stat boosts
     def health
-      (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+      @health
     end
 
     # calculate damage at specific level from level @ 26 includng stat boosts
     def damage
-      (damage_26 * (100.0 + attack_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+      @damage
     end
 
     # calculate speed includng stat boosts
     def speed_with_boosts
-      (speed * (100.0 + speed_boosts * 2.5) / 100.0).round
+      @speed
     end
 
     def resistance(symbol)

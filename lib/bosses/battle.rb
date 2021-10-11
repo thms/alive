@@ -1,4 +1,4 @@
-module Dinosaurs
+module Bosses
   module Battle
 
     # Attributes for rendering simulations
@@ -9,12 +9,11 @@ module Dinosaurs
     attr_accessor :modifiers # same method, we instantiate modifiers and append them to this list.[decrease_speed]
     attr_accessor :is_stunned # when stunned, skip this attack and unstun.
     attr_accessor :strategy # single strategy to use
-    attr_accessor :strategies # allow an array of strategies and choose one for each move
     attr_accessor :value # used during min max and other strategeis: self: 1.0, opponent -1.0
-    attr_accessor :team # used in team matches
+    attr_accessor :team # used in team matches and raids
     attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
     attr_accessor :selected_ability # stores the abiity selected for the next round, to simplify the code base
-
+    attr_accessor :ability_index # stores the index into the abilities to select them in sequence per round
     # reset fight attributes, to initial values
     # also (re)-build the abilities from the classes passed in
     # ToDo: use stat bosts to calculate actual health, speed and damage
@@ -25,22 +24,13 @@ module Dinosaurs
       @modifiers = []
       @is_revenge = false
       @selected_ability = nil
-      # Instantiate the abilities
-      self.abilities = self.abilities.map{|klass| klass.new} if self.abilities.first.class == Class
-      self.abilities_swap_in = self.abilities_swap_in.map{|klass| klass.new} if self.abilities_swap_in.first.class == Class
+      @ability_index = 1
+      # Instantiate the abilities, this is an array of an array of abilitities for a raid boss
+      self.abilities = self.abilities.map {|round_abilities| round_abilities.map{|klass| klass.new}} if self.abilities.first.first.class == Class
       self.abilities_counter = self.abilities_counter.map{|klass| klass.new} if self.abilities_counter.first.class == Class
-      self.abilities_on_escape = self.abilities_on_escape.map{|klass| klass.new} if self.abilities_on_escape.first.class == Class
       self
     end
 
-    # pick a strategy
-    def strategy
-      if @strategies.nil?
-        @strategy
-      else
-        @strategies.sample
-      end
-    end
 
     # calculate modifications to current attributes by collecting all active modifiers to the attributes
     # attributes are
@@ -183,47 +173,18 @@ module Dinosaurs
       abilities.select {|ability| ability.is_available? && ability.is_implemented}
     end
 
-    # Pick the next ability (need to add order dependency or strikes)
-    # returns the instance
-    # For now just return the first available ability defined later use strategies
+    # Pick the next ability returns the instance
+    # Bosses have a fixed order in which they go through their abilities
+    # round: the current round of the raid battle, starting at 1
     def pick_ability(attacker, defender, round = nil)
-      @selected_ability = strategy.next_move(attacker, defender)
+      @selected_ability = attacker.moves[round][@ability_index]
+      @ability_index += 1
+      @ability_index = 1 if @ability_index > attacker.moves[round].size
+      @selected_ability
     end
 
     def has_counter?
       !abilities_counter.empty?
-    end
-
-    def has_swap_in?
-      !abilities_swap_in.empty?
-    end
-
-    def has_on_escape?
-      !abilities_on_escape.empty?
-    end
-
-    # can the dino swap out in the current state of the game
-    # this is determined exclusively by an active swap_prevention modifer
-    # two modes: if dino swaps in and swap rpevention is a consequence of that, resistance is not evaluated
-    # if another dino lays swap prevention modifier, then resistance is evaluated
-    def can_swap?
-      if modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'self'}
-        # cannot swap if own swap-in resulted the swap prevention
-        return false
-      elsif modifiers.any? {|modifier| modifier.class == Modifiers::PreventSwap && modifier.source == 'other'}
-        if rand(100) <= resistance(:swap_prevention)
-          # can swap if other initated swap prevention and resistance is in its favor
-          return true
-        else
-          return false
-        end
-      else
-        return true
-      end
-    end
-
-    def try_to_run
-      team.try_to_run
     end
 
     # when swapping out, all cooldowns and delays get reset
@@ -272,17 +233,17 @@ module Dinosaurs
 
     # calculate health at specific level from level @ 26 includng stat boosts
     def health
-      (health_26 * (100.0 + health_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+      @health
     end
 
     # calculate damage at specific level from level @ 26 includng stat boosts
     def damage
-      (damage_26 * (100.0 + attack_boosts * 2.5 + (level - 26) * 5.0) / 100.0).round
+      @damage
     end
 
     # calculate speed includng stat boosts
     def speed_with_boosts
-      (speed * (100.0 + speed_boosts * 2.5) / 100.0).round
+      @speed
     end
 
     def resistance(symbol)

@@ -12,7 +12,7 @@ namespace :db do
       end
 
       # excludes models
-      excludes = %w(ApplicationRecord)
+      excludes = %w(ApplicationRecord Dinosaur Minion)
 
       puts "Found models: " + models.join(', ')
 

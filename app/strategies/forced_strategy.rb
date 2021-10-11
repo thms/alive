@@ -17,7 +17,8 @@ class ForcedStrategy < Strategy
       'Trykosaurus'   => ['ResilientImpact', 'DefenseShatteringRampage', 'FierceStrike'],
       'Thoradolosaur' => ['FierceImpact', 'FierceRampage', 'InstantCharge', 'FierceImpact'],
       'Monolorhino'   => ['CunningStrike', 'DefiniteImpact', 'CunningStrike', 'DefiniteImpact'],
-      'Erlikospyx'    => ['MinimalSpeedupStrike', 'PrecisePounce', 'RevengeDistractingImpact'],
+      #'Erlikospyx'    => ['MinimalSpeedupStrike', 'PrecisePounce', 'RevengeDistractingImpact'],
+      'Erlikospyx'    => ['RevengeDistractingImpact', 'PrecisePounce', 'MinimalSpeedupStrike'],
       'Erlidominus'   => ['MinimalSpeedupStrike', 'Rampage', 'DistractingImpact'],
     }
   end

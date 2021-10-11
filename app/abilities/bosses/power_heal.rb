@@ -1,21 +1,19 @@
-class MutualFury < Ability
+class Bosses::PowerHeal < Ability
 
   self.is_implemented = true
-  self.cooldown = 1
+  self.cooldown = 0
   self.delay = 0
-  self.trigger = "regular"
+  self.trigger = "counter"
   self.is_priority = false
   self.damage_multiplier = 0
   self.bypass = []
   self.is_rending_attack = false
-  self.is_counter = false
+  self.is_counter = true
   self.is_swap_out = false
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 3, 2))
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.cleanse(:all)
+    attacker.heal(0.0227 * attacker.damage)
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -32,7 +30,6 @@ class MutualFury < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 1))
   end
 
   # add modifiers for the defender after damage is done in revenge mode

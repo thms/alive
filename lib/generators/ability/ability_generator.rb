@@ -7,8 +7,7 @@ module Generators
 
 
     def create_ability_file
-      # template "ability.erb", "app/abilities/#{file_name}.rb" unless File.exist?("app/abilities/#{file_name}.rb")
-      File.delete "app/abilities/#{file_name}.rb" if File.exist?("app/abilities/#{file_name}.rb")
+      File.delete full_path if File.exist?(full_path)
       template "ability.erb", full_path
     end
 
@@ -84,6 +83,10 @@ module Generators
       gsub_file full_path, "self.bypass = [", "self.bypass = [:armor,"
     end
 
+    def bypass_taunt(effect)
+      gsub_file full_path, "self.bypass = [", "self.bypass = [:taunt,"
+    end
+
     def revenge_bypass_armor(effect)
       # do nothing, already set to bypass armor
     end
@@ -128,8 +131,14 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
-      insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+      if ['self', 'team'].include?(effect['target'])
+        insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
+          "    attacker.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+        end
+      else
+        insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
+          "    defender.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+        end
       end
     end
 
@@ -178,6 +187,10 @@ module Generators
           "    defender.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'other'))\n"
         end
       end
+    end
+
+    def revenge_swap_prevent(effect)
+      swap_prevent(effect)
     end
 
     def speed_increase(effect)
@@ -284,6 +297,10 @@ module Generators
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
         "    attacker.add_modifier(Modifiers::Taunt.new(#{turns}, #{attacks}))\n"
       end
+    end
+
+    def revenge_taunt(effect)
+      taunt(effect)
     end
 
     def remove_damage_decrease(effect)
@@ -419,6 +436,12 @@ module Generators
       gsub_file full_path, "self.damage_multiplier = 0", "self.damage_multiplier = #{damage}"
     end
 
+    def revenge_rend(effect)
+      damage = effect['multiplier']
+      gsub_file full_path, "self.is_rending_attack = false", "self.is_rending_attack = true"
+      gsub_file full_path, "self.damage_multiplier = 0", "self.damage_multiplier = #{damage}"
+    end
+
     def revenge_cloak(effect)
       damage = ((effect['multiplier'] - 1) * 100)
       probability = 75
@@ -428,6 +451,7 @@ module Generators
         "    attacker.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))\n"
       end
     end
+
   end
 end
 end

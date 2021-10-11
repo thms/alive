@@ -109,12 +109,16 @@ Use mixed strategy for a dinosaur to make it hard for opponent to adjust
 
 # get the dinodex from here
 https://jwatoolbox.com/_next/data/9A_G3Qyrpar9PSLRyQi88/en/dinodex.json
-
+https://jwatoolbox.com/_next/data/7nt6E4JTmVIfBIWTqMvJA/en/dinodex.json
 ## Boosts
 
 Each level increases health, Damage by 5%
 Critical hit: +25% damage
 
+## Bosses & Raids
+Bosses sometimes have an ability with the same name, but a slightly different set of rules, so we need to create them in a different namespace
+Raids mechanics are different
+Since there is no data feed for bosses and minions, I am handcrafting the data files for now, mirroring the Dinodex
 
 
 ## How To
@@ -122,7 +126,7 @@ Critical hit: +25% damage
 rake db:seed:dump EXCLUDE=
 
 ## Strategy and Strongest Dinosaurs
-According to Ggamespress.gg version 1.9 their 1:1 simulator, percentage of wins
+According to Gamespress.gg version 1.9 their 1:1 simulator, percentage of wins
 Geminititan 98%
 Indoraptor 2 96%
 Ardentismaxima 95%

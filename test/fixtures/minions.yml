@@ -1,0 +1,74 @@
+Minion_1:
+  id: 1
+  boss_id: 5
+  name: Charlie Minion
+  level: 18
+  rarity: rare
+  health: 1786
+  damage: 989
+  speed: 149
+  armor: 0
+  critical_chance: 5
+  slug: charlie-minion
+  abilities:
+  - !ruby/class 'CunningStrike'
+  - !ruby/class 'HighPounce'
+  - !ruby/class 'CunningImpact'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  klass: cunning
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-10-06 08:55:16.196816000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-10-06 08:55:16.196816000 Z
+    zone: *2
+    time: *3
+
+Minion_2:
+  id: 2
+  boss_id: 5
+  name: Echo Minion
+  level: 18
+  rarity: rare
+  health: 1903
+  damage: 1091
+  speed: 149
+  armor: 0
+  critical_chance: 5
+  slug: echo-minion
+  abilities:
+  - !ruby/class 'GroupStrike'
+  - !ruby/class 'HighPounce'
+  - !ruby/class 'CunningImpact'
+  resistances:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  klass: cunning
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &1 2021-10-06 08:55:16.203698000 Z
+    zone: &2 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *1
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-10-06 08:55:16.203698000 Z
+    zone: *2
+    time: *3
+

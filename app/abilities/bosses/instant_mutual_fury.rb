@@ -1,10 +1,10 @@
-class MutualFury < Ability
+class Bosses::InstantMutualFury < Ability
 
   self.is_implemented = true
-  self.cooldown = 1
+  self.cooldown = 0
   self.delay = 0
   self.trigger = "regular"
-  self.is_priority = false
+  self.is_priority = true
   self.damage_multiplier = 0
   self.bypass = []
   self.is_rending_attack = false

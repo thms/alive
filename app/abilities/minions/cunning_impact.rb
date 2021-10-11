@@ -1,11 +1,11 @@
-class MutualFury < Ability
+class Minions::CunningImpact < Ability
 
   self.is_implemented = true
   self.cooldown = 1
   self.delay = 0
   self.trigger = "regular"
   self.is_priority = false
-  self.damage_multiplier = 0
+  self.damage_multiplier = 1.5
   self.bypass = []
   self.is_rending_attack = false
   self.is_counter = false
@@ -13,9 +13,7 @@ class MutualFury < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 3, 2))
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.cleanse(:all)
+    attacker.cleanse(:damage_over_time)
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -24,6 +22,8 @@ class MutualFury < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
+    defender.remove_critical_chance_increase
+    defender.remove_attack_increase
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
@@ -32,7 +32,8 @@ class MutualFury < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 1))
+    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
+    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
   end
 
   # add modifiers for the defender after damage is done in revenge mode

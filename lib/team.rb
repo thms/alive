@@ -1,6 +1,6 @@
 require 'logger'
 
-# Represents a team in a 4:4 match (or any other number of opponents)
+# Represents a team in a PVP 4:4 match (or any other number of opponents)
 
 class Team
 

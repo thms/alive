@@ -1,11 +1,11 @@
-class MutualFury < Ability
+class AlertSafetyRampage < Ability
 
   self.is_implemented = true
-  self.cooldown = 1
-  self.delay = 0
+  self.cooldown = 2
+  self.delay = 1
   self.trigger = "regular"
   self.is_priority = false
-  self.damage_multiplier = 0
+  self.damage_multiplier = 2
   self.bypass = []
   self.is_rending_attack = false
   self.is_counter = false
@@ -13,8 +13,6 @@ class MutualFury < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 3, 2))
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
     attacker.cleanse(:all)
   end
 
@@ -32,7 +30,6 @@ class MutualFury < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 1))
   end
 
   # add modifiers for the defender after damage is done in revenge mode

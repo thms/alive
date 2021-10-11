@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_18_130122) do
+ActiveRecord::Schema.define(version: 2021_09_27_153205) do
+
+  create_table "bosses", force: :cascade do |t|
+    t.string "name", default: "", null: false
+    t.integer "level", default: 26, null: false
+    t.string "rarity", default: "", null: false
+    t.integer "health", default: 0, null: false
+    t.integer "damage", default: 0, null: false
+    t.integer "speed", default: 0, null: false
+    t.integer "armor", default: 0, null: false
+    t.integer "critical_chance", default: 0, null: false
+    t.string "slug"
+    t.integer "rounds", default: 1, null: false
+    t.string "abilities", default: "", null: false
+    t.string "abilities_counter", default: "", null: false
+    t.string "resistances", default: "", null: false
+    t.string "klass", default: "", null: false
+    t.boolean "is_implemented", default: false, null: false
+    t.integer "level_cap", default: 0, null: false
+    t.integer "boost_cap", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "dinosaurs", force: :cascade do |t|
     t.string "name"
@@ -37,6 +59,26 @@ ActiveRecord::Schema.define(version: 2021_06_18_130122) do
     t.string "klass", default: "", null: false
     t.integer "health_26", default: 0, null: false
     t.integer "damage_26", default: 0, null: false
+  end
+
+  create_table "minions", force: :cascade do |t|
+    t.integer "boss_id", default: 0, null: false
+    t.string "name", default: "", null: false
+    t.integer "level", default: 26, null: false
+    t.string "rarity", default: "", null: false
+    t.integer "health", default: 0, null: false
+    t.integer "damage", default: 0, null: false
+    t.integer "speed", default: 0, null: false
+    t.integer "armor", default: 0, null: false
+    t.integer "critical_chance", default: 0, null: false
+    t.string "slug"
+    t.string "abilities", default: "", null: false
+    t.string "abilities_counter", default: "", null: false
+    t.string "resistances", default: "", null: false
+    t.string "klass", default: "", null: false
+    t.boolean "is_implemented", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end
