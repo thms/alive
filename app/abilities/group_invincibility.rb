@@ -13,7 +13,7 @@ class GroupInvincibility < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(100, 1, 1))
+    attacker.team.each {|target| target.add_modifier(Modifiers::Shields.new(100, 1, 1))}
   end
 
   # same as above but called when the attacker is in revenge mode

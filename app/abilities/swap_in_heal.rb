@@ -13,8 +13,8 @@ class SwapInHeal < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::PreventSwap.new(1, 'self'))
-    attacker.heal(1 * attacker.damage)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::PreventSwap.new(1, 'self'))}
+    attacker.zelf.each {|target| target.heal(1 * attacker.zelf.damage)}
   end
 
   # same as above but called when the attacker is in revenge mode

@@ -13,8 +13,8 @@ class GroupAcceleration < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(50, 3, nil))
-    attacker.remove_speed_decrease
+    attacker.team.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(50, 3, nil))}
+    attacker.team.each {|target| target.remove_speed_decrease}
   end
 
   # same as above but called when the attacker is in revenge mode

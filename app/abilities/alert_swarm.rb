@@ -29,7 +29,7 @@ class AlertSwarm < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::PreventSwap.new(1, 'other'))
+    defender.escapee.each {|target| target.add_modifier(Modifiers::PreventSwap.new(1, 'other'))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

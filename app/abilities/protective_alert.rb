@@ -13,7 +13,7 @@ class ProtectiveAlert < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -30,8 +30,8 @@ class ProtectiveAlert < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Vulnerability.new(50, 2, 4))
-    defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::Vulnerability.new(50, 2, 4))}
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 2, 4))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

@@ -13,8 +13,8 @@ class LesserEmergencyHeal < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(1 * attacker.damage)
-    attacker.cleanse(:all)
+    attacker.lowest_hp_teammate.each {|target| target.heal(1 * attacker.zelf.damage)}
+    attacker.lowest_hp_teammate.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

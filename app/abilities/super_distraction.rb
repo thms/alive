@@ -21,7 +21,7 @@ class SuperDistraction < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_dodge
+    defender.highest_dmg.each {|target| target.remove_dodge}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
@@ -30,8 +30,9 @@ class SuperDistraction < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
-    defender.add_modifier(Modifiers::DamageOverTime.new(25, 2))
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(25, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
@@ -41,7 +42,7 @@ class SuperDistraction < Ability
   # special logic for some attacks
   def damage_defender(attacker, defender)
     result = super
-    defender.is_stunned = rand(100) < 25.0 * (100.0 - defender.resistance(:stun)) / 100.0
+    defender.highest_dmg.each {|target| target.is_stunned = rand(100) < 25.0 * (100.0 - target.resistance(:stun)) / 100.0}
     result
   end
 

@@ -29,7 +29,7 @@ class SlowingImpact < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 3, nil))
+    defender.fastest.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(50, 3, nil))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

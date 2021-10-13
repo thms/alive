@@ -13,7 +13,7 @@ class ShieldAdvantage < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(50, 1, 4))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(50, 1, 4))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -22,8 +22,8 @@ class ShieldAdvantage < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
-    defender.remove_taunt
+    defender.highest_hp.each {|target| target.destroy_shields}
+    defender.highest_hp.each {|target| target.remove_taunt}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

@@ -29,7 +29,7 @@ class ToxicQuills < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DamageOverTime.new(33, 3))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(33, 3))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
@@ -39,7 +39,7 @@ class ToxicQuills < Ability
   # special logic for some attacks
   def damage_defender(attacker, defender)
     result = super
-    defender.is_stunned = rand(100) < 75.0 * (100.0 - defender.resistance(:stun)) / 100.0
+    defender.highest_dmg.each {|target| target.is_stunned = rand(100) < 75.0 * (100.0 - target.resistance(:stun)) / 100.0}
     result
   end
 

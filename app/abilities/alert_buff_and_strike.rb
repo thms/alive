@@ -13,9 +13,9 @@ class AlertBuffAndStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseCriticalChance.new(25, 3, 2))
-    attacker.remove_critical_chance_decrease
-    attacker.remove_speed_decrease
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseCriticalChance.new(25, 3, 2))}
+    attacker.zelf.each {|target| target.remove_critical_chance_decrease}
+    attacker.zelf.each {|target| target.remove_speed_decrease}
   end
 
   # same as above but called when the attacker is in revenge mode

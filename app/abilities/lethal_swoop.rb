@@ -29,7 +29,7 @@ class LethalSwoop < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DamageOverTime.new(33, 3))
+    defender.highest_hp.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(33, 3))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

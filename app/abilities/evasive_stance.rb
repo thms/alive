@@ -13,7 +13,7 @@ class EvasiveStance < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Dodge.new(75, 3, 4))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(75, 3, 4))}
   end
 
   # same as above but called when the attacker is in revenge mode

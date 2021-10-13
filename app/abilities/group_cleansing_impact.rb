@@ -13,7 +13,7 @@ class GroupCleansingImpact < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:all)
+    attacker.team.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

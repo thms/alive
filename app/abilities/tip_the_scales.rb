@@ -13,7 +13,7 @@ class TipTheScales < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:all)
+    attacker.team.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -22,7 +22,7 @@ class TipTheScales < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.nullify
+    defender.all_opponents.each {|target| target.nullify}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

@@ -13,7 +13,7 @@ class InstantInvincibility < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(100, 0, 4))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(100, 0, 4))}
   end
 
   # same as above but called when the attacker is in revenge mode

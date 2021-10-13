@@ -49,6 +49,9 @@ class Ability
   attr_accessor :current_delay
   attr_accessor :current_cooldown
 
+  # Keep track of random target selection
+  attr_accessor :random_target
+
   def name
     self.class.name
   end
@@ -56,6 +59,7 @@ class Ability
   def initialize
     @current_cooldown = 0 # cooldown only starts after an ability has been used, so initially there is none.
     @current_delay = self.delay # delay is only until the first use of an ability afterwards it is don't care.
+    @random_target = nil # set to nil, this may be initialised when the ability is selecting its target
   end
 
   def is_available?
@@ -91,6 +95,8 @@ class Ability
     start_cooldown
     # trigger on escape ability of the attacker, if any
     on_escape(attacker, defender)
+    # reset random target to nil
+    @random_target = nil
     stats
   end
 

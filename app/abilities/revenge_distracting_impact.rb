@@ -31,12 +31,12 @@ class RevengeDistractingImpact < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 2, 4))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
   def update_defender_after_damage_revenge(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 2, 4))}
   end
 
   # special logic for some attacks

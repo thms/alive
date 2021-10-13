@@ -21,8 +21,8 @@ class RakingCounterAttack < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_cloak
-    defender.remove_dodge
+    defender.attacker.each {|target| target.remove_cloak}
+    defender.attacker.each {|target| target.remove_dodge}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

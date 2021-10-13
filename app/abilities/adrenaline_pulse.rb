@@ -13,8 +13,8 @@ class AdrenalinePulse < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(1 * attacker.damage)
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.heal(1 * attacker.zelf.damage)}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

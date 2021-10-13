@@ -13,38 +13,38 @@ class RevengeCunningRampage < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:damage_over_time)
+    attacker.zelf.each {|target| target.cleanse(:damage_over_time)}
   end
 
   # same as above but called when the attacker is in revenge mode
   def update_attacker_revenge(attacker)
-    attacker.cleanse(:damage_over_time)
+    attacker.zelf.each {|target| target.cleanse(:damage_over_time)}
     self.delay = 0
     self.cooldown = 1
   end
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_critical_chance_increase
-    defender.remove_attack_increase
+    defender.highest_dmg.each {|target| target.remove_critical_chance_increase}
+    defender.highest_dmg.each {|target| target.remove_attack_increase}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
   def update_defender_revenge(defender)
-    defender.remove_critical_chance_increase
-    defender.remove_attack_increase
+    defender.highest_dmg.each {|target| target.remove_critical_chance_increase}
+    defender.highest_dmg.each {|target| target.remove_attack_increase}
   end
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
-    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
   def update_defender_after_damage_revenge(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
-    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))}
   end
 
   # special logic for some attacks

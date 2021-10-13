@@ -13,8 +13,8 @@ class DaringStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:vulnerable)
-    attacker.cleanse(:damage_over_time)
+    attacker.zelf.each {|target| target.cleanse(:vulnerable)}
+    attacker.zelf.each {|target| target.cleanse(:damage_over_time)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -31,7 +31,7 @@ class DaringStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
+    defender.lowest_hp.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

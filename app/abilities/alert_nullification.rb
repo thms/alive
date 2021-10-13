@@ -21,7 +21,7 @@ class AlertNullification < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.nullify
+    defender.all_opponents.each {|target| target.nullify}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
@@ -30,7 +30,7 @@ class AlertNullification < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 2, 4))
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 2, 4))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

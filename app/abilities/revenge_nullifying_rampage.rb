@@ -23,12 +23,12 @@ class RevengeNullifyingRampage < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.nullify
+    defender.most_pos.each {|target| target.nullify}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
   def update_defender_revenge(defender)
-    defender.nullify
+    defender.most_pos.each {|target| target.nullify}
   end
 
   # add modifiers for the defender after damage is done

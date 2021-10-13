@@ -13,9 +13,9 @@ class Refresh < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(1 * attacker.damage)
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.heal(1 * attacker.zelf.damage)}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

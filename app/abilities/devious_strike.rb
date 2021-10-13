@@ -13,8 +13,8 @@ class DeviousStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseCriticalChance.new(30, 2, 2))
-    attacker.add_modifier(Modifiers::Dodge.new(75, 1, 2))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseCriticalChance.new(30, 2, 2))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(75, 1, 2))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -31,7 +31,7 @@ class DeviousStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(25, 2, 4))
+    defender.lowest_hp.each {|target| target.add_modifier(Modifiers::Distraction.new(25, 2, 4))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

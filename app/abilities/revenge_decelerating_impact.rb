@@ -31,12 +31,12 @@ class RevengeDeceleratingImpact < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))
+    defender.fastest.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
   def update_defender_after_damage_revenge(defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))
+    defender.fastest.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))}
   end
 
   # special logic for some attacks

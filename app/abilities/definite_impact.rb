@@ -21,10 +21,10 @@ class DefiniteImpact < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
-    defender.remove_taunt
-    defender.remove_cloak
-    defender.remove_dodge
+    defender.most_pos.each {|target| target.destroy_shields}
+    defender.most_pos.each {|target| target.remove_taunt}
+    defender.most_pos.each {|target| target.remove_cloak}
+    defender.most_pos.each {|target| target.remove_dodge}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

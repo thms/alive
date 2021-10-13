@@ -13,7 +13,7 @@ class FierceImpact < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:vulnerable)
+    attacker.zelf.each {|target| target.cleanse(:vulnerable)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -22,8 +22,8 @@ class FierceImpact < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
-    defender.remove_taunt
+    defender.lowest_hp.each {|target| target.destroy_shields}
+    defender.lowest_hp.each {|target| target.remove_taunt}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

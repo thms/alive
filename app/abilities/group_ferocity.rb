@@ -13,9 +13,9 @@ class GroupFerocity < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 2))
-    attacker.remove_critical_chance_decrease
-    attacker.cleanse(:distraction)
+    attacker.team.each {|target| target.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 2))}
+    attacker.team.each {|target| target.remove_critical_chance_decrease}
+    attacker.team.each {|target| target.cleanse(:distraction)}
   end
 
   # same as above but called when the attacker is in revenge mode

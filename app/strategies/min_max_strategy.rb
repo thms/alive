@@ -5,7 +5,7 @@ require 'logger'
 # to reflect these accurately, we'd need to evaluate every possible combination at every attack and coutner attack,
 # which ballons this out quite significantly
 # so the best use of all the min max strategies is to understand the gameplay better
-# Both TQ and NN strategy take the probabilistic nature perfrectly into account 
+# Both TQ and NN strategy take the probabilistic nature perfrectly into account
 
 class MinMaxStrategy < Strategy
 
@@ -22,6 +22,7 @@ class MinMaxStrategy < Strategy
   @@logger = Logger.new(STDOUT)
   @@logger.level = :warn
   @@log = []
+  @@optimize_remaining_health = false # if true, favours path that preserve more own health, or lead to biggest loss of health for other
 
 # returns a single available ability from the attacker
   def self.next_move(attacker, defender)
@@ -231,7 +232,11 @@ class MinMaxStrategy < Strategy
       node.winner = dinosaurs.last.name
       node.looser = dinosaurs.first.name
       # factor in remaining health of self or other
-      value = dinosaurs.last.value # * (dinosaurs.last.current_health.to_f / dinosaurs.last.health.to_f)
+      if @@optimize_remaining_health
+        value = dinosaurs.last.value * (dinosaurs.last.current_health.to_f / dinosaurs.last.health.to_f)
+      else
+        value = dinosaurs.last.value
+      end
       node.value = attacker.minimize(value, node.value)
       node.data[:health] = Mechanics.health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)
@@ -240,7 +245,11 @@ class MinMaxStrategy < Strategy
       node.winner = dinosaurs.first.name
       node.looser = dinosaurs.last.name
       # factor in remaining health of self or other
-      value = dinosaurs.first.value # * (dinosaurs.first.current_health.to_f / dinosaurs.first.health.to_f)
+      if @@optimize_remaining_health
+        value = dinosaurs.first.value * (dinosaurs.first.current_health.to_f / dinosaurs.first.health.to_f)
+      else
+        value = dinosaurs.first.value
+      end
       node.value = attacker.minimize(value, node.value)
       node.data[:health] = Mechanics.health(dinosaurs)
       update_ability_outcomes(ability_outcomes, attacker, dinosaurs, node.value)

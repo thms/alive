@@ -21,8 +21,8 @@ class GroupShatteringImpact < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
-    defender.remove_taunt
+    defender.all_opponents.each {|target| target.destroy_shields}
+    defender.all_opponents.each {|target| target.remove_taunt}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

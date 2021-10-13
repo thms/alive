@@ -21,7 +21,7 @@ class FlightlessStrike < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_attack_increase
+    defender.lowest_hp.each {|target| target.remove_attack_increase}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
@@ -30,7 +30,7 @@ class FlightlessStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
+    defender.lowest_hp.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

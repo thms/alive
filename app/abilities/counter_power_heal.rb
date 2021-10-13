@@ -13,7 +13,7 @@ class CounterPowerHeal < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(0.11 * attacker.health)
+    attacker.zelf.each {|target| target.heal(0.11 * attacker.zelf.health)}
   end
 
   # same as above but called when the attacker is in revenge mode

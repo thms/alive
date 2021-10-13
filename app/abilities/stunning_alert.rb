@@ -13,7 +13,7 @@ class StunningAlert < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::PreventSwap.new(2, 'self'))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'self'))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -39,7 +39,7 @@ class StunningAlert < Ability
   # special logic for some attacks
   def damage_defender(attacker, defender)
     result = super
-    defender.is_stunned = rand(100) < 100 * (100.0 - defender.resistance(:stun)) / 100.0
+    defender.highest_dmg.each {|target| target.is_stunned = rand(100) < 100 * (100.0 - target.resistance(:stun)) / 100.0}
     result
   end
 

@@ -13,8 +13,8 @@ class TauntingBellow < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(50, 0, 4))
-    attacker.add_modifier(Modifiers::Taunt.new(1, nil))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(50, 0, 4))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Taunt.new(1, nil))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -31,7 +31,7 @@ class TauntingBellow < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))
+    defender.fastest.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

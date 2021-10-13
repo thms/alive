@@ -2,7 +2,7 @@
 # This has the generic data, non-player specific only
 require 'json'
 
-CREATE_DINOSAURS  = false
+CREATE_DINOSAURS  = true
 CREATE_BOSSES     = true
 CREATE_MINIONS    = true
 

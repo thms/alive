@@ -13,7 +13,7 @@ class CleansingSwoop < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -30,7 +30,7 @@ class CleansingSwoop < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DamageOverTime.new(25, 2))
+    defender.highest_hp.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(25, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

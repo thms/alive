@@ -13,7 +13,7 @@ class ConstrictingRampage < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(1 * attacker.damage)
+    attacker.zelf.each {|target| target.heal(1 * attacker.zelf.damage)}
   end
 
   # same as above but called when the attacker is in revenge mode

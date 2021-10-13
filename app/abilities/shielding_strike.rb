@@ -13,7 +13,7 @@ class ShieldingStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(50, 1, 2))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(50, 1, 2))}
   end
 
   # same as above but called when the attacker is in revenge mode

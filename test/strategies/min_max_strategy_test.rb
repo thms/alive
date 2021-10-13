@@ -3,7 +3,6 @@ require 'test_helper'
 class MinMaxStrategyTest < ActiveSupport::TestCase
 
   test "MinMax Strategy should find strong move even when there is no guarantee of a win" do
-    skip
     attacker = Dinosaur.new(
       value: 1.0,
       level: 26,
@@ -30,7 +29,6 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should find strongest move when there is a clear path to victory" do
-    skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -85,7 +83,6 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax Strategy should find a good move for Quetzorion" do
-    skip
     defender = Dinosaur.new(
       value: -1.0,
       level: 26,
@@ -113,7 +110,6 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "should save state to disk and load back" do
-    skip
     MinMaxStrategy.reset
     10.times do
       d1 = Dinosaur.new(health_26: 1000, damage_26: 300, speed: 130, level: 20, name: 'd1', abilities: [Strike, Impact], strategy: DefaultStrategy)
@@ -131,7 +127,6 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
   end
 
   test "MinMax should find path to victory for GT over Thor" do
-    skip
     MinMaxStrategy.reset
     attacker = Dinosaur.find_by_name('Geminititan').reset_attributes!
     defender = Dinosaur.find_by_name('Thoradolosaur').reset_attributes!
@@ -150,7 +145,6 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     assert_equal "DefiniteShieldAdvantage", ability_attacker.class.name
   end
 
-  focus
   test "MinMax Erlikospyx vs Erlidominus" do
     attacker = Dinosaur.find_by_name('Erlikospyx').reset_attributes!
     attacker.value = 1.0
@@ -159,7 +153,7 @@ class MinMaxStrategyTest < ActiveSupport::TestCase
     defender.value = -1.0
     MinMaxStrategy.reset
     result = MinMaxStrategy.next_move(attacker, defender)
-    assert_equal PrecisePounce, result.class
+    assert_includes [MinimalSpeedupStrike, PrecisePounce, RevengeDistractingImpact], result.class
   end
 
 end

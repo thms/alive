@@ -13,10 +13,9 @@ class InstantBuff < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 1))
-    attacker.add_modifier(Modifiers::Dodge.new(75, 0, 2))
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(75, 0, 2))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -33,6 +32,7 @@ class InstantBuff < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
+    defender.zelf.each {|target| target.add_modifier(Modifiers::IncreaseDamage.new(50, 2, 1))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

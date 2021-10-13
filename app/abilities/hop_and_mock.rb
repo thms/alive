@@ -13,9 +13,9 @@ class HopAndMock < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Dodge.new(75, 0, 2))
-    attacker.add_modifier(Modifiers::Taunt.new(1, nil))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(75, 0, 2))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Taunt.new(1, nil))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -24,7 +24,7 @@ class HopAndMock < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.nullify
+    defender.most_pos.each {|target| target.nullify}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

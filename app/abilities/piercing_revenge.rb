@@ -23,17 +23,17 @@ class PiercingRevenge < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
+    defender.highest_hp.each {|target| target.destroy_shields}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
   def update_defender_revenge(defender)
-    defender.destroy_shields
+    defender.highest_hp.each {|target| target.destroy_shields}
   end
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::PreventSwap.new(2, 'other'))
+    defender.highest_hp.each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'other'))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

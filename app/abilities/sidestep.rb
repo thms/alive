@@ -13,9 +13,9 @@ class Sidestep < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.add_modifier(Modifiers::Dodge.new(100, 0, 2))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(100, 0, 2))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

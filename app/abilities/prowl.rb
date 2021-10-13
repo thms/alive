@@ -13,9 +13,9 @@ class Prowl < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseCriticalChance.new(50, 2, 2))
-    attacker.add_modifier(Modifiers::Dodge.new(75, 1, 2))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseCriticalChance.new(50, 2, 2))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(75, 1, 2))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode

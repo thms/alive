@@ -21,8 +21,8 @@ class CraftyStrike < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_critical_chance_increase
-    defender.remove_attack_increase
+    defender.lowest_hp.each {|target| target.remove_critical_chance_increase}
+    defender.lowest_hp.each {|target| target.remove_attack_increase}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

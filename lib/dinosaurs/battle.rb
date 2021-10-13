@@ -294,5 +294,13 @@ module Dinosaurs
       end
     end
 
+    # the following methods make only really sense in the context of raids
+    # where there are different targets. To simplify things we are just returning
+    # [self] from these so the ability classes can work with teams and individual dinosaurs
+    Constants::TARGETS.each do |target|
+      define_method(target) do
+        return [self]
+      end
+    end
   end
 end

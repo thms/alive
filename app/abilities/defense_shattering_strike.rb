@@ -21,8 +21,8 @@ class DefenseShatteringStrike < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
-    defender.remove_taunt
+    defender.lowest_hp.each {|target| target.destroy_shields}
+    defender.lowest_hp.each {|target| target.remove_taunt}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

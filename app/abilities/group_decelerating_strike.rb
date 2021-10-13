@@ -29,7 +29,7 @@ class GroupDeceleratingStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(50, 2, nil))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

@@ -21,7 +21,7 @@ class MinorRendingAttack < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.destroy_shields
+    defender.lowest_hp.each {|target| target.destroy_shields}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

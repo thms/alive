@@ -13,9 +13,9 @@ class FearlessFlap < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))
-    attacker.add_modifier(Modifiers::Dodge.new(100, 2, 2))
-    attacker.cleanse(:all)
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(10, 2, nil))}
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(100, 2, 2))}
+    attacker.zelf.each {|target| target.cleanse(:all)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -32,7 +32,7 @@ class FearlessFlap < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 2, 2))
+    defender.all_opponents.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 2, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

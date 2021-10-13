@@ -13,12 +13,12 @@ class RevengeProtection < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(50, 2, 2))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(50, 2, 2))}
   end
 
   # same as above but called when the attacker is in revenge mode
   def update_attacker_revenge(attacker)
-    attacker.add_modifier(Modifiers::Shields.new(50, 4, 4))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Shields.new(50, 4, 4))}
     self.delay = 0
     self.cooldown = 1
   end

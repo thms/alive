@@ -13,7 +13,7 @@ class EvasiveWoundingStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Dodge.new(50, 2, 4))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Dodge.new(50, 2, 4))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -30,7 +30,7 @@ class EvasiveWoundingStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::DamageOverTime.new(20, 2))
+    defender.highest_dmg.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(20, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

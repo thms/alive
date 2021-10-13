@@ -15,6 +15,7 @@ module Generators
       # write all the normal actions into the file
       def write_actions
         ability['effects'].each do |effect|
+          effect['target'] = 'zelf' if effect['target'] == 'self'
           self.send(effect['action'], effect)
         end
       end

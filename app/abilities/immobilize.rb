@@ -29,7 +29,7 @@ class Immobilize < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::PreventSwap.new(2, 'other'))
+    defender.fastest.each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'other'))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
@@ -39,7 +39,7 @@ class Immobilize < Ability
   # special logic for some attacks
   def damage_defender(attacker, defender)
     result = super
-    defender.is_stunned = rand(100) < 100 * (100.0 - defender.resistance(:stun)) / 100.0
+    defender.fastest.each {|target| target.is_stunned = rand(100) < 100 * (100.0 - target.resistance(:stun)) / 100.0}
     result
   end
 

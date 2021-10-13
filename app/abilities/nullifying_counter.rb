@@ -21,7 +21,7 @@ class NullifyingCounter < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.nullify
+    defender.attacker.each {|target| target.nullify}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode

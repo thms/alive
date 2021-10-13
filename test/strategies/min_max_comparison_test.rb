@@ -166,7 +166,6 @@ class MinMaxComparisonTest < ActiveSupport::TestCase
     # assert_equal MaimingWound, result.class
   end
 
-  focus
   test "MinMax Erlikospyx vs Erlidominus" do
     attacker = Dinosaur.find_by_name('Erlikospyx').reset_attributes!
     attacker.value = 1.0

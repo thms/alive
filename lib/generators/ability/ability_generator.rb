@@ -12,8 +12,11 @@ module Generators
     end
 
     # write all the normal actions into the file
+    # transform from 'self' to 'zelf' here
     def write_actions
       ability['effects'].each do |effect|
+        puts effect['action']
+        effect['target'] = 'zelf' if effect['target'] == 'self'
         self.send(effect['action'], effect)
       end
     end
@@ -29,7 +32,7 @@ module Generators
           "    self.delay = #{ability['if_revenge']['delay']}\n"
         end
         ability['if_revenge']['effects'].each do |effect|
-          puts effect['action']
+          effect['target'] = 'zelf' if effect['target'] == 'self'
           self.send("revenge_#{effect['action']}", effect)
         end
       end
@@ -95,8 +98,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-        "    defender.add_modifier(Modifiers::Distraction.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::Distraction.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -104,8 +108,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage_revenge(defender)\n", :force => true do
-        "    defender.add_modifier(Modifiers::Distraction.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::Distraction.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -113,8 +118,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
-      insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-        "    defender.add_modifier(Modifiers::ReduceCriticalChance.new(#{amount}, #{turns}, #{attacks}))\n"
+      targets = effect['target']
+    insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -122,8 +128,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage_revenge(defender)\n", :force => true do
-        "    defender.add_modifier(Modifiers::ReduceCriticalChance.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -131,13 +138,14 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       if ['self', 'team'].include?(effect['target'])
         insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-          "    attacker.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+          "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))}\n"
         end
       else
         insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-          "    defender.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+          "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))}\n"
         end
       end
     end
@@ -146,8 +154,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker_revenge(attacker)\n", :force => true do
-        "    attacker.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::IncreaseDamage.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -155,8 +164,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::Shields.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Shields.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -164,27 +174,30 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker_revenge(attacker)\n", :force => true do
-        "    attacker.add_modifier(Modifiers::Shields.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Shields.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def stun(effect)
       probability = (effect['probability'] * 100)
+      targets = effect['target']
       insert_into_file full_path, :after => "result = super\n" do
-        "    defender.is_stunned = rand(100) < #{probability} * (100.0 - defender.resistance(:stun)) / 100.0\n"
+        "    defender.#{targets}.each {|target| target.is_stunned = rand(100) < #{probability} * (100.0 - target.resistance(:stun)) / 100.0}\n"
       end
     end
 
     def swap_prevent(effect)
       turns = effect['duration'][0]
-      if effect['target'] == 'self'
+      targets = effect['target']
+      if effect['target'] == 'zelf'
         insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-          "    attacker.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'self'))\n"
+          "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'self'))}\n"
         end
       else
         insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-          "    defender.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'other'))\n"
+          "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'other'))}\n"
         end
       end
     end
@@ -197,22 +210,25 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::IncreaseSpeed.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::IncreaseSpeed.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def heal(effect)
       amount = effect['multiplier']
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.heal(#{amount} * attacker.damage)\n"
+        "    attacker.#{targets}.each {|target| target.heal(#{amount} * attacker.zelf.damage)}\n"
       end
     end
 
     def heal_pct(effect)
       amount = effect['multiplier']
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.heal(#{amount} * attacker.health)\n"
+        "    attacker.#{targets}.each {|target| target.heal(#{amount} * attacker.zelf.health)}\n"
       end
     end
 
@@ -220,8 +236,9 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-        "    defender.add_modifier(Modifiers::DecreaseSpeed.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -229,46 +246,53 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage_revenge(defender)\n", :force => true do
-        "    defender.add_modifier(Modifiers::DecreaseSpeed.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::DecreaseSpeed.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def remove_speed_decrease(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.remove_speed_decrease\n"
+        "    attacker.#{targets}.each {|target| target.remove_speed_decrease}\n"
       end
     end
 
     def remove_crit_decrease(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.remove_critical_chance_decrease\n"
+        "    attacker.#{targets}.each {|target| target.remove_critical_chance_decrease}\n"
       end
     end
 
     def dot(effect)
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-        "    defender.add_modifier(Modifiers::DamageOverTime.new(#{amount}, #{turns}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::DamageOverTime.new(#{amount}, #{turns}))}\n"
       end
     end
 
     def remove_all_neg(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.cleanse(:all)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:all)}\n"
       end
     end
 
     def remove_all_pos(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.nullify\n"
+        "    defender.#{targets}.each {|target| target.nullify}\n"
       end
     end
 
     def revenge_remove_all_pos(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.nullify\n"
+        "    defender.#{targets}.each {|target| target.nullify}\n"
       end
     end
 
@@ -277,8 +301,9 @@ module Generators
       probability = (effect['probability'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::Dodge.new(#{probability}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Dodge.new(#{probability}, #{turns}, #{attacks}))}\n"
       end
     end
 
@@ -286,16 +311,18 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::IncreaseCriticalChance.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::IncreaseCriticalChance.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def taunt(effect)
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::Taunt.new(#{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Taunt.new(#{turns}, #{attacks}))}\n"
       end
     end
 
@@ -304,86 +331,100 @@ module Generators
     end
 
     def remove_damage_decrease(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.cleanse(:distraction)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:distraction)}\n"
       end
     end
 
     def remove_dodge(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_dodge\n"
+        "    defender.#{targets}.each {|target| target.remove_dodge}\n"
       end
     end
 
     def revenge_remove_dodge(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.remove_dodge\n"
+        "    defender.#{targets}.each {|target| target.remove_dodge}\n"
       end
     end
 
     def remove_cloak(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_cloak\n"
+        "    defender.#{targets}.each {|target| target.remove_cloak}\n"
       end
     end
 
     def revenge_remove_cloak(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.remove_cloak\n"
+        "    defender.#{targets}.each {|target| target.remove_cloak}\n"
       end
     end
 
     def remove_taunt(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_taunt\n"
+        "    defender.#{targets}.each {|target| target.remove_taunt}\n"
       end
     end
 
     def revenge_remove_taunt(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.remove_taunt\n"
+        "    defender.#{targets}.each {|target| target.remove_taunt}\n"
       end
     end
 
     def remove_shield(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.destroy_shields\n"
+        "    defender.#{targets}.each {|target| target.destroy_shields}\n"
       end
     end
 
     def revenge_remove_shield(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.destroy_shields\n"
+        "    defender.#{targets}.each {|target| target.destroy_shields}\n"
       end
     end
 
     def remove_speed_increase(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_speed_increase\n"
+        "    defender.#{targets}.each {|target| target.remove_speed_increase}\n"
       end
     end
 
     def remove_damage_increase(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_attack_increase\n"
+        "    defender.#{targets}.each {|target| target.remove_attack_increase}\n"
       end
     end
 
     def revenge_remove_damage_increase(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.remove_attack_increase\n"
+        "    defender.#{targets}.each {|target| target.remove_attack_increase}\n"
       end
     end
 
     def remove_crit_increase(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender(defender)\n" do
-        "    defender.remove_critical_chance_increase\n"
+        "    defender.#{targets}.each {|target| target.remove_critical_chance_increase}\n"
       end
     end
 
     def revenge_remove_crit_increase(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_revenge(defender)\n", :force => true do
-        "    defender.remove_critical_chance_increase\n"
+        "    defender.#{targets}.each {|target| target.remove_critical_chance_increase}\n"
       end
     end
 
@@ -391,32 +432,37 @@ module Generators
       amount = (effect['multiplier'] * 100).to_i
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_defender_after_damage(defender)\n" do
-        "    defender.add_modifier(Modifiers::Vulnerability.new(#{amount}, #{turns}, #{attacks}))\n"
+        "    defender.#{targets}.each {|target| target.add_modifier(Modifiers::Vulnerability.new(#{amount}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def remove_vulner(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.cleanse(:vulnerable)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:vulnerable)}\n"
       end
     end
 
     def revenge_remove_vulner(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker_revenge(attacker)\n", :force => true do
-        "    attacker.cleanse(:vulnerable)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:vulnerable)}\n"
       end
     end
 
     def remove_dot(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.cleanse(:damage_over_time)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:damage_over_time)}\n"
       end
     end
 
     def revenge_remove_dot(effect)
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker_revenge(attacker)\n", :force => true do
-        "    attacker.cleanse(:damage_over_time)\n"
+        "    attacker.#{targets}.each {|target| target.cleanse(:damage_over_time)}\n"
       end
     end
 
@@ -425,21 +471,22 @@ module Generators
       probability = 75
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker(attacker)\n" do
-        "    attacker.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))}\n"
       end
     end
 
     def rend(effect)
       damage = effect['multiplier']
-      gsub_file full_path, "self.is_rending_attack = false", "self.is_rending_attack = true"
-      gsub_file full_path, "self.damage_multiplier = 0", "self.damage_multiplier = #{damage}"
+      gsub_file full_path, /self.is_rending_attack = (false|true)/, "self.is_rending_attack = true"
+      gsub_file full_path, /self.damage_multiplier = (\d+\.*\d*)/, "self.damage_multiplier = #{damage}"
     end
 
     def revenge_rend(effect)
       damage = effect['multiplier']
-      gsub_file full_path, "self.is_rending_attack = false", "self.is_rending_attack = true"
-      gsub_file full_path, "self.damage_multiplier = 0", "self.damage_multiplier = #{damage}"
+      gsub_file full_path, /self.is_rending_attack = (false|true)/, "self.is_rending_attack = true"
+      gsub_file full_path, /self.damage_multiplier = (\d+\.*\d*)/, "self.damage_multiplier = #{damage}"
     end
 
     def revenge_cloak(effect)
@@ -447,8 +494,9 @@ module Generators
       probability = 75
       turns = effect['duration'][0]
       attacks = effect['duration'][1] || 'nil'
+      targets = effect['target']
       insert_into_file full_path, :after => "def update_attacker_revenge(attacker)\n", :force => true do
-        "    attacker.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))\n"
+        "    attacker.#{targets}.each {|target| target.add_modifier(Modifiers::Cloak.new(#{probability}, #{damage}, #{turns}, #{attacks}))}\n"
       end
     end
 

@@ -13,7 +13,7 @@ class CunningStrike < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.cleanse(:damage_over_time)
+    attacker.zelf.each {|target| target.cleanse(:damage_over_time)}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -22,8 +22,8 @@ class CunningStrike < Ability
 
   # remove modifiers for the defender before damage is done
   def update_defender(defender)
-    defender.remove_critical_chance_increase
-    defender.remove_attack_increase
+    defender.lowest_hp.each {|target| target.remove_critical_chance_increase}
+    defender.lowest_hp.each {|target| target.remove_attack_increase}
   end
 
   # remove modifiers for the defender before damage is done in revenge mode
@@ -32,8 +32,8 @@ class CunningStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender)
-    defender.add_modifier(Modifiers::Distraction.new(50, 1, 2))
-    defender.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))
+    defender.lowest_hp.each {|target| target.add_modifier(Modifiers::Distraction.new(50, 1, 2))}
+    defender.lowest_hp.each {|target| target.add_modifier(Modifiers::ReduceCriticalChance.new(100, 1, 2))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

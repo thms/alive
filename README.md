@@ -35,11 +35,14 @@ DNA needed to progress to next level, coins needed to progress to next level
 Fusions: dna needed for one fusion for each level of rarity
 
 ## DOING
-Raids
+Raids::generators
+Raids::battle mechanics
+Abilities::targets
 
 ## TODO
 Check revenge mode
 Check RevengeCloak ability - does it double the damage?
+Flock creatures - absorb, alert etc.
 
 Fix swap mechanics in team matches - are they still wrong?
 Why is the team strategy so swappy?
