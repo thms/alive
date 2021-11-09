@@ -1,0 +1,350 @@
+{
+  "pageProps": {
+    "key": "indominus_rex_boss",
+    "detail": {
+      "uuid": "indominus_rex_boss",
+      "name": "Indominus Rex Boss",
+      "rarity": "legendary",
+      "class": "fierce",
+      "moves": [
+        [
+          {
+            "uuid": "group_definite_strike",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "remove_cloak",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_dodge",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_taunt",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_shield",
+                "target": "all_opponents"
+              },
+              {
+                "action": "attack",
+                "multiplier": 1,
+                "target": "all_opponents"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "all_opponents"
+              }
+          ]
+          },
+          {
+            "uuid": "instant_mutual_fury",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "team"
+              },
+              {
+                "action": "speed_increase",
+                "target": "team",
+                "multiplier": 0.1,
+                "duration": [
+                  2
+                ]
+              },
+              {
+                "action": "damage_increase",
+                "target": "team",
+                "multiplier": 0.5,
+                "duration": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "action": "damage_increase",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "random_armor_piercing_impact",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "attack",
+                "multiplier": 1.5,
+                "target": "random_opponent"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "random_opponent"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "uuid": "instant_mutual_fury",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "team"
+              },
+              {
+                "action": "speed_increase",
+                "target": "team",
+                "multiplier": 0.1,
+                "duration": [
+                  2
+                ]
+              },
+              {
+                "action": "damage_increase",
+                "target": "team",
+                "multiplier": 0.5,
+                "duration": [
+                  3,
+                  2
+                ]
+              },
+              {
+                "action": "damage_increase",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2,
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "random_piercing_rampage",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "attack",
+                "multiplier": 2.0,
+                "target": "random_opponent"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "random_opponent"
+              },
+              {
+                "action": "bypass_taunt",
+                "target": "random_opponent"
+              }
+            ]
+          },
+          {
+            "uuid": "cloak",
+            "trigger": "regular",
+            "cooldown": 3,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "cloak",
+                "multiplier": 2.0,
+                "target": "self",
+                "duration": [
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "group_fierce_strike",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "self"
+              },
+              {
+                "action": "attack",
+                "multiplier": 1.0,
+                "target": "all_opponents"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_taunt",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_shield",
+                "target": "all_opponents"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "uuid": "instant_group_cloak",
+            "trigger": "regular",
+            "cooldown": 3,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "cloak",
+                "multiplier": 2.0,
+                "target": "team",
+                "duration": [
+                  1
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "random_piercing_rampage",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "attack",
+                "multiplier": 2.0,
+                "target": "random_opponent"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "random_opponent"
+              },
+              {
+                "action": "bypass_taunt",
+                "target": "random_opponent"
+              }
+            ]
+          },
+          {
+            "uuid": "revenge_cloak",
+            "trigger": "regular",
+            "cooldown": 3,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "cloak",
+                "multiplier": 2.0,
+                "target": "self",
+                "duration": [
+                  2
+                ]
+              }
+            ],
+            "if_revenge": {
+              "cooldown": 1,
+              "delay": 0,
+              "priority": 1,
+              "effects": [
+                {
+                  "action": "cloak",
+                  "target": "self",
+                  "multiplier": 3,
+                  "duration": [
+                    1
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "uuid": "group_definite_impact",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "attack",
+                "multiplier": 1.5,
+                "target": "all_opponents"
+              },
+              {
+                "action": "bypass_armor",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_cloak",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_dodge",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_taunt",
+                "target": "all_opponents"
+              },
+              {
+                "action": "remove_shield",
+                "target": "all_opponents"
+              }
+            ]
+          }
+        ]
+      ],
+      "moves_counter": [],
+      "level": 19,
+      "rounds": 3,
+      "health": 12508,
+      "damage": 1239,
+      "speed": 132,
+      "armor": 0,
+      "crit": 40,
+      "level_cap": 20,
+      "boost_cap": 10,
+      "resistance": [
+        0,
+        80,
+        50,
+        90,
+        0,
+        100,
+        0,
+        0,
+        75
+      ],
+      "resistance_labels": [
+        "critical_reduction",
+        "dot",
+        "distraction",
+        "rend",
+        "speed_decrease",
+        "stun",
+        "swap_prevention",
+        "taunt",
+        "vulnerable"
+      ],
+      "minions": ["Charlie Minion", "Echo Minion"]
+    }
+  }
+}

@@ -13,7 +13,7 @@ class Bosses::PowerHeal < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.heal(0.0227 * attacker.damage)
+    attacker.zelf.each {|target| target.heal(0.0227 * attacker.zelf.damage)}
   end
 
   # same as above but called when the attacker is in revenge mode

@@ -7,9 +7,9 @@ namespace :abilities do
   task :generate => :environment do
     Dinosaur.all.each do |dinosaur|
       slug = dinosaur.slug
-      #slug = 'archaeopteryx'
+#      slug = 'refrenantem'
       puts slug
-      file = File.read(Rails.root.join('tmp', 'dinosaurs', "#{slug}.json"))
+      file = File.read(Rails.root.join('data', 'dinosaurs', "#{slug}.json"))
       data =  JSON.parse(file)
       abilities = []
       abilities << data['pageProps']['detail']['moves']

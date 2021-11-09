@@ -13,7 +13,7 @@ class Bosses::Cloak < Ability
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker)
-    attacker.add_modifier(Modifiers::Cloak.new(75, 100.0, 2, nil))
+    attacker.zelf.each {|target| target.add_modifier(Modifiers::Cloak.new(75, 100.0, 2, nil))}
   end
 
   # same as above but called when the attacker is in revenge mode

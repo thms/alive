@@ -1,0 +1,46 @@
+{
+  "pageProps": {
+    "key": "charlie_minion",
+    "detail": {
+      "boss_uuid": "indominus_rex_boss",
+      "uuid": "charlie_minion",
+      "name": "Charlie Minion",
+      "rarity": "rare",
+      "class": "cunning",
+      "moves": [
+        "cunning_strike",
+        "high_pounce",
+        "cunning_impact"
+      ],
+      "moves_counter": [],
+      "health": 1786,
+      "damage": 989,
+      "speed": 149,
+      "armor": 0,
+      "crit": 5,
+      "level": 18,
+      "resistance": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "resistance_labels": [
+        "critical_reduction",
+        "dot",
+        "distraction",
+        "rend",
+        "speed_decrease",
+        "stun",
+        "swap_prevention",
+        "taunt",
+        "vulnerable"
+      ]
+    }
+  }
+}

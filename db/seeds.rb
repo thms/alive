@@ -17,7 +17,7 @@ def to_constant(name, namespace = nil)
 end
 
 if CREATE_DINOSAURS
-  file = File.read(Rails.root.join('db', 'dinodex_2021_09_29.json'))
+  file = File.read(Rails.root.join('data', 'dinodex_2021_09_29.json'))
   data =  JSON.parse(file)
   # Iterate over dinosaurs and create entry for each
   data['pageProps']['creatures'].each do |creature|
@@ -71,7 +71,7 @@ end
 if CREATE_BOSSES
   # Create bosses
   # these files have been handcrafted ...
-  files = Dir.glob(Rails.root.join('tmp', 'bosses', '*.json'))
+  files = Dir.glob(Rails.root.join('data', 'bosses', '*.json'))
   files.each do |name|
     file = File.read(name)
     creature =  JSON.parse(file)['pageProps']['detail']
@@ -114,7 +114,7 @@ end
 
 if CREATE_MINIONS
   # Create minions, from handcrafted files
-  files = Dir.glob(Rails.root.join('tmp', 'minions', '*.json'))
+  files = Dir.glob(Rails.root.join('data', 'minions', '*.json'))
   files.each do |name|
     file = File.read(name)
     creature =  JSON.parse(file)['pageProps']['detail']

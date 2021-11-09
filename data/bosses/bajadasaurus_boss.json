@@ -1,0 +1,234 @@
+{
+  "pageProps": {
+    "key": "bajadasaurus_boss",
+    "detail": {
+      "uuid": "bajadasaurus_boss",
+      "name": "Bajadasaurus Boss",
+      "rarity": "rare",
+      "class": "wildcard",
+      "moves": [
+        [
+          {
+            "uuid": "bellow",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "self"
+              },
+              {
+                "action": "shield",
+                "target": "self",
+                "multiplier": 0.5,
+                "duration": [
+                  0,
+                  4
+                ]
+              },
+              {
+                "action": "speed_decrease",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "group_superior_vulnerability",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "remove_damage_decrease",
+                "target": "self"
+              },
+              {
+                "action": "speed_decrease",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  1
+                ]
+              },
+              {
+                "action": "vulner",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "action": "attack",
+                "multiplier": 1,
+                "target": "all_opponents"
+              },
+              {
+                "action": "bypass_dodge",
+                "target": "all_opponents"
+              }
+            ]
+          },
+          {
+            "uuid": "total_cleanse_and_strike",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "team"
+              },
+              {
+                "action": "attack",
+                "multiplier": 1,
+                "target": "all_opponents"
+              }
+            ]
+          }
+        ],
+        [
+          {
+            "uuid": "bellow",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "priority": 1,
+            "effects": [
+              {
+                "action": "remove_all_neg",
+                "target": "self"
+              },
+              {
+                "action": "shield",
+                "target": "self",
+                "multiplier": 0.5,
+                "duration": [
+                  0,
+                  4
+                ]
+              },
+              {
+                "action": "speed_decrease",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2
+                ]
+              }
+            ]
+          },
+          {
+            "uuid": "group_slowing_impact",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "remove_damage_decrease",
+                "target": "self"
+              },
+              {
+                "action": "speed_decrease",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2
+                ]
+              },
+              {
+                "action": "vulner",
+                "target": "all_opponents",
+                "multiplier": 0.5,
+                "duration": [
+                  2,
+                  1
+                ]
+              },
+              {
+                "action": "attack",
+                "multiplier": 1.5,
+                "target": "all_opponents"
+              },
+              {
+                "action": "bypass_dodge",
+                "target": "all_opponents"
+              }
+            ]
+          },
+          {
+            "uuid": "precise_devastation",
+            "trigger": "regular",
+            "cooldown": 0,
+            "delay": 0,
+            "effects": [
+              {
+                "action": "attack",
+                "multiplier": 3,
+                "target": "highest_hp"
+              },
+              {
+                "action": "bypass_dodge",
+                "target": "highest_hp"
+              }
+            ]
+          }
+        ]
+      ],
+      "moves_counter": [
+        {
+          "uuid": "power_heal",
+          "trigger": "counter",
+          "cooldown": 0,
+          "delay": 0,
+          "effects": [
+            {
+              "action": "heal",
+              "target": "self",
+              "multiplier": 0.0227
+            }
+          ]
+        }
+      ],
+      "level": 9,
+      "rounds": 2,
+      "health": 4581,
+      "damage": 349,
+      "speed": 110,
+      "armor": 0,
+      "crit": 50,
+      "level_cap": 10,
+      "boost_cap": 0,
+      "resistance": [
+        50,
+        80,
+        45,
+        80,
+        60,
+        75,
+        0,
+        0,
+        45
+      ],
+      "resistance_labels": [
+        "critical_reduction",
+        "dot",
+        "distraction",
+        "rend",
+        "speed_decrease",
+        "stun",
+        "swap_prevention",
+        "taunt",
+        "vulnerable"
+      ],
+      "minions": []
+    }
+  }
+}
