@@ -43,6 +43,7 @@ Abilities::targets
 Check revenge mode
 Check RevengeCloak ability - does it double the damage?
 Flock creatures - absorb, alert etc.
+Matches and simulations controllers: save/cache outcomes of them using names and levels as key, e.g. albertosaurus-26-velociraptor-25 so they can be calculated once, and retrieved from persistent cache, but also deleted, may want to use the strategy played for matches as part of the key, store documents in mongo, and graphs in file system
 
 Fix swap mechanics in team matches - are they still wrong?
 Why is the team strategy so swappy?
