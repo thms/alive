@@ -75,60 +75,60 @@ class Ability
   end
 
   # TODO: ability to force the random decisions (crit, dodge) one way or the other for the simulator
-  def execute(attacker, defender)
+  def execute(attacker, defender, mode = :pvp)
     # destroy shields, cloak dodge, before attacking
-    attacker.is_revenge ? update_defender_revenge(defender) : update_defender(defender)
+    attacker.is_revenge ? update_defender_revenge(defender, mode) : update_defender(defender, mode)
     # Tick down the attacker's shields at the top if his turn
     attacker.tick_shields
     # Tick down the attacker's shields at the top if his turn
     attacker.tick_dodge
     # increase damage and add modifiers
-    attacker.is_revenge ? update_attacker_revenge(attacker) : update_attacker(attacker)
-    stats = damage_defender(attacker, defender)
+    attacker.is_revenge ? update_attacker_revenge(attacker, mode) : update_attacker(attacker, mode)
+    stats = damage_defender(attacker, defender, mode)
     # add new modifiers for the defender, so they don't already get ticked down in damage _defender.
-    attacker.is_revenge ? update_defender_after_damage_revenge(defender) : update_defender_after_damage(defender)
+    attacker.is_revenge ? update_defender_after_damage_revenge(defender, mode) : update_defender_after_damage(defender, mode)
     # execute counter attack, if defender survived and was attacked
     if defender && defender.has_counter? && !defender.is_stunned && defender.current_health > 0 && damage_multiplier > 0
-      stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker)
+      stats[:counter] = defender.abilities_counter.first.damage_defender(defender, attacker, mode)
     end
     # start the cooldown period
     start_cooldown
     # trigger on escape ability of the attacker, if any
-    on_escape(attacker, defender)
+    on_escape(attacker, defender, mode)
     # reset random target to nil
     @random_target = nil
     stats
   end
 
   # remove defender's shields, etc. before receiving damage
-  def update_defender(defender)
+  def update_defender(defender, mode = :pvp)
   end
 
   # revenge version, before receiving damage
-  def update_defender_revenge(defender)
+  def update_defender_revenge(defender, mode = :pvp)
   end
 
   # update attacker's shields, etc.
   # need to push the modifiers onto the attacker's list
-  def update_attacker(attacker)
+  def update_attacker(attacker, mode = :pvp)
   end
 
   # update attacker's shields, etc.
   # need to push the modifiers onto the attacker's list
   # called in revenge mode
-  def update_attacker_revenge(attacker)
+  def update_attacker_revenge(attacker, mode = :pvp)
   end
 
   # update defender's speed, distractions etc, after they have received a hit so they don't get ticked down during damage_defender already
   # need to push the modifiers onto the defender's list
-  def update_defender_after_damage(defender)
+  def update_defender_after_damage(defender, mode = :pvp)
   end
 
-  def update_defender_after_damage_revenge(defender)
+  def update_defender_after_damage_revenge(defender, mode = :pvp)
   end
 
   # update defender's current_health with the corresponding damage
-  def damage_defender(attacker, defender)
+  def damage_defender(attacker, defender, mode = :pvp)
     # Don't deal damage if there is no defender (testing) or there is no damage to be done, e.g. when healing
     # don't tick down defender shields and others when healing, since there is no attack on them
     if damage_multiplier == 0 || defender.nil?
@@ -182,7 +182,7 @@ class Ability
   end
 
   # TODO: performs swapping out effects,
-  def on_escape(attacker, defender)
+  def on_escape(attacker, defender, mode = :pvp)
   end
 
   def to_param

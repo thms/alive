@@ -28,5 +28,12 @@ class AcuteStunTest < ActiveSupport::TestCase
     assert_in_delta stats, 50, 10
   end
 
-
+  
+  test "Acute stun should target highest damage dino of team" do
+    attacker = Team.new('attacker', ['Dracoceratops']).reset_attributes!
+    defender = Team.new('defender', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    AcuteStun.new.execute(attacker.dinosaurs.first, defender.dinosaurs.first, :raid)
+    assert_equal 'Tarbosaurus', defender.dinosaurs.last.name
+    assert_equal [false, true], defender.dinosaurs.map(&:is_stunned)
+  end
 end

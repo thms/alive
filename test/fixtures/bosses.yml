@@ -1,0 +1,91 @@
+Boss_1:
+  id: 11
+  name: Indominus Rex Boss
+  level: 19
+  rarity: legendary
+  health: 12508
+  damage: 1239
+  speed: 132
+  armor: 0
+  critical_chance: 40
+  slug: indominus-rex-boss
+  rounds: 3
+  abilities:
+  - - !ruby/class 'Bosses::GroupDefiniteStrike'
+    - &1 !ruby/class 'Bosses::InstantMutualFury'
+    - !ruby/class 'Bosses::RandomArmorPiercingImpact'
+  - - *1
+    - &2 !ruby/class 'Bosses::RandomPiercingRampage'
+    - !ruby/class 'Bosses::Cloak'
+    - !ruby/class 'Bosses::GroupFierceStrike'
+  - - !ruby/class 'Bosses::InstantGroupCloak'
+    - *2
+    - !ruby/class 'Bosses::RevengeCloak'
+    - !ruby/class 'Bosses::GroupDefiniteImpact'
+  resistances:
+  - 0
+  - 80
+  - 50
+  - 90
+  - 0
+  - 100
+  - 0
+  - 0
+  - 75
+  klass: fierce
+  level_cap: 20
+  boost_cap: 10
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &3 2021-10-13 09:45:31.211712000 Z
+    zone: &4 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *3
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &5 2021-10-13 09:45:31.211712000 Z
+    zone: *4
+    time: *5
+
+Boss_2:
+  id: 12
+  name: Bajadasaurus Boss
+  level: 9
+  rarity: rare
+  health: 4581
+  damage: 349
+  speed: 110
+  armor: 0
+  critical_chance: 50
+  slug: bajadasaurus-boss
+  rounds: 2
+  abilities:
+  - - &1 !ruby/class 'Bosses::Bellow'
+    - !ruby/class 'Bosses::GroupSuperiorVulnerability'
+    - !ruby/class 'Bosses::TotalCleanseAndStrike'
+  - - *1
+    - !ruby/class 'Bosses::GroupSlowingImpact'
+    - !ruby/class 'Bosses::PreciseDevastation'
+  abilities_counter:
+  - !ruby/class 'Bosses::PowerHeal'
+  resistances:
+  - 50
+  - 80
+  - 45
+  - 80
+  - 60
+  - 75
+  - 0
+  - 0
+  - 45
+  klass: wildcard
+  level_cap: 10
+  boost_cap: 0
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &2 2021-10-13 09:45:31.225597000 Z
+    zone: &3 !ruby/object:ActiveSupport::TimeZone
+      name: Etc/UTC
+    time: *2
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: &4 2021-10-13 09:45:31.225597000 Z
+    zone: *3
+    time: *4
+

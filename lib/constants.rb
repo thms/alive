@@ -8,7 +8,7 @@ KLASSES = [:cunning, :cunning_fierce, :cunning_resilient, :fierce, :fierce_resil
 RESISTANCES = [:critical_reduction, :damage_over_time, :distraction, :rend, :speed_decrease, :stun, :swap_prevention, :taunt, :vulnerable]
 RARITIES = [:common, :rare, :epic, :legendary, :unique, :apex]
 COLORS = {common: 'grey', rare: 'blue', epic: 'orange', legendary: 'red', unique: 'green', apex: 'black'}
-TARGETS = %w(all_opponents attacker escapee fastest highest_dmg highest_hp lowest_hp lowest_hp_teammate most_pos random_opponent zelf team )
+TARGETS = %w(all_opponents attacker escapee fastest highest_dmg highest_hp lowest_hp lowest_hp_teammate most_pos random_opponent self team )
 STARTING_LEVELS = {
   common: 1,
   rare: 6,

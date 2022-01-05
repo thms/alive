@@ -35,7 +35,7 @@ class MinMax2Strategy < Strategy
       }
 
       result = one_round(root, attacker, defender)
-      @@logger.warn("Moves: #{result[:ability_outcomes]}")
+      @@logger.info("Moves: #{result[:ability_outcomes]}")
       EventSink.add "#{attacker.name}: #{result[:ability_outcomes]}"
       # pick one of the best moves if there are more than one with the same best value
       if attacker.value == 1.0

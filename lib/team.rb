@@ -9,7 +9,7 @@ class Team
   attr_accessor :value      # the value 1.0 || -1.0
   attr_accessor :strategy   # the team strategy
   attr_accessor :current_dinosaur # the one currently fighting
-  attr_accessor :recent_dinosaur # keeps track of current dinossaur when he was forced to swap out, so we cannot swap him in again
+  attr_accessor :recent_dinosaur # keeps track of current dinosaur when he was forced to swap out, so we cannot swap him in again
   attr_accessor :logger
   attr_accessor :log
   attr_accessor :color
@@ -169,5 +169,10 @@ class Team
 
   def hash_value
     @dinosaurs.map {|d| d.hash_value}.to_sentence
+  end
+
+  # deal with the naming clash of team used in battle and in the
+  def each
+    self.dinosaurs.each
   end
 end

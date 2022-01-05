@@ -10,7 +10,7 @@ class IsStunned < Ability
   self.damage_multiplier = 0
   self.bypass = []
 
-  def update_attacker(attacker)
+  def update_attacker(attacker, mode = :pvp)
     attacker.is_stunned = false
   end
 

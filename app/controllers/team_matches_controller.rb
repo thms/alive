@@ -4,9 +4,9 @@ class TeamMatchesController < ApplicationController
 
   def index
     name1 = 'A'
-    team1 = ['Sarcorixis', 'Baryonyx', 'Suchotator', 'Entelochops']
+    team1 = ['Erlikosaurus Gen 2', 'Dilophosaurus']
     name2 = 'D'
-    team2 = ['Diplodocus', 'Indominus Rex Gen 2', 'Thylacotator', 'Brontolasmus']
+    team2 = ['Postimetrodon']
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0})
     @logs = []
     @events = []
@@ -15,8 +15,8 @@ class TeamMatchesController < ApplicationController
     team1.each {|name| @survivors1["#{name1}:#{name}"] = 0}
     team2.each {|name| @survivors2["#{name2}:#{name}"] = 0}
     TQTeamStrategy.load
-    #TQTeamStrategy.reset
-    1.times do
+    TQTeamStrategy.reset
+    100.times do
       EventSink.reset
       @t1 = Team.new(name1, team1)
       @t1.strategy = TQTeamStrategy
@@ -24,6 +24,7 @@ class TeamMatchesController < ApplicationController
       @t2.strategy = TQTeamStrategy
       #pimp_defense_team
       #pimp_offense_team
+      adjust_teams
       @t1.color = '#03a9f4'
       @t2.color = '#03f4a9'
       match = TeamMatch.new(@t1, @t2)
@@ -56,6 +57,13 @@ class TeamMatchesController < ApplicationController
     end
   end
 
+  def adjust_teams
+    @t1.reset_attributes!
+    @t1.dinosaurs.first.level = 7
+    @t1.dinosaurs.last.level = 8
+    @t2.reset_attributes!
+    @t2.dinosaurs.first.level = 12
+  end
   # bring defense team up to level in campagin battle
   def pimp_defense_team
     @t2.reset_attributes!

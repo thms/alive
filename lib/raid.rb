@@ -26,7 +26,7 @@ class Raid
     @current_round = 1
     @total_rounds = @defender.boss.total_rounds
     @logger = Logger.new(STDOUT)
-    @logger.level = :info
+    @logger.level = :warn
     @log = [] # ["T1:D1::Strike", "T2:D2::CleansingStrike", ...]
     @events = []
   end

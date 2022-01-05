@@ -2,7 +2,7 @@ require 'logger'
 class TeamMechanics
 
   @@logger = Logger.new(STDOUT)
-  @@logger.level = :info
+  @@logger.level = :warn
 
   # attacker and defender are the current dinosaurs of each team, not the entire team
   # this only deals with single attacks and swap in when an on_escape ability was used

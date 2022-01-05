@@ -124,6 +124,12 @@ Bosses sometimes have an ability with the same name, but a slightly different se
 Raids mechanics are different
 Since there is no data feed for bosses and minions, I am handcrafting the data files for now, mirroring the Dinodex
 
+## Ability targeting
+https://ludia.helpshift.com/hc/en/21-jurassic-world-alive/faq/2172-what-is-ability-targeting/?s=hot-topics&f=what-is-ability-targeting&l=en
+This needs to be rewritten given the restrictions around tie breaking and random hitting
+I.e. target selection of an ability needs to be done within the raid structure and passed to the ability for execution, rather than
+in the dinosaur class since it needs knowledge of the state of the battle, namely ordering of dinosaurs for tie breaking and it needs to keep track of random target selection to avoid duplicating it.
+It also needs to take taunting and resistance to it into account.
 
 ## How To
 ### Dump DB to seeds

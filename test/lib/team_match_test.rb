@@ -2,6 +2,7 @@ require 'test_helper'
 
 class TeamMatchTest < ActiveSupport::TestCase
 
+  #focus
   test "Faster team should win - one" do
     #skip
     team1 = create_team(1000, 300, 132, 20, 'attacker', [Strike], [], DefaultTeamStrategy)

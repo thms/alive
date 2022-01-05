@@ -56,8 +56,10 @@ module Dinosaurs
     # if percentage values: this is an absolute delta.
     def current_attributes
       attributes = {speed: 100, shields: 0, damage: 0, distraction: 0, dodge: 0, critical_chance: self.critical_chance, damage_over_time: 0, vulnerable: false }
-      modifiers.each do |modifier|
-        modifier.execute(attributes)
+      if modifiers
+        modifiers.each do |modifier|
+          modifier.execute(attributes)
+        end
       end
       attributes
     end
@@ -66,6 +68,14 @@ module Dinosaurs
       [0, (speed_with_boosts * current_attributes[:speed] / 100).to_i].max
     end
 
+    # number of positive modifiers
+    def number_of_positive_modifiers
+      if modifiers
+        modifiers.count {|m| m.is_positive}
+      else
+        return 0
+      end
+    end
     # attempt to add a modifiers
     def add_modifier(modifier)
       # unconditional at frist, TODO later take resistances into account
@@ -294,13 +304,49 @@ module Dinosaurs
       end
     end
 
-    # the following methods make only really sense in the context of raids
-    # where there are different targets. To simplify things we are just returning
-    # [self] from these so the ability classes can work with teams and individual dinosaurs
-    Constants::TARGETS.each do |target|
-      define_method(target) do
+
+    # returns the targets for this dinosaur's team
+    # in pvp mode, this is always the dinosaur itself
+    # in raid mode it depends on the target
+    # before targets gets called it is already clear if this is opponent or own team,
+    # so when a dinosaur is called with _all_opponents, it is all members of it's team
+    # it always resolves to members of its own team
+    def targets(target, mode = :pvp)
+      if mode == :pvp
         return [self]
+      elsif mode == :raid
+        case target
+        when 'all_opponents', 'team'
+          return self.team.healthy_dinosaurs
+        when 'self', 'attacker', 'escapee'
+          return [self]
+        when 'random_opponent'
+          return [self.team.healthy_dinosaurs.sample]
+        when 'fastest'
+          return [self.team.healthy_dinosaurs.max_by(&:current_speed)]
+        when 'highest_dmg'
+          return [self.team.healthy_dinosaurs.max_by(&:damage)]
+        when 'highest_hp'
+          return [self.team.healthy_dinosaurs.max_by(&:current_health)]
+        when 'lowest_hp_teammate' # lowest absolute HP on the team, excluding fully healthy dinosaurs
+          dinosaurs = self.team.healthy_dinosaurs.select {|d| d.current_health != d.health}
+          if dinosaurs.size == 0
+            dinosaurs = self.team.healthy_dinosaurs
+          end
+          return [dinosaurs.min_by(&:current_health)]
+        when 'lowest_hp' # lowest absolute HP on the team
+          return [self.team.healthy_dinosaurs.min_by(&:current_health)]
+        when 'most_pos'
+          # member with the most positive effects currently applied
+          return [self.team.healthy_dinosaurs.max_by(&:number_of_positive_modifiers)]
+        else
+          raise "not implemented"
+        end
+      else
+        # do nothing for now in :campaign mode, not implemented
+        raise "not implemented"
       end
     end
+
   end
 end

@@ -1,7 +1,7 @@
 # describes the game mechanics and steps to take
 class Mechanics
 
-
+  # attacker and defender are individual dinosaurs
   def self.attack(attacker, defender, log, logger)
     swapped_out = nil
     if attacker.is_stunned

@@ -40,8 +40,8 @@ class BlendedStrategy < Strategy
         end
         result[:value] += r[:value]
       end
-      @@logger.warn results
-      @@logger.warn result
+      @@logger.info results
+      @@logger.info result
       EventSink.add "#{attacker.name}: #{result[:ability_outcomes]}"
       # pick one of the best moves if there are more than one with the same best value
       if attacker.value == 1.0

@@ -289,6 +289,91 @@ class DinosaurTest < ActiveSupport::TestCase
     assert_equal 1250, dinosaur.health
   end
 
+  # Testing targets for Raids
+  test "targets should return all dinosaurs on team for all_opponents"  do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('all_opponents', :raid)
+    assert_equal 2, targets.size
+    assert_equal ['Velociraptor', 'Tarbosaurus'], targets.map(&:name)
+  end
 
+  test "targets should return all dinosaurs on team for team"  do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('team', :raid)
+    assert_equal 2, targets.size
+    assert_equal ['Velociraptor', 'Tarbosaurus'], targets.map(&:name)
+  end
+
+  test "targets should return the attacker on team for attacker"  do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('attacker', :raid)
+    assert_equal 1, targets.size
+    assert_equal ['Velociraptor'], targets.map(&:name)
+    targets = team.dinosaurs.last.targets('attacker', :raid)
+    assert_equal 1, targets.size
+    assert_equal ['Tarbosaurus'], targets.map(&:name)
+  end
+
+  test "targets should return fastest dinosaur on team for fastest"  do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('fastest', :raid)
+    assert_equal 1, targets.size
+    assert_equal ['Velociraptor'], targets.map(&:name)
+    targets = team.dinosaurs.last.targets('fastest', :raid)
+    assert_equal 1, targets.size
+    assert_equal ['Velociraptor'], targets.map(&:name)
+  end
+
+  test "targets should return highest damage dinosaur on team for highest_dmg" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('highest_dmg', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Tarbosaurus', targets.first.name
+    targets = team.dinosaurs.last.targets('highest_dmg', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Tarbosaurus', targets.first.name
+  end
+
+  test "targets should return highest damage dinosaur on team for highest_hp" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('highest_hp', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Tarbosaurus', targets.first.name
+    targets = team.dinosaurs.last.targets('highest_hp', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Tarbosaurus', targets.first.name
+  end
+
+  test "targets should return dinosaur with lowest overall HP on team for lowest_hp" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('lowest_hp', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Velociraptor', targets.first.name
+    targets = team.dinosaurs.last.targets('lowest_hp', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Velociraptor', targets.first.name
+  end
+
+  test "targets should return dinosaur with lowest overall HP on team excluding dinosaurs at full health for lowest_hp_teammate" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    team.dinosaurs.last.current_health -= 10
+    targets = team.dinosaurs.first.targets('lowest_hp_teammate', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Tarbosaurus', targets.first.name
+  end
+
+  test "targets should return dinosaur with lowest overall HP on team if all are at full health for lowest_hp_teammate" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('lowest_hp_teammate', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Velociraptor', targets.first.name
+  end
+
+  test "targets should return dinosaur with most positive modifiers for most_pos" do
+    team = Team.new('team', ['Velociraptor', 'Tarbosaurus']).reset_attributes!
+    targets = team.dinosaurs.first.targets('most_pos', :raid)
+    assert_equal 1, targets.size
+    assert_equal 'Velociraptor', targets.first.name
+  end
 
 end
