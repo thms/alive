@@ -10,9 +10,12 @@ class SwapInResilientStrike < Ability
   self.is_rending_attack = false
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = 'self'
+  self.defender_team_targets = 'lowest_hp'
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)
+    attacker.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'self'))}
     attacker.targets('self').each {|target| target.cleanse(:distraction)}
   end
 
@@ -33,7 +36,6 @@ class SwapInResilientStrike < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender, mode = :pvp)
-    defender.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'other'))}
     defender.targets('lowest_hp').each {|target| target.add_modifier(Modifiers::Vulnerability.new(50, 2, 1))}
   end
 

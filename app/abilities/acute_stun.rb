@@ -10,6 +10,8 @@ class AcuteStun < Ability
   self.is_rending_attack = false
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = nil
+  self.defender_team_targets = 'highest_dmg'
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)
@@ -38,7 +40,7 @@ class AcuteStun < Ability
   # special logic for some attacks
   def damage_defender(attacker, defender, mode = :pvp)
     result = super
-    defender.targets('highest_dmg', mode).each {|target| target.is_stunned = rand(100) < 100 * (100.0 - target.resistance(:stun)) / 100.0}
+    defender.targets('highest_dmg').each {|target| target.is_stunned = rand(100) < 100 * (100.0 - target.resistance(:stun)) / 100.0}
     result
   end
 

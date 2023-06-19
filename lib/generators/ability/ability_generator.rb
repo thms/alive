@@ -12,12 +12,18 @@ module Generators
     end
 
     # write all the normal actions into the file
-    # transform from 'self' to 'zelf' here
     def write_actions
       ability['effects'].each do |effect|
         puts effect['action']
-        #effect['target'] = 'zelf' if effect['target'] == 'self'
         self.send(effect['action'], effect)
+        # set the target for the action
+        if ['self', 'team', 'lowest_hp_teammate'].include?(effect['target'])
+          gsub_file full_path, "self.attacker_team_targets = nil", "self.attacker_team_targets = '#{effect['target']}'"
+        elsif ['all_opponents', 'attacker', 'escapee', 'fastest', 'highest_dmg', 'highest_hp', 'lowest_hp', 'most_pos', 'random_opponent'].include?(effect['target'])
+          gsub_file full_path, "self.defender_team_targets = nil", "self.defender_team_targets = '#{effect['target']}'"
+        else
+          raise "not implemented"
+        end
       end
     end
 
@@ -32,7 +38,6 @@ module Generators
           "    self.delay = #{ability['if_revenge']['delay']}\n"
         end
         ability['if_revenge']['effects'].each do |effect|
-          #effect['target'] = 'zelf' if effect['target'] == 'self'
           self.send("revenge_#{effect['action']}", effect)
         end
       end
@@ -191,7 +196,7 @@ module Generators
     def swap_prevent(effect)
       turns = effect['duration'][0]
       target = effect['target']
-      if effect['target'] == 'zelf'
+      if effect['target'] == 'self'
         insert_into_file full_path, :after => "def update_attacker(attacker, mode = :pvp)\n" do
           "    attacker.targets('#{target}').each {|target| target.add_modifier(Modifiers::PreventSwap.new(#{turns}, 'self'))}\n"
         end

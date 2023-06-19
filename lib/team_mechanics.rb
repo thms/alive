@@ -11,9 +11,8 @@ class TeamMechanics
     # on the first attack of a dinosaur the recent-dinosaur must be reset to allow swapping in
     attacker.team.recent_dinosaur = nil
     if attacker.is_stunned
-      # start cooldown on what the attacker selected, even if he did not get around to use it
-      attacker.selected_ability.start_cooldown
-      # execute do nothing ability
+      # do not start cooldown on what the attacker selected,  if he did not get around to use it
+      # instead execute do nothing ability
       hit_stats = IsStunned.new.execute(attacker, defender)
 
       log << {event: "#{attacker.name}::stunned", stats: hit_stats, health: Mechanics.health([attacker, defender])}

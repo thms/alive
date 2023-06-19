@@ -10,6 +10,8 @@ class RevengeDefiniteRampage < Ability
   self.is_rending_attack = false
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = nil
+  self.defender_team_targets = 'most_pos'
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)

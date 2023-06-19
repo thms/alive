@@ -4,6 +4,8 @@
 # output is a tree with all possible path and their outcomes
 # possible outcomes: one of the two wins, or swaps out, or both die (DoT)
 
+# This is aiming to be an exhaustive search of all possible paths, rather than an actual match being played with different strategies.
+
 # TODO
 # Imlement statistical elements - critical chance, possibiity of a dodge, etc
 # Two options: create separte nodes and inject decision

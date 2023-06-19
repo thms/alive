@@ -4,25 +4,25 @@ class MatchesController < ApplicationController
 
   # runs a number of matches to account of randomnes and collects logs from each match, to then graph all paths taken, and the number of times they have been taken
   def index
-    name1 = 'Indoraptor'
-    name2 = 'Testacornibus'
+    name1 = 'Thylacotator'
+    name2 = 'Sarcorixis'
     @stats = HashWithIndifferentAccess.new({name1 => 0, name2 => 0, 'draw' => 0, "#{name1} swapped out" => 0, "#{name2} swapped out" => 0})
     @logs = []
     TQStrategy.load
     #TQStrategy.reset
-    TQStrategy.enable_learning_mode
+    TQStrategy.disable_learning_mode
     MinMaxStrategy.reset
     MinMax2Strategy.reset
     EventSink.reset
-    10.times do
+    1.times do
       ForcedStrategy.reset
       @d1 = Dinosaur.find_by_name name1
       @d1.strategy = MinMaxStrategy
       #@d1.strategies = [ForcedStrategy, MinMaxStrategy, TQStrategy]
       @d2 = Dinosaur.find_by_name name2
       @d2.strategy = MinMaxStrategy
-      @d2.level = 23
-      @d1.level = 29
+      @d2.level = 26
+      @d1.level = 26
       @d1.color = '#03a9f4'
       @d2.color = '#03f4a9'
       @start_node_title = start_node_title(@d1.reset_attributes!, @d2.reset_attributes!)

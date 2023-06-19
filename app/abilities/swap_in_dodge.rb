@@ -10,9 +10,12 @@ class SwapInDodge < Ability
   self.is_rending_attack = false
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = 'self'
+  self.defender_team_targets = nil
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)
+    attacker.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(1, 'self'))}
     attacker.targets('self').each {|target| target.add_modifier(Modifiers::Dodge.new(100, 0, 2))}
   end
 
@@ -30,7 +33,6 @@ class SwapInDodge < Ability
 
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender, mode = :pvp)
-    defender.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(1, 'other'))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode

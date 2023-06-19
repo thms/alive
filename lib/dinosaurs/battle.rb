@@ -15,7 +15,7 @@ module Dinosaurs
     attr_accessor :is_revenge # trueif the dino swapped in for a dino that just died
     attr_accessor :selected_ability # stores the abiity selected for the next round, to simplify the code base
 
-    # reset fight attributes, to initial values
+    # reset fight attributes to initial values
     # also (re)-build the abilities from the classes passed in
     # ToDo: use stat bosts to calculate actual health, speed and damage
     def reset_attributes!
@@ -195,7 +195,6 @@ module Dinosaurs
 
     # Pick the next ability (need to add order dependency or strikes)
     # returns the instance
-    # For now just return the first available ability defined later use strategies
     def pick_ability(attacker, defender, round = nil)
       @selected_ability = strategy.next_move(attacker, defender)
     end

@@ -38,6 +38,8 @@ class MinMax2Strategy < Strategy
       @@logger.info("Moves: #{result[:ability_outcomes]}")
       EventSink.add "#{attacker.name}: #{result[:ability_outcomes]}"
       # pick one of the best moves if there are more than one with the same best value
+      @@logger.warn(result[:ability_outcomes])
+
       if attacker.value == 1.0
         best_outcome = result[:ability_outcomes].values.max
         result[:ability_outcomes].delete_if {|k,v| v < best_outcome}

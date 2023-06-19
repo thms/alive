@@ -6,9 +6,8 @@ class Mechanics
     swapped_out = nil
     if attacker.is_stunned
       # logger.info("#{attacker.name} is stunned")
-      # start cooldown on what the attacker selected, even if he did not get around to use it
-      attacker.selected_ability.start_cooldown
-      # execute do nothing ability
+      # do not start cooldown on what the attacker selected, if he did not get around to use it
+      # instead execute do nothing ability
       hit_stats = IsStunned.new.execute(attacker, defender)
       log << {event: "#{attacker.name}::IsStunned", stats: hit_stats, health: health([attacker, defender])}
       EventSink.add "#{attacker.name}::stunned"

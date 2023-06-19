@@ -10,6 +10,8 @@ class GreaterEmergencyHeal < Ability
   self.is_rending_attack = false
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = 'lowest_hp_teammate'
+  self.defender_team_targets = nil
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)

@@ -45,6 +45,10 @@ class Ability
   class_attribute :is_swap_out
   self.is_swap_out = false
 
+  # keep track of the targets for own and other team
+  class_attribute :attacker_team_targets
+  class_attribute :defender_team_targets
+
   # Keep track of the current delay and cooldown
   attr_accessor :current_delay
   attr_accessor :current_cooldown

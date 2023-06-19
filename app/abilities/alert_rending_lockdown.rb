@@ -10,9 +10,12 @@ class AlertRendingLockdown < Ability
   self.is_rending_attack = true
   self.is_counter = false
   self.is_swap_out = false
+  self.attacker_team_targets = 'self'
+  self.defender_team_targets = 'highest_hp'
 
   # add and remove modifiers for the attacker
   def update_attacker(attacker, mode = :pvp)
+    attacker.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'self'))}
   end
 
   # same as above but called when the attacker is in revenge mode
@@ -30,7 +33,6 @@ class AlertRendingLockdown < Ability
   # add modifiers for the defender after damage is done
   def update_defender_after_damage(defender, mode = :pvp)
     defender.targets('highest_hp').each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'other'))}
-    defender.targets('self').each {|target| target.add_modifier(Modifiers::PreventSwap.new(2, 'other'))}
   end
 
   # add modifiers for the defender after damage is done in revenge mode
